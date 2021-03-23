@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion/ngx';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
@@ -39,6 +40,7 @@ export class ScanPage {
     public routerOutlet: IonRouterOutlet,
     private deviceMotion: DeviceMotion,
     private vibration: Vibration,
+    private router: Router,
   ) {
     this.platform.ready().then(
       () => {
@@ -101,9 +103,11 @@ export class ScanPage {
   }
 
   async prepareScanner(): Promise<void> {
+    const loading = await this.presentLoading("Preparing");
     let denied = false;
     await this.qrScanner.getStatus().then(
       async (status: QRScannerStatus) => {
+        loading.dismiss();
         if (status.denied) {
           const alert = await this.presentAlert("Press Setting to grant camera permission.", "Message", "Setting");
           await alert.onDidDismiss().then(
@@ -179,13 +183,10 @@ export class ScanPage {
               this.motionX = Math.round(acceleration.x);
               this.motionY = Math.round(acceleration.y);
               this.motionZ = Math.round(acceleration.z);
-              console.log("Motion again!")
               this.motionlessCount = 0;
-              console.log(await this.qrScanner.getStatus())
               const showing = (await this.qrScanner.getStatus()).showing;
               const previewing = (await this.qrScanner.getStatus()).previewing;
               if (!showing || !previewing) {
-                console.log("not showing, make it show again")
                 this.motionSubscription.unsubscribe();
                 await this.prepareScanner();
               }
@@ -216,11 +217,9 @@ export class ScanPage {
   }
 
   async processQrCode(scannedData: string, loading: HTMLIonLoadingElement): Promise<void> {
-    await loading.dismiss();
-    const alert = await this.presentAlert(scannedData, 'Scanned Data', "OK");
-    await alert.onDidDismiss().then(
-      async () => {
-        await this.scanQr();
+    this.router.navigate(['result', { qrCodeContent: scannedData }]).then(
+      () => {
+        loading.dismiss();
       }
     );
   }

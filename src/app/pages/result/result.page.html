@@ -1,9 +1,148 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>result</ion-title>
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark" mode="ios">
+    <ion-title>Result</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <ion-row>
+    <ion-col class="ion-text-center ion-padding-horizontal ion-padding-top">
+      <ngx-qrcode [elementType]="qrElementType" [value]="qrCodeContent" [width]="175"
+        [errorCorrectionLevel]="errorCorrectionLevel" [colorDark]="qrColorDark" [colorLight]="qrColorLight"
+        [margin]="qrMargin">
+      </ngx-qrcode>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col class="ion-text-center ion-padding-horizontal ion-padding-bottom">
+      <ion-item lines="none">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">Content
+        </ion-label>
+        <ion-textarea class="box" readonly [value]="qrCodeContent" autoGrow="true" rows="1"></ion-textarea>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="baseDecoded">
+    <ion-col class="ion-text-center ion-padding-horizontal ion-padding-bottom">
+      <ion-item lines="none">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">Base64 Decoded
+        </ion-label>
+        <ion-textarea class="box" readonly [value]="baseDecodedText" autoGrow="true" rows="1"></ion-textarea>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
 </ion-content>
+
+<ion-footer mode="ios" [ngStyle]="config.darkTheme?  {'background-color': '#222428'} : {'background-color': 'white'}">
+
+  <!-- URL -->
+  <ion-row *ngIf="contentType === 'url'" class="ion-padding-horizontal ion-margin-horizontal">
+    <ion-col>
+      <ion-button expand="full" color="secondary" mode="ios">
+        <ion-icon slot="start" name="globe-outline"></ion-icon>
+        <span>Browse Website</span>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <!-- Contact -->
+  <ion-row *ngIf="contentType === 'contact'" class="ion-padding-horizontal ion-margin-horizontal">
+    <ion-col>
+      <ion-button expand="full" color="secondary" mode="ios">
+        <ion-icon slot="start" name="person-add-sharp"></ion-icon>
+        <span>Add Contact</span>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <!-- Phone Number -->
+  <ion-row *ngIf="contentType === 'phone'" class="ion-padding-horizontal ion-margin-horizontal">
+    <ion-col>
+      <ion-button expand="full" color="secondary" mode="ios">
+        <ion-icon slot="start" name="call"></ion-icon>
+        <span>Call</span>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="contentType === 'phone'" class="ion-padding-horizontal ion-margin-horizontal">
+    <ion-col>
+      <ion-button expand="full" color="secondary" mode="ios">
+        <ion-icon slot="start" name="person-add-sharp"></ion-icon>
+        <span>Add Contact</span>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <!-- SMS -->
+  <ion-row *ngIf="contentType === 'sms'" class="ion-padding-horizontal ion-margin-horizontal">
+    <ion-col>
+      <ion-button expand="full" color="secondary" mode="ios">
+        <ion-icon slot="start" name="send"></ion-icon>
+        <span>Send SMS</span>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <!-- Email -->
+  <ion-row *ngIf="contentType === 'email'" class="ion-padding-horizontal ion-margin-horizontal">
+    <ion-col>
+      <ion-button expand="full" color="secondary" mode="ios">
+        <ion-icon slot="start" name="mail"></ion-icon>
+        <span>Send Email</span>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <!-- General -->
+  <ion-row class="ion-padding-horizontal ion-margin-horizontal">
+    <ion-col>
+      <ion-button expand="full" color="primary" mode="ios">
+        <ion-icon slot="start" name="search"></ion-icon>
+        <span>Web Search</span>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button expand="full" color="primary" mode="ios">
+        <ion-icon slot="start" name="copy"></ion-icon>
+        <span>Copy Text</span>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-padding-horizontal ion-margin-horizontal">
+    <ion-col>
+      <ion-button expand="full" color="primary" mode="ios" (click)="base64Decode()">
+        <ion-icon slot="start" name="code-working"></ion-icon>
+        <span>Base64 Decode</span>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button expand="full" color="primary" mode="ios">
+        <ion-icon slot="start" name="image"></ion-icon>
+        <span>Save QR Code</span>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-padding-horizontal ion-margin-horizontal ion-padding-bottom">
+    <ion-col>
+      <ion-button expand="full" color="dimgray" mode="ios" (click)="returnScanPage()">
+        <ion-icon slot="start" name="chevron-back"></ion-icon>
+        <span>Return</span>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

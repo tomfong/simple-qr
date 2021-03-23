@@ -28,6 +28,7 @@
     "@ionic/storage-angular": "^3.0.2",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
+    "@techiediaries/ngx-qrcode": "^9.1.0",
     "cordova-android": "9.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

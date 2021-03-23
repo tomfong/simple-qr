@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class ConfigService {
 
   public language: string = 'en';
+  public darkTheme: boolean = false;
 
   constructor(
 

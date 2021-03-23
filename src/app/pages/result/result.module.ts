@@ -7,12 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { ResultPageRoutingModule } from './result-routing.module';
 
 import { ResultPage } from './result.page';
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    NgxQRCodeModule,
     ResultPageRoutingModule
   ],
   declarations: [ResultPage]
