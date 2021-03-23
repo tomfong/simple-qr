@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { AlertController, LoadingController, Platform, ToastController } from '@ionic/angular';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
@@ -32,6 +33,7 @@ export class ResultPage implements OnInit {
     private router: Router,
     public config: ConfigService,
     public toastController: ToastController,
+    private clipboard: Clipboard,
   ) { }
 
   ngOnInit() {
@@ -116,13 +118,56 @@ export class ResultPage implements OnInit {
     }
   }
 
+  async copyText(): Promise<void> {
+    if (this.base64Decoded) {
+      const alert = await this.alertController.create(
+        {
+          header: "Copy",
+          message: "Which content do you want to copy?",
+          buttons: [
+            {
+              text: 'Original',
+              handler: async () => {
+                alert.dismiss();
+                await this.clipboard.copy(this.qrCodeContent).then(
+                  async () => {
+                    await this.presentToast("Copied", 1500, "bottom", "short");
+                  }
+                )
+              }
+            },
+            {
+              text: 'Base64-Decoded',
+              handler: async () => {
+                alert.dismiss();
+                await this.clipboard.copy(this.base64DecodedText).then(
+                  async () => {
+                    await this.presentToast("Copied", 1500, "bottom", "short");
+                  }
+                )
+              }
+            }
+          ]
+        }
+      )
+      alert.present();
+    } else {
+      await this.clipboard.copy(this.qrCodeContent).then(
+        async () => {
+          await this.presentToast("Copied", 1500, "bottom", "short");
+        }
+      )
+    }
+  }
+
   async base64Decode(): Promise<void> {
     try {
       this.base64DecodedText = atob(this.qrCodeContent ? this.qrCodeContent : "");
       this.base64Decoded = true;
+      await this.presentToast("Decoded", 1500, "bottom", "short");
     } catch (err) {
       this.base64Decoded = false;
-      await this.presentToast("Data is not Base64 encoded", 2000, "middle");
+      await this.presentToast("Data is not Base64 encoded", 2000, "middle", "long");
     }
   }
 
@@ -130,16 +175,28 @@ export class ResultPage implements OnInit {
     this.router.navigate(['/scan'], { replaceUrl: true });
   }
 
-  async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom") {
-    const toast = await this.toastController.create({
-      message: msg,
-      duration: msTimeout,
-      mode: "ios",
-      color: "light",
-      cssClass: "text-center-toast",
-      position: pos
-    });
-    toast.present();
+  async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", size: "short" | "long" ) {
+    if (size === "long") {
+      const toast = await this.toastController.create({
+        message: msg,
+        duration: msTimeout,
+        mode: "ios",
+        color: "light",
+        cssClass: "text-center-toast",
+        position: pos
+      });
+      toast.present();
+    } else {
+      const toast = await this.toastController.create({
+        message: msg,
+        duration: msTimeout,
+        mode: "ios",
+        color: "light",
+        cssClass: "text-center-short-toast",
+        position: pos
+      });
+      toast.present();
+    }
   }
 
 }

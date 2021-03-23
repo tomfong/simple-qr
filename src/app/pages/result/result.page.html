@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" mode="ios">
   <ion-toolbar color="dark" mode="ios">
     <ion-title>Result</ion-title>
   </ion-toolbar>
@@ -6,7 +6,7 @@
 
 <ion-content>
 
-  <ion-row>
+  <ion-row *ngIf="qrCodeContent && qrCodeContent.trim().length > 0">
     <ion-col class="ion-text-center ion-padding-horizontal ion-padding-top">
       <ngx-qrcode [elementType]="qrElementType" [value]="qrCodeContent" [width]="175"
         [errorCorrectionLevel]="errorCorrectionLevel" [colorDark]="qrColorDark" [colorLight]="qrColorLight"
@@ -15,17 +15,17 @@
     </ion-col>
   </ion-row>
 
-  <ion-row>
+  <ion-row *ngIf="qrCodeContent && qrCodeContent.trim().length > 0">
     <ion-col class="ion-text-center ion-padding-horizontal ion-padding-bottom">
       <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">Content
+        <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">Original Content
         </ion-label>
         <ion-textarea class="box" readonly [value]="qrCodeContent" autoGrow="true" rows="1"></ion-textarea>
       </ion-item>
     </ion-col>
   </ion-row>
 
-  <ion-row *ngIf="base64Decoded">
+  <ion-row *ngIf="base64Decoded && qrCodeContent && qrCodeContent.trim().length > 0">
     <ion-col class="ion-text-center ion-padding-horizontal ion-padding-bottom">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">Base64 Decoded
@@ -37,7 +37,11 @@
 
 </ion-content>
 
-<ion-footer mode="ios" [ngStyle]="config.darkTheme?  {'background-color': '#222428'} : {'background-color': 'white'}">
+<ion-footer mode="md" [ngStyle]="config.darkTheme?  {'background-color': '#222428'} : {'background-color': 'white'}">
+
+  <ion-row class="ion-padding-horizontal ion-margin-horizontal ion-no-padding-top">
+    <ion-col></ion-col>
+  </ion-row>
 
   <!-- URL -->
   <ion-row *ngIf="contentType === 'url'" class="ion-padding-horizontal ion-margin-horizontal">
@@ -106,14 +110,14 @@
   <!-- General -->
   <ion-row class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col>
-      <ion-button expand="full" color="primary" mode="ios" (click)="webSearch()">
+      <ion-button expand="full" color="primary" mode="ios" (click)="webSearch()" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
         <ion-icon slot="start" name="search"></ion-icon>
         <span>Web Search</span>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
     <ion-col>
-      <ion-button expand="full" color="primary" mode="ios">
+      <ion-button expand="full" color="primary" mode="ios" (click)="copyText()" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
         <ion-icon slot="start" name="copy"></ion-icon>
         <span>Copy Text</span>
         <ion-ripple-effect></ion-ripple-effect>
@@ -122,14 +126,14 @@
   </ion-row>
   <ion-row class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col>
-      <ion-button expand="full" color="primary" mode="ios" (click)="base64Decode()">
+      <ion-button expand="full" color="primary" mode="ios" (click)="base64Decode()" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
         <ion-icon slot="start" name="code-working"></ion-icon>
         <span>Base64 Decode</span>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
     <ion-col>
-      <ion-button expand="full" color="primary" mode="ios">
+      <ion-button expand="full" color="primary" mode="ios" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
         <ion-icon slot="start" name="image"></ion-icon>
         <span>Save QR Code</span>
         <ion-ripple-effect></ion-ripple-effect>
