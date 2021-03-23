@@ -4,6 +4,7 @@ import { Vibration } from '@ionic-native/vibration/ngx';
 import { AlertController, LoadingController, Platform, ToastController } from '@ionic/angular';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
 import { ConfigService } from 'src/app/services/config.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-result',
@@ -19,8 +20,8 @@ export class ResultPage implements OnInit {
   errorCorrectionLevel: NgxQrcodeErrorCorrectionLevels = NgxQrcodeErrorCorrectionLevels.LOW;
   qrMargin: number = 3;
 
-  baseDecoded: boolean = false;
-  baseDecodedText: string = "";
+  base64Decoded: boolean = false;
+  base64DecodedText: string = "";
 
   constructor(
     private platform: Platform,
@@ -48,7 +49,7 @@ export class ResultPage implements OnInit {
 
   ionViewWillLeave(): void {
     this.vibration.vibrate(0);
-    this.baseDecoded = false;
+    this.base64Decoded = false;
   }
 
   setContentType(): void {
@@ -81,11 +82,46 @@ export class ResultPage implements OnInit {
     return this.config.darkTheme? "#222428" : "#ffffff";
   }
 
+  async webSearch(): Promise<void> {
+    let url: string;
+    if (this.base64Decoded) {
+      const alert = await this.alertController.create(
+        {
+          header: "Search",
+          message: "Which content do you want to search for?",
+          buttons: [
+            {
+              text: 'Original',
+              handler: () => {
+                alert.dismiss();
+                url = environment.webSearchUrl + encodeURIComponent(this.qrCodeContent);
+                window.open(url, '_system');
+              }
+            },
+            {
+              text: 'Base64-Decoded',
+              handler: () => {
+                alert.dismiss();
+                url = environment.webSearchUrl + encodeURIComponent(this.base64DecodedText);
+                window.open(url, '_system');
+              }
+            }
+          ]
+        }
+      )
+      alert.present();
+    } else {
+      url = environment.webSearchUrl + encodeURIComponent(this.qrCodeContent);
+      window.open(url, '_system');
+    }
+  }
+
   async base64Decode(): Promise<void> {
     try {
-      this.baseDecodedText = atob(this.qrCodeContent ? this.qrCodeContent : "");
-      this.baseDecoded = true;
+      this.base64DecodedText = atob(this.qrCodeContent ? this.qrCodeContent : "");
+      this.base64Decoded = true;
     } catch (err) {
+      this.base64Decoded = false;
       await this.presentToast("Data is not Base64 encoded", 2000, "middle");
     }
   }

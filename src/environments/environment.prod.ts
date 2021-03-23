@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  webSearchUrl: "https://www.google.com/search?q=",
 };

@@ -25,12 +25,12 @@
     </ion-col>
   </ion-row>
 
-  <ion-row *ngIf="baseDecoded">
+  <ion-row *ngIf="base64Decoded">
     <ion-col class="ion-text-center ion-padding-horizontal ion-padding-bottom">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">Base64 Decoded
         </ion-label>
-        <ion-textarea class="box" readonly [value]="baseDecodedText" autoGrow="true" rows="1"></ion-textarea>
+        <ion-textarea class="box" readonly [value]="base64DecodedText" autoGrow="true" rows="1"></ion-textarea>
       </ion-item>
     </ion-col>
   </ion-row>
@@ -106,7 +106,7 @@
   <!-- General -->
   <ion-row class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col>
-      <ion-button expand="full" color="primary" mode="ios">
+      <ion-button expand="full" color="primary" mode="ios" (click)="webSearch()">
         <ion-icon slot="start" name="search"></ion-icon>
         <span>Web Search</span>
         <ion-ripple-effect></ion-ripple-effect>
