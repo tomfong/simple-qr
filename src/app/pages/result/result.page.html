@@ -46,7 +46,7 @@
   <!-- URL -->
   <ion-row *ngIf="contentType === 'url'" class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col>
-      <ion-button expand="full" color="secondary" mode="ios">
+      <ion-button expand="full" color="secondary" mode="ios" (click)="browseWebsite()">
         <ion-icon slot="start" name="globe-outline"></ion-icon>
         <span>Browse Website</span>
         <ion-ripple-effect></ion-ripple-effect>

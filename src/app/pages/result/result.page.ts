@@ -90,6 +90,10 @@ export class ResultPage implements OnInit {
     return this.config.darkTheme? "#222428" : "#ffffff";
   }
 
+  browseWebsite(): void {
+    window.open(this.qrCodeContent, '_system');
+  }
+
   async webSearch(): Promise<void> {
     let url: string;
     if (this.base64Decoded) {
