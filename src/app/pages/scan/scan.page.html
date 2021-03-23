@@ -1,0 +1,36 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary" mode="ios" >
+    <ion-title>Simple QR Scanner</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="scan-ready">
+    <div class="guide" *ngIf="cameraActive">
+      <img class="svg guide-frame" src="assets/img/guide-frame.svg">
+    </div>
+    <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+      <ion-fab-button color="primary">
+        <ion-icon name="chevron-up"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-list side="top">
+        <ion-fab-button color="primary" *ngIf="!flashActive && cameraActive" (click)="toggleFlash()">
+          <ion-icon name="flash"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="success" *ngIf="flashActive && cameraActive" (click)="toggleFlash()">
+          <ion-icon name="flash-off"></ion-icon>
+        </ion-fab-button>
+      </ion-fab-list>
+      <ion-fab-list side="start">
+        <ion-fab-button color="primary" (click)="navigateSetting()">
+          <ion-icon name="settings"></ion-icon>
+        </ion-fab-button>
+      </ion-fab-list>
+      <ion-fab-list side="end">
+        <ion-fab-button color="danger" (click)="confirmExitApp()">
+          <ion-icon name="exit"></ion-icon>
+        </ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>  
+  </div>
+</ion-content>

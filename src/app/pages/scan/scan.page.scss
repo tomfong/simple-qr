@@ -1,0 +1,28 @@
+ion-content,
+body {
+    background: none transparent;
+    --background: none transparent;
+}
+
+.scan-ready {
+    background: none transparent;
+    height: 100%;
+
+    .guide {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        top: 0;
+        left: 0;
+
+        .guide-frame {
+            width: 60%;
+            max-width: 400px;
+            margin-bottom: 6em;
+            max-height: 50%;
+            opacity: 70%;
+        }
+    }
+}
