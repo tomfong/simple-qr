@@ -14,6 +14,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -42,6 +44,8 @@ export function createTranslateLoader(http: HttpClient) {
     DeviceMotion,
     Vibration,
     Clipboard,
+    File,
+    SocialSharing,
   ],
   bootstrap: [AppComponent],
 })
