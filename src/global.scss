@@ -28,9 +28,23 @@
 .text-center-toast {
     text-align: center;
     --max-width: 320px; 
+    overflow-wrap: anywhere;
+}
+
+.text-start-toast {
+    text-align: left;
+    --max-width: 320px; 
+    overflow-wrap: anywhere;
 }
 
 .text-center-short-toast {
     text-align: center;
     --max-width: 150px; 
+    overflow-wrap: anywhere;
+}
+
+.text-start-short-toast {
+    text-align: left;
+    --max-width: 150px; 
+    overflow-wrap: anywhere;
 }

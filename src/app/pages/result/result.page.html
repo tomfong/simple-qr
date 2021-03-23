@@ -8,7 +8,7 @@
 
   <ion-row *ngIf="qrCodeContent && qrCodeContent.trim().length > 0">
     <ion-col class="ion-text-center ion-padding-horizontal ion-padding-top">
-      <ngx-qrcode [elementType]="qrElementType" [value]="qrCodeContent" [width]="200"
+      <ngx-qrcode [elementType]="qrElementType" [value]="qrCodeContent" [width]="800"
         [errorCorrectionLevel]="errorCorrectionLevel" [colorDark]="qrColorDark" [colorLight]="qrColorLight"
         [margin]="qrMargin">
       </ngx-qrcode>
@@ -132,10 +132,17 @@
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
-    <ion-col>
+    <!-- <ion-col>
       <ion-button expand="full" color="primary" mode="ios" (click)="saveQrCode()" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
         <ion-icon slot="start" name="image"></ion-icon>
         <span>Save QR Code</span>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-button>
+    </ion-col> -->
+    <ion-col>
+      <ion-button expand="full" color="primary" mode="ios" (click)="shareQrCode()" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+        <ion-icon slot="start" name="share-social"></ion-icon>
+        <span>Share QR Code</span>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
