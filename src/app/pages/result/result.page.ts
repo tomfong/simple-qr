@@ -29,7 +29,7 @@ export class ResultPage implements OnInit {
   base64Decoded: boolean = false;
   base64DecodedText: string = "";
 
-  localNotificationSub: Subscription;
+  webToast: HTMLIonToastElement;
 
   constructor(
     private platform: Platform,
@@ -52,32 +52,40 @@ export class ResultPage implements OnInit {
     this.setContentType();
   }
 
-  ionViewDidEnter(): void {
+  async ionViewDidEnter(): Promise<void> {
     if (this.platform.is("android")) {
       this.vibration.vibrate([100, 100, 100]);
     } else {
       this.vibration.vibrate(100);
     }
     if (this.contentType === "url") {
-      this.localNotificationSub = this.localNotifications.on("click").subscribe(
-        () => {
-          this.browseWebsite();
-        }
-      );
-      this.localNotifications.schedule({
-        id: 1,
-        title: "View on Browser",
-        text: `Click to browse ${this.qrCodeContent} on the browser.`,
-        foreground: true
+      this.webToast = await this.toastController.create({
+        header: "Website",
+        message: `${this.qrCodeContent}`,
+        duration: 7000,
+        mode: "ios",
+        color: "light",
+        position: "top",
+        buttons: [
+          {
+            text: 'Open',
+            side: 'end',
+            handler: () => {
+              this.browseWebsite();
+              this.webToast.dismiss();
+            }
+          }
+        ]
       });
+      this.webToast.present();
     }
   }
 
   async ionViewWillLeave(): Promise<void> {
     this.vibration.vibrate(0);
     this.base64Decoded = false;
-    if (this.localNotificationSub) {
-      this.localNotificationSub.unsubscribe();
+    if (this.webToast) {
+      this.webToast.dismiss();
     }
     await this.localNotifications.clear(1);
   }
