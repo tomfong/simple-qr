@@ -68,8 +68,6 @@ export class ResultPage implements OnInit {
         id: 1,
         title: "View on Browser",
         text: `Click to browse ${this.qrCodeContent} on the browser.`,
-        priority: 1,
-        silent: false,
         foreground: true
       });
     }

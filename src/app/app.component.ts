@@ -15,13 +15,7 @@ export class AppComponent {
     translate: TranslateService,
     public config: ConfigService,
     private platform: Platform,
-    private localNotifications: LocalNotifications
   ) {
     translate.setDefaultLang(config.language);
-    this.platform.ready().then(
-      async () => {
-        await this.localNotifications.requestPermission();
-      }
-    );
   }
 }
