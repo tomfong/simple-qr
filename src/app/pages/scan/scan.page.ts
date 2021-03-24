@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion/ngx';
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { AlertController, IonRouterOutlet, LoadingController, Platform } from '@ionic/angular';
@@ -42,7 +41,6 @@ export class ScanPage {
     private deviceMotion: DeviceMotion,
     private vibration: Vibration,
     private router: Router,
-    private localNotifications: LocalNotifications
   ) {
     this.platform.ready().then(
       async () => {
@@ -51,7 +49,6 @@ export class ScanPage {
             await this.confirmExitApp();
           }
         });
-        await this.localNotifications.requestPermission();
         this.platform.pause.subscribe(
           async () => {
             await this.qrScanner.destroy().then(

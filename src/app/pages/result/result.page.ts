@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { AlertController, LoadingController, Platform, ToastController } from '@ionic/angular';
@@ -44,7 +43,6 @@ export class ResultPage implements OnInit {
     private file: File,
     private socialSharing: SocialSharing,
     private webview: WebView,
-    private localNotifications: LocalNotifications
   ) { }
 
   ngOnInit() {
@@ -87,7 +85,6 @@ export class ResultPage implements OnInit {
     if (this.webToast) {
       this.webToast.dismiss();
     }
-    await this.localNotifications.clear(1);
   }
 
   setContentType(): void {

@@ -154,6 +154,4 @@
     <plugin name="cordova-clipboard" spec="^1.3.0" />
     <plugin name="cordova-plugin-file" spec="^6.0.2" />
     <plugin name="cordova-plugin-x-socialsharing" spec="^6.0.3" />
-    <plugin name="cordova-plugin-local-notification" spec="^0.9.0-beta.2" />
-    <engine name="android" spec="9.0.0" />
 </widget>
