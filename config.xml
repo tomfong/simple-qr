@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.simple.qrscanner" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Simple QR Scanner</name>
-    <description>A simple QR code scanner app.</description>
-    <author email="tom.fonglamhang@gmail.com" href="http://github.com/tomfong/">Tom Fong</author>
+<widget id="com.tomfong.simpleqr" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Simple QR</name>
+    <description>A simple app for scanning and managing QR code</description>
+    <author email="tom.fonglamhang@gmail.com" href="https://github.com/tomfong/">Tom Fong</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -153,4 +153,5 @@
     <plugin name="cordova-clipboard" spec="^1.3.0" />
     <plugin name="cordova-plugin-file" spec="^6.0.2" />
     <plugin name="cordova-plugin-x-socialsharing" spec="^6.0.3" />
+    <engine name="android" spec="^9.0.0" />
 </widget>
