@@ -162,7 +162,7 @@ export class ScanPage {
           async (acceleration: DeviceMotionAccelerationData) => {
             if (this.detectMotionless(acceleration.x, acceleration.y, acceleration.z)) {
               this.motionlessCount++;
-              if (this.motionlessCount > 10 && this.cameraActive) {
+              if (this.motionlessCount > 30 && this.cameraActive) {
                 await this.qrScanner.destroy().then(
                   async () => {
                     this.cameraActive = false;

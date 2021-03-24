@@ -3,10 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { AlertController, LoadingController, Platform, ToastController } from '@ionic/angular';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
+import { Subscription } from 'rxjs';
 import { ConfigService } from 'src/app/services/config.service';
 import { environment } from 'src/environments/environment';
 
@@ -27,6 +29,8 @@ export class ResultPage implements OnInit {
   base64Decoded: boolean = false;
   base64DecodedText: string = "";
 
+  localNotificationSub: Subscription;
+
   constructor(
     private platform: Platform,
     public alertController: AlertController,
@@ -39,7 +43,8 @@ export class ResultPage implements OnInit {
     private clipboard: Clipboard,
     private file: File,
     private socialSharing: SocialSharing,
-    private webview: WebView
+    private webview: WebView,
+    private localNotifications: LocalNotifications
   ) { }
 
   ngOnInit() {
@@ -49,15 +54,34 @@ export class ResultPage implements OnInit {
 
   ionViewDidEnter(): void {
     if (this.platform.is("android")) {
-      this.vibration.vibrate([100,100,100]);
+      this.vibration.vibrate([100, 100, 100]);
     } else {
       this.vibration.vibrate(100);
     }
+    if (this.contentType === "url") {
+      this.localNotificationSub = this.localNotifications.on("click").subscribe(
+        () => {
+          this.browseWebsite();
+        }
+      );
+      this.localNotifications.schedule({
+        id: 1,
+        title: "View on Browser",
+        text: `Click to browse ${this.qrCodeContent} on the browser.`,
+        priority: 1,
+        silent: false,
+        foreground: true
+      });
+    }
   }
 
-  ionViewWillLeave(): void {
+  async ionViewWillLeave(): Promise<void> {
     this.vibration.vibrate(0);
     this.base64Decoded = false;
+    if (this.localNotificationSub) {
+      this.localNotificationSub.unsubscribe();
+    }
+    await this.localNotifications.clear(1);
   }
 
   setContentType(): void {
@@ -67,15 +91,15 @@ export class ResultPage implements OnInit {
     const phonePrefix = "tel:";
     const smsPrefix = "smsto:";
     const emailPrefix = "mailto:";
-    if (this.qrCodeContent.trim().toLowerCase().substr(0,urlPrefix1.length) === urlPrefix1 || this.qrCodeContent.trim().toLowerCase().substr(0,urlPrefix2.length) === urlPrefix2) {
+    if (this.qrCodeContent.trim().toLowerCase().substr(0, urlPrefix1.length) === urlPrefix1 || this.qrCodeContent.trim().toLowerCase().substr(0, urlPrefix2.length) === urlPrefix2) {
       this.contentType = "url";
-    } else if (this.qrCodeContent.trim().substr(0,contactPrefix.length) === contactPrefix) {
+    } else if (this.qrCodeContent.trim().substr(0, contactPrefix.length) === contactPrefix) {
       this.contentType = "contact";
-    } else if (this.qrCodeContent.trim().toLowerCase().substr(0,phonePrefix.length) === phonePrefix) {
+    } else if (this.qrCodeContent.trim().toLowerCase().substr(0, phonePrefix.length) === phonePrefix) {
       this.contentType = "phone";
-    } else if (this.qrCodeContent.trim().toLowerCase().substr(0,smsPrefix.length) === smsPrefix) {
+    } else if (this.qrCodeContent.trim().toLowerCase().substr(0, smsPrefix.length) === smsPrefix) {
       this.contentType = "sms";
-    } else if (this.qrCodeContent.trim().toLowerCase().substr(0,emailPrefix.length) === emailPrefix) {
+    } else if (this.qrCodeContent.trim().toLowerCase().substr(0, emailPrefix.length) === emailPrefix) {
       this.contentType = "email";
     } else {
       this.contentType = "freeText";
@@ -83,11 +107,11 @@ export class ResultPage implements OnInit {
   }
 
   get qrColorDark(): string {
-    return this.config.darkTheme? "#ffffff" : "#222428";
+    return this.config.darkTheme ? "#ffffff" : "#222428";
   }
 
   get qrColorLight(): string {
-    return this.config.darkTheme? "#222428" : "#ffffff";
+    return this.config.darkTheme ? "#222428" : "#ffffff";
   }
 
   browseWebsite(): void {
@@ -174,7 +198,7 @@ export class ResultPage implements OnInit {
     try {
       this.base64DecodedText = atob(this.qrCodeContent ? this.qrCodeContent : "");
       this.base64Decoded = true;
-      await this.presentToast("Decoded", 1500, "bottom", "center","short");
+      await this.presentToast("Decoded", 1500, "bottom", "center", "short");
     } catch (err) {
       this.base64Decoded = false;
       await this.presentToast("Data is not Base64 encoded", 2000, "middle", "center", "long");
@@ -226,7 +250,7 @@ export class ResultPage implements OnInit {
     this.router.navigate(['/scan'], { replaceUrl: true });
   }
 
-  async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long" ) {
+  async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {
     if (size === "long") {
       if (align === "left") {
         const toast = await this.toastController.create({

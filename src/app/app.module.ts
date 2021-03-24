@@ -17,6 +17,7 @@ import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -47,7 +48,8 @@ export function createTranslateLoader(http: HttpClient) {
     Clipboard,
     File,
     SocialSharing,
-    WebView
+    WebView,
+    LocalNotifications,
   ],
   bootstrap: [AppComponent],
 })

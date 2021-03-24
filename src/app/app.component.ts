@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfigService } from './services/config.service';
 
@@ -11,8 +13,15 @@ export class AppComponent {
 
   constructor(
     translate: TranslateService,
-    public config: ConfigService
+    public config: ConfigService,
+    private platform: Platform,
+    private localNotifications: LocalNotifications
   ) {
     translate.setDefaultLang(config.language);
+    this.platform.ready().then(
+      async () => {
+        await this.localNotifications.requestPermission();
+      }
+    );
   }
 }
