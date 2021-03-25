@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CallNumber } from '@ionic-native/call-number/ngx';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
@@ -25,6 +26,8 @@ export class ResultPage implements OnInit {
   errorCorrectionLevel: NgxQrcodeErrorCorrectionLevels = NgxQrcodeErrorCorrectionLevels.HIGH;
   qrMargin: number = 3;
 
+  phoneNumber: string;
+
   base64Decoded: boolean = false;
   base64DecodedText: string = "";
 
@@ -43,6 +46,7 @@ export class ResultPage implements OnInit {
     private file: File,
     private socialSharing: SocialSharing,
     private webview: WebView,
+    private callNumber: CallNumber
   ) { }
 
   ngOnInit() {
@@ -100,6 +104,7 @@ export class ResultPage implements OnInit {
       this.contentType = "contact";
     } else if (this.qrCodeContent.trim().toLowerCase().substr(0, phonePrefix.length) === phonePrefix) {
       this.contentType = "phone";
+      this.phoneNumber = this.qrCodeContent.trim().toLowerCase().substr(phonePrefix.length);
     } else if (this.qrCodeContent.trim().toLowerCase().substr(0, smsPrefix.length) === smsPrefix) {
       this.contentType = "sms";
     } else if (this.qrCodeContent.trim().toLowerCase().substr(0, emailPrefix.length) === emailPrefix) {
@@ -117,8 +122,51 @@ export class ResultPage implements OnInit {
     return this.config.darkTheme ? "#222428" : "#ffffff";
   }
 
+  get type(): string {
+    switch (this.contentType) {
+      case "freeText":
+        return "Free Text";
+      case "url":
+        return "URL";
+      case "contact":
+        return "Contact Information";
+      case "email":
+        return "Email";
+      case "phone":
+        return "Phone Number";
+      case "sms":
+        return "SMS";
+    }
+  }
+
   browseWebsite(): void {
     window.open(this.qrCodeContent, '_system');
+  }
+
+  async callPhone(): Promise<void> {
+    const alert = await this.alertController.create({
+      header: "Phone Call",
+      message: `Are you sure to call ${this.phoneNumber} now?`,
+      buttons: [
+        {
+          text: 'Yes',
+          handler: async () => {
+            alert.dismiss();
+            await this.callNumber.callNumber(this.phoneNumber, false).catch(
+              async (err) => {
+                this.presentToast("Failed to open dialer", 3000, "middle", "center", "long");
+              }
+            );
+          }
+        },
+        {
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'btn-inverse'
+        }
+      ]
+    });
+    await alert.present();
   }
 
   async webSearch(): Promise<void> {

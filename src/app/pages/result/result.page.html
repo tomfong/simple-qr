@@ -15,10 +15,22 @@
     </ion-col>
   </ion-row>
 
+   <ion-row *ngIf="contentType === 'phone' && qrCodeContent && qrCodeContent.trim().length > 0">
+    <ion-col class="ion-text-center ion-padding-horizontal ion-padding-bottom">
+      <ion-item lines="none">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
+          Phone Number
+        </ion-label>
+        <ion-textarea class="box" readonly [value]="phoneNumber" rows="1"></ion-textarea>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
   <ion-row *ngIf="qrCodeContent && qrCodeContent.trim().length > 0">
     <ion-col class="ion-text-center ion-padding-horizontal ion-padding-bottom">
       <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">Original Content
+        <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
+          Original Content
         </ion-label>
         <ion-textarea class="box" readonly [value]="qrCodeContent" autoGrow="true" rows="1"></ion-textarea>
       </ion-item>
@@ -28,7 +40,8 @@
   <ion-row *ngIf="base64Decoded && qrCodeContent && qrCodeContent.trim().length > 0">
     <ion-col class="ion-text-center ion-padding-horizontal ion-padding-bottom">
       <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">Base64 Decoded
+        <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
+          Base64 Decoded
         </ion-label>
         <ion-textarea class="box" readonly [value]="base64DecodedText" autoGrow="true" rows="1"></ion-textarea>
       </ion-item>
@@ -68,9 +81,9 @@
   <!-- Phone Number -->
   <ion-row *ngIf="contentType === 'phone'" class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col>
-      <ion-button expand="full" color="secondary" mode="ios">
+      <ion-button expand="full" color="secondary" mode="ios" (click)="callPhone()">
         <ion-icon slot="start" name="call"></ion-icon>
-        <span>Call</span>
+        <span class="overflow: hidden; text-overflow: ellipsis;">Call {{phoneNumber}}</span>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
