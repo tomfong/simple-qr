@@ -90,7 +90,7 @@
   </ion-row>
   <ion-row *ngIf="contentType === 'phone'" class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col>
-      <ion-button expand="full" color="secondary" mode="ios">
+      <ion-button expand="full" color="secondary" mode="ios" (click)="addContact()">
         <ion-icon slot="start" name="person-add-sharp"></ion-icon>
         <span>Add Contact</span>
         <ion-ripple-effect></ion-ripple-effect>

@@ -56,6 +56,7 @@
     "codelyzer": "^6.0.0",
     "cordova-android": "^9.0.0",
     "cordova-plugin-androidx-adapter": "^1.1.3",
+    "cordova-plugin-contacts": "git+https://github.com/tomfong/cordova-plugin-contacts.git",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-device-motion": "^2.0.1",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
@@ -98,7 +99,8 @@
       "cordova-plugin-file": {},
       "cordova-plugin-x-socialsharing": {},
       "cordova-plugin-androidx-adapter": {},
-      "mx.ferreyra.callnumber": {}
+      "mx.ferreyra.callnumber": {},
+      "cordova-plugin-contacts": {}
     },
     "platforms": [
       "android"

@@ -7,7 +7,8 @@
   },
   "files": [
     "src/main.ts",
-    "src/polyfills.ts"
+    "src/polyfills.ts",
+    "./plugins/cordova-plugin-contacts/types/index.d.ts"
   ],
   "include": [
     "src/**/*.d.ts"

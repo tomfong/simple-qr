@@ -8,7 +8,6 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { AlertController, LoadingController, Platform, ToastController } from '@ionic/angular';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
-import { Subscription } from 'rxjs';
 import { ConfigService } from 'src/app/services/config.service';
 import { environment } from 'src/environments/environment';
 
@@ -46,7 +45,7 @@ export class ResultPage implements OnInit {
     private file: File,
     private socialSharing: SocialSharing,
     private webview: WebView,
-    private callNumber: CallNumber
+    private callNumber: CallNumber,
   ) { }
 
   ngOnInit() {
@@ -141,6 +140,26 @@ export class ResultPage implements OnInit {
 
   browseWebsite(): void {
     window.open(this.qrCodeContent, '_system');
+  }
+
+  async addContact(): Promise<void> {
+    let contact: Contact;
+    if (this.contentType === "phone") {
+      contact = navigator.contacts.create({
+        phoneNumbers: [{
+          pref: true,
+          type: "mobile",
+          value: this.phoneNumber
+        }]
+      });
+    }
+    if (contact) {
+      contact.save(() => {
+        this.presentToast("Saved", 2000, "bottom", "center", "short");
+      }, err => {
+        this.presentToast("Failed to save contact", 3000, "middle", "center", "long");
+      })
+    }
   }
 
   async callPhone(): Promise<void> {
