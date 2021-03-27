@@ -1,3 +1,83 @@
+@import "~@angular/material/theming";
+@include mat-core();
+$custom-primary: (
+  50: #00a5aa,
+  100: #00a5aa,
+  200: #00a5aa,
+  300: #00a5aa,
+  400: #00a5aa,
+  500: #00a5aa,
+  600: #00a5aa,
+  700: #00a5aa,
+  800: #00a5aa,
+  900: #00a5aa,
+  A100: #00a5aa,
+  A200: #00a5aa,
+  A400: #00a5aa,
+  A700: #00a5aa,
+  contrast: (
+    50: white,
+    100: white,
+    200: white,
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: white,
+    A200: white,
+    A400: white,
+    A700: white,
+  ),
+);
+$custom-secondary: (
+  50: #1b89cd,
+  100: #1b89cd,
+  200: #1b89cd,
+  300: #1b89cd,
+  400: #1b89cd,
+  500: #1b89cd,
+  600: #1b89cd,
+  700: #1b89cd,
+  800: #1b89cd,
+  900: #1b89cd,
+  A100: #1b89cd,
+  A200: #1b89cd,
+  A400: #1b89cd,
+  A700: #1b89cd,
+  contrast: (
+    50: white,
+    100: white,
+    200: white,
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: white,
+    A200: white,
+    A400: white,
+    A700: white,
+  ),
+);
+$app-primary: mat-palette($custom-primary);
+$app-accent: mat-palette($custom-secondary);
+$app-warn: mat-palette($mat-red);
+$app-theme: mat-light-theme(
+  (
+    color: (
+      primary: $app-primary,
+      accent: $app-accent,
+      warn: $app-warn,
+    ),
+  )
+);
+@include angular-material-theme($app-theme);
+
 :root {
   /** primary **/
   --ion-color-primary: #00a5aa;
@@ -230,4 +310,13 @@
   --ion-color-contrast-rgb: var(--ion-color-dimgray-contrast-rgb);
   --ion-color-shade: var(--ion-color-dimgray-shade);
   --ion-color-tint: var(--ion-color-dimgray-tint);
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }

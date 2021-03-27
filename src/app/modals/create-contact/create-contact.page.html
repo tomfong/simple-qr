@@ -1,0 +1,83 @@
+<ion-header [translucent]="true" mode="ios">
+  <ion-toolbar color="secondary" mode="ios">
+    <ion-buttons slot="start">
+      <ion-button class="toolbar-start-btn" (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>New Contact</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="toolbar-end-btn" (click)="saveContent()">
+        {{ 'Save' }}
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-row class="ion-padding-horizontal ion-padding-top">
+    <ion-col>
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Given Name</mat-label>
+        <input matInput [(ngModel)]="givenName" type="text">
+      </mat-form-field>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-padding-horizontal">
+    <ion-col>
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Family Name</mat-label>
+        <input matInput [(ngModel)]="familyName" type="text">
+      </mat-form-field>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-padding-horizontal">
+    <ion-col>
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Phone Number</mat-label>
+        <input matInput [(ngModel)]="phoneNumber" type="tel">
+        <mat-icon matSuffix color="accent">call</mat-icon>
+      </mat-form-field>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-padding-horizontal">
+    <ion-col>
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Phone Tag</mat-label>
+        <mat-select [(ngModel)]="phoneNumberType">
+          <mat-option [value]="type.value" *ngFor="let type of phoneNumberTypes">
+            {{ type.text }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-padding-horizontal">
+    <ion-col>
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Email Address</mat-label>
+        <input matInput [(ngModel)]="emailAddress" type="email">
+        <mat-icon matSuffix color="accent">alternate_email</mat-icon>
+      </mat-form-field>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-padding-horizontal ion-padding-bottom">
+    <ion-col>
+      <mat-form-field appearance="outline" color="accent">
+        <mat-label>Email Tag</mat-label>
+        <mat-select [(ngModel)]="emailType">
+          <mat-option [value]="type.value" *ngFor="let type of emailTypes">
+            {{ type.text }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

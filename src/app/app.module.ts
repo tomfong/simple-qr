@@ -18,13 +18,18 @@ import { File } from '@ionic-native/file/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
+import { CreateContactPageModule } from './modals/create-contact/create-contact.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent
+  ],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -39,6 +44,9 @@ export function createTranslateLoader(http: HttpClient) {
       }
     }),
     IonicStorageModule.forRoot(),
+    CreateContactPageModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

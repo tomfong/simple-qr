@@ -6,8 +6,9 @@ import { File } from '@ionic-native/file/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
-import { AlertController, LoadingController, Platform, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
+import { CreateContactPage } from 'src/app/modals/create-contact/create-contact.page';
 import { ConfigService } from 'src/app/services/config.service';
 import { environment } from 'src/environments/environment';
 
@@ -46,6 +47,7 @@ export class ResultPage implements OnInit {
     private socialSharing: SocialSharing,
     private webview: WebView,
     private callNumber: CallNumber,
+    public modalController: ModalController
   ) { }
 
   ngOnInit() {
@@ -143,23 +145,42 @@ export class ResultPage implements OnInit {
   }
 
   async addContact(): Promise<void> {
-    let contact: Contact;
+    let modal: HTMLIonModalElement;
     if (this.contentType === "phone") {
-      contact = navigator.contacts.create({
-        phoneNumbers: [{
-          pref: true,
-          type: "mobile",
-          value: this.phoneNumber
-        }]
+      modal = await this.modalController.create({
+        component: CreateContactPage,
+        cssClass: 'modal-page',
+        componentProps: {
+          phoneNumber: this.phoneNumber
+        }
+      });
+    } else {
+      modal = await this.modalController.create({
+        component: CreateContactPage,
+        cssClass: 'modal-page',
+        componentProps: {}
       });
     }
-    if (contact) {
-      contact.save(() => {
-        this.presentToast("Saved", 2000, "bottom", "center", "short");
-      }, err => {
-        this.presentToast("Failed to save contact", 3000, "middle", "center", "long");
-      })
-    }
+    modal.onDidDismiss().then(
+      async (result) => {
+        if (result.data) {
+          const data = result.data;
+          if (!data.cancelled) {
+            const contact = navigator.contacts.create({
+              name: data.name,
+              emails: [data.email],
+              phoneNumbers: [data.phone]
+            });
+            contact.save(() => {
+              this.presentToast("Saved", 2000, "bottom", "center", "short");
+            }, err => {
+              this.presentToast("Failed to save contact", 3000, "middle", "center", "long");
+            })
+          }
+        }
+      }
+    );
+    await modal.present();
   }
 
   async callPhone(): Promise<void> {

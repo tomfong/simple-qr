@@ -14,7 +14,8 @@ const routes: Routes = [
   {
     path: 'result',
     loadChildren: () => import('./pages/result/result.module').then( m => m.ResultPageModule)
-  },  {
+  },
+  {
     path: 'history',
     loadChildren: () => import('./pages/history/history.module').then( m => m.HistoryPageModule)
   },

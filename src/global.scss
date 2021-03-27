@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -27,24 +27,40 @@
 
 .text-center-toast {
     text-align: center;
-    --max-width: 320px; 
+    --max-width: 320px;
     overflow-wrap: anywhere;
 }
 
 .text-start-toast {
     text-align: left;
-    --max-width: 320px; 
+    --max-width: 320px;
     overflow-wrap: anywhere;
 }
 
 .text-center-short-toast {
     text-align: center;
-    --max-width: 150px; 
+    --max-width: 150px;
     overflow-wrap: anywhere;
 }
 
 .text-start-short-toast {
     text-align: left;
-    --max-width: 150px; 
+    --max-width: 150px;
     overflow-wrap: anywhere;
+}
+
+.modal-page .modal-wrapper {
+    max-height: 70%;
+    position: absolute;
+    display: block;
+    max-width: 90%;
+    border-radius: 15px;
+}
+
+.toolbar-start-btn {
+    padding-left: 10px;
+}
+
+.toolbar-end-btn {
+    padding-right: 10px;
 }

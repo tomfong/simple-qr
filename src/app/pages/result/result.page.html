@@ -15,7 +15,7 @@
     </ion-col>
   </ion-row>
 
-   <ion-row *ngIf="contentType === 'phone' && qrCodeContent && qrCodeContent.trim().length > 0">
+  <ion-row *ngIf="contentType === 'phone' && qrCodeContent && qrCodeContent.trim().length > 0">
     <ion-col class="ion-text-center ion-padding-horizontal ion-padding-bottom">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
@@ -123,14 +123,16 @@
   <!-- General -->
   <ion-row class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col>
-      <ion-button expand="full" color="primary" mode="ios" (click)="webSearch()" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+      <ion-button expand="full" color="primary" mode="ios" (click)="webSearch()"
+        [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
         <ion-icon slot="start" name="search"></ion-icon>
         <span>Web Search</span>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
     <ion-col>
-      <ion-button expand="full" color="primary" mode="ios" (click)="copyText()" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+      <ion-button expand="full" color="primary" mode="ios" (click)="copyText()"
+        [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
         <ion-icon slot="start" name="copy"></ion-icon>
         <span>Copy Text</span>
         <ion-ripple-effect></ion-ripple-effect>
@@ -139,7 +141,8 @@
   </ion-row>
   <ion-row class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col>
-      <ion-button expand="full" color="primary" mode="ios" (click)="base64Decode()" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+      <ion-button expand="full" color="primary" mode="ios" (click)="base64Decode()"
+        [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
         <ion-icon slot="start" name="code-working"></ion-icon>
         <span>Base64 Decode</span>
         <ion-ripple-effect></ion-ripple-effect>
@@ -153,7 +156,8 @@
       </ion-button>
     </ion-col> -->
     <ion-col>
-      <ion-button expand="full" color="primary" mode="ios" (click)="shareQrCode()" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+      <ion-button expand="full" color="primary" mode="ios" (click)="shareQrCode()"
+        [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
         <ion-icon slot="start" name="share-social"></ion-icon>
         <span>Share QR Code</span>
         <ion-ripple-effect></ion-ripple-effect>
