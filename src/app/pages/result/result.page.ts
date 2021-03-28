@@ -427,7 +427,7 @@ export class ResultPage implements OnInit {
   }
 
   returnScanPage(): void {
-    this.router.navigate(['/scan', { t: new Date().getTime() }], { replaceUrl: true });
+    this.router.navigate(['/scan'], { replaceUrl: true });
   }
 
   async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {
