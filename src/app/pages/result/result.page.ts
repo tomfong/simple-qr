@@ -33,6 +33,12 @@ export class ResultPage implements OnInit {
   vCardContact: VCardContact;
   smsContent: string;
 
+  toEmails: string;
+  ccEmails: string;
+  bccEmails: string;
+  emailSubject: string;
+  emailBody: string;
+
   base64Decoded: boolean = false;
   base64DecodedText: string = "";
 
@@ -126,6 +132,7 @@ export class ResultPage implements OnInit {
       }
     } else if (tContent.substr(0, emailPrefix.length) === emailPrefix) {
       this.contentType = "email";
+      this.prepareEmail();
     } else {
       this.contentType = "freeText";
     }
@@ -272,6 +279,10 @@ export class ResultPage implements OnInit {
         )
       }
     }
+  }
+
+  async sendEmail(): Promise<void> {
+    window.open(this.qrCodeContent, "_system");
   }
 
   async webSearch(): Promise<void> {
@@ -476,6 +487,36 @@ export class ResultPage implements OnInit {
         }
       }
     )
+  }
+
+  prepareEmail(): void {
+    const emailPrefix = "MAILTO:";
+    const emailString = this.qrCodeContent.substr(emailPrefix.length);
+    const emailParts = emailString.split('?', 2);
+    this.toEmails = emailParts[0].trim();
+    if (emailParts.length > 1) {
+      const secondEmailParts = emailParts[1].split("&");
+      const ccPrefix = "cc=";
+      const bccPrefix = "bcc=";
+      const subjectPrefix = "subject=";
+      const bodyPrefix = "body=";
+      secondEmailParts.forEach(
+        (part) => {
+          if (part.toLowerCase().substr(0, ccPrefix.length) === ccPrefix) {
+            this.ccEmails = part.substr(ccPrefix.length);
+          }
+          if (part.toLowerCase().substr(0, bccPrefix.length) === bccPrefix) {
+            this.bccEmails = part.substr(bccPrefix.length);
+          }
+          if (part.toLowerCase().substr(0, subjectPrefix.length) === subjectPrefix) {
+            this.emailSubject = decodeURIComponent(part.substr(subjectPrefix.length));
+          }
+          if (part.toLowerCase().substr(0, bodyPrefix.length) === bodyPrefix) {
+            this.emailBody = decodeURIComponent(part.substr(bodyPrefix.length));
+          }
+        }
+      );
+    }
   }
 
   returnScanPage(): void {

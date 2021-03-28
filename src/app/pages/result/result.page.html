@@ -43,6 +43,61 @@
     </ion-col>
   </ion-row>
 
+  <ion-row *ngIf="contentType === 'email' && toEmails && qrCodeContent && qrCodeContent.trim().length > 0">
+    <ion-col class="ion-text-center ion-padding-horizontal">
+      <ion-item lines="none">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
+          Email to
+        </ion-label>
+        <ion-textarea class="box" readonly [value]="toEmails" autoGrow="true" rows="1"></ion-textarea>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="contentType === 'email' && ccEmails && qrCodeContent && qrCodeContent.trim().length > 0">
+    <ion-col class="ion-text-center ion-padding-horizontal">
+      <ion-item lines="none">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
+          CC
+        </ion-label>
+        <ion-textarea class="box" readonly [value]="ccEmails" autoGrow="true" rows="1"></ion-textarea>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="contentType === 'email' && bccEmails && qrCodeContent && qrCodeContent.trim().length > 0">
+    <ion-col class="ion-text-center ion-padding-horizontal">
+      <ion-item lines="none">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
+          BCC
+        </ion-label>
+        <ion-textarea class="box" readonly [value]="bccEmails" autoGrow="true" rows="1"></ion-textarea>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="contentType === 'email' && emailSubject && qrCodeContent && qrCodeContent.trim().length > 0">
+    <ion-col class="ion-text-center ion-padding-horizontal">
+      <ion-item lines="none">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
+          Subject
+        </ion-label>
+        <ion-textarea class="box" readonly [value]="emailSubject" autoGrow="true" rows="1"></ion-textarea>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="contentType === 'email' && emailBody && qrCodeContent && qrCodeContent.trim().length > 0">
+    <ion-col class="ion-text-center ion-padding-horizontal">
+      <ion-item lines="none">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
+          Body
+        </ion-label>
+        <ion-textarea class="box" readonly [value]="emailBody" autoGrow="true" rows="1"></ion-textarea>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
   <ion-row *ngIf="contentType === 'contact' && qrCodeContent && qrCodeContent.trim().length > 0 && vCardContact">
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
@@ -156,7 +211,7 @@
   <!-- Email -->
   <ion-row *ngIf="contentType === 'email'" class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col>
-      <ion-button expand="full" color="secondary" mode="ios">
+      <ion-button expand="full" color="secondary" mode="ios" (click)="sendEmail()">
         <ion-icon slot="start" name="mail"></ion-icon>
         <span>Send Email</span>
         <ion-ripple-effect></ion-ripple-effect>
