@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MatInput } from '@angular/material/input';
 import { ModalController, ToastController } from '@ionic/angular';
 import { VCardContact } from 'src/app/models/v-card-contact';
 
@@ -13,7 +14,7 @@ export class CreateContactPage implements OnInit {
 
   name: ContactName;
   @Input() givenName: string = '';
-  @ViewChild('givenNameInput') givenNameInput: HTMLInputElement;
+  @ViewChild('givenNameInput') givenNameInput: MatInput;
   @Input() familyName: string = '';
   
   phoneNumberObject: ContactField;

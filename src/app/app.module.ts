@@ -18,6 +18,7 @@ import { File } from '@ionic-native/file/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
+import { SMS } from '@ionic-native/sms/ngx';
 import { CreateContactPageModule } from './modals/create-contact/create-contact.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -58,6 +59,7 @@ export function createTranslateLoader(http: HttpClient) {
     SocialSharing,
     WebView,
     CallNumber,
+    SMS,
   ],
   bootstrap: [AppComponent],
 })

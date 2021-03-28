@@ -4,6 +4,7 @@ import { CallNumber } from '@ionic-native/call-number/ngx';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { SMS } from '@ionic-native/sms/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { AlertController, LoadingController, ModalController, Platform, ToastController } from '@ionic/angular';
@@ -30,6 +31,7 @@ export class ResultPage implements OnInit {
 
   phoneNumber: string;
   vCardContact: VCardContact;
+  smsContent: string;
 
   base64Decoded: boolean = false;
   base64DecodedText: string = "";
@@ -51,7 +53,8 @@ export class ResultPage implements OnInit {
     private socialSharing: SocialSharing,
     private webview: WebView,
     private callNumber: CallNumber,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private sms: SMS,
   ) { }
 
   ngOnInit() {
@@ -97,23 +100,31 @@ export class ResultPage implements OnInit {
   }
 
   setContentType(): void {
-    const urlPrefix1 = "https://";
-    const urlPrefix2 = "http://";
+    const urlPrefix1 = "HTTPS://";
+    const urlPrefix2 = "HTTP://";
     const contactPrefix = "BEGIN:VCARD";
-    const phonePrefix = "tel:";
-    const smsPrefix = "smsto:";
-    const emailPrefix = "mailto:";
-    if (this.qrCodeContent.trim().toLowerCase().substr(0, urlPrefix1.length) === urlPrefix1 || this.qrCodeContent.trim().toLowerCase().substr(0, urlPrefix2.length) === urlPrefix2) {
+    const phonePrefix = "TEL:";
+    const smsPrefix = "SMSTO:";
+    const emailPrefix = "MAILTO:";
+    const tContent = this.qrCodeContent.trim().toUpperCase();
+    if (tContent.substr(0, urlPrefix1.length) === urlPrefix1 || tContent.substr(0, urlPrefix2.length) === urlPrefix2) {
       this.contentType = "url";
-    } else if (this.qrCodeContent.trim().substr(0, contactPrefix.length) === contactPrefix) {
+    } else if (tContent.substr(0, contactPrefix.length) === contactPrefix) {
       this.contentType = "contact";
       this.generateVCardContact();
-    } else if (this.qrCodeContent.trim().toLowerCase().substr(0, phonePrefix.length) === phonePrefix) {
+    } else if (tContent.substr(0, phonePrefix.length) === phonePrefix) {
       this.contentType = "phone";
-      this.phoneNumber = this.qrCodeContent.trim().toLowerCase().substr(phonePrefix.length);
-    } else if (this.qrCodeContent.trim().toLowerCase().substr(0, smsPrefix.length) === smsPrefix) {
+      this.phoneNumber = tContent.substr(phonePrefix.length);
+    } else if (tContent.substr(0, smsPrefix.length) === smsPrefix) {
       this.contentType = "sms";
-    } else if (this.qrCodeContent.trim().toLowerCase().substr(0, emailPrefix.length) === emailPrefix) {
+      const tContent2 = tContent.substr(smsPrefix.length);
+      if (tContent2.indexOf(':') !== -1) {
+        this.phoneNumber = tContent2.substr(0, tContent2.indexOf(':'));
+        this.smsContent = tContent2.substr(tContent2.indexOf(':') + 1);
+      } else {
+        this.phoneNumber = tContent2.substr(0);
+      }
+    } else if (tContent.substr(0, emailPrefix.length) === emailPrefix) {
       this.contentType = "email";
     } else {
       this.contentType = "freeText";
@@ -159,7 +170,7 @@ export class ResultPage implements OnInit {
           vCardContact: this.vCardContact
         }
       });
-    } else if (this.contentType === "phone") {
+    } else if (this.contentType === "phone" || this.contentType === "sms") {
       modal = await this.modalController.create({
         component: CreateContactPage,
         cssClass: 'modal-page',
@@ -220,6 +231,47 @@ export class ResultPage implements OnInit {
       ]
     });
     await alert.present();
+  }
+
+  async sendSms(): Promise<void> {
+    if (this.smsContent) {
+      if (this.platform.is('android')) {
+        await this.sms.send(
+          this.phoneNumber,
+          this.smsContent,
+          {
+            replaceLineBreaks: true,
+            android: {
+              intent: 'INTENT'
+            }
+          }
+        ).then(
+          (value) => {
+            this.presentToast("Preparing message", 2000, "middle", "center", "long");
+          },
+          async (err) => {
+            console.error("error in send sms", err)
+            this.presentToast("Failed to send message", 3000, "middle", "center", "long");
+          }
+        )
+      } else {
+        await this.sms.send(
+          this.phoneNumber,
+          this.smsContent,
+          {
+            replaceLineBreaks: true
+          }
+        ).then(
+          (value) => {
+            this.presentToast("Preparing message", 2000, "middle", "center", "long");
+          },
+          async (err) => {
+            console.error("error in send sms", err)
+            this.presentToast("Failed to send message", 3000, "middle", "center", "long");
+          }
+        )
+      }
+    }
   }
 
   async webSearch(): Promise<void> {
@@ -377,49 +429,49 @@ export class ResultPage implements OnInit {
       line => {
         const tLine = line.trim();
         console.log(tLine);
-        if (tLine.toUpperCase().substr(0,fullNameId1.length) === fullNameId1 ) {
+        if (tLine.toUpperCase().substr(0, fullNameId1.length) === fullNameId1) {
           this.vCardContact.fullName = tLine.substr(fullNameId1.length);
-        } else if (tLine.toUpperCase().substr(0,fullNameId2.length) === fullNameId2 ) {
+        } else if (tLine.toUpperCase().substr(0, fullNameId2.length) === fullNameId2) {
           this.vCardContact.fullName = tLine.substr(fullNameId2.length);
         }
-        if (tLine.toUpperCase().substr(0,nameId1.length) === nameId1) {
-          const names =  tLine.substr(nameId1.length).split(";");
+        if (tLine.toUpperCase().substr(0, nameId1.length) === nameId1) {
+          const names = tLine.substr(nameId1.length).split(";");
           this.vCardContact.familyName = names[0];
           this.vCardContact.givenName = names[1];
-        } else if (tLine.toUpperCase().substr(0,nameId2.length) === nameId2 ) {
-          const names =  tLine.substr(nameId2.length).split(";");
+        } else if (tLine.toUpperCase().substr(0, nameId2.length) === nameId2) {
+          const names = tLine.substr(nameId2.length).split(";");
           this.vCardContact.familyName = names[0];
           this.vCardContact.givenName = names[1];
         }
-        if (tLine.toUpperCase().substr(0,workEmailId1.length) === workEmailId1 ) {
+        if (tLine.toUpperCase().substr(0, workEmailId1.length) === workEmailId1) {
           this.vCardContact.workEmail = tLine.substr(workEmailId1.length);
-        } else if (tLine.toUpperCase().substr(0,workEmailId2.length) === workEmailId2 ) {
+        } else if (tLine.toUpperCase().substr(0, workEmailId2.length) === workEmailId2) {
           this.vCardContact.workEmail = tLine.substr(workEmailId2.length);
         }
-        if (tLine.toUpperCase().substr(0,homeEmailId1.length) === homeEmailId1 ) {
+        if (tLine.toUpperCase().substr(0, homeEmailId1.length) === homeEmailId1) {
           this.vCardContact.homeEmail = tLine.substr(homeEmailId1.length);
-        } else if (tLine.toUpperCase().substr(0,homeEmailId2.length) === homeEmailId2 ) {
+        } else if (tLine.toUpperCase().substr(0, homeEmailId2.length) === homeEmailId2) {
           this.vCardContact.homeEmail = tLine.substr(homeEmailId2.length);
         }
-        if (tLine.toUpperCase().substr(0,defaultEmailId1.length) === defaultEmailId1 ) {
+        if (tLine.toUpperCase().substr(0, defaultEmailId1.length) === defaultEmailId1) {
           this.vCardContact.defaultEmail = tLine.substr(defaultEmailId1.length);
-        } else if (tLine.toUpperCase().substr(0,defaultEmailId2.length) === defaultEmailId2 ) {
+        } else if (tLine.toUpperCase().substr(0, defaultEmailId2.length) === defaultEmailId2) {
           this.vCardContact.defaultEmail = tLine.substr(defaultEmailId2.length);
         }
-        if (tLine.toUpperCase().substr(0,workPhoneNumberId1.length) === workPhoneNumberId1 ) {
+        if (tLine.toUpperCase().substr(0, workPhoneNumberId1.length) === workPhoneNumberId1) {
           this.vCardContact.workPhoneNumber = tLine.substr(workPhoneNumberId1.length);
-        } else if (tLine.toUpperCase().substr(0,workPhoneNumberId2.length) === workPhoneNumberId2 ) {
+        } else if (tLine.toUpperCase().substr(0, workPhoneNumberId2.length) === workPhoneNumberId2) {
           this.vCardContact.workPhoneNumber = tLine.substr(workPhoneNumberId2.length);
         }
-        if (tLine.toUpperCase().substr(0,homePhoneNumberId1.length) === homePhoneNumberId1 ) {
+        if (tLine.toUpperCase().substr(0, homePhoneNumberId1.length) === homePhoneNumberId1) {
           this.vCardContact.homePhoneNumber = tLine.substr(homePhoneNumberId1.length);
-        } else if (tLine.toUpperCase().substr(0,homePhoneNumberId2.length) === homePhoneNumberId2 ) {
+        } else if (tLine.toUpperCase().substr(0, homePhoneNumberId2.length) === homePhoneNumberId2) {
           this.vCardContact.homePhoneNumber = tLine.substr(homePhoneNumberId2.length);
         }
-        if (tLine.toUpperCase().substr(0,mobilePhoneNumberId.length) === mobilePhoneNumberId ) {
+        if (tLine.toUpperCase().substr(0, mobilePhoneNumberId.length) === mobilePhoneNumberId) {
           this.vCardContact.mobilePhoneNumber = tLine.substr(mobilePhoneNumberId.length);
         }
-        if (tLine.toUpperCase().substr(0,defaultPhoneNumberId.length) === defaultPhoneNumberId ) {
+        if (tLine.toUpperCase().substr(0, defaultPhoneNumberId.length) === defaultPhoneNumberId) {
           this.vCardContact.defaultPhoneNumber = tLine.substr(defaultPhoneNumberId.length);
         }
       }

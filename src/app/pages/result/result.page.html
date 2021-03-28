@@ -21,13 +21,24 @@
     </ion-col>
   </ion-row>
 
-  <ion-row *ngIf="contentType === 'phone' && qrCodeContent && qrCodeContent.trim().length > 0">
+  <ion-row *ngIf="(contentType === 'phone' || contentType === 'sms') && qrCodeContent && qrCodeContent.trim().length > 0">
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
           Phone Number
         </ion-label>
         <ion-textarea class="box" readonly [value]="phoneNumber" rows="1"></ion-textarea>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="contentType === 'sms' && smsContent && qrCodeContent && qrCodeContent.trim().length > 0">
+    <ion-col class="ion-text-center ion-padding-horizontal">
+      <ion-item lines="none">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
+          Message Content
+        </ion-label>
+        <ion-textarea class="box" readonly [value]="smsContent.length > 0? smsContent : ' '" autoGrow="true" rows="1"></ion-textarea>
       </ion-item>
     </ion-col>
   </ion-row>
@@ -125,9 +136,18 @@
   <!-- SMS -->
   <ion-row *ngIf="contentType === 'sms'" class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col>
-      <ion-button expand="full" color="secondary" mode="ios">
+      <ion-button expand="full" color="secondary" mode="ios" (click)="sendSms()" [disabled]="!smsContent">
         <ion-icon slot="start" name="send"></ion-icon>
-        <span>Send SMS</span>
+        <span>Send Message</span>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="contentType === 'sms'" class="ion-padding-horizontal ion-margin-horizontal">
+    <ion-col>
+      <ion-button expand="full" color="secondary" mode="ios" (click)="addContact()">
+        <ion-icon slot="start" name="person-add-sharp"></ion-icon>
+        <span>Add Contact</span>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
