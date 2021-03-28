@@ -30,8 +30,9 @@
   <ion-row class="ion-padding-horizontal">
     <ion-col>
       <mat-form-field appearance="outline" color="accent">
-        <mat-label>Given Name</mat-label>
-        <input matInput [(ngModel)]="givenName" type="text">
+        <mat-label>First Name</mat-label>
+        <input #givenNameInput="matInput" matInput [(ngModel)]="givenName" type="text" />
+        <mat-hint>Required</mat-hint>
       </mat-form-field>
     </ion-col>
   </ion-row>
@@ -39,7 +40,7 @@
   <ion-row class="ion-padding-horizontal">
     <ion-col>
       <mat-form-field appearance="outline" color="accent">
-        <mat-label>Family Name</mat-label>
+        <mat-label>Last Name</mat-label>
         <input matInput [(ngModel)]="familyName" type="text">
       </mat-form-field>
     </ion-col>

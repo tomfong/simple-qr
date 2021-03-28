@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ModalController, ToastController } from '@ionic/angular';
 import { VCardContact } from 'src/app/models/v-card-contact';
 
 @Component({
@@ -13,6 +13,7 @@ export class CreateContactPage implements OnInit {
 
   name: ContactName;
   @Input() givenName: string = '';
+  @ViewChild('givenNameInput') givenNameInput: HTMLInputElement;
   @Input() familyName: string = '';
   
   phoneNumberObject: ContactField;
@@ -26,7 +27,8 @@ export class CreateContactPage implements OnInit {
   @Input() emailAddress: string = '';
 
   constructor(
-    public modalController: ModalController
+    public modalController: ModalController,
+    public toastController: ToastController,
   ) { }
 
   ngOnInit() { 
@@ -74,10 +76,63 @@ export class CreateContactPage implements OnInit {
   }
 
   saveContent(): void {
+    if (this.givenName.trim().length <= 0) {
+      this.presentToast('Give a name to the contact', 2000, "bottom", "center", "long");
+      this.givenNameInput.focus();
+      return;
+    }
     const name = new ContactName('', this.familyName.trim(), this.givenName.trim());
     const phone = new ContactField(this.phoneNumberType, this.phoneNumber, true);
     const email = new ContactField(this.emailType, this.emailAddress, true);
     this.modalController.dismiss({ cancelled: false, name, phone, email });
+  }
+
+  async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {
+    if (size === "long") {
+      if (align === "left") {
+        const toast = await this.toastController.create({
+          message: msg,
+          duration: msTimeout,
+          mode: "ios",
+          color: "light",
+          cssClass: "text-start-toast",
+          position: pos
+        });
+        toast.present();
+      } else {
+        const toast = await this.toastController.create({
+          message: msg,
+          duration: msTimeout,
+          mode: "ios",
+          color: "light",
+          cssClass: "text-center-toast",
+          position: pos
+        });
+        toast.present();
+      }
+    } else {
+      if (align === "left") {
+        const toast = await this.toastController.create({
+          message: msg,
+          duration: msTimeout,
+          mode: "ios",
+          color: "light",
+          cssClass: "text-start-short-toast",
+          position: pos
+        });
+        toast.present();
+      } else {
+        const toast = await this.toastController.create({
+          message: msg,
+          duration: msTimeout,
+          mode: "ios",
+          color: "light",
+          cssClass: "text-center-short-toast",
+          position: pos
+        });
+        toast.present();
+      }
+    }
   }
 
 }
