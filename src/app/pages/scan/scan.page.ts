@@ -5,6 +5,7 @@ import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { AlertController, IonRouterOutlet, LoadingController, Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { EnvService } from 'src/app/services/env.service';
 
 enum CameraChoice {
   BACK,
@@ -41,6 +42,7 @@ export class ScanPage {
     private deviceMotion: DeviceMotion,
     private vibration: Vibration,
     private router: Router,
+    private env: EnvService,
   ) {
     this.platform.ready().then(
       async () => {
@@ -217,7 +219,8 @@ export class ScanPage {
   }
 
   async processQrCode(scannedData: string, loading: HTMLIonLoadingElement): Promise<void> {
-    this.router.navigate(['result', { qrCodeContent: scannedData }]).then(
+    this.env.result = scannedData;
+    this.router.navigate(['result', { t: new Date().getTime() }]).then(
       () => {
         loading.dismiss();
       }

@@ -16,7 +16,18 @@
 
 <ion-content>
 
-  <ion-row class="ion-padding-horizontal ion-padding-top">
+  <ion-row class="ion-padding-horizontal ion-padding">
+    <ion-col size="2" style="display: flex; align-items: center;">
+      <mat-icon style="color: rgba(0, 0, 0, 0.6);">info</mat-icon>
+    </ion-col>
+    <ion-col size="10" style="display: flex; align-items: center;">
+      <mat-hint>
+        Only name, phone number and email address can be saved.
+      </mat-hint>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-padding-horizontal">
     <ion-col>
       <mat-form-field appearance="outline" color="accent">
         <mat-label>Given Name</mat-label>

@@ -16,7 +16,7 @@
   </ion-row>
 
   <ion-row *ngIf="contentType === 'phone' && qrCodeContent && qrCodeContent.trim().length > 0">
-    <ion-col class="ion-text-center ion-padding-horizontal ion-padding-bottom">
+    <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
           Phone Number
@@ -26,8 +26,22 @@
     </ion-col>
   </ion-row>
 
+  <ion-row *ngIf="contentType === 'contact' && qrCodeContent && qrCodeContent.trim().length > 0 && vCardContact">
+    <ion-col class="ion-text-center ion-padding-horizontal">
+      <ion-item lines="none">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
+          Contact Name
+        </ion-label>
+        <ion-textarea class="box" readonly
+          [value]="vCardContact.fullName? vCardContact.fullName : ( vCardContact.givenName &&  vCardContact.familyName ? (vCardContact.givenName + ' ' + vCardContact.familyName) : '(Not Provided)')"
+          rows="1">
+        </ion-textarea>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
   <ion-row *ngIf="qrCodeContent && qrCodeContent.trim().length > 0">
-    <ion-col class="ion-text-center ion-padding-horizontal ion-padding-bottom">
+    <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
           Original Content
@@ -38,7 +52,7 @@
   </ion-row>
 
   <ion-row *ngIf="base64Decoded && qrCodeContent && qrCodeContent.trim().length > 0">
-    <ion-col class="ion-text-center ion-padding-horizontal ion-padding-bottom">
+    <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
           Base64 Decoded
@@ -48,11 +62,15 @@
     </ion-col>
   </ion-row>
 
+  <ion-row class="ion-padding-horizontal ion-margin-horizontal ion-padding-bottom">
+    <ion-col></ion-col>
+  </ion-row>
+
 </ion-content>
 
 <ion-footer mode="md" [ngStyle]="config.darkTheme?  {'background-color': '#222428'} : {'background-color': 'white'}">
 
-  <ion-row class="ion-padding-horizontal ion-margin-horizontal ion-no-padding-top">
+  <ion-row class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col></ion-col>
   </ion-row>
 
@@ -70,7 +88,7 @@
   <!-- Contact -->
   <ion-row *ngIf="contentType === 'contact'" class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col>
-      <ion-button expand="full" color="secondary" mode="ios">
+      <ion-button expand="full" color="secondary" mode="ios" (click)="addContact()">
         <ion-icon slot="start" name="person-add-sharp"></ion-icon>
         <span>Add Contact</span>
         <ion-ripple-effect></ion-ripple-effect>
