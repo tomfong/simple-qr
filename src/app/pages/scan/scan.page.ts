@@ -227,6 +227,38 @@ export class ScanPage {
     );
   }
 
+  async createQrcode(): Promise<void> {
+    const alert = await this.alertController.create({
+      header: "Generate QR Code",
+      inputs: [
+        {
+          name: 'qrcode',
+          type: 'text',
+          placeholder: 'QR code content...'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Enter',
+          handler: async (data) => {
+            const text = data.qrcode;
+            const loading = await this.presentLoading("Please wait...");
+            if (this.scanSubscription) {
+              this.scanSubscription.unsubscribe();
+            }
+            if (this.motionSubscription) {
+              this.motionSubscription.unsubscribe();
+              this.motionSubscription = null;
+              this.motionlessCount = 0;
+            }
+            await this.processQrCode(text, loading);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
   async toggleFlash(): Promise<void> {
     if (!this.flashActive) {
       await this.qrScanner.enableLight().then(
