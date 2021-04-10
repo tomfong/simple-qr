@@ -8,11 +8,16 @@
       </ion-back-button>
     </ion-buttons>
     <ion-title>History</ion-title>
+    <ion-buttons slot="end" *ngIf="env.scanRecords && env.scanRecords.length > 0">
+      <ion-button mode="md" (click)="removeAllRecords()">
+        <ion-icon slot="icon-only" name="trash-bin"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ng-container *ngIf="env.scanRecords.length <= 0">
+  <ng-container *ngIf="!env.scanRecords || (env.scanRecords.length <= 0)">
     <div class="ion-padding-horizontal fullscreen-vertical-center">
       <ion-icon src="assets/icon/history.svg" color="dark" style="font-size: 3rem"></ion-icon>
       <p class="ion-text-center">
@@ -22,7 +27,7 @@
       </p>
     </div>
   </ng-container>
-  <ng-container *ngIf="env.scanRecords.length > 0">
+  <ng-container *ngIf="env.scanRecords && env.scanRecords.length > 0">
     <ion-list mode="ios">
       <ion-item-sliding *ngFor="let record of env.scanRecords; index as i">
         <ion-item [lines]="i === env.scanRecords.length - 1? 'none' : 'full'" button (click)="processQrCode(record.text)">
@@ -40,7 +45,7 @@
           </ion-label>
         </ion-item>
         <ion-item-options side="end">
-          <ion-item-option color="danger">
+          <ion-item-option color="danger" expandable (click)="removeRecord(record)">
             <ion-icon slot="icon-only" name="trash-bin"></ion-icon>
           </ion-item-option>
         </ion-item-options>

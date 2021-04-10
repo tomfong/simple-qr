@@ -59,7 +59,6 @@ export class EnvService {
   public async storageGet(key: string): Promise<any> {
     const value = await this._storage?.get(key).then(
       value => {
-        console.log("value1", value)
         return value;
       },
       err => {
@@ -67,7 +66,6 @@ export class EnvService {
         return null;
       }
     );
-    console.log("value2", value)
     return value;
   }
 
@@ -95,9 +93,33 @@ export class EnvService {
 
   async saveScanRecord(value: string): Promise<void> {
     const record = new ScanRecord();
+    const date = new Date();
+    record.id = String(date.getTime());
     record.text = value;
-    record.createdAt = new Date();
+    record.createdAt = date;
     this._scanRecords.unshift(record);
     await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
   }
+
+  async undoScanRecordDeletion(record: ScanRecord): Promise<void> {
+    this._scanRecords.push(record);
+    this._scanRecords.sort( (r1, r2) => {
+      return r2.createdAt.getTime() - r1.createdAt.getTime();
+    });
+    await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
+  }
+
+  async deleteScanRecord(recordId: string): Promise<void> {
+    const index = this._scanRecords.findIndex( r => r.id === recordId);
+    if (index !== -1) {
+      this._scanRecords.splice(index, 1);
+      await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
+    }
+  }
+
+  async deleteAllScanRecords(): Promise<void> {
+    this._scanRecords = [];
+    await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
+  }
+
 }
