@@ -1,10 +1,11 @@
 <ion-header [translucent]="true" mode="ios">
   <ion-toolbar color="dark" mode="ios">
     <ion-buttons slot="start">
-      <ion-button mode="ios" (click)="returnScanPage()">
-        <ion-icon slot="start" name="chevron-back"></ion-icon>
-        <span>Return</span>
-      </ion-button>
+      <ion-back-button 
+        mode="md"
+        defaultHref="scan"
+        [icon]="'arrow-back'">
+      </ion-back-button>
     </ion-buttons>
     <ion-title>Result</ion-title>
   </ion-toolbar>

@@ -25,11 +25,26 @@ export class HistoryPage {
     if (!date) {
       return "-";
     }
-    return moment(date).format("HH:mm:ss YYYY-MMM-DD");
+    return moment(date).format("YYYY-MMM-DD HH:mm:ss");
   }
 
-  returnScanPage(): void {
-    this.router.navigate(['/scan'], { replaceUrl: true });
+  async processQrCode(scannedData: string): Promise<void> {
+    const loading = await this.presentLoading("Please wait...");
+    this.env.result = scannedData;
+    this.router.navigate(['result', { t: new Date().getTime() }]).then(
+      () => {
+        loading.dismiss();
+      }
+    );
+  }
+
+  async presentLoading(msg: string): Promise<HTMLIonLoadingElement> {
+    const loading = await this.loadingController.create({
+      message: msg,
+      mode: "ios"
+    });
+    await loading.present();
+    return loading;
   }
 
 }

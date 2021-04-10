@@ -1,10 +1,11 @@
 <ion-header [translucent]="true" mode="ios">
   <ion-toolbar color="dark" mode="ios">
     <ion-buttons slot="start">
-      <ion-button mode="ios" (click)="returnScanPage()">
-        <ion-icon slot="start" name="chevron-back"></ion-icon>
-        <span>Return</span>
-      </ion-button>
+      <ion-back-button 
+        mode="md"
+        defaultHref="scan"
+        [icon]="'arrow-back'">
+      </ion-back-button>
     </ion-buttons>
     <ion-title>History</ion-title>
   </ion-toolbar>
@@ -22,8 +23,28 @@
     </div>
   </ng-container>
   <ng-container *ngIf="env.scanRecords.length > 0">
-    <p *ngFor="let record of env.scanRecords">
-      {{ record.text + ", " + maskDatetime(record.createdAt) }}
-    </p>
+    <ion-list mode="ios">
+      <ion-item-sliding *ngFor="let record of env.scanRecords; index as i">
+        <ion-item [lines]="i === env.scanRecords.length - 1? 'none' : 'full'" button (click)="processQrCode(record.text)">
+          <ion-label>
+            <p class="ion-padding-top ion-padding-horizontal">
+              <ion-text color="dark" style="font-size: large;">
+                {{ record.text }}
+              </ion-text>
+            </p>
+            <p class="ion-padding-bottom ion-padding-horizontal">
+              <ion-text color="medium">
+                {{ maskDatetime(record.createdAt) }}
+              </ion-text>
+            </p>
+          </ion-label>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option color="danger">
+            <ion-icon slot="icon-only" name="trash-bin"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
   </ng-container>
 </ion-content>
