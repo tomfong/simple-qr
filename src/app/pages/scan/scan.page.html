@@ -15,10 +15,10 @@
       </ion-fab-button>
       <ion-fab-list side="top">
         <ion-fab-button color="secondary" *ngIf="!flashActive && cameraActive" (click)="toggleFlash()">
-          <ion-icon name="flash"></ion-icon>
+          <ion-icon name="flash-off"></ion-icon>
         </ion-fab-button>
         <ion-fab-button color="success" *ngIf="flashActive && cameraActive" (click)="toggleFlash()">
-          <ion-icon name="flash-off"></ion-icon>
+          <ion-icon name="flash"></ion-icon>
         </ion-fab-button>
       </ion-fab-list>
       <ion-fab-list side="start">
