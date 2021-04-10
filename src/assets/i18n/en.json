@@ -40,6 +40,7 @@
     "SHARE_QRCODE": "Share QR Code",
     "SETTING": "Setting",
     "LANGUAGE": "Language",
+    "SYSTEM_LANGUAGE": "System Language (Default)",
     "COLOR_THEME": "Color Theme",
     "CAMERA_PAUSE": "Camera Pause",
     "SCAN_HISTORY_LOGGING": "Scan History Logging",

@@ -15,6 +15,16 @@
         <ion-label>
           <p class="ion-padding">
             <ion-text color="dark" style="font-size: large;">
+              {{ 'SYSTEM_LANGUAGE' | translate }}
+            </ion-text>
+          </p>
+        </ion-label>
+        <ion-radio mode="md" slot="end" [value]="'default'" color="secondary"></ion-radio>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-label>
+          <p class="ion-padding">
+            <ion-text color="dark" style="font-size: large;">
               English
             </ion-text>
           </p>

@@ -40,6 +40,7 @@
     "SHARE_QRCODE": "分享QR碼",
     "SETTING": "設定",
     "LANGUAGE": "語言",
+    "SYSTEM_LANGUAGE": "系統語言 (預設)",
     "COLOR_THEME": "顏色主題",
     "CAMERA_PAUSE": "掃描暫停",
     "SCAN_HISTORY_LOGGING": "掃描記錄",

@@ -11,7 +11,8 @@ import { ScanRecord } from '../models/scan-record';
 })
 export class EnvService {
 
-  public language: string = 'en';
+  public languages: string[] = ['en', 'zh-HK'];
+  public language: string = 'default';
   public darkTheme: boolean = false;
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
@@ -40,11 +41,30 @@ export class EnvService {
     await this.storageGet("language").then(
       async value => {
         if (value !== null && value !== undefined) {
+          if (value === 'default') {
+            const browserLang = this.translate.getBrowserCultureLang();
+            if (browserLang.includes("zh", 0)) {
+              this.translate.use("zh-HK");
+            } else if (this.languages.includes(browserLang)) {
+              this.translate.use(browserLang);
+            } else {
+              this.translate.use('en')
+            }
+          } else {
+            this.translate.use(value);
+          }
           this.language = value;
         } else {
-          this.language = 'en';
+          const browserLang = this.translate.getBrowserCultureLang();
+          if (browserLang.includes("zh", 0)) {
+            this.translate.use("zh-HK");
+          } else if (this.languages.includes(browserLang)) {
+            this.translate.use(browserLang);
+          } else {
+            this.translate.use('en')
+          }
+          this.language = 'default';
         }
-        this.translate.use(this.language);
       }
     );
     await this.storageGet(environment.storageScanRecordKey).then(

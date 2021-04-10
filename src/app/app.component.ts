@@ -15,7 +15,7 @@ export class AppComponent {
     public env: EnvService,
     private platform: Platform,
   ) {
-    translate.addLangs(["en", "zh-HK"]);
+    translate.addLangs(this.env.languages);
     translate.setDefaultLang('en');
   }
 }
