@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, Platform, ToastController } from '@ionic/angular';
-import { ConfigService } from 'src/app/services/config.service';
 import { EnvService } from 'src/app/services/env.service';
 import * as moment from 'moment';
 import { ScanRecord } from 'src/app/models/scan-record';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-history',
@@ -20,9 +20,9 @@ export class HistoryPage {
     public alertController: AlertController,
     public loadingController: LoadingController,
     private router: Router,
-    public config: ConfigService,
     public env: EnvService,
     public toastController: ToastController,
+    public translate: TranslateService,
   ) { }
 
   async ionViewWillLeave() {
@@ -40,7 +40,7 @@ export class HistoryPage {
   }
 
   async processQrCode(scannedData: string): Promise<void> {
-    const loading = await this.presentLoading("Please wait...");
+    const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
     this.env.result = scannedData;
     this.router.navigate(['result', { t: new Date().getTime() }]).then(
       () => {
@@ -65,14 +65,14 @@ export class HistoryPage {
     }
     await this.env.deleteScanRecord(record.id);
     this.deleteToast = await this.toastController.create({
-      message: `You can undo the deletion in 5 seconds`,
+      message: this.translate.instant('MSG.UNDO_DELETE'),
       duration: 5000,
       mode: "ios",
       color: "light",
       position: "bottom",
       buttons: [
         {
-          text: 'Undo',
+          text: this.translate.instant('UNDO'),
           side: 'end',
           handler: async () => {
             await this.env.undoScanRecordDeletion(record);
@@ -87,15 +87,15 @@ export class HistoryPage {
 
   async removeAllRecords() {
     const alert = await this.alertController.create({
-      header: 'Remove All',
-      message: 'Are you sure to remove all records? <b>This action cannot be undone.</b>',
+      header: this.translate.instant('REMOVE_ALL'),
+      message: this.translate.instant('MSG.REMOVE_ALL_RECORD'),
       buttons: [
         {
-          text: 'Cancel',
+          text: this.translate.instant('CANCEL'),
           role: 'cancel'
         },
         {
-          text: 'Confirm',
+          text: this.translate.instant('CONFIRM'),
           handler: async () => {
             await this.env.deleteAllScanRecords();
           }

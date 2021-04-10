@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { SettingPageRoutingModule } from './setting-routing.module';
+import { SettingLanguagePageRoutingModule } from './setting-language-routing.module';
 
-import { SettingPage } from './setting.page';
+import { SettingLanguagePage } from './setting-language.page';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
@@ -27,8 +27,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         deps: [HttpClient]
       }
     }),
-    SettingPageRoutingModule
+    SettingLanguagePageRoutingModule
   ],
-  declarations: [SettingPage]
+  declarations: [SettingLanguagePage]
 })
-export class SettingPageModule {}
+export class SettingLanguagePageModule {}

@@ -8,10 +8,10 @@ import { SMS } from '@ionic-native/sms/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { AlertController, LoadingController, ModalController, Platform, ToastController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
 import { CreateContactPage } from 'src/app/modals/create-contact/create-contact.page';
 import { VCardContact } from 'src/app/models/v-card-contact';
-import { ConfigService } from 'src/app/services/config.service';
 import { EnvService } from 'src/app/services/env.service';
 import { environment } from 'src/environments/environment';
 
@@ -51,7 +51,6 @@ export class ResultPage implements OnInit {
     private route: ActivatedRoute,
     private vibration: Vibration,
     private router: Router,
-    public config: ConfigService,
     public env: EnvService,
     public toastController: ToastController,
     private clipboard: Clipboard,
@@ -61,6 +60,7 @@ export class ResultPage implements OnInit {
     private callNumber: CallNumber,
     public modalController: ModalController,
     private sms: SMS,
+    public translate: TranslateService,
   ) { }
 
   async ngOnInit() {
@@ -77,7 +77,7 @@ export class ResultPage implements OnInit {
     }
     if (this.contentType === "url") {
       this.webToast = await this.toastController.create({
-        header: "Website",
+        header: this.translate.instant('WEBSITE'),
         message: `${this.qrCodeContent}`,
         duration: 3000,
         mode: "ios",
@@ -85,7 +85,7 @@ export class ResultPage implements OnInit {
         position: "top",
         buttons: [
           {
-            text: 'Open',
+            text: this.translate.instant('OPEN'),
             side: 'end',
             handler: () => {
               this.browseWebsite();
@@ -140,28 +140,11 @@ export class ResultPage implements OnInit {
   }
 
   get qrColorDark(): string {
-    return this.config.darkTheme ? "#ffffff" : "#222428";
+    return this.env.darkTheme ? "#ffffff" : "#222428";
   }
 
   get qrColorLight(): string {
-    return this.config.darkTheme ? "#222428" : "#ffffff";
-  }
-
-  get type(): string {
-    switch (this.contentType) {
-      case "freeText":
-        return "Free Text";
-      case "url":
-        return "URL";
-      case "contact":
-        return "Contact Information";
-      case "email":
-        return "Email";
-      case "phone":
-        return "Phone Number";
-      case "sms":
-        return "SMS";
-    }
+    return this.env.darkTheme ? "#222428" : "#ffffff";
   }
 
   browseWebsite(): void {
@@ -204,9 +187,9 @@ export class ResultPage implements OnInit {
               phoneNumbers: [data.phone]
             });
             contact.save(() => {
-              this.presentToast("Saved", 2000, "bottom", "center", "short");
+              this.presentToast(this.translate.instant('MSG.SAVED'), 2000, "bottom", "center", "short");
             }, err => {
-              this.presentToast("Failed to save contact", 3000, "middle", "center", "long");
+              this.presentToast(this.translate.instant('MSG.FAIL_SAVE_CONTACT'), 3000, "middle", "center", "long");
             })
           }
         }
@@ -217,22 +200,22 @@ export class ResultPage implements OnInit {
 
   async callPhone(): Promise<void> {
     const alert = await this.alertController.create({
-      header: "Phone Call",
-      message: `Are you sure to call ${this.phoneNumber} now?`,
+      header: this.translate.instant('PHONE_CALL'),
+      message: this.translate.instant('MSG.CALL_PHONE').replace('{phoneNumber}', this.phoneNumber),
       buttons: [
         {
-          text: 'Yes',
+          text: this.translate.instant('YES'),
           handler: async () => {
             alert.dismiss();
             await this.callNumber.callNumber(this.phoneNumber, false).catch(
               async (err) => {
-                this.presentToast("Failed to open dialer", 3000, "middle", "center", "long");
+                this.presentToast(this.translate.instant('MSG.FAIL_CALL_PHONE'), 3000, "middle", "center", "long");
               }
             );
           }
         },
         {
-          text: 'No',
+          text: this.translate.instant('NO'),
           role: 'cancel',
           cssClass: 'btn-inverse'
         }
@@ -255,11 +238,11 @@ export class ResultPage implements OnInit {
           }
         ).then(
           (value) => {
-            this.presentToast("Preparing message", 2000, "middle", "center", "long");
+            this.presentToast(this.translate.instant('MSG.PREPARE_SMS'), 2000, "middle", "center", "long");
           },
           async (err) => {
             console.error("error in send sms", err)
-            this.presentToast("Failed to send message", 3000, "middle", "center", "long");
+            this.presentToast(this.translate.instant('MSG.FAIL_PREPARE_SMS'), 3000, "middle", "center", "long");
           }
         )
       } else {
@@ -271,11 +254,11 @@ export class ResultPage implements OnInit {
           }
         ).then(
           (value) => {
-            this.presentToast("Preparing message", 2000, "middle", "center", "long");
+            this.presentToast(this.translate.instant('MSG.PREPARE_SMS'), 2000, "middle", "center", "long");
           },
           async (err) => {
             console.error("error in send sms", err)
-            this.presentToast("Failed to send message", 3000, "middle", "center", "long");
+            this.presentToast(this.translate.instant('MSG.FAIL_PREPARE_SMS'), 3000, "middle", "center", "long");
           }
         )
       }
@@ -291,22 +274,22 @@ export class ResultPage implements OnInit {
     if (this.base64Decoded) {
       const alert = await this.alertController.create(
         {
-          header: "Search",
-          message: "Which content do you want to search for?",
+          header: this.translate.instant('SEARCH'),
+          message: this.translate.instant('MSG.SEARCH'),
           buttons: [
             {
-              text: 'Original',
+              text: this.translate.instant('ORIGINAL'),
               handler: () => {
                 alert.dismiss();
-                url = this.config.WEB_SEARCH_URL + encodeURIComponent(this.qrCodeContent);
+                url = this.env.WEB_SEARCH_URL + encodeURIComponent(this.qrCodeContent);
                 window.open(url, '_system');
               }
             },
             {
-              text: 'Base64-Decoded',
+              text: this.translate.instant('BASE64_DECODED'),
               handler: () => {
                 alert.dismiss();
-                url = this.config.WEB_SEARCH_URL + encodeURIComponent(this.base64DecodedText);
+                url = this.env.WEB_SEARCH_URL + encodeURIComponent(this.base64DecodedText);
                 window.open(url, '_system');
               }
             }
@@ -315,7 +298,7 @@ export class ResultPage implements OnInit {
       )
       alert.present();
     } else {
-      url = this.config.WEB_SEARCH_URL + encodeURIComponent(this.qrCodeContent);
+      url = this.env.WEB_SEARCH_URL + encodeURIComponent(this.qrCodeContent);
       window.open(url, '_system');
     }
   }
@@ -324,27 +307,27 @@ export class ResultPage implements OnInit {
     if (this.base64Decoded) {
       const alert = await this.alertController.create(
         {
-          header: "Copy",
-          message: "Which content do you want to copy?",
+          header: this.translate.instant('COPY'),
+          message: this.translate.instant('MSG.COPY_TEXT'),
           buttons: [
             {
-              text: 'Original',
+              text: this.translate.instant('ORIGINAL'),
               handler: async () => {
                 alert.dismiss();
                 await this.clipboard.copy(this.qrCodeContent).then(
                   async () => {
-                    await this.presentToast("Copied", 1500, "bottom", "center", "short");
+                    await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
                   }
                 )
               }
             },
             {
-              text: 'Base64-Decoded',
+              text: this.translate.instant('BASE64_DECODED'),
               handler: async () => {
                 alert.dismiss();
                 await this.clipboard.copy(this.base64DecodedText).then(
                   async () => {
-                    await this.presentToast("Copied", 1500, "bottom", "center", "short");
+                    await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
                   }
                 )
               }
@@ -356,7 +339,7 @@ export class ResultPage implements OnInit {
     } else {
       await this.clipboard.copy(this.qrCodeContent).then(
         async () => {
-          await this.presentToast("Copied", 1500, "bottom", "center", "short");
+          await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
         }
       )
     }
@@ -366,10 +349,10 @@ export class ResultPage implements OnInit {
     try {
       this.base64DecodedText = atob(this.qrCodeContent ? this.qrCodeContent : "");
       this.base64Decoded = true;
-      await this.presentToast("Decoded", 1500, "bottom", "center", "short");
+      await this.presentToast(this.translate.instant('MSG.DECODED'), 1500, "bottom", "center", "short");
     } catch (err) {
       this.base64Decoded = false;
-      await this.presentToast("Data is not Base64 encoded", 2000, "middle", "center", "long");
+      await this.presentToast(this.translate.instant('MSG.NOT_BASE64'), 2000, "middle", "center", "long");
     }
   }
 
@@ -380,22 +363,22 @@ export class ResultPage implements OnInit {
     const data = imageDataUrl.split(',')[1];
     const blob = this.base64toBlob(data, 'image/png');
     const filename = "qrcode_" + (new Date()).getTime() + '.png';
-    await this.file.checkDir(this.env.baseDir, this.config.APP_FOLDER_NAME).then(
+    await this.file.checkDir(this.env.baseDir, this.env.APP_FOLDER_NAME).then(
       async value => {
         if (!value) {
-          await this.file.createDir(this.env.baseDir, this.config.APP_FOLDER_NAME, true).catch(err => console.error('createDir error', err));
+          await this.file.createDir(this.env.baseDir, this.env.APP_FOLDER_NAME, true).catch(err => console.error('createDir error', err));
         }
       },
       async err => {
         console.error("error in checkDir", err);
-        await this.file.createDir(this.env.baseDir, this.config.APP_FOLDER_NAME, true).catch(err => console.error('createDir error', err));
+        await this.file.createDir(this.env.baseDir, this.env.APP_FOLDER_NAME, true).catch(err => console.error('createDir error', err));
       }
     );
-    await this.file.writeFile(`${this.env.baseDir}/${this.config.APP_FOLDER_NAME}`, filename, blob as Blob, { replace: true, append: false }).then(
+    await this.file.writeFile(`${this.env.baseDir}/${this.env.APP_FOLDER_NAME}`, filename, blob as Blob, { replace: true, append: false }).then(
       async _ => {
         console.log('writeFile succeed');
         loading.dismiss();
-        const finalPath = `${this.env.baseDir}${this.config.APP_FOLDER_NAME}/${filename}`.replace(/(^\w+:|^)\/\//, '');
+        const finalPath = `${this.env.baseDir}${this.env.APP_FOLDER_NAME}/${filename}`.replace(/(^\w+:|^)\/\//, '');
         await this.presentToast(`Saved as ${finalPath}`, 5000, "middle", "left", "long");
       },
       async err => {
@@ -407,11 +390,11 @@ export class ResultPage implements OnInit {
   }
 
   async shareQrCode(): Promise<void> {
-    const loading = await this.presentLoading("Preparing");
+    const loading = await this.presentLoading(this.translate.instant('PREPARING'));
     const canvas = document.querySelector("canvas") as HTMLCanvasElement;
     const imageDataUrl = canvas.toDataURL("image/png", 1);
     loading.dismiss();
-    await this.socialSharing.share('Just scan it!\n\nShared by Simple QR', 'Simple QR', imageDataUrl, null);
+    await this.socialSharing.share(this.translate.instant('MSG.SHARE_QR'), this.translate.instant('SIMPLE_QR'), imageDataUrl, null);
   }
 
   generateVCardContact(): void {

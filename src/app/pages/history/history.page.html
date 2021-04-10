@@ -7,7 +7,7 @@
         [icon]="'arrow-back'">
       </ion-back-button>
     </ion-buttons>
-    <ion-title>History</ion-title>
+    <ion-title>{{ 'HISTORY' | translate }}</ion-title>
     <ion-buttons slot="end" *ngIf="env.scanRecords && env.scanRecords.length > 0">
       <ion-button mode="md" (click)="removeAllRecords()">
         <ion-icon slot="icon-only" name="trash-bin"></ion-icon>
@@ -22,7 +22,7 @@
       <ion-icon src="assets/icon/history.svg" color="dark" style="font-size: 3rem"></ion-icon>
       <p class="ion-text-center">
         <ion-text color="dark" style="font-size: large;">
-          Scanning history will be shown here
+          {{ 'SCANNING_HISTORY_SHOWN' | translate }}
         </ion-text>
       </p>
     </div>

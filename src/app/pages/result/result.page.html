@@ -7,7 +7,7 @@
         [icon]="'arrow-back'">
       </ion-back-button>
     </ion-buttons>
-    <ion-title>Result</ion-title>
+    <ion-title>{{ 'RESULT' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -26,7 +26,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
-          Phone Number
+          {{ 'PHONE_NUMBER' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="phoneNumber" rows="1"></ion-textarea>
       </ion-item>
@@ -37,7 +37,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
-          Message Content
+          {{ 'MESSAGE_CONTENT' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="smsContent.length > 0? smsContent : ' '" autoGrow="true" rows="1"></ion-textarea>
       </ion-item>
@@ -48,7 +48,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
-          Email to
+          {{ 'EMAIL_TO' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="toEmails" autoGrow="true" rows="1"></ion-textarea>
       </ion-item>
@@ -59,7 +59,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
-          CC
+          {{ 'CC' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="ccEmails" autoGrow="true" rows="1"></ion-textarea>
       </ion-item>
@@ -70,7 +70,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
-          BCC
+          {{ 'BCC' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="bccEmails" autoGrow="true" rows="1"></ion-textarea>
       </ion-item>
@@ -81,7 +81,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
-          Subject
+          {{ 'EMAIL_SUBJECT' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="emailSubject" autoGrow="true" rows="1"></ion-textarea>
       </ion-item>
@@ -92,7 +92,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
-          Body
+          {{ 'EMAIL_BODY' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="emailBody" autoGrow="true" rows="1"></ion-textarea>
       </ion-item>
@@ -103,7 +103,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
-          Contact Name
+          {{ 'CONTACT_NAME' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly
           [value]="vCardContact.fullName? vCardContact.fullName : ( vCardContact.givenName &&  vCardContact.familyName ? (vCardContact.givenName + ' ' + vCardContact.familyName) : '(Not Provided)')"
@@ -117,7 +117,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
-          Original Content
+          {{ 'ORIGINAL_CONTENT' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="qrCodeContent" autoGrow="true" rows="1"></ion-textarea>
       </ion-item>
@@ -128,7 +128,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom" color="dark" position="floating">
-          Base64 Decoded
+          {{ 'BASE64_DECODED' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="base64DecodedText" autoGrow="true" rows="1"></ion-textarea>
       </ion-item>
@@ -141,7 +141,7 @@
 
 </ion-content>
 
-<ion-footer mode="md" [ngStyle]="config.darkTheme?  {'background-color': '#222428'} : {'background-color': 'white'}">
+<ion-footer mode="md" [ngStyle]="env.darkTheme?  {'background-color': '#222428'} : {'background-color': 'white'}">
 
   <ion-row class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col></ion-col>
@@ -152,7 +152,7 @@
     <ion-col>
       <ion-button expand="full" color="secondary" mode="ios" (click)="browseWebsite()">
         <ion-icon slot="start" name="globe-outline"></ion-icon>
-        <span>Browse Website</span>
+        <span>{{ 'BROWSE_WEBSITE' | translate }}</span>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
@@ -163,7 +163,7 @@
     <ion-col>
       <ion-button expand="full" color="secondary" mode="ios" (click)="addContact()">
         <ion-icon slot="start" name="person-add-sharp"></ion-icon>
-        <span>Add Contact</span>
+        <span>{{ 'ADD_CONTACT' | translate }}</span>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
@@ -174,7 +174,7 @@
     <ion-col>
       <ion-button expand="full" color="secondary" mode="ios" (click)="callPhone()">
         <ion-icon slot="start" name="call"></ion-icon>
-        <span class="overflow: hidden; text-overflow: ellipsis;">Call {{phoneNumber}}</span>
+        <span class="overflow: hidden; text-overflow: ellipsis;">{{ 'CALL' | translate }} {{phoneNumber}}</span>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
@@ -183,7 +183,7 @@
     <ion-col>
       <ion-button expand="full" color="secondary" mode="ios" (click)="addContact()">
         <ion-icon slot="start" name="person-add-sharp"></ion-icon>
-        <span>Add Contact</span>
+        <span>{{ 'ADD_CONTACT' | translate }}</span>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
@@ -194,7 +194,7 @@
     <ion-col>
       <ion-button expand="full" color="secondary" mode="ios" (click)="sendSms()" [disabled]="!smsContent">
         <ion-icon slot="start" name="send"></ion-icon>
-        <span>Send Message</span>
+        <span>{{ 'SEND_MESSAGE' | translate }}</span>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
@@ -203,7 +203,7 @@
     <ion-col>
       <ion-button expand="full" color="secondary" mode="ios" (click)="addContact()">
         <ion-icon slot="start" name="person-add-sharp"></ion-icon>
-        <span>Add Contact</span>
+        <span>{{ 'ADD_CONTACT' | translate }}</span>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
@@ -214,7 +214,7 @@
     <ion-col>
       <ion-button expand="full" color="secondary" mode="ios" (click)="sendEmail()">
         <ion-icon slot="start" name="mail"></ion-icon>
-        <span>Send Email</span>
+        <span>{{ 'SEND_EMAIL' | translate }}</span>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
@@ -226,7 +226,7 @@
       <ion-button expand="full" color="primary" mode="ios" (click)="webSearch()"
         [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
         <ion-icon slot="start" name="search"></ion-icon>
-        <span>Web Search</span>
+        <span>{{ 'WEB_SEARCH' | translate }}</span>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
@@ -234,7 +234,7 @@
       <ion-button expand="full" color="primary" mode="ios" (click)="copyText()"
         [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
         <ion-icon slot="start" name="copy"></ion-icon>
-        <span>Copy Text</span>
+        <span>{{ 'COPY_TEXT' | translate }}</span>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
@@ -244,7 +244,7 @@
       <ion-button expand="full" color="primary" mode="ios" (click)="base64Decode()"
         [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
         <ion-icon slot="start" name="code-working"></ion-icon>
-        <span>Base64 Decode</span>
+        <span>{{ 'BASE64_DECODED' | translate }}</span>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
@@ -259,7 +259,7 @@
       <ion-button expand="full" color="primary" mode="ios" (click)="shareQrCode()"
         [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
         <ion-icon slot="start" name="share-social"></ion-icon>
-        <span>Share QR Code</span>
+        <span>{{ 'SHARE_QRCODE' | translate }}</span>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>

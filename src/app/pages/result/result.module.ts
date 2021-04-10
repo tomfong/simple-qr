@@ -8,6 +8,13 @@ import { ResultPageRoutingModule } from './result-routing.module';
 
 import { ResultPage } from './result.page';
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
+
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   imports: [
@@ -15,6 +22,13 @@ import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
     FormsModule,
     IonicModule,
     NgxQRCodeModule,
+    TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     ResultPageRoutingModule
   ],
   declarations: [ResultPage]

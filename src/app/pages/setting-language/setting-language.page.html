@@ -1,0 +1,36 @@
+<ion-header [translucent]="true" mode="ios">
+  <ion-toolbar color="dark" mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'LANGUAGE' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list mode="ios">
+    <ion-radio-group [(ngModel)]="env.language" (ionChange)="saveLanguage()">
+      <ion-item lines="full">
+        <ion-label>
+          <p class="ion-padding">
+            <ion-text color="dark" style="font-size: large;">
+              English
+            </ion-text>
+          </p>
+        </ion-label>
+        <ion-radio mode="md" slot="end" [value]="'en'" color="secondary"></ion-radio>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label>
+          <p class="ion-padding">
+            <ion-text color="dark" style="font-size: large;">
+              正體中文
+            </ion-text>
+          </p>
+        </ion-label>
+        <ion-radio mode="md" slot="end" [value]="'zh-HK'" color="secondary"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+</ion-content>

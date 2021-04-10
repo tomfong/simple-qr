@@ -4,8 +4,8 @@ import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { AlertController, IonRouterOutlet, LoadingController, Platform } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { ConfigService } from 'src/app/services/config.service';
 import { EnvService } from 'src/app/services/env.service';
 
 enum CameraChoice {
@@ -44,7 +44,7 @@ export class ScanPage {
     private vibration: Vibration,
     private router: Router,
     private env: EnvService,
-    public config: ConfigService,
+    public translate: TranslateService,
   ) {
     this.platform.ready().then(
       async () => {
@@ -107,13 +107,17 @@ export class ScanPage {
   }
 
   async prepareScanner(): Promise<void> {
-    const loading = await this.presentLoading("Preparing");
+    const loading = await this.presentLoading(this.translate.instant("PREPARING"));
     let denied = false;
     await this.qrScanner.getStatus().then(
       async (status: QRScannerStatus) => {
         loading.dismiss();
         if (status.denied) {
-          const alert = await this.presentAlert("Press Setting to grant camera permission.", "Message", "Setting");
+          const alert = await this.presentAlert(
+            this.translate.instant("MSG.CAMERA_PERMISSION_1"),
+            this.translate.instant("MESSAGE"),
+            this.translate.instant("SETTING")
+          );
           await alert.onDidDismiss().then(
             async () => {
               denied = true;
@@ -134,7 +138,11 @@ export class ScanPage {
       },
       async err => {
         if (err.name === "CAMERA_ACCESS_DENIED") {
-          const alert = await this.presentAlert("You must grant the camera permission for scanning.", "Message", "OK");
+          const alert = await this.presentAlert(
+            this.translate.instant("MSG.CAMERA_PERMISSION_2"),
+            this.translate.instant("MESSAGE"),
+            this.translate.instant("OK")
+          );
           await alert.onDidDismiss().then(
             async () => {
               await this.prepareScanner();
@@ -170,7 +178,12 @@ export class ScanPage {
                 await this.qrScanner.destroy().then(
                   async () => {
                     this.cameraActive = false;
-                    this.pauseAlert = await this.presentAlert("The camera is paused to save battery. Hold the device to resume.", "Camera Pause", null, true);
+                    this.pauseAlert = await this.presentAlert(
+                      this.translate.instant("MSG.CAMERA_PAUSE"),
+                      this.translate.instant("CAMERA_PAUSE"),
+                      null,
+                      true
+                    );
                     this.pauseAlert.onDidDismiss().then(
                       () => {
                         this.pauseAlert = null;
@@ -200,7 +213,7 @@ export class ScanPage {
         this.scanSubscription = this.qrScanner.scan().subscribe(
           async (text: string) => {
             this.vibration.vibrate(200);
-            const loading = await this.presentLoading("Please wait...");
+            const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
             if (this.scanSubscription) {
               this.scanSubscription.unsubscribe();
             }
@@ -231,12 +244,12 @@ export class ScanPage {
 
   async createQrcode(): Promise<void> {
     const alert = await this.alertController.create({
-      header: "Generate QR Code",
+      header: this.translate.instant('GENERATE_QRCODE'),
       inputs: [
         {
           name: 'qrcode',
           type: 'text',
-          placeholder: 'QR code content...'
+          placeholder: this.translate.instant('QRCODE_CONTENT')
         },
       ],
       buttons: [
@@ -244,7 +257,7 @@ export class ScanPage {
           text: 'Enter',
           handler: async (data) => {
             const text = data.qrcode;
-            const loading = await this.presentLoading("Please wait...");
+            const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
             if (this.scanSubscription) {
               this.scanSubscription.unsubscribe();
             }
@@ -283,22 +296,22 @@ export class ScanPage {
   }
 
   async navigateSetting(): Promise<void> {
-
+    this.router.navigate(['setting', { t: new Date().getTime() }]);
   }
 
   async confirmExitApp(): Promise<void> {
     const alert = await this.alertController.create({
-      header: "Exit the app",
-      message: "Do you want to leave now?",
+      header: this.translate.instant('EXIT_APP'),
+      message: this.translate.instant('MSG.EXIT_APP'),
       buttons: [
         {
-          text: 'Yes',
+          text: this.translate.instant('YES'),
           handler: () => {
             navigator['app'].exitApp();
           }
         },
         {
-          text: 'No',
+          text: this.translate.instant('NO'),
           role: 'cancel',
           cssClass: 'btn-inverse'
         }

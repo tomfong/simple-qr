@@ -18,5 +18,8 @@ export class SettingPage {
     
   }
 
+  setLanguage() {
+    this.router.navigate(['setting-language', { t: new Date().getTime() }]);
+  }
 
 }

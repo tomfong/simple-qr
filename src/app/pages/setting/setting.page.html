@@ -1,9 +1,74 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>setting</ion-title>
+<ion-header [translucent]="true" mode="ios">
+  <ion-toolbar color="dark" mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'SETTING' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-list mode="ios">
+    <ion-item lines="full" button (click)="setLanguage()">
+      <ion-icon color="dimgray" name="language"></ion-icon>
+      <ion-label>
+        <p class="ion-padding">
+          <ion-text color="dark" style="font-size: large;">
+            {{ 'LANGUAGE' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+    </ion-item>
+    <ion-item lines="full" button>
+      <ion-icon color="dimgray" name="moon"></ion-icon>
+      <ion-label>
+        <p class="ion-padding">
+          <ion-text color="dark" style="font-size: large;">
+            {{ 'COLOR_THEME' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+    </ion-item>
+    <ion-item lines="full" button>
+      <ion-icon color="dimgray" name="camera"></ion-icon>
+      <ion-label>
+        <p class="ion-padding">
+          <ion-text color="dark" style="font-size: large;">
+            {{ 'CAMERA_PAUSE' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+    </ion-item>
+    <ion-item lines="full" button>
+      <ion-icon color="dimgray" src="assets/icon/history.svg"></ion-icon>
+      <ion-label>
+        <p class="ion-padding">
+          <ion-text color="dark" style="font-size: large;">
+            {{ 'SCAN_HISTORY_LOGGING' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+    </ion-item>
+    <ion-item lines="full" button>
+      <ion-icon color="dimgray" name="logo-github"></ion-icon>
+      <ion-label>
+        <p class="ion-padding">
+          <ion-text color="dark" style="font-size: large;">
+            {{ 'ABOUT_SIMPLE_QR' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+    </ion-item>
+    <ion-item lines="none" button>
+      <ion-icon color="dimgray" src="assets/icon/dollar.svg"></ion-icon>
+      <ion-label>
+        <p class="ion-padding">
+          <ion-text color="dark" style="font-size: large;">
+            {{ 'SUPPORT_DEVELOPER' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
