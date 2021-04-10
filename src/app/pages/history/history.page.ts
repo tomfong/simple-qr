@@ -25,7 +25,7 @@ export class HistoryPage {
     if (!date) {
       return "-";
     }
-    return moment(date).format("YYYY-MM-DD HH:mm:ss");
+    return moment(date).format("HH:mm:ss YYYY-MMM-DD");
   }
 
   returnScanPage(): void {

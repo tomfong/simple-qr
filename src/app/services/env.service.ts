@@ -34,7 +34,17 @@ export class EnvService {
         if (value !== null && value !== undefined) {
           try {
             this._scanRecords = JSON.parse(value);
+            this._scanRecords.forEach(
+              r => {
+                const tCreatedAt = r.createdAt;
+                r.createdAt = new Date(tCreatedAt);
+              }
+            );
+            this._scanRecords.sort( (r1, r2) => {
+              return r2.createdAt.getTime() - r1.createdAt.getTime();
+            });
           } catch (err) {
+            console.error(err);
             this._scanRecords = [];
           }
         }
@@ -87,7 +97,7 @@ export class EnvService {
     const record = new ScanRecord();
     record.text = value;
     record.createdAt = new Date();
-    this._scanRecords.push(record);
+    this._scanRecords.unshift(record);
     await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
   }
 }
