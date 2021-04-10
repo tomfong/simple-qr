@@ -63,9 +63,10 @@ export class ResultPage implements OnInit {
     private sms: SMS,
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.qrCodeContent = this.env.result;
     this.setContentType();
+    await this.env.saveScanRecord(this.qrCodeContent);
   }
 
   async ionViewDidEnter(): Promise<void> {
@@ -297,7 +298,7 @@ export class ResultPage implements OnInit {
               text: 'Original',
               handler: () => {
                 alert.dismiss();
-                url = environment.webSearchUrl + encodeURIComponent(this.qrCodeContent);
+                url = this.config.WEB_SEARCH_URL + encodeURIComponent(this.qrCodeContent);
                 window.open(url, '_system');
               }
             },
@@ -305,7 +306,7 @@ export class ResultPage implements OnInit {
               text: 'Base64-Decoded',
               handler: () => {
                 alert.dismiss();
-                url = environment.webSearchUrl + encodeURIComponent(this.base64DecodedText);
+                url = this.config.WEB_SEARCH_URL + encodeURIComponent(this.base64DecodedText);
                 window.open(url, '_system');
               }
             }
@@ -314,7 +315,7 @@ export class ResultPage implements OnInit {
       )
       alert.present();
     } else {
-      url = environment.webSearchUrl + encodeURIComponent(this.qrCodeContent);
+      url = this.config.WEB_SEARCH_URL + encodeURIComponent(this.qrCodeContent);
       window.open(url, '_system');
     }
   }
@@ -379,22 +380,22 @@ export class ResultPage implements OnInit {
     const data = imageDataUrl.split(',')[1];
     const blob = this.base64toBlob(data, 'image/png');
     const filename = "qrcode_" + (new Date()).getTime() + '.png';
-    await this.file.checkDir(this.env.baseDir, environment.appFolderName).then(
+    await this.file.checkDir(this.env.baseDir, this.config.APP_FOLDER_NAME).then(
       async value => {
         if (!value) {
-          await this.file.createDir(this.env.baseDir, environment.appFolderName, true).catch(err => console.error('createDir error', err));
+          await this.file.createDir(this.env.baseDir, this.config.APP_FOLDER_NAME, true).catch(err => console.error('createDir error', err));
         }
       },
       async err => {
         console.error("error in checkDir", err);
-        await this.file.createDir(this.env.baseDir, environment.appFolderName, true).catch(err => console.error('createDir error', err));
+        await this.file.createDir(this.env.baseDir, this.config.APP_FOLDER_NAME, true).catch(err => console.error('createDir error', err));
       }
     );
-    await this.file.writeFile(`${this.env.baseDir}/${environment.appFolderName}`, filename, blob as Blob, { replace: true, append: false }).then(
+    await this.file.writeFile(`${this.env.baseDir}/${this.config.APP_FOLDER_NAME}`, filename, blob as Blob, { replace: true, append: false }).then(
       async _ => {
         console.log('writeFile succeed');
         loading.dismiss();
-        const finalPath = `${this.env.baseDir}${environment.appFolderName}/${filename}`.replace(/(^\w+:|^)\/\//, '');
+        const finalPath = `${this.env.baseDir}${this.config.APP_FOLDER_NAME}/${filename}`.replace(/(^\w+:|^)\/\//, '');
         await this.presentToast(`Saved as ${finalPath}`, 5000, "middle", "left", "long");
       },
       async err => {

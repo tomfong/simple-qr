@@ -64,3 +64,11 @@
 .toolbar-end-btn {
     padding-right: 10px;
 }
+
+.fullscreen-vertical-center {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    place-content: center
+}

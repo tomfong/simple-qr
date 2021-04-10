@@ -1,9 +1,29 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>history</ion-title>
+<ion-header [translucent]="true" mode="ios">
+  <ion-toolbar color="dark" mode="ios">
+    <ion-buttons slot="start">
+      <ion-button mode="ios" (click)="returnScanPage()">
+        <ion-icon slot="start" name="chevron-back"></ion-icon>
+        <span>Return</span>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>History</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ng-container *ngIf="env.scanRecords.length <= 0">
+    <div class="ion-padding-horizontal fullscreen-vertical-center">
+      <ion-icon src="assets/icon/history.svg" color="dark" style="font-size: 3rem"></ion-icon>
+      <p class="ion-text-center">
+        <ion-text color="dark" style="font-size: large;">
+          Scanning history will be shown here
+        </ion-text>
+      </p>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="env.scanRecords.length > 0">
+    <p *ngFor="let record of env.scanRecords">
+      {{ record.text + ", " + maskDatetime(record.createdAt) }}
+    </p>
+  </ng-container>
 </ion-content>

@@ -5,6 +5,7 @@ import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { AlertController, IonRouterOutlet, LoadingController, Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { ConfigService } from 'src/app/services/config.service';
 import { EnvService } from 'src/app/services/env.service';
 
 enum CameraChoice {
@@ -43,6 +44,7 @@ export class ScanPage {
     private vibration: Vibration,
     private router: Router,
     private env: EnvService,
+    public config: ConfigService,
   ) {
     this.platform.ready().then(
       async () => {
@@ -274,6 +276,10 @@ export class ScanPage {
         }
       );
     }
+  }
+
+  async navigateHistory(): Promise<void> {
+    this.router.navigate(['history', { t: new Date().getTime() }]);
   }
 
   async navigateSetting(): Promise<void> {
