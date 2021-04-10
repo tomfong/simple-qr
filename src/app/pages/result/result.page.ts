@@ -79,7 +79,7 @@ export class ResultPage implements OnInit {
       this.webToast = await this.toastController.create({
         header: "Website",
         message: `${this.qrCodeContent}`,
-        duration: 7000,
+        duration: 3000,
         mode: "ios",
         color: "light",
         position: "top",
