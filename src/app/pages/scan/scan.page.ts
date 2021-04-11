@@ -260,7 +260,7 @@ export class ScanPage {
       ],
       buttons: [
         {
-          text: 'Enter',
+          text: this.translate.instant('ENTER'),
           handler: async (data) => {
             const text = data.qrcode;
             const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
