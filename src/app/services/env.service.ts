@@ -20,6 +20,7 @@ export class EnvService {
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
   public readonly WEB_SEARCH_URL: string = "https://www.google.com/search?q=";
+  public readonly GITHUB_REPO_URL: string = "https://github.com/tomfong/simple-qr";
 
   private _storage: Storage | null = null;
   private _scannedData: string = '';
