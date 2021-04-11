@@ -1,3 +1,4 @@
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { Injectable } from '@angular/core';
 import { File } from '@ionic-native/file/ngx';
 import { Platform } from '@ionic/angular';
@@ -13,7 +14,7 @@ export class EnvService {
 
   public languages: string[] = ['en', 'zh-HK'];
   public language: string = 'default';
-  public darkTheme: boolean = false;
+  public colorTheme: 'light' | 'dark' = 'light';
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
   public readonly WEB_SEARCH_URL: string = "https://www.google.com/search?q=";
@@ -27,6 +28,7 @@ export class EnvService {
     private platform: Platform,
     private storage: Storage,
     public translate: TranslateService,
+    private overlayContainer: OverlayContainer,
   ) {
     this.platform.ready().then(
       async () => {
@@ -65,6 +67,16 @@ export class EnvService {
           }
           this.language = 'default';
         }
+      }
+    );
+    await this.storageGet("color").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.colorTheme = value;
+        } else {
+          this.colorTheme = 'light';
+        }
+        this.toggleColorTheme();
       }
     );
     await this.storageGet(environment.storageScanRecordKey).then(
@@ -160,4 +172,15 @@ export class EnvService {
     await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
   }
 
+  toggleColorTheme(): void {
+    if (this.colorTheme === 'light') {
+      document.body.classList.toggle('dark', false);
+      this.overlayContainer.getContainerElement().classList.remove('ng-mat-dark');
+      this.overlayContainer.getContainerElement().classList.add('ng-mat-light');
+    } else {
+      document.body.classList.toggle('dark', true);
+      this.overlayContainer.getContainerElement().classList.remove('ng-mat-light');
+      this.overlayContainer.getContainerElement().classList.add('ng-mat-dark');
+    }
+  }
 }

@@ -91,14 +91,14 @@ export class HistoryPage {
       message: this.translate.instant('MSG.REMOVE_ALL_RECORD'),
       buttons: [
         {
-          text: this.translate.instant('CANCEL'),
-          role: 'cancel'
-        },
-        {
-          text: this.translate.instant('CONFIRM'),
+          text: this.translate.instant('YES'),
           handler: async () => {
             await this.env.deleteAllScanRecords();
           }
+        },
+        {
+          text: this.translate.instant('NO'),
+          role: 'cancel'
         },
       ]
     });

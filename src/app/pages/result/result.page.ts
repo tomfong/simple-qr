@@ -140,11 +140,11 @@ export class ResultPage implements OnInit {
   }
 
   get qrColorDark(): string {
-    return this.env.darkTheme ? "#ffffff" : "#222428";
+    return this.env.colorTheme === "dark" ? "#ffffff" : "#222428";
   }
 
   get qrColorLight(): string {
-    return this.env.darkTheme ? "#222428" : "#ffffff";
+    return this.env.colorTheme === "dark" ? "#121212" : "#ffffff";
   }
 
   browseWebsite(): void {

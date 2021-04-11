@@ -19,9 +19,9 @@
 <ion-content>
   <ng-container *ngIf="!env.scanRecords || (env.scanRecords.length <= 0)">
     <div class="ion-padding-horizontal fullscreen-vertical-center">
-      <ion-icon src="assets/icon/history.svg" color="dark" style="font-size: 3rem"></ion-icon>
+      <ion-icon src="assets/icon/history.svg" [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: 3rem"></ion-icon>
       <p class="ion-text-center">
-        <ion-text color="dark" style="font-size: large;">
+        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
           {{ 'SCANNING_HISTORY_SHOWN' | translate }}
         </ion-text>
       </p>
@@ -33,7 +33,7 @@
         <ion-item [lines]="i === env.scanRecords.length - 1? 'none' : 'full'" button (click)="processQrCode(record.text)">
           <ion-label>
             <p class="ion-padding-top ion-padding-horizontal">
-              <ion-text color="dark" style="font-size: large;">
+              <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
                 {{ record.text }}
               </ion-text>
             </p>

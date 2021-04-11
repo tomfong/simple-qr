@@ -1,0 +1,38 @@
+<ion-header [translucent]="true" mode="ios">
+  <ion-toolbar color="dark" mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'COLOR_THEME' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list mode="ios">
+    <ion-radio-group [(ngModel)]="env.colorTheme" (ionChange)="saveColorTheme()">
+      <ion-item lines="full">
+        <ion-icon color="warning" name="sunny"></ion-icon>
+        <ion-label>
+          <p class="ion-padding">
+            <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+              {{ 'LIGHT' | translate }}
+            </ion-text>
+          </p>
+        </ion-label>
+        <ion-radio mode="md" slot="end" [value]="'light'" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"></ion-radio>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-icon color="medium" name="moon"></ion-icon>
+        <ion-label>
+          <p class="ion-padding">
+            <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+              {{ 'DARK' | translate }}
+            </ion-text>
+          </p>
+        </ion-label>
+        <ion-radio mode="md" slot="end" [value]="'dark'" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+</ion-content>

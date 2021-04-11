@@ -11,60 +11,60 @@
 <ion-content>
   <ion-list mode="ios">
     <ion-item lines="full" button (click)="setLanguage()">
-      <ion-icon color="dimgray" name="language"></ion-icon>
+      <ion-icon [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="language"></ion-icon>
       <ion-label>
         <p class="ion-padding">
-          <ion-text color="dark" style="font-size: large;">
+          <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
             {{ 'LANGUAGE' | translate }}
           </ion-text>
         </p>
       </ion-label>
     </ion-item>
-    <ion-item lines="full" button>
-      <ion-icon color="dimgray" name="moon"></ion-icon>
+    <ion-item lines="full" button (click)="setColorTheme()">
+      <ion-icon [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="color-palette"></ion-icon>
       <ion-label>
         <p class="ion-padding">
-          <ion-text color="dark" style="font-size: large;">
+          <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
             {{ 'COLOR_THEME' | translate }}
           </ion-text>
         </p>
       </ion-label>
     </ion-item>
     <ion-item lines="full" button>
-      <ion-icon color="dimgray" name="camera"></ion-icon>
+      <ion-icon [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="camera"></ion-icon>
       <ion-label>
         <p class="ion-padding">
-          <ion-text color="dark" style="font-size: large;">
+          <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
             {{ 'CAMERA_PAUSE' | translate }}
           </ion-text>
         </p>
       </ion-label>
     </ion-item>
     <ion-item lines="full" button>
-      <ion-icon color="dimgray" src="assets/icon/history.svg"></ion-icon>
+      <ion-icon [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" src="assets/icon/history.svg"></ion-icon>
       <ion-label>
         <p class="ion-padding">
-          <ion-text color="dark" style="font-size: large;">
+          <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
             {{ 'SCAN_HISTORY_LOGGING' | translate }}
           </ion-text>
         </p>
       </ion-label>
     </ion-item>
     <ion-item lines="full" button>
-      <ion-icon color="dimgray" name="logo-github"></ion-icon>
+      <ion-icon [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="logo-github"></ion-icon>
       <ion-label>
         <p class="ion-padding">
-          <ion-text color="dark" style="font-size: large;">
+          <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
             {{ 'ABOUT_SIMPLE_QR' | translate }}
           </ion-text>
         </p>
       </ion-label>
     </ion-item>
     <ion-item lines="none" button>
-      <ion-icon color="dimgray" src="assets/icon/dollar.svg"></ion-icon>
+      <ion-icon [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" src="assets/icon/dollar.svg"></ion-icon>
       <ion-label>
         <p class="ion-padding">
-          <ion-text color="dark" style="font-size: large;">
+          <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
             {{ 'SUPPORT_DEVELOPER' | translate }}
           </ion-text>
         </p>

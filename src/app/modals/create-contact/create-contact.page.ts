@@ -1,8 +1,10 @@
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatInput } from '@angular/material/input';
 import { ModalController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { VCardContact } from 'src/app/models/v-card-contact';
+import { EnvService } from 'src/app/services/env.service';
 
 @Component({
   selector: 'app-create-contact',
@@ -22,7 +24,7 @@ export class CreateContactPage implements OnInit {
   @Input() givenName: string = '';
   @ViewChild('givenNameInput') givenNameInput: MatInput;
   @Input() familyName: string = '';
-  
+
   phoneNumberObject: ContactField;
   phoneNumberTypes = [{ text: this.defaultText, value: 'other' }, { text: this.mobileText, value: 'mobile' }, { text: this.homeText, value: 'home' }, { text: this.workText, value: 'work' }];
   phoneNumberType: string = 'other';
@@ -37,6 +39,7 @@ export class CreateContactPage implements OnInit {
     public modalController: ModalController,
     public toastController: ToastController,
     public translate: TranslateService,
+    public env: EnvService,
   ) { 
     this.defaultText = this.translate.instant("DEFAULT_OR_OTHER");
     this.mobileText = this.translate.instant("MOBILE");
@@ -46,7 +49,7 @@ export class CreateContactPage implements OnInit {
     this.emailTypes = [{ text: this.defaultText, value: 'other' }, { text: this.homeText, value: 'home' }, { text: this.workText, value: 'work' }];
   }
 
-  ngOnInit() { 
+  ngOnInit() {
     if (this.vCardContact) {
       if (this.vCardContact.fullName) {
         this.givenName = this.vCardContact.fullName;

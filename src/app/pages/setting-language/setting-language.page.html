@@ -14,32 +14,32 @@
       <ion-item lines="full">
         <ion-label>
           <p class="ion-padding">
-            <ion-text color="dark" style="font-size: large;">
+            <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
               {{ 'SYSTEM_LANGUAGE' | translate }}
             </ion-text>
           </p>
         </ion-label>
-        <ion-radio mode="md" slot="end" [value]="'default'" color="secondary"></ion-radio>
+        <ion-radio mode="md" slot="end" [value]="'default'" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"></ion-radio>
       </ion-item>
       <ion-item lines="full">
         <ion-label>
           <p class="ion-padding">
-            <ion-text color="dark" style="font-size: large;">
+            <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
               English
             </ion-text>
           </p>
         </ion-label>
-        <ion-radio mode="md" slot="end" [value]="'en'" color="secondary"></ion-radio>
+        <ion-radio mode="md" slot="end" [value]="'en'" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"></ion-radio>
       </ion-item>
       <ion-item lines="none">
         <ion-label>
           <p class="ion-padding">
-            <ion-text color="dark" style="font-size: large;">
+            <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
               正體中文
             </ion-text>
           </p>
         </ion-label>
-        <ion-radio mode="md" slot="end" [value]="'zh-HK'" color="secondary"></ion-radio>
+        <ion-radio mode="md" slot="end" [value]="'zh-HK'" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"></ion-radio>
       </ion-item>
     </ion-radio-group>
   </ion-list>

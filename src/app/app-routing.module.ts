@@ -26,6 +26,10 @@ const routes: Routes = [
     path: 'setting-language',
     loadChildren: () => import('./pages/setting-language/setting-language.module').then( m => m.SettingLanguagePageModule)
   },
+  {
+    path: 'setting-color',
+    loadChildren: () => import('./pages/setting-color/setting-color.module').then( m => m.SettingColorPageModule)
+  },
 
 
 ];
