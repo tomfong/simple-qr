@@ -16,6 +16,7 @@ export class EnvService {
   public language: string = 'default';
   public colorTheme: 'light' | 'dark' = 'light';
   public cameraPauseTimeout: 0 | 5 | 10 | 20 | 30 = 10;
+  public scanRecordLogging: 'on' | 'off' = 'on';
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
   public readonly WEB_SEARCH_URL: string = "https://www.google.com/search?q=";
@@ -86,6 +87,15 @@ export class EnvService {
           this.cameraPauseTimeout = value;
         } else {
           this.cameraPauseTimeout = 10;
+        }
+      }
+    );
+    await this.storageGet("scan-record-logging").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.scanRecordLogging = value;
+        } else {
+          this.scanRecordLogging = 'on';
         }
       }
     );

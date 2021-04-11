@@ -32,4 +32,8 @@ export class SettingPage {
     this.router.navigate(['setting-camera-pause', { t: new Date().getTime() }]);
   }
 
+  setScanRecordLogging() {
+    this.router.navigate(['setting-record', { t: new Date().getTime() }]);
+  }
+
 }

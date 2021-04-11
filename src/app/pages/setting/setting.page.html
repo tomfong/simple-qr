@@ -43,7 +43,7 @@
       </ion-label>
       <ion-ripple-effect></ion-ripple-effect>
     </ion-item>
-    <ion-item lines="none" button>
+    <ion-item lines="none" button (click)="setScanRecordLogging()">
       <ion-icon [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" src="assets/icon/history.svg"></ion-icon>
       <ion-label>
         <p class="ion-padding">

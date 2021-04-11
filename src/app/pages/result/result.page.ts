@@ -66,7 +66,9 @@ export class ResultPage implements OnInit {
   async ngOnInit() {
     this.qrCodeContent = this.env.result;
     this.setContentType();
-    await this.env.saveScanRecord(this.qrCodeContent);
+    if (this.env.scanRecordLogging === 'on') {
+      await this.env.saveScanRecord(this.qrCodeContent);
+    }
   }
 
   async ionViewDidEnter(): Promise<void> {

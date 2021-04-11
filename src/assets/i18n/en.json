@@ -51,6 +51,8 @@
     "SECONDS": "seconds",
     "CAMERA_PAUSE_EXPLAIN": "When scanning, the app keeps detecting the motion of your device. If the device is motionless for a time, the scanning and camera preview will be paused to save battery. Choose Never to disable the function.",
     "SCAN_HISTORY_LOGGING": "Scan History Logging",
+    "TURN_ON": "On",
+    "TURN_OFF": "Off",
     "ABOUT_SIMPLE_QR": "About Simple QR",
     "SUPPORT_DEVELOPER": "Support Developer",
     "NEW_CONTACT": "New Contact",
