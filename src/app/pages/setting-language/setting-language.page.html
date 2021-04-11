@@ -11,7 +11,7 @@
 <ion-content>
   <ion-list mode="ios">
     <ion-radio-group [(ngModel)]="env.language" (ionChange)="saveLanguage()">
-      <ion-item lines="full">
+      <ion-item lines="none">
         <ion-label>
           <p class="ion-padding">
             <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
@@ -20,8 +20,9 @@
           </p>
         </ion-label>
         <ion-radio mode="md" slot="end" [value]="'default'" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"></ion-radio>
+        <ion-ripple-effect></ion-ripple-effect>
       </ion-item>
-      <ion-item lines="full">
+      <ion-item lines="none">
         <ion-label>
           <p class="ion-padding">
             <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
@@ -40,6 +41,7 @@
           </p>
         </ion-label>
         <ion-radio mode="md" slot="end" [value]="'zh-HK'" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"></ion-radio>
+        <ion-ripple-effect></ion-ripple-effect>
       </ion-item>
     </ion-radio-group>
   </ion-list>

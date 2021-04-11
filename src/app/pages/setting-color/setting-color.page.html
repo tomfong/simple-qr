@@ -11,7 +11,7 @@
 <ion-content>
   <ion-list mode="ios">
     <ion-radio-group [(ngModel)]="env.colorTheme" (ionChange)="saveColorTheme()">
-      <ion-item lines="full">
+      <ion-item lines="none">
         <ion-icon color="warning" name="sunny"></ion-icon>
         <ion-label>
           <p class="ion-padding">
@@ -21,6 +21,7 @@
           </p>
         </ion-label>
         <ion-radio mode="md" slot="end" [value]="'light'" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"></ion-radio>
+        <ion-ripple-effect></ion-ripple-effect>
       </ion-item>
       <ion-item lines="none">
         <ion-icon color="medium" name="moon"></ion-icon>
@@ -32,6 +33,7 @@
           </p>
         </ion-label>
         <ion-radio mode="md" slot="end" [value]="'dark'" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"></ion-radio>
+        <ion-ripple-effect></ion-ripple-effect>
       </ion-item>
     </ion-radio-group>
   </ion-list>

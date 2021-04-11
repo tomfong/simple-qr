@@ -36,6 +36,9 @@ export class HistoryPage {
     if (!date) {
       return "-";
     }
+    if (this.translate.currentLang === 'zh-HK') {
+      return moment(date).format("YYYY年M月D日 HH:mm:ss");
+    }
     return moment(date).format("YYYY-MMM-DD HH:mm:ss");
   }
 
