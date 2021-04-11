@@ -14,9 +14,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
-import { File } from '@ionic-native/file/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { SMS } from '@ionic-native/sms/ngx';
 
@@ -56,9 +54,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     DeviceMotion,
     Vibration,
     Clipboard,
-    File,
     SocialSharing,
-    WebView,
     CallNumber,
     SMS,
   ],

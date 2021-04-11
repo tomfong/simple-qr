@@ -27,8 +27,7 @@
     "@ionic-native/clipboard": "^5.31.1",
     "@ionic-native/core": "^5.31.1",
     "@ionic-native/device-motion": "^5.31.1",
-    "@ionic-native/file": "^5.31.1",
-    "@ionic-native/ionic-webview": "^5.31.1",
+    "@ionic-native/ionic-webview": "^5.32.0",
     "@ionic-native/qr-scanner": "^5.31.1",
     "@ionic-native/sms": "^5.31.1",
     "@ionic-native/social-sharing": "^5.31.1",
@@ -40,7 +39,6 @@
     "@ngx-translate/http-loader": "^6.0.0",
     "@techiediaries/ngx-qrcode": "^9.1.0",
     "cordova-clipboard": "^1.3.0",
-    "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-x-socialsharing": "^6.0.3",
     "dotenv": "^8.2.0",
     "es6-promise-plugin": "^4.2.2",
@@ -67,7 +65,7 @@
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-device-motion": "^2.0.1",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
-    "cordova-plugin-ionic-webview": "^4.2.1",
+    "cordova-plugin-ionic-webview": "^4.0.0",
     "cordova-plugin-qrscanner": "^3.0.1",
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-statusbar": "^2.4.2",
@@ -96,20 +94,19 @@
       "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
-      "cordova-plugin-ionic-webview": {
-        "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
-      },
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-device-motion": {},
       "cordova-plugin-vibration": {},
       "cordova-sqlite-storage": {},
       "cordova-clipboard": {},
-      "cordova-plugin-file": {},
       "cordova-plugin-x-socialsharing": {},
       "cordova-plugin-androidx-adapter": {},
       "mx.ferreyra.callnumber": {},
       "cordova-plugin-contacts": {},
-      "cordova-sms-plugin": {}
+      "cordova-sms-plugin": {},
+      "cordova-plugin-ionic-webview": {
+        "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
+      }
     },
     "platforms": [
       "android"

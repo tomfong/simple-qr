@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
-import { File } from '@ionic-native/file/ngx';
-import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { SMS } from '@ionic-native/sms/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
@@ -13,7 +11,6 @@ import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiedi
 import { CreateContactPage } from 'src/app/modals/create-contact/create-contact.page';
 import { VCardContact } from 'src/app/models/v-card-contact';
 import { EnvService } from 'src/app/services/env.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-result',
@@ -54,9 +51,7 @@ export class ResultPage implements OnInit {
     public env: EnvService,
     public toastController: ToastController,
     private clipboard: Clipboard,
-    private file: File,
     private socialSharing: SocialSharing,
-    private webview: WebView,
     private callNumber: CallNumber,
     public modalController: ModalController,
     private sms: SMS,
@@ -358,38 +353,38 @@ export class ResultPage implements OnInit {
     }
   }
 
-  async saveQrCode(): Promise<void> {
-    const loading = await this.presentLoading("Saving");
-    const canvas = document.querySelector("canvas") as HTMLCanvasElement;
-    const imageDataUrl = canvas.toDataURL("image/png", 1);
-    const data = imageDataUrl.split(',')[1];
-    const blob = this.base64toBlob(data, 'image/png');
-    const filename = "qrcode_" + (new Date()).getTime() + '.png';
-    await this.file.checkDir(this.env.baseDir, this.env.APP_FOLDER_NAME).then(
-      async value => {
-        if (!value) {
-          await this.file.createDir(this.env.baseDir, this.env.APP_FOLDER_NAME, true).catch(err => console.error('createDir error', err));
-        }
-      },
-      async err => {
-        console.error("error in checkDir", err);
-        await this.file.createDir(this.env.baseDir, this.env.APP_FOLDER_NAME, true).catch(err => console.error('createDir error', err));
-      }
-    );
-    await this.file.writeFile(`${this.env.baseDir}/${this.env.APP_FOLDER_NAME}`, filename, blob as Blob, { replace: true, append: false }).then(
-      async _ => {
-        console.log('writeFile succeed');
-        loading.dismiss();
-        const finalPath = `${this.env.baseDir}${this.env.APP_FOLDER_NAME}/${filename}`.replace(/(^\w+:|^)\/\//, '');
-        await this.presentToast(`Saved as ${finalPath}`, 5000, "middle", "left", "long");
-      },
-      async err => {
-        console.error('writeFile error', err);
-        loading.dismiss();
-        await this.presentToast("Failed to save the QR code", 3000, "middle", "center", "long");
-      }
-    );
-  }
+  // async saveQrCode(): Promise<void> {
+  //   const loading = await this.presentLoading("Saving");
+  //   const canvas = document.querySelector("canvas") as HTMLCanvasElement;
+  //   const imageDataUrl = canvas.toDataURL("image/png", 1);
+  //   const data = imageDataUrl.split(',')[1];
+  //   const blob = this.base64toBlob(data, 'image/png');
+  //   const filename = "qrcode_" + (new Date()).getTime() + '.png';
+  //   await this.file.checkDir(this.env.baseDir, this.env.APP_FOLDER_NAME).then(
+  //     async value => {
+  //       if (!value) {
+  //         await this.file.createDir(this.env.baseDir, this.env.APP_FOLDER_NAME, true).catch(err => console.error('createDir error', err));
+  //       }
+  //     },
+  //     async err => {
+  //       console.error("error in checkDir", err);
+  //       await this.file.createDir(this.env.baseDir, this.env.APP_FOLDER_NAME, true).catch(err => console.error('createDir error', err));
+  //     }
+  //   );
+  //   await this.file.writeFile(`${this.env.baseDir}/${this.env.APP_FOLDER_NAME}`, filename, blob as Blob, { replace: true, append: false }).then(
+  //     async _ => {
+  //       console.log('writeFile succeed');
+  //       loading.dismiss();
+  //       const finalPath = `${this.env.baseDir}${this.env.APP_FOLDER_NAME}/${filename}`.replace(/(^\w+:|^)\/\//, '');
+  //       await this.presentToast(`Saved as ${finalPath}`, 5000, "middle", "left", "long");
+  //     },
+  //     async err => {
+  //       console.error('writeFile error', err);
+  //       loading.dismiss();
+  //       await this.presentToast("Failed to save the QR code", 3000, "middle", "center", "long");
+  //     }
+  //   );
+  // }
 
   async shareQrCode(): Promise<void> {
     const loading = await this.presentLoading(this.translate.instant('PREPARING'));

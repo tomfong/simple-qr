@@ -1,6 +1,5 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Injectable } from '@angular/core';
-import { File } from '@ionic-native/file/ngx';
 import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -27,7 +26,6 @@ export class EnvService {
   private _scanRecords: ScanRecord[] = [];
 
   constructor(
-    private file: File,
     private platform: Platform,
     private storage: Storage,
     public translate: TranslateService,
@@ -148,15 +146,15 @@ export class EnvService {
     this._scannedData = value;
   }
 
-  get baseDir(): string {
-    let baseDir: string;
-    if (this.platform.is('android')) {
-      baseDir = this.file.externalDataDirectory;
-    } else {
-      baseDir = this.file.dataDirectory;
-    }
-    return baseDir;
-  }
+  // get baseDir(): string {
+  //   let baseDir: string;
+  //   if (this.platform.is('android')) {
+  //     baseDir = this.file.externalDataDirectory;
+  //   } else {
+  //     baseDir = this.file.dataDirectory;
+  //   }
+  //   return baseDir;
+  // }
 
   get scanRecords(): ScanRecord[] {
     return this._scanRecords;
