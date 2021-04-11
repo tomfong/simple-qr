@@ -28,4 +28,8 @@ export class SettingPage {
     this.router.navigate(['setting-color', { t: new Date().getTime() }]);
   }
 
+  setCameraPause() {
+    this.router.navigate(['setting-camera-pause', { t: new Date().getTime() }]);
+  }
+
 }

@@ -46,6 +46,9 @@
     "LIGHT": "淺色",
     "DARK": "深色",
     "CAMERA_PAUSE": "掃描暫停",
+    "NEVER": "永不",
+    "SECONDS": "秒",
+    "CAMERA_PAUSE_EXPLAIN": "掃描進行時，應用程序會檢測設備的運動。如果您的設備有一段時間不動，掃描和相機預覽將會暫停以節省電池。選擇「永不」可停用這功能。",
     "SCAN_HISTORY_LOGGING": "掃描記錄",
     "ABOUT_SIMPLE_QR": "關於簡易QR",
     "SUPPORT_DEVELOPER": "支持開發者",
@@ -80,7 +83,7 @@
         "EXIT_APP": "確定要離開?",
         "CAMERA_PERMISSION_1": "按「設定」以授權「簡易QR」使用相機",
         "CAMERA_PERMISSION_2": "使用掃描功能，您必須授權「簡易QR」使用相機",
-        "CAMERA_PAUSE": "為節省電力已暫停掃描，提起裝置可繼續使用。",
+        "CAMERA_PAUSE": "為節省電力已暫停掃描，提起裝置可繼續使用。您可在「設定」調校此功能。",
         "UNDO_DELETE": "您可在5秒內復原記錄",
         "REMOVE_ALL_RECORD": "確定要刪除全部記錄? <b>此動作無法被撤回。</b>",
         "GIVE_NAME_CONTACT": "請填寫名字"

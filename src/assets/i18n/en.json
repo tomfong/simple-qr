@@ -46,6 +46,9 @@
     "LIGHT": "Light",
     "DARK": "Dark",
     "CAMERA_PAUSE": "Camera Pause",
+    "NEVER": "Never",
+    "SECONDS": "seconds",
+    "CAMERA_PAUSE_EXPLAIN": "When scanning, the app keeps detecting the motion of your device. If the device is motionless for a time, the scanning and camera preview will be paused to save battery. Choose Never to disable the function.",
     "SCAN_HISTORY_LOGGING": "Scan History Logging",
     "ABOUT_SIMPLE_QR": "About Simple QR",
     "SUPPORT_DEVELOPER": "Support Developer",
@@ -80,7 +83,7 @@
         "EXIT_APP": "Do you want to leave now?",
         "CAMERA_PERMISSION_1": "Press Setting to grant camera permission.",
         "CAMERA_PERMISSION_2": "You must grant the camera permission for scanning.",
-        "CAMERA_PAUSE": "The camera is paused to save battery. Hold the device to resume.",
+        "CAMERA_PAUSE": "The camera is paused to save battery. Hold the device to resume. You can go Setting to configure the function.",
         "UNDO_DELETE": "You can undo the deletion in 5 seconds",
         "REMOVE_ALL_RECORD": "Are you sure to remove all records? <b>This action cannot be undone.</b>",
         "GIVE_NAME_CONTACT": "Give a name to the contact"

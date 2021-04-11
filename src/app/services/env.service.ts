@@ -15,6 +15,7 @@ export class EnvService {
   public languages: string[] = ['en', 'zh-HK'];
   public language: string = 'default';
   public colorTheme: 'light' | 'dark' = 'light';
+  public cameraPauseTimeout: 0 | 5 | 10 | 20 | 30 = 10;
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
   public readonly WEB_SEARCH_URL: string = "https://www.google.com/search?q=";
@@ -77,6 +78,15 @@ export class EnvService {
           this.colorTheme = 'light';
         }
         this.toggleColorTheme();
+      }
+    );
+    await this.storageGet("camera-pause-timeout").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.cameraPauseTimeout = value;
+        } else {
+          this.cameraPauseTimeout = 10;
+        }
       }
     );
     await this.storageGet(environment.storageScanRecordKey).then(

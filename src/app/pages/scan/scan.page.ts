@@ -170,46 +170,52 @@ export class ScanPage {
     await this.qrScanner.show().then(
       () => {
         this.cameraActive = true;
-        this.motionSubscription = this.deviceMotion.watchAcceleration({ frequency: 1000 }).subscribe(
-          async (acceleration: DeviceMotionAccelerationData) => {
-            if (this.detectMotionless(acceleration.x, acceleration.y, acceleration.z)) {
-              this.motionlessCount++;
-              if (this.motionlessCount > 30 && this.cameraActive) {
-                await this.qrScanner.destroy().then(
-                  async () => {
-                    this.cameraActive = false;
-                    this.pauseAlert = await this.presentAlert(
-                      this.translate.instant("MSG.CAMERA_PAUSE"),
-                      this.translate.instant("CAMERA_PAUSE"),
-                      null,
-                      true
-                    );
-                    this.pauseAlert.onDidDismiss().then(
-                      () => {
-                        this.pauseAlert = null;
-                      }
-                    );
-                  }
-                );
-              }
-            } else {
-              if (this.pauseAlert) {
-                this.pauseAlert.dismiss();
-                this.pauseAlert = null;
-              }
-              this.motionX = Math.round(acceleration.x);
-              this.motionY = Math.round(acceleration.y);
-              this.motionZ = Math.round(acceleration.z);
-              this.motionlessCount = 0;
-              const showing = (await this.qrScanner.getStatus()).showing;
-              const previewing = (await this.qrScanner.getStatus()).previewing;
-              if (!showing || !previewing) {
-                this.motionSubscription.unsubscribe();
-                await this.prepareScanner();
+        if (this.env.cameraPauseTimeout !== 0) {
+          this.motionSubscription = this.deviceMotion.watchAcceleration({ frequency: 1000 }).subscribe(
+            async (acceleration: DeviceMotionAccelerationData) => {
+              if (this.detectMotionless(acceleration.x, acceleration.y, acceleration.z)) {
+                this.motionlessCount++;
+                console.log("motionless detected =>",this.motionlessCount)
+                if (this.motionlessCount > this.env.cameraPauseTimeout && this.cameraActive) {
+                  await this.qrScanner.destroy().then(
+                    async () => {
+                      this.cameraActive = false;
+                      this.pauseAlert = await this.presentAlert(
+                        this.translate.instant("MSG.CAMERA_PAUSE"),
+                        this.translate.instant("CAMERA_PAUSE"),
+                        null,
+                        true
+                      );
+                      this.pauseAlert.onDidDismiss().then(
+                        () => {
+                          this.pauseAlert = null;
+                        }
+                      );
+                    }
+                  );
+                }
+              } else {
+                console.log("motion detected!")
+                if (this.pauseAlert) {
+                  this.pauseAlert.dismiss();
+                  this.pauseAlert = null;
+                }
+                this.motionX = Math.round(acceleration.x);
+                this.motionY = Math.round(acceleration.y);
+                this.motionZ = Math.round(acceleration.z);
+                this.motionlessCount = 0;
+                const showing = (await this.qrScanner.getStatus()).showing;
+                const previewing = (await this.qrScanner.getStatus()).previewing;
+                if (!showing || !previewing) {
+                  this.motionSubscription.unsubscribe();
+                  await this.prepareScanner();
+                }
               }
             }
-          }
-        );
+          );
+        } else {
+          console.log("the motion detect is disabled!")
+        }
         this.scanSubscription = this.qrScanner.scan().subscribe(
           async (text: string) => {
             this.vibration.vibrate(200);
