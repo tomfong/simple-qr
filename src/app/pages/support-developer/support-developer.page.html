@@ -1,0 +1,45 @@
+<ion-header [translucent]="true" mode="ios">
+  <ion-toolbar color="dark" mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title> {{ 'SUPPORT_DEVELOPER' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item lines="none" button>
+    <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" src="assets/icon/ads.svg"></ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+          {{ 'WATCH_ADS' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-ripple-effect></ion-ripple-effect>
+  </ion-item>
+  <ion-item lines="full" button>
+    <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="logo-paypal"></ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+          {{ 'DONATE_PAYPAL' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-ripple-effect></ion-ripple-effect>
+  </ion-item>
+  <ion-item lines="none">
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="white-space: normal;">
+          {{ 'SUPPORT_DEV_EXPLAIN' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+  </ion-item>
+
+</ion-content>

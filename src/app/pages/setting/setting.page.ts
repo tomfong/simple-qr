@@ -44,7 +44,7 @@ export class SettingPage {
   }
 
   async supportDeveloper() {
-    await this.presentToast(this.translate.instant('DEVELOPING'), 2000, "bottom", "center", "short");
+    this.router.navigate(['support-developer', { t: new Date().getTime() }]);
   }
 
   async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {

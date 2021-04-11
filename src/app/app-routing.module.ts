@@ -38,6 +38,10 @@ const routes: Routes = [
     path: 'setting-record',
     loadChildren: () => import('./pages/setting-record/setting-record.module').then( m => m.SettingRecordPageModule)
   },
+  {
+    path: 'support-developer',
+    loadChildren: () => import('./pages/support-developer/support-developer.module').then( m => m.SupportDeveloperPageModule)
+  },
 
 
 ];
