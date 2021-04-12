@@ -53,10 +53,16 @@ export class CreateContactPage implements OnInit {
     if (this.vCardContact) {
       if (this.vCardContact.fullName) {
         this.givenName = this.vCardContact.fullName;
-      }
-      if (this.vCardContact.givenName && this.vCardContact.familyName) {
+      } else if (this.vCardContact.givenName && this.vCardContact.familyName) {
         this.givenName = this.vCardContact.givenName;
         this.familyName = this.vCardContact.familyName;
+      } else {
+        if (this.vCardContact.givenName) {
+          this.givenName = this.vCardContact.givenName;
+        }
+        if (this.vCardContact.familyName) {
+          this.familyName = this.vCardContact.familyName;
+        }
       }
       if (this.vCardContact.workPhoneNumber) {
         this.phoneNumber = this.vCardContact.workPhoneNumber;

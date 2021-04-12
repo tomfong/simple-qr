@@ -1,10 +1,7 @@
 <ion-header [translucent]="true" mode="ios">
   <ion-toolbar color="dark" mode="ios">
     <ion-buttons slot="start">
-      <ion-back-button 
-        mode="md"
-        defaultHref="scan"
-        [icon]="'arrow-back'">
+      <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
       </ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'RESULT' | translate }}</ion-title>
@@ -22,10 +19,12 @@
     </ion-col>
   </ion-row>
 
-  <ion-row *ngIf="(contentType === 'phone' || contentType === 'sms') && qrCodeContent && qrCodeContent.trim().length > 0">
+  <ion-row
+    *ngIf="(contentType === 'phone' || contentType === 'sms') && qrCodeContent && qrCodeContent.trim().length > 0">
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom" [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom"
+          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
           {{ 'PHONE_NUMBER' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="phoneNumber" rows="1"></ion-textarea>
@@ -36,10 +35,12 @@
   <ion-row *ngIf="contentType === 'sms' && smsContent && qrCodeContent && qrCodeContent.trim().length > 0">
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom" [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom"
+          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
           {{ 'MESSAGE_CONTENT' | translate }}
         </ion-label>
-        <ion-textarea class="box" readonly [value]="smsContent.length > 0? smsContent : ' '" autoGrow="true" rows="1"></ion-textarea>
+        <ion-textarea class="box" readonly [value]="smsContent.length > 0? smsContent : ' '" autoGrow="true" rows="1">
+        </ion-textarea>
       </ion-item>
     </ion-col>
   </ion-row>
@@ -47,7 +48,8 @@
   <ion-row *ngIf="contentType === 'email' && toEmails && qrCodeContent && qrCodeContent.trim().length > 0">
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom" [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom"
+          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
           {{ 'EMAIL_TO' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="toEmails" autoGrow="true" rows="1"></ion-textarea>
@@ -58,7 +60,8 @@
   <ion-row *ngIf="contentType === 'email' && ccEmails && qrCodeContent && qrCodeContent.trim().length > 0">
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom" [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom"
+          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
           {{ 'CC' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="ccEmails" autoGrow="true" rows="1"></ion-textarea>
@@ -69,7 +72,8 @@
   <ion-row *ngIf="contentType === 'email' && bccEmails && qrCodeContent && qrCodeContent.trim().length > 0">
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom" [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom"
+          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
           {{ 'BCC' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="bccEmails" autoGrow="true" rows="1"></ion-textarea>
@@ -80,7 +84,8 @@
   <ion-row *ngIf="contentType === 'email' && emailSubject && qrCodeContent && qrCodeContent.trim().length > 0">
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom" [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom"
+          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
           {{ 'EMAIL_SUBJECT' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="emailSubject" autoGrow="true" rows="1"></ion-textarea>
@@ -91,7 +96,8 @@
   <ion-row *ngIf="contentType === 'email' && emailBody && qrCodeContent && qrCodeContent.trim().length > 0">
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom" [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom"
+          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
           {{ 'EMAIL_BODY' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="emailBody" autoGrow="true" rows="1"></ion-textarea>
@@ -102,12 +108,17 @@
   <ion-row *ngIf="contentType === 'contact' && qrCodeContent && qrCodeContent.trim().length > 0 && vCardContact">
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom" [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom"
+          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
           {{ 'CONTACT_NAME' | translate }}
         </ion-label>
-        <ion-textarea class="box" readonly
-          [value]="vCardContact.fullName? vCardContact.fullName : ( vCardContact.givenName &&  vCardContact.familyName ? (vCardContact.givenName + ' ' + vCardContact.familyName) : ('NOT_PROVIDED' | translate))"
-          rows="1">
+        <ion-textarea class="box" readonly [value]="vCardContact.fullName? 
+                    vCardContact.fullName : 
+                    ( vCardContact.givenName &&  vCardContact.familyName ? 
+                      (vCardContact.givenName + ' ' + vCardContact.familyName) : 
+                        ( vCardContact.givenName ? vCardContact.givenName :
+                          ( vCardContact.familyName ? vCardContact.familyName :
+                            ('NOT_PROVIDED' | translate))))" rows="1">
         </ion-textarea>
       </ion-item>
     </ion-col>
@@ -116,7 +127,8 @@
   <ion-row *ngIf="qrCodeContent && qrCodeContent.trim().length > 0">
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom" [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom"
+          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
           {{ 'ORIGINAL_CONTENT' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="qrCodeContent" autoGrow="true" rows="1"></ion-textarea>
@@ -127,7 +139,8 @@
   <ion-row *ngIf="base64Decoded && qrCodeContent && qrCodeContent.trim().length > 0">
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom" [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom"
+          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
           {{ 'BASE64_DECODED' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="base64DecodedText" autoGrow="true" rows="1"></ion-textarea>
@@ -141,7 +154,8 @@
 
 </ion-content>
 
-<ion-footer mode="md" [ngStyle]="env.colorTheme === 'dark'?  {'background-color': '#222428'} : {'background-color': 'white'}">
+<ion-footer mode="md"
+  [ngStyle]="env.colorTheme === 'dark'?  {'background-color': '#222428'} : {'background-color': 'white'}">
 
   <ion-row class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col></ion-col>
