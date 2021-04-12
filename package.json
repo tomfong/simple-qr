@@ -39,6 +39,7 @@
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
     "@techiediaries/ngx-qrcode": "^9.1.0",
+    "cordova-android": "^9.0.0",
     "cordova-clipboard": "^1.3.0",
     "cordova-plugin-x-socialsharing": "^6.0.3",
     "dotenv": "^8.2.0",
@@ -59,15 +60,13 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
     "admob-plus-cordova": "^1.5.0",
-    "call-number": "^1.0.1",
     "codelyzer": "^6.0.0",
-    "cordova-android": "^9.0.0",
     "cordova-plugin-androidx-adapter": "^1.1.3",
     "cordova-plugin-contacts": "git+https://github.com/tomfong/cordova-plugin-contacts.git",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-device-motion": "^2.0.1",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
-    "cordova-plugin-ionic-webview": "^4.0.0",
+    "cordova-plugin-ionic-webview": "^4.2.1",
     "cordova-plugin-qrscanner": "^3.0.1",
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-statusbar": "^2.4.2",
@@ -111,7 +110,8 @@
       },
       "admob-plus-cordova": {
         "APP_ID_ANDROID": "ca-app-pub-8368268385210489~6270523943",
-        "APP_ID_IOS": "test"
+        "APP_ID_IOS": "test",
+        "PLAY_SERVICES_VERSION": "19.8.0"
       }
     },
     "platforms": [
