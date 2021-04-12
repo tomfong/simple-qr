@@ -181,8 +181,8 @@ export class ScanPage {
                     async () => {
                       this.cameraActive = false;
                       this.pauseAlert = await this.presentAlert(
-                        this.translate.instant("MSG.CAMERA_PAUSE"),
-                        this.translate.instant("CAMERA_PAUSE"),
+                        this.translate.instant("MSG.CAMERA_PAUSED"),
+                        this.translate.instant("CAMERA_PAUSED"),
                         null,
                         true
                       );
