@@ -1,5 +1,6 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Injectable } from '@angular/core';
+import { ThemeDetection, ThemeDetectionResponse } from '@ionic-native/theme-detection/ngx';
 import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -14,6 +15,7 @@ export class EnvService {
   public languages: string[] = ['en', 'zh-HK'];
   public language: string = 'default';
   public colorTheme: 'light' | 'dark' = 'light';
+  public selectedColorTheme: 'default' | 'light' | 'dark' = 'default';
   public cameraPauseTimeout: 0 | 5 | 10 | 20 | 30 = 10;
   public scanRecordLogging: 'on' | 'off' = 'on';
 
@@ -30,6 +32,7 @@ export class EnvService {
     private storage: Storage,
     public translate: TranslateService,
     private overlayContainer: OverlayContainer,
+    private themeDetection: ThemeDetection,
   ) {
     this.platform.ready().then(
       async () => {
@@ -73,9 +76,9 @@ export class EnvService {
     await this.storageGet("color").then(
       value => {
         if (value !== null && value !== undefined) {
-          this.colorTheme = value;
+          this.selectedColorTheme = value;
         } else {
-          this.colorTheme = 'light';
+          this.selectedColorTheme = 'default';
         }
         this.toggleColorTheme();
       }
@@ -192,11 +195,33 @@ export class EnvService {
   }
 
   toggleColorTheme(): void {
-    if (this.colorTheme === 'light') {
+    if (this.selectedColorTheme === 'default') {
+      this.themeDetection.isAvailable().then(
+        (res: ThemeDetectionResponse) => {
+          if (res.value) {
+            this.themeDetection.isDarkModeEnabled().then((res: ThemeDetectionResponse) => {
+              if (res.value) {
+                this.colorTheme = 'dark';
+                document.body.classList.toggle('dark', true);
+                this.overlayContainer.getContainerElement().classList.remove('ng-mat-light');
+                this.overlayContainer.getContainerElement().classList.add('ng-mat-dark');
+              } else {
+                this.colorTheme = 'light';
+                document.body.classList.toggle('dark', false);
+                this.overlayContainer.getContainerElement().classList.remove('ng-mat-dark');
+                this.overlayContainer.getContainerElement().classList.add('ng-mat-light');
+              }
+            }).catch((error: any) => console.error(error));
+          }
+        }
+      )
+    } else if (this.selectedColorTheme === 'light') {
+      this.colorTheme = 'light';
       document.body.classList.toggle('dark', false);
       this.overlayContainer.getContainerElement().classList.remove('ng-mat-dark');
       this.overlayContainer.getContainerElement().classList.add('ng-mat-light');
-    } else {
+    } else if (this.selectedColorTheme === 'dark') {
+      this.colorTheme = 'dark';
       document.body.classList.toggle('dark', true);
       this.overlayContainer.getContainerElement().classList.remove('ng-mat-light');
       this.overlayContainer.getContainerElement().classList.add('ng-mat-dark');

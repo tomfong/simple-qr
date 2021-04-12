@@ -18,6 +18,7 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { SMS } from '@ionic-native/sms/ngx';
 import { AdMob } from '@admob-plus/ionic/ngx';
+import { ThemeDetection } from '@ionic-native/theme-detection/ngx';
 
 import { CreateContactPageModule } from './modals/create-contact/create-contact.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -59,6 +60,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     CallNumber,
     SMS,
     AdMob,
+    ThemeDetection,
   ],
   bootstrap: [AppComponent],
 })

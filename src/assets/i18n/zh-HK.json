@@ -42,7 +42,7 @@
     "SHARE_QRCODE": "分享QR碼",
     "SETTING": "設定",
     "LANGUAGE": "語言",
-    "SYSTEM_LANGUAGE": "系統語言 (預設)",
+    "SYSTEM_DEFAULT": "系統預設",
     "COLOR_THEME": "顏色主題",
     "LIGHT": "淺色",
     "DARK": "深色",

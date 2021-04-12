@@ -42,7 +42,7 @@
     "SHARE_QRCODE": "Share QR Code",
     "SETTING": "Setting",
     "LANGUAGE": "Language",
-    "SYSTEM_LANGUAGE": "System Language (Default)",
+    "SYSTEM_DEFAULT": "System Default",
     "COLOR_THEME": "Color Theme",
     "LIGHT": "Light",
     "DARK": "Dark",
