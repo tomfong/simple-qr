@@ -19,19 +19,28 @@ export class SupportDeveloperPage {
   ) { }
 
   async watchAds() {
-    await this.presentToast(this.translate.instant("THANKS_SUPPORT"), 1000, "bottom", "center", "short");
+    const thanksToast = await this.presentToast(this.translate.instant("THANKS_SUPPORT"), 1000, "bottom", "center", "long");
     await this.admob.start();
     const interstitial = new this.admob.InterstitialAd({
-      adUnitId: 'ca-app-pub-8368268385210489/3477867317',
+      adUnitId: 'ca-app-pub-1258868559061405/2974771602',
     });
-    await interstitial.load();
+    await interstitial.load().catch(
+      async err => {
+        if (thanksToast) {
+          await thanksToast.dismiss();
+        }
+        console.error("load ad failed", err);
+        await this.presentToast(this.translate.instant("MSG.FAIL_LOAD_ADS"), 2000, "bottom", "center", "long");
+      }
+    );
     await interstitial.show();
   }
 
   async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {
+    let toast: HTMLIonToastElement;
     if (size === "long") {
       if (align === "left") {
-        const toast = await this.toastController.create({
+        toast = await this.toastController.create({
           message: msg,
           duration: msTimeout,
           mode: "ios",
@@ -39,9 +48,9 @@ export class SupportDeveloperPage {
           cssClass: "text-start-toast",
           position: pos
         });
-        toast.present();
+        await toast.present();
       } else {
-        const toast = await this.toastController.create({
+        toast = await this.toastController.create({
           message: msg,
           duration: msTimeout,
           mode: "ios",
@@ -49,11 +58,11 @@ export class SupportDeveloperPage {
           cssClass: "text-center-toast",
           position: pos
         });
-        toast.present();
+        await toast.present();
       }
     } else {
       if (align === "left") {
-        const toast = await this.toastController.create({
+        toast = await this.toastController.create({
           message: msg,
           duration: msTimeout,
           mode: "ios",
@@ -61,9 +70,9 @@ export class SupportDeveloperPage {
           cssClass: "text-start-short-toast",
           position: pos
         });
-        toast.present();
+        await toast.present();
       } else {
-        const toast = await this.toastController.create({
+        toast = await this.toastController.create({
           message: msg,
           duration: msTimeout,
           mode: "ios",
@@ -71,9 +80,10 @@ export class SupportDeveloperPage {
           cssClass: "text-center-short-toast",
           position: pos
         });
-        toast.present();
+        await toast.present();
       }
     }
+    return toast;
   }
 
 }

@@ -56,7 +56,7 @@
     "ABOUT_SIMPLE_QR": "關於簡易QR",
     "SUPPORT_DEVELOPER": "支持開發者",
     "WATCH_ADS": "觀看廣告",
-    "THANKS_SUPPORT": "載入中，感謝支持",
+    "THANKS_SUPPORT": "廣告載入中，感謝支持",
     "DONATE_PAYPAL": "透過PayPal™捐款",
     "SUPPORT_DEV_EXPLAIN": "簡易QR是一個免費的開源應用程式。如果您想以經濟方式支持計劃或開發者，歡迎觀看廣告。感謝您的支持！",
     "DEVELOPING": "開發中",
@@ -94,6 +94,7 @@
         "CAMERA_PAUSE": "為節省電力已暫停掃描，提起裝置可繼續使用。您可在「設定」調校此功能。",
         "UNDO_DELETE": "您可在5秒內復原記錄",
         "REMOVE_ALL_RECORD": "確定要刪除全部記錄? <b>此動作無法被撤回。</b>",
-        "GIVE_NAME_CONTACT": "請填寫名字"
+        "GIVE_NAME_CONTACT": "請填寫名字",
+        "FAIL_LOAD_ADS": "無法載入廣告"
     }
 }

@@ -56,7 +56,7 @@
     "ABOUT_SIMPLE_QR": "About Simple QR",
     "SUPPORT_DEVELOPER": "Support Developer",
     "WATCH_ADS": "Watch an Ad",
-    "THANKS_SUPPORT": "Loading... Thanks for support",
+    "THANKS_SUPPORT": "Loading Ad... Thanks for support",
     "DONATE_PAYPAL": "Donate via PayPal™",
     "SUPPORT_DEV_EXPLAIN": "Simple QR is a free-of-charge and open-source project. If you would like to contribute financially to the project or support me, please feel free to click to watch ads. Thanks for your contribution!",
     "DEVELOPING": "Developing",
@@ -94,6 +94,7 @@
         "CAMERA_PAUSE": "The camera is paused to save battery. Hold the device to resume. You can go Setting to configure the function.",
         "UNDO_DELETE": "You can undo the deletion in 5 seconds",
         "REMOVE_ALL_RECORD": "Are you sure to remove all records? <b>This action cannot be undone.</b>",
-        "GIVE_NAME_CONTACT": "Give a name to the contact"
+        "GIVE_NAME_CONTACT": "Give a name to the contact",
+        "FAIL_LOAD_ADS": "Failed to load ad"
     }
 }

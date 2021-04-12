@@ -29,7 +29,7 @@
             <application android:networkSecurityConfig="@xml/network_security_config" />
         </edit-config>
         <config-file parent="/manifest/application" target="AndroidManifest.xml">
-            <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-8368268385210489~6270523943" />
+            <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-1258868559061405~8296554504" />
         </config-file>
         <resource-file src="resources/android/xml/network_security_config.xml" target="app/src/main/res/xml/network_security_config.xml" />
         <allow-intent href="market:*" />

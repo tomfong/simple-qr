@@ -109,7 +109,7 @@
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
       "admob-plus-cordova": {
-        "APP_ID_ANDROID": "ca-app-pub-8368268385210489~6270523943",
+        "APP_ID_ANDROID": "ca-app-pub-1258868559061405~8296554504",
         "APP_ID_IOS": "test",
         "PLAY_SERVICES_VERSION": "19.8.0"
       }
