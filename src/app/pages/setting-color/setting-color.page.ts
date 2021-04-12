@@ -17,7 +17,7 @@ export class SettingColorPage {
   ) { }
 
   async saveColorTheme() {
-    this.env.toggleColorTheme();
+    await this.env.toggleColorTheme();
     await this.env.storageSet("color", this.env.selectedColorTheme);
   }
 

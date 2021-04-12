@@ -1,5 +1,6 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Injectable } from '@angular/core';
+import { Device } from '@ionic-native/device/ngx';
 import { ThemeDetection, ThemeDetectionResponse } from '@ionic-native/theme-detection/ngx';
 import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
@@ -33,6 +34,7 @@ export class EnvService {
     public translate: TranslateService,
     private overlayContainer: OverlayContainer,
     private themeDetection: ThemeDetection,
+    private device: Device,
   ) {
     this.platform.ready().then(
       async () => {
@@ -74,13 +76,13 @@ export class EnvService {
       }
     );
     await this.storageGet("color").then(
-      value => {
+      async value => {
         if (value !== null && value !== undefined) {
           this.selectedColorTheme = value;
         } else {
           this.selectedColorTheme = 'default';
         }
-        this.toggleColorTheme();
+        await this.toggleColorTheme();
       }
     );
     await this.storageGet("camera-pause-timeout").then(
@@ -194,27 +196,41 @@ export class EnvService {
     await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
   }
 
-  toggleColorTheme(): void {
+  async toggleColorTheme(): Promise<void> {
+    console.log("toggle color!")
     if (this.selectedColorTheme === 'default') {
-      this.themeDetection.isAvailable().then(
-        (res: ThemeDetectionResponse) => {
-          if (res.value) {
-            this.themeDetection.isDarkModeEnabled().then((res: ThemeDetectionResponse) => {
-              if (res.value) {
-                this.colorTheme = 'dark';
-                document.body.classList.toggle('dark', true);
-                this.overlayContainer.getContainerElement().classList.remove('ng-mat-light');
-                this.overlayContainer.getContainerElement().classList.add('ng-mat-dark');
-              } else {
-                this.colorTheme = 'light';
-                document.body.classList.toggle('dark', false);
-                this.overlayContainer.getContainerElement().classList.remove('ng-mat-dark');
-                this.overlayContainer.getContainerElement().classList.add('ng-mat-light');
-              }
-            }).catch((error: any) => console.error(error));
+      const version = Number(this.device.version.split(".")[0]);
+      if (this.platform.is("android") && version <= 9) {  // Android 9 or below
+        this.colorTheme = 'light';
+        document.body.classList.toggle('dark', false);
+        this.overlayContainer.getContainerElement().classList.remove('ng-mat-dark');
+        this.overlayContainer.getContainerElement().classList.add('ng-mat-light');
+      } else {
+        await this.themeDetection.isAvailable().then( // Android 10 or above
+          async (res: ThemeDetectionResponse) => {
+            if (res.value) {
+              await this.themeDetection.isDarkModeEnabled().then((res: ThemeDetectionResponse) => {
+                if (res.value) {
+                  this.colorTheme = 'dark';
+                  document.body.classList.toggle('dark', true);
+                  this.overlayContainer.getContainerElement().classList.remove('ng-mat-light');
+                  this.overlayContainer.getContainerElement().classList.add('ng-mat-dark');
+                } else {
+                  this.colorTheme = 'light';
+                  document.body.classList.toggle('dark', false);
+                  this.overlayContainer.getContainerElement().classList.remove('ng-mat-dark');
+                  this.overlayContainer.getContainerElement().classList.add('ng-mat-light');
+                }
+              }).catch((error: any) => console.error(error));
+            } else {
+              this.colorTheme = 'light';
+              document.body.classList.toggle('dark', false);
+              this.overlayContainer.getContainerElement().classList.remove('ng-mat-dark');
+              this.overlayContainer.getContainerElement().classList.add('ng-mat-light');
+            }
           }
-        }
-      )
+        )
+      }
     } else if (this.selectedColorTheme === 'light') {
       this.colorTheme = 'light';
       document.body.classList.toggle('dark', false);

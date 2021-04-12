@@ -27,6 +27,7 @@
     "@ionic-native/call-number": "^5.31.1",
     "@ionic-native/clipboard": "^5.31.1",
     "@ionic-native/core": "^5.31.1",
+    "@ionic-native/device": "^5.32.0",
     "@ionic-native/device-motion": "^5.31.1",
     "@ionic-native/ionic-webview": "^5.32.0",
     "@ionic-native/qr-scanner": "^5.31.1",
