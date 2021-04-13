@@ -21,6 +21,7 @@ import { AdMob } from '@admob-plus/ionic/ngx';
 import { ThemeDetection } from '@ionic-native/theme-detection/ngx';
 import { Device } from '@ionic-native/device/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
 import { CreateContactPageModule } from './modals/create-contact/create-contact.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -65,6 +66,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     ThemeDetection,
     Device,
     AppVersion,
+    SplashScreen,
   ],
   bootstrap: [AppComponent],
 })

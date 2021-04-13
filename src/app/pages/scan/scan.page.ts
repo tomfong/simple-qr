@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion/ngx';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { AlertController, IonRouterOutlet, LoadingController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -45,9 +46,15 @@ export class ScanPage {
     private router: Router,
     private env: EnvService,
     public translate: TranslateService,
+    private splashScreen: SplashScreen,
   ) {
     this.platform.ready().then(
       async () => {
+        setTimeout(
+          () => {
+            this.splashScreen.hide();
+          }, 100
+        );
         this.platform.backButton.subscribeWithPriority(-1, async () => {
           if (!this.routerOutlet.canGoBack()) {
             await this.confirmExitApp();
