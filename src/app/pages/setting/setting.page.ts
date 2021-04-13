@@ -4,7 +4,6 @@ import { AppVersion } from '@ionic-native/app-version/ngx';
 import { Device } from '@ionic-native/device/ngx';
 import { AlertController, LoadingController, Platform, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import * as moment from 'moment';
 import { EnvService } from 'src/app/services/env.service';
 
 @Component({
@@ -15,15 +14,12 @@ import { EnvService } from 'src/app/services/env.service';
 export class SettingPage {
 
   constructor(
-    private platform: Platform,
     public alertController: AlertController,
     public loadingController: LoadingController,
     private router: Router,
     public env: EnvService,
     public toastController: ToastController,
     public translate: TranslateService,
-    private appVersion: AppVersion,
-    private device: Device,
   ) { 
     
   }
@@ -53,17 +49,8 @@ export class SettingPage {
   }
 
   async reportBug() {
-    const now = moment();
-    const datetimestr1 = now.format("YYYYMMDDHHmmss");
-    const datetimestr2 = now.format("YYYY-MM-DD HH:mm:ss ZZ");
-    const appVersion = await this.appVersion.getVersionNumber();
-    const model = `${this.device.manufacturer} ${this.device.model}`;
-    const os = this.platform.is("android")? "Android" : (this.platform.is("ios")? "iOS" : "Other");
-    const osVersion = this.device.version;
-    const mailtoContent = `
-      mailto:tomfong.dev@gmail.com?subject=Simple%20QR%20-%20Report%20Issue%20(%23${datetimestr1})&body=Developer%2C%0A%0AI%20would%20like%20to%20report%20an%20issue%20regarding%20Simple%20QR.%0A%0ADate%20%26%20Time%0A${datetimestr2}%0A%0AApp%20Version%0A${appVersion}%0A%0AModel%0A${model}%0A%0APlatform%0A${os}%20${osVersion}%0A%0ADescription%0D%0A(describe%20the%20issue%20below)%0D%0A%0D%0A%0D%0A%0D%0A%0D%0A%0D%0A%0D%0AThank%20you.%0D%0A%0D%0ABest%2C%0D%0AUser
-    `;  // must be in one line
-    window.open(mailtoContent, '_system');
+    const mailContent = await this.env.getBugReportMailContent();
+    window.open(mailContent, '_system');
   }
 
   async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {
