@@ -19,8 +19,17 @@ export class SupportDeveloperPage {
   ) { }
 
   async watchAds() {
-    const thanksToast = await this.presentToast(this.translate.instant("THANKS_SUPPORT"), 1000, "bottom", "center", "long");
-    await this.admob.start();
+    let thanksToast = await this.presentToast(this.translate.instant("THANKS_SUPPORT"), 0, "bottom", "center", "long");
+    await this.admob.start().catch(
+      async err => {
+        if (thanksToast) {
+          await thanksToast.dismiss();
+          thanksToast = null;
+        }
+        console.error("start ad failed", err);
+        await this.presentToast(this.translate.instant("MSG.FAIL_LOAD_ADS"), 2000, "bottom", "center", "long");
+      }
+    );
     const interstitial = new this.admob.InterstitialAd({
       adUnitId: 'ca-app-pub-1258868559061405/2974771602',
     });
@@ -28,12 +37,33 @@ export class SupportDeveloperPage {
       async err => {
         if (thanksToast) {
           await thanksToast.dismiss();
+          thanksToast = null;
         }
         console.error("load ad failed", err);
         await this.presentToast(this.translate.instant("MSG.FAIL_LOAD_ADS"), 2000, "bottom", "center", "long");
       }
     );
-    await interstitial.show();
+    await interstitial.show().then(
+      async () => {
+        if (thanksToast) {
+          await thanksToast.dismiss();
+          thanksToast = null;
+        }
+      }
+    ).catch(
+      async err => {
+        if (thanksToast) {
+          await thanksToast.dismiss();
+          thanksToast = null;
+        }
+        console.error("show ad failed", err);
+        await this.presentToast(this.translate.instant("MSG.FAIL_LOAD_ADS"), 2000, "bottom", "center", "long");
+      }
+    );
+    if (thanksToast) {
+      await thanksToast.dismiss();
+      thanksToast = null;
+    }
   }
 
   async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {
