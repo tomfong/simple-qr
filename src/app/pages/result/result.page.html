@@ -24,6 +24,42 @@
     </ion-col>
   </ion-row>
 
+  <ion-row *ngIf="qrCodeContent && qrCodeContent.trim().length > 0">
+    <ion-col class="ion-text-center ion-padding-horizontal">
+      <ion-item lines="none">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom"
+          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+          {{ 'QR_CODE_CONTENT' | translate }}
+        </ion-label>
+        <ion-textarea class="box" readonly [value]="qrCodeContent" autoGrow="true" rows="1"></ion-textarea>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="base64Encoded && qrCodeContent && qrCodeContent.trim().length > 0">
+    <ion-col class="ion-text-center ion-padding-horizontal">
+      <ion-item lines="none">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom"
+          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+          {{ 'BASE64_ENCODED' | translate }}
+        </ion-label>
+        <ion-textarea class="box" readonly [value]="base64EncodedText" autoGrow="true" rows="1"></ion-textarea>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="base64Decoded && qrCodeContent && qrCodeContent.trim().length > 0">
+    <ion-col class="ion-text-center ion-padding-horizontal">
+      <ion-item lines="none">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom"
+          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+          {{ 'BASE64_DECODED' | translate }}
+        </ion-label>
+        <ion-textarea class="box" readonly [value]="base64DecodedText" autoGrow="true" rows="1"></ion-textarea>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
   <ion-row
     *ngIf="(contentType === 'phone' || contentType === 'sms') && qrCodeContent && qrCodeContent.trim().length > 0">
     <ion-col class="ion-text-center ion-padding-horizontal">
@@ -129,30 +165,6 @@
     </ion-col>
   </ion-row>
 
-  <ion-row *ngIf="qrCodeContent && qrCodeContent.trim().length > 0">
-    <ion-col class="ion-text-center ion-padding-horizontal">
-      <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
-          {{ 'ORIGINAL_CONTENT' | translate }}
-        </ion-label>
-        <ion-textarea class="box" readonly [value]="qrCodeContent" autoGrow="true" rows="1"></ion-textarea>
-      </ion-item>
-    </ion-col>
-  </ion-row>
-
-  <ion-row *ngIf="base64Decoded && qrCodeContent && qrCodeContent.trim().length > 0">
-    <ion-col class="ion-text-center ion-padding-horizontal">
-      <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
-          {{ 'BASE64_DECODED' | translate }}
-        </ion-label>
-        <ion-textarea class="box" readonly [value]="base64DecodedText" autoGrow="true" rows="1"></ion-textarea>
-      </ion-item>
-    </ion-col>
-  </ion-row>
-
   <ion-row class="ion-padding-horizontal ion-margin-horizontal ion-padding-bottom">
     <ion-col></ion-col>
   </ion-row>
@@ -241,7 +253,7 @@
 
   <!-- General -->
   <ion-row class="ion-padding-horizontal ion-margin-horizontal">
-    <ion-col>
+    <ion-col size="6">
       <ion-button expand="full" color="primary" mode="ios" (click)="webSearch()"
         [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
         <ion-icon slot="start" name="search"></ion-icon>
@@ -249,7 +261,7 @@
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
-    <ion-col>
+    <ion-col size="6">
       <ion-button expand="full" color="primary" mode="ios" (click)="copyText()"
         [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
         <ion-icon slot="start" name="copy"></ion-icon>
@@ -259,11 +271,11 @@
     </ion-col>
   </ion-row>
   <ion-row class="ion-padding-horizontal ion-margin-horizontal ion-padding-bottom">
-    <ion-col>
-      <ion-button expand="full" color="primary" mode="ios" (click)="base64Decode()"
+    <ion-col size="6">
+      <ion-button expand="full" color="primary" mode="ios" (click)="base64()"
         [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
         <ion-icon slot="start" name="code-working"></ion-icon>
-        <span>{{ 'BASE64_DECODED' | translate }}</span>
+        <span>{{ 'BASE64' | translate }}</span>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
@@ -274,7 +286,7 @@
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col> -->
-    <ion-col>
+    <ion-col size="6">
       <ion-button expand="full" color="primary" mode="ios" (click)="shareQrCode()"
         [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
         <ion-icon slot="start" name="share-social"></ion-icon>

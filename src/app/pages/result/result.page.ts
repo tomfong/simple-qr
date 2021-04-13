@@ -36,6 +36,8 @@ export class ResultPage implements OnInit {
   emailSubject: string;
   emailBody: string;
 
+  base64Encoded: boolean = false;
+  base64EncodedText: string = "";
   base64Decoded: boolean = false;
   base64DecodedText: string = "";
 
@@ -98,6 +100,7 @@ export class ResultPage implements OnInit {
   async ionViewWillLeave(): Promise<void> {
     this.vibration.vibrate(0);
     this.base64Decoded = false;
+    this.base64Encoded = false;
     if (this.webToast) {
       this.webToast.dismiss();
     }
@@ -301,7 +304,82 @@ export class ResultPage implements OnInit {
   }
 
   async copyText(): Promise<void> {
-    if (this.base64Decoded) {
+    if (this.base64Decoded && this.base64Encoded) {
+      const alert = await this.alertController.create(
+        {
+          header: this.translate.instant('COPY'),
+          message: this.translate.instant('MSG.COPY_TEXT'),
+          buttons: [
+            {
+              text: this.translate.instant('ORIGINAL'),
+              handler: async () => {
+                alert.dismiss();
+                await this.clipboard.copy(this.qrCodeContent).then(
+                  async () => {
+                    await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
+                  }
+                )
+              }
+            },
+            {
+              text: this.translate.instant('BASE64_ENCODED'),
+              handler: async () => {
+                alert.dismiss();
+                await this.clipboard.copy(this.base64EncodedText).then(
+                  async () => {
+                    await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
+                  }
+                )
+              }
+            },
+            {
+              text: this.translate.instant('BASE64_DECODED'),
+              handler: async () => {
+                alert.dismiss();
+                await this.clipboard.copy(this.base64DecodedText).then(
+                  async () => {
+                    await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
+                  }
+                )
+              }
+            }
+          ]
+        }
+      )
+      alert.present();
+    } else if (!this.base64Decoded && this.base64Encoded) {
+      const alert = await this.alertController.create(
+        {
+          header: this.translate.instant('COPY'),
+          message: this.translate.instant('MSG.COPY_TEXT'),
+          buttons: [
+            {
+              text: this.translate.instant('ORIGINAL'),
+              handler: async () => {
+                alert.dismiss();
+                await this.clipboard.copy(this.qrCodeContent).then(
+                  async () => {
+                    await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
+                  }
+                )
+              }
+            },
+            {
+              text: this.translate.instant('BASE64_ENCODED'),
+              handler: async () => {
+                alert.dismiss();
+                await this.clipboard.copy(this.base64EncodedText).then(
+                  async () => {
+                    await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
+                  }
+                )
+              }
+            }
+          ]
+        }
+      )
+      alert.present();
+    } else if (this.base64Decoded && !this.base64Encoded) {
       const alert = await this.alertController.create(
         {
           header: this.translate.instant('COPY'),
@@ -342,14 +420,28 @@ export class ResultPage implements OnInit {
     }
   }
 
-  async base64Decode(): Promise<void> {
+  async base64(): Promise<void> {
+    let failEncoded = false, failDecoded = false;
+    try {
+      this.base64EncodedText = btoa(this.qrCodeContent ? this.qrCodeContent : "");
+      this.base64Encoded = true;
+    } catch (err) {
+      this.base64Encoded = false;
+      failEncoded = true;
+    }
     try {
       this.base64DecodedText = atob(this.qrCodeContent ? this.qrCodeContent : "");
       this.base64Decoded = true;
-      await this.presentToast(this.translate.instant('MSG.DECODED'), 1500, "bottom", "center", "short");
     } catch (err) {
       this.base64Decoded = false;
-      await this.presentToast(this.translate.instant('MSG.NOT_BASE64'), 2000, "middle", "center", "long");
+      failDecoded = true;
+    }
+    if (failEncoded && failDecoded) {
+      await this.presentToast(this.translate.instant('MSG.NOT_BASE64_EN_DE'), 2000, "middle", "center", "long");
+    } else if (failEncoded && !failDecoded) {
+      await this.presentToast(this.translate.instant('MSG.NOT_BASE64_EN'), 2000, "middle", "center", "long");
+    } else if (!failEncoded && failDecoded) {
+      await this.presentToast(this.translate.instant('MSG.NOT_BASE64_DE'), 2000, "middle", "center", "long");
     }
   }
 
