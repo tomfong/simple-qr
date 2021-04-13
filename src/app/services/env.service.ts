@@ -14,7 +14,8 @@ import { ScanRecord } from '../models/scan-record';
 export class EnvService {
 
   public languages: string[] = ['en', 'zh-HK'];
-  public language: string = 'default';
+  public language: 'en' | 'zh-HK' = 'en';
+  public selectedLanguage: 'default' | 'en' | 'zh-HK' = 'default';
   public colorTheme: 'light' | 'dark' = 'light';
   public selectedColorTheme: 'default' | 'light' | 'dark' = 'default';
   public cameraPauseTimeout: 0 | 5 | 10 | 20 | 30 = 10;
@@ -49,30 +50,11 @@ export class EnvService {
     await this.storageGet("language").then(
       async value => {
         if (value !== null && value !== undefined) {
-          if (value === 'default') {
-            const browserLang = this.translate.getBrowserCultureLang();
-            if (browserLang.includes("zh", 0)) {
-              this.translate.use("zh-HK");
-            } else if (this.languages.includes(browserLang)) {
-              this.translate.use(browserLang);
-            } else {
-              this.translate.use('en')
-            }
-          } else {
-            this.translate.use(value);
-          }
-          this.language = value;
+          this.selectedLanguage = value;
         } else {
-          const browserLang = this.translate.getBrowserCultureLang();
-          if (browserLang.includes("zh", 0)) {
-            this.translate.use("zh-HK");
-          } else if (this.languages.includes(browserLang)) {
-            this.translate.use(browserLang);
-          } else {
-            this.translate.use('en')
-          }
-          this.language = 'default';
+          this.selectedLanguage = 'default';
         }
+        this.toggleLanguageChange();
       }
     );
     await this.storageGet("color").then(
@@ -194,6 +176,25 @@ export class EnvService {
   async deleteAllScanRecords(): Promise<void> {
     this._scanRecords = [];
     await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
+  }
+
+  toggleLanguageChange() {
+    if (this.selectedLanguage === 'default') {
+      let language = 'en';
+      const browserLang = this.translate.getBrowserCultureLang();
+      if (browserLang.includes("zh", 0)) {
+        language = "zh-HK";
+      } else if (this.languages.includes(browserLang)) {
+        language = browserLang as 'en' | 'zh-HK';
+      } else {
+        language = 'en';
+      }
+      this.translate.use(language);
+      this.language = language as 'en' | 'zh-HK';
+    } else {
+      this.translate.use(this.selectedLanguage);
+      this.language = this.selectedLanguage;
+    }
   }
 
   async toggleColorTheme(): Promise<void> {

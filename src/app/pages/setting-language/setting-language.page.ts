@@ -15,18 +15,7 @@ export class SettingLanguagePage {
   ) { }
 
   async saveLanguage() {
-    if (this.env.language === 'default') {
-      const browserLang = this.translate.getBrowserCultureLang();
-      if (browserLang.includes("zh", 0)) {
-        this.translate.use("zh-HK");
-      } else if (this.env.languages.includes(browserLang)) {
-        this.translate.use(browserLang);
-      } else {
-        this.translate.use('en')
-      }
-    } else {
-      this.translate.use(this.env.language);
-    }
-    await this.env.storageSet("language", this.env.language);
+    this.env.toggleLanguageChange();
+    await this.env.storageSet("language", this.env.selectedLanguage);
   }
 }
