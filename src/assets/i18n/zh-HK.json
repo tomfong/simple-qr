@@ -107,6 +107,7 @@
         "FAIL_LOAD_ADS": "無法載入廣告",
         "ALREADY_BOOKMARKED": "已加入書籤",
         "BOOKMARKED": "成功加入書籤",
+        "UNBOOKMARKED": "已移除書籤",
         "REMOVE_ALL_BOOKMARKS": "確定要刪除所有書籤? <b>此動作無法被撤回。</b>"
     }
 }

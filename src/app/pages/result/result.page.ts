@@ -43,6 +43,8 @@ export class ResultPage implements OnInit {
 
   webToast: HTMLIonToastElement;
 
+  bookmarked: boolean = false;
+
   constructor(
     private platform: Platform,
     public alertController: AlertController,
@@ -65,6 +67,9 @@ export class ResultPage implements OnInit {
     this.setContentType();
     if (this.env.scanRecordLogging === 'on') {
       await this.env.saveScanRecord(this.qrCodeContent);
+    }
+    if (this.env.bookmarks.find( x => x.text === this.qrCodeContent)) {
+      this.bookmarked = true;
     }
   }
 
@@ -602,6 +607,21 @@ export class ResultPage implements OnInit {
       this.presentToast(this.translate.instant("MSG.BOOKMARKED"), 1000, "bottom", "center", "short");
     } else {
       this.presentToast(this.translate.instant("MSG.ALREADY_BOOKMARKED"), 1000, "bottom", "center", "short");
+    }
+    if (this.env.bookmarks.find( x => x.text === this.qrCodeContent)) {
+      this.bookmarked = true;
+    } else {
+      this.bookmarked = false;
+    }
+  }
+
+  async removeBookmark() {
+    await this.env.deleteBookmark(this.qrCodeContent);
+    this.presentToast(this.translate.instant("MSG.UNBOOKMARKED"), 1000, "bottom", "center", "short");
+    if (this.env.bookmarks.find( x => x.text === this.qrCodeContent)) {
+      this.bookmarked = true;
+    } else {
+      this.bookmarked = false;
     }
   }
 

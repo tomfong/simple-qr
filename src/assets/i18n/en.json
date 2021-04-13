@@ -107,6 +107,7 @@
         "FAIL_LOAD_ADS": "Failed to load ad",
         "ALREADY_BOOKMARKED": "Already Bookmarked",
         "BOOKMARKED": "Bookmarked",
+        "UNBOOKMARKED": "Removed",
         "REMOVE_ALL_BOOKMARKS": "Are you sure to remove all bookmarked texts? <b>This action cannot be undone.</b>"
     }
 }
