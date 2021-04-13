@@ -50,11 +50,6 @@ export class ScanPage {
   ) {
     this.platform.ready().then(
       async () => {
-        setTimeout(
-          () => {
-            this.splashScreen.hide();
-          }, 100
-        );
         this.platform.backButton.subscribeWithPriority(-1, async () => {
           if (!this.routerOutlet.canGoBack()) {
             await this.confirmExitApp();
@@ -84,6 +79,11 @@ export class ScanPage {
   }
 
   async ionViewDidEnter(): Promise<void> {
+    setTimeout(
+      () => {
+        this.splashScreen.hide();
+      }, 100
+    );
     this.qrScanner.disableLight().then(
       () => {
         this.flashActive = false;
@@ -118,8 +118,8 @@ export class ScanPage {
     let denied = false;
     await this.qrScanner.getStatus().then(
       async (status: QRScannerStatus) => {
-        loading.dismiss();
         if (status.denied) {
+          loading.dismiss();
           const alert = await this.presentAlert(
             this.translate.instant("MSG.CAMERA_PERMISSION_1"),
             this.translate.instant("MESSAGE"),
@@ -134,16 +134,19 @@ export class ScanPage {
       },
     );
     if (denied) {
+      loading.dismiss();
       this.qrScanner.openSettings();
       return;
     }
     await this.qrScanner.prepare().then(
       async (status: QRScannerStatus) => {
+        loading.dismiss();
         if (status.authorized) {
           await this.scanQr();
         }
       },
       async err => {
+        loading.dismiss();
         if (err.name === "CAMERA_ACCESS_DENIED") {
           const alert = await this.presentAlert(
             this.translate.instant("MSG.CAMERA_PERMISSION_2"),
@@ -173,7 +176,7 @@ export class ScanPage {
       this.pauseAlert.dismiss();
       this.pauseAlert = null;
     }
-    await this.qrScanner.useCamera(this.cameraChoice);
+    // await this.qrScanner.useCamera(this.cameraChoice);
     await this.qrScanner.show().then(
       () => {
         this.cameraActive = true;
