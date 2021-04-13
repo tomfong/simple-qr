@@ -50,7 +50,7 @@
     "CAMERA_PAUSE_TRIGGER": "暫停掃描觸發",
     "NEVER": "永不",
     "SECONDS": "秒",
-    "CAMERA_PAUSE_EXPLAIN": "掃描進行時，應用程序會檢測設備的運動。如果您的設備有一段時間不動，掃描和相機預覽將會暫停以節省電池。選擇「永不」可停用這功能。",
+    "CAMERA_PAUSE_EXPLAIN": "掃描進行時，程式會檢測設備的運動。如果您的設備靜止一段時間，程式將會暫停掃描和相機預覽以節省電力。選擇「永不」可停用這功能。",
     "SCAN_HISTORY_LOGGING": "掃描記錄",
     "TURN_ON": "開啟",
     "TURN_OFF": "關閉",
