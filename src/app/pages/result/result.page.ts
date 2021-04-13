@@ -504,6 +504,15 @@ export class ResultPage implements OnInit {
     this.router.navigate(['/scan'], { replaceUrl: true });
   }
 
+  async addBookmark() {
+    const flag = await this.env.saveBookmark(this.qrCodeContent);
+    if (flag === true) {
+      this.presentToast(this.translate.instant("MSG.BOOKMARKED"), 1000, "bottom", "center", "short");
+    } else {
+      this.presentToast(this.translate.instant("MSG.ALREADY_BOOKMARKED"), 1000, "bottom", "center", "short");
+    }
+  }
+
   async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {
     if (size === "long") {
       if (align === "left") {

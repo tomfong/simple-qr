@@ -5,6 +5,11 @@
       </ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'RESULT' | translate }}</ion-title>
+    <ion-buttons slot="end" *ngIf="qrCodeContent !== null && qrCodeContent !== undefined && qrCodeContent.trim().length > 0">
+      <ion-button mode="md" (click)="addBookmark()">
+        <ion-icon slot="icon-only" name="star"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

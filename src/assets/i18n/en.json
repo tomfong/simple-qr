@@ -19,7 +19,9 @@
     "ORIGINAL": "Original",
     "BASE64_DECODED": "Base64 Decoded",
     "HISTORY": "History",
+    "BOOKMARKS": "Bookmarks",
     "SCANNING_HISTORY_SHOWN": "Scanning history will be shown here",
+    "FAVOURITE_TEXT_SHOWN": "Bookmarked texts will be shown here",
     "REMOVE_ALL": "Remove All",
     "RESULT": "Result",
     "UNDO": "Undo",
@@ -98,6 +100,9 @@
         "UNDO_DELETE": "You can undo the deletion in 5 seconds",
         "REMOVE_ALL_RECORD": "Are you sure to remove all records? <b>This action cannot be undone.</b>",
         "GIVE_NAME_CONTACT": "Give a name to the contact",
-        "FAIL_LOAD_ADS": "Failed to load ad"
+        "FAIL_LOAD_ADS": "Failed to load ad",
+        "ALREADY_BOOKMARKED": "Already Bookmarked",
+        "BOOKMARKED": "Bookmarked",
+        "REMOVE_ALL_BOOKMARKS": "Are you sure to remove all bookmarked texts? <b>This action cannot be undone.</b>"
     }
 }

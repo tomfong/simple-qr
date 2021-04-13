@@ -8,6 +8,7 @@ import { Storage } from '@ionic/storage-angular';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
 import { environment } from 'src/environments/environment';
+import { Bookmark } from '../models/bookmark';
 import { ScanRecord } from '../models/scan-record';
 
 @Injectable({
@@ -32,6 +33,7 @@ export class EnvService {
   private _storage: Storage | null = null;
   private _scannedData: string = '';
   private _scanRecords: ScanRecord[] = [];
+  private _bookmarks: Bookmark[] = [];
 
   constructor(
     private platform: Platform,
@@ -112,6 +114,27 @@ export class EnvService {
         }
       }
     );
+    await this.storageGet("bookmarks").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          try {
+            this._bookmarks = JSON.parse(value);
+            this._bookmarks.forEach(
+              t => {
+                const tCreatedAt = t.createdAt;
+                t.createdAt = new Date(tCreatedAt);
+              }
+            );
+            this._bookmarks.sort((t1, t2) => {
+              return t2.createdAt.getTime() - t1.createdAt.getTime();
+            });
+          } catch (err) {
+            console.error(err);
+            this._bookmarks = [];
+          }
+        }
+      }
+    )
   }
 
   public async storageSet(key: string, value: any) {
@@ -182,6 +205,46 @@ export class EnvService {
   async deleteAllScanRecords(): Promise<void> {
     this._scanRecords = [];
     await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
+  }
+
+  get bookmarks(): Bookmark[] {
+    return this._bookmarks;
+  }
+
+  async saveBookmark(value: string): Promise<boolean> {
+    const index = this._bookmarks.findIndex( x => x.text === value );
+    if (index === -1) {
+      const bookmark = new Bookmark();
+      const date = new Date();
+      bookmark.text = value;
+      bookmark.createdAt = date;
+      this._bookmarks.unshift(bookmark);
+      await this.storageSet("bookmarks", JSON.stringify(this._bookmarks));
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  async undoBookmarkDeletion(bookmark: Bookmark): Promise<void> {
+    this._bookmarks.push(bookmark);
+    this._bookmarks.sort((t1, t2) => {
+      return t2.createdAt.getTime() - t1.createdAt.getTime();
+    });
+    await this.storageSet("bookmarks", JSON.stringify(this._bookmarks));
+  }
+
+  async deleteBookmark(text: string): Promise<void> {
+    const index = this._bookmarks.findIndex(t => t.text === text);
+    if (index !== -1) {
+      this._bookmarks.splice(index, 1);
+      await this.storageSet("bookmarks", JSON.stringify(this._bookmarks));
+    }
+  }
+
+  async deleteAllBookmarks(): Promise<void> {
+    this._bookmarks = [];
+    await this.storageSet("bookmarks", JSON.stringify(this._bookmarks));
   }
 
   toggleLanguageChange() {

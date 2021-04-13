@@ -19,7 +19,9 @@
     "ORIGINAL": "原始",
     "BASE64_DECODED": "Base64解碼",
     "HISTORY": "歷史",
+    "BOOKMARKS": "書籤",
     "SCANNING_HISTORY_SHOWN": "您的掃描記錄會在這裡顯示",
+    "FAVOURITE_TEXT_SHOWN": "已收藏的書籤會在這裡顯示",
     "REMOVE_ALL": "刪除全部",
     "RESULT": "結果",
     "UNDO": "復原",
@@ -98,6 +100,9 @@
         "UNDO_DELETE": "您可在5秒內復原記錄",
         "REMOVE_ALL_RECORD": "確定要刪除全部記錄? <b>此動作無法被撤回。</b>",
         "GIVE_NAME_CONTACT": "請填寫名字",
-        "FAIL_LOAD_ADS": "無法載入廣告"
+        "FAIL_LOAD_ADS": "無法載入廣告",
+        "ALREADY_BOOKMARKED": "已加入書籤",
+        "BOOKMARKED": "成功加入書籤",
+        "REMOVE_ALL_BOOKMARKS": "確定要刪除所有書籤? <b>此動作無法被撤回。</b>"
     }
 }

@@ -7,9 +7,15 @@
         [icon]="'arrow-back'">
       </ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'HISTORY' | translate }}</ion-title>
-    <ion-buttons slot="end" *ngIf="env.scanRecords && env.scanRecords.length > 0">
-      <ion-button mode="md" (click)="removeAllRecords()">
+    <ion-title *ngIf="segmentModel === 'history'">{{ 'HISTORY' | translate }}</ion-title>
+    <ion-title *ngIf="segmentModel === 'bookmarks'">{{ 'BOOKMARKS' | translate }}</ion-title>
+    <ion-buttons slot="end" *ngIf="segmentModel === 'history' && env.scanRecords && env.scanRecords.length > 0">
+      <ion-button mode="md" (click)="removeAll()">
+        <ion-icon slot="icon-only" name="trash-bin"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end" *ngIf="segmentModel === 'bookmarks' && env.bookmarks && env.bookmarks.length > 0">
+      <ion-button mode="md" (click)="removeAll()">
         <ion-icon slot="icon-only" name="trash-bin"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -17,7 +23,15 @@
 </ion-header>
 
 <ion-content>
-  <ng-container *ngIf="!env.scanRecords || (env.scanRecords.length <= 0)">
+  <ion-segment mode="md" [(ngModel)]="segmentModel" (ionChange)="segmentChanged($event)" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'">
+    <ion-segment-button [value]="'history'">
+      <ion-icon src="assets/icon/history.svg"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button [value]="'bookmarks'">
+      <ion-icon name="star"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+  <ng-container *ngIf="segmentModel === 'history' && (!env.scanRecords || (env.scanRecords.length <= 0))">
     <div class="ion-padding-horizontal fullscreen-vertical-center">
       <ion-icon src="assets/icon/history.svg" [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: 3rem"></ion-icon>
       <p class="ion-text-center">
@@ -27,9 +41,9 @@
       </p>
     </div>
   </ng-container>
-  <ng-container *ngIf="env.scanRecords && env.scanRecords.length > 0">
+  <ng-container *ngIf="segmentModel === 'history' && env.scanRecords && env.scanRecords.length > 0">
     <ion-list mode="ios">
-      <ion-item-sliding *ngFor="let record of env.scanRecords; index as i">
+      <ion-item-sliding *ngFor="let record of env.scanRecords; index as i" #slidingItem>
         <ion-item [lines]="i === env.scanRecords.length - 1? 'none' : 'full'" button (click)="processQrCode(record.text)">
           <ion-label>
             <p class="ion-padding-top ion-padding-horizontal">
@@ -45,8 +59,44 @@
           </ion-label>
           <ion-ripple-effect></ion-ripple-effect>
         </ion-item>
+        <ion-item-options side="start" (ionSwipe)="addFavourite(record, slidingItem)">
+          <ion-item-option [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" expandable (click)="addFavourite(record, slidingItem)">
+            <ion-icon slot="icon-only" name="star"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
         <ion-item-options side="end">
-          <ion-item-option color="danger" expandable (click)="removeRecord(record)">
+          <ion-item-option color="danger" expandable (click)="removeRecord(record, slidingItem)">
+            <ion-icon slot="icon-only" name="trash-bin"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </ng-container>
+  <ng-container *ngIf="segmentModel === 'bookmarks' && (!env.bookmarks || (env.bookmarks.length <= 0))">
+    <div class="ion-padding-horizontal fullscreen-vertical-center">
+      <ion-icon name="star" [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: 3rem"></ion-icon>
+      <p class="ion-text-center">
+        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+          {{ 'FAVOURITE_TEXT_SHOWN' | translate }}
+        </ion-text>
+      </p>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="segmentModel === 'bookmarks' && env.bookmarks && env.bookmarks.length > 0">
+    <ion-list mode="ios">
+      <ion-item-sliding *ngFor="let bookmark of env.bookmarks; index as i" #slidingItem>
+        <ion-item [lines]="i === env.bookmarks.length - 1? 'none' : 'full'" button (click)="processQrCode(bookmark.text)">
+          <ion-label>
+            <p class="ion-padding">
+              <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+                {{ bookmark.text }}
+              </ion-text>
+            </p>
+          </ion-label>
+          <ion-ripple-effect></ion-ripple-effect>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option color="danger" expandable (click)="removeBookmark(bookmark, slidingItem)">
             <ion-icon slot="icon-only" name="trash-bin"></ion-icon>
           </ion-item-option>
         </ion-item-options>
