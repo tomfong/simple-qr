@@ -89,3 +89,10 @@
     </ion-item>
   </ion-list>
 </ion-content>
+
+<ion-footer mode="ios" >
+  <ion-toolbar class="ion-text-center" mode="ios" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'">
+    <span>{{ 'APP_VERSION' | translate }}</span>
+    <span>{{ ' ' + env.version }}</span>
+  </ion-toolbar>
+</ion-footer>

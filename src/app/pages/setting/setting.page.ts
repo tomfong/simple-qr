@@ -20,6 +20,7 @@ export class SettingPage {
     public env: EnvService,
     public toastController: ToastController,
     public translate: TranslateService,
+    public appVersion: AppVersion,
   ) { 
     
   }
