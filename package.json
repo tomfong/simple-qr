@@ -7,6 +7,7 @@
     "ng": "ng",
     "setenv": "node setenv",
     "start": "ng serve",
+    "start:android": "ionic cordova run android --device",
     "build:dev": "ionic cordova build android --dev",
     "build:prod": "ionic cordova build android --prod",
     "test": "ng test",

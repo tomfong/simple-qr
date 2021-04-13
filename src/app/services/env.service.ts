@@ -114,7 +114,7 @@ export class EnvService {
         }
       }
     );
-    await this.storageGet("bookmarks").then(
+    await this.storageGet(environment.storageBookmarkKey).then(
       value => {
         if (value !== null && value !== undefined) {
           try {
@@ -219,7 +219,7 @@ export class EnvService {
       bookmark.text = value;
       bookmark.createdAt = date;
       this._bookmarks.unshift(bookmark);
-      await this.storageSet("bookmarks", JSON.stringify(this._bookmarks));
+      await this.storageSet(environment.storageBookmarkKey, JSON.stringify(this._bookmarks));
       return true;
     } else {
       return false;
@@ -231,20 +231,20 @@ export class EnvService {
     this._bookmarks.sort((t1, t2) => {
       return t2.createdAt.getTime() - t1.createdAt.getTime();
     });
-    await this.storageSet("bookmarks", JSON.stringify(this._bookmarks));
+    await this.storageSet(environment.storageBookmarkKey, JSON.stringify(this._bookmarks));
   }
 
   async deleteBookmark(text: string): Promise<void> {
     const index = this._bookmarks.findIndex(t => t.text === text);
     if (index !== -1) {
       this._bookmarks.splice(index, 1);
-      await this.storageSet("bookmarks", JSON.stringify(this._bookmarks));
+      await this.storageSet(environment.storageBookmarkKey, JSON.stringify(this._bookmarks));
     }
   }
 
   async deleteAllBookmarks(): Promise<void> {
     this._bookmarks = [];
-    await this.storageSet("bookmarks", JSON.stringify(this._bookmarks));
+    await this.storageSet(environment.storageBookmarkKey, JSON.stringify(this._bookmarks));
   }
 
   toggleLanguageChange() {

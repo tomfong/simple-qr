@@ -3,13 +3,15 @@ require('dotenv').config()
 
 const environmentFile = `export const environment = {
     production: false,
-    storageScanRecordKey: "${process.env.STORAGE_SCAN_RECORD_KEY}"
+    storageScanRecordKey: "${process.env.STORAGE_SCAN_RECORD_KEY}",
+    storageBookmarkKey: "${process.env.STORAGE_BOOKMARK_KEY}"
 };
 `;
 
 const environmentProdFile = `export const environment = {
     production: true,
-    storageScanRecordKey: "${process.env.STORAGE_SCAN_RECORD_KEY}"
+    storageScanRecordKey: "${process.env.STORAGE_SCAN_RECORD_KEY}",
+    storageBookmarkKey: "${process.env.STORAGE_BOOKMARK_KEY}"
 };
 `;
 const dir = './src/environments';
