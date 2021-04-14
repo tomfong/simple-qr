@@ -66,6 +66,10 @@ export class SupportDeveloperPage {
     }
   }
 
+  async buyMilkTea() {
+    this.presentToast(this.translate.instant("DEVELOPING"), 1500, 'bottom', 'center', 'short');
+  }
+
   async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {
     let toast: HTMLIonToastElement;
     if (size === "long") {
