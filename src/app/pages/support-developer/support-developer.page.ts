@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AdMob } from '@admob-plus/ionic/ngx';
-import { ToastController } from '@ionic/angular';
+import { ActionSheetController, AlertController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 
@@ -15,6 +15,7 @@ export class SupportDeveloperPage {
     public env: EnvService,
     private admob: AdMob,
     public toastController: ToastController,
+    public actionSheetController: ActionSheetController,
     private translate: TranslateService,
   ) { }
 
@@ -67,7 +68,40 @@ export class SupportDeveloperPage {
   }
 
   async buyMilkTea() {
-    this.presentToast(this.translate.instant("DEVELOPING"), 1500, 'bottom', 'center', 'short');
+    const actionSheet = await this.actionSheetController.create(
+      {
+        mode: "ios",
+        translucent: true,
+        header: this.translate.instant('CUP_SIZE'),
+        buttons: [
+          {
+            text: this.translate.instant('SMALL_MILKTEA'),
+            handler: async () => {
+              this.presentToast(this.translate.instant("DEVELOPING"), 1500, 'bottom', 'center', 'short');
+            }
+          },
+          {
+            text: this.translate.instant('LARGE_MILKTEA'),
+            handler: async () => {
+              this.presentToast(this.translate.instant("DEVELOPING"), 1500, 'bottom', 'center', 'short');
+            }
+          },
+          {
+            text: this.translate.instant('EXTRA_LARGE_MILKTEA'),
+            handler: async () => {
+              this.presentToast(this.translate.instant("DEVELOPING"), 1500, 'bottom', 'center', 'short');
+            }
+          },
+          {
+            text: this.translate.instant('PREMIUM_MILKTEA'),
+            handler: async () => {
+              this.presentToast(this.translate.instant("DEVELOPING"), 1500, 'bottom', 'center', 'short');
+            }
+          }
+        ]
+      }
+    )
+    actionSheet.present();
   }
 
   async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {
