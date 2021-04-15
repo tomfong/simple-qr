@@ -34,6 +34,7 @@
     "@ionic-native/core": "^5.31.1",
     "@ionic-native/device": "^5.32.0",
     "@ionic-native/device-motion": "^5.31.1",
+    "@ionic-native/in-app-purchase-2": "^5.32.0",
     "@ionic-native/ionic-webview": "^5.32.0",
     "@ionic-native/qr-scanner": "^5.31.1",
     "@ionic-native/sms": "^5.31.1",
@@ -76,6 +77,7 @@
     "cordova-plugin-device-motion": "^2.0.1",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
     "cordova-plugin-ionic-webview": "^4.2.1",
+    "cordova-plugin-purchase": "^10.5.3",
     "cordova-plugin-qrscanner": "^3.0.1",
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-statusbar": "^2.4.2",
@@ -124,7 +126,8 @@
         "PLAY_SERVICES_VERSION": "19.8.0"
       },
       "cordova-plugin-theme-detection": {},
-      "cordova-plugin-app-version": {}
+      "cordova-plugin-app-version": {},
+      "cordova-plugin-purchase": {}
     },
     "platforms": [
       "android"

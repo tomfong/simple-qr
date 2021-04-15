@@ -22,6 +22,7 @@ import { ThemeDetection } from '@ionic-native/theme-detection/ngx';
 import { Device } from '@ionic-native/device/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { InAppPurchase2 } from '@ionic-native/in-app-purchase-2/ngx';
 
 import { CreateContactPageModule } from './modals/create-contact/create-contact.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -67,6 +68,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     Device,
     AppVersion,
     SplashScreen,
+    InAppPurchase2,
   ],
   bootstrap: [AppComponent],
 })
