@@ -5,6 +5,7 @@ import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { SMS } from '@ionic-native/sms/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
+import { WifiWizard2 } from '@ionic-native/wifi-wizard-2/ngx';
 import { AlertController, LoadingController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
@@ -19,7 +20,7 @@ import { EnvService } from 'src/app/services/env.service';
 })
 export class ResultPage implements OnInit {
 
-  contentType: "freeText" | "url" | "contact" | "phone" | "sms" | "email" = "freeText";
+  contentType: "freeText" | "url" | "contact" | "phone" | "sms" | "email" | "wifi" = "freeText";
 
   qrCodeContent: string;
   qrElementType: NgxQrcodeElementTypes = NgxQrcodeElementTypes.CANVAS;
@@ -35,6 +36,11 @@ export class ResultPage implements OnInit {
   bccEmails: string;
   emailSubject: string;
   emailBody: string;
+
+  wifiSSID: string;
+  wifiPassword: string;
+  wifiEncryption: 'NONE' | 'WEP' | 'WPA';
+  wifiHidden: boolean;
 
   base64Encoded: boolean = false;
   base64EncodedText: string = "";
@@ -60,6 +66,7 @@ export class ResultPage implements OnInit {
     public modalController: ModalController,
     private sms: SMS,
     public translate: TranslateService,
+    private wifi: WifiWizard2,
   ) { }
 
   async ngOnInit() {
@@ -100,6 +107,26 @@ export class ResultPage implements OnInit {
       });
       this.webToast.present();
     }
+    if (this.contentType === "wifi") {
+      this.webToast = await this.toastController.create({
+        header: this.translate.instant('WIFI_NETWORK'),
+        message: `SSID: ${this.wifiSSID}`,
+        duration: 3000,
+        mode: "ios",
+        color: "light",
+        position: "top",
+        buttons: [
+          {
+            text: this.translate.instant('CONNECT'),
+            side: 'end',
+            handler: () => {
+
+            }
+          }
+        ]
+      });
+      this.webToast.present();
+    }
   }
 
   async ionViewWillLeave(): Promise<void> {
@@ -118,6 +145,7 @@ export class ResultPage implements OnInit {
     const phonePrefix = "TEL:";
     const smsPrefix = "SMSTO:";
     const emailPrefix = "MAILTO:";
+    const wifiPrefix = "WIFI:";
     const tContent = this.qrCodeContent.trim().toUpperCase();
     if (tContent.substr(0, urlPrefix1.length) === urlPrefix1 || tContent.substr(0, urlPrefix2.length) === urlPrefix2) {
       this.contentType = "url";
@@ -139,6 +167,9 @@ export class ResultPage implements OnInit {
     } else if (tContent.substr(0, emailPrefix.length) === emailPrefix) {
       this.contentType = "email";
       this.prepareEmail();
+    } else if (tContent.substr(0, wifiPrefix.length) === wifiPrefix) {
+      this.contentType = "wifi";
+      this.prepareWifi();
     } else {
       this.contentType = "freeText";
     }
@@ -595,6 +626,49 @@ export class ResultPage implements OnInit {
         }
       );
     }
+  }
+
+  prepareWifi(): void {
+    const wifiPrefix = "WIFI:";
+    const wifiString = this.qrCodeContent.substr(wifiPrefix.length);
+    const wifiParts = wifiString.replace(/\\;/g, 'ä').replace(/\\:/g, 'Ä').split(";");
+    if (wifiParts.length > 0) {
+      const encryptionPrefix = "T:";
+      const ssidPrefix = "S:";
+      const passwordPrefix = "P:";
+      const hiddenPrefix = "H:";
+      wifiParts.forEach(
+        (part) => {
+          if (part.toUpperCase().substr(0, encryptionPrefix.length) === encryptionPrefix) {
+            const method = part.substr(encryptionPrefix.length) as 'WPA' | 'WEP' | 'nopass';
+            this.wifiEncryption = method === 'nopass'? 'NONE' : (method === 'WPA'? 'WPA' : 'WEP');
+          }
+          if (part.toUpperCase().substr(0, ssidPrefix.length) === ssidPrefix) {
+            this.wifiSSID = part.substr(ssidPrefix.length).replace("ä", ";").replace("Ä", ":");
+          }
+          if (part.toUpperCase().substr(0, passwordPrefix.length) === passwordPrefix) {
+            this.wifiPassword = part.substr(passwordPrefix.length).replace("ä", ";").replace("Ä", ":");
+          }
+          if (part.toUpperCase().substr(0, hiddenPrefix.length) === hiddenPrefix) {
+            this.wifiHidden = part.substr(hiddenPrefix.length).toLowerCase() === "true"? true : false;
+          }
+        }
+      );
+    }
+  }
+
+  async  connectWifi(): Promise<void> {
+    if (this.platform.is("android")) {
+      await this.wifi.connect(this.wifiSSID, false, this.wifiPassword, this.wifiEncryption).then(
+        async (value) => {
+          console.log("wifi", value);
+        },
+        err => {
+          console.error("wifi", err);
+        }
+      );
+    }
+    
   }
 
   returnScanPage(): void {

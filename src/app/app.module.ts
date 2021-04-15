@@ -23,6 +23,7 @@ import { Device } from '@ionic-native/device/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { InAppPurchase2 } from '@ionic-native/in-app-purchase-2/ngx';
+import { WifiWizard2 } from '@ionic-native/wifi-wizard-2/ngx';
 
 import { CreateContactPageModule } from './modals/create-contact/create-contact.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -69,6 +70,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     AppVersion,
     SplashScreen,
     InAppPurchase2,
+    WifiWizard2,
   ],
   bootstrap: [AppComponent],
 })

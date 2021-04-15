@@ -5,7 +5,8 @@
       </ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'RESULT' | translate }}</ion-title>
-    <ion-buttons slot="end" *ngIf="qrCodeContent !== null && qrCodeContent !== undefined && qrCodeContent.trim().length > 0">
+    <ion-buttons slot="end"
+      *ngIf="qrCodeContent !== null && qrCodeContent !== undefined && qrCodeContent.trim().length > 0">
       <ion-button mode="md" (click)="addBookmark()" *ngIf="!bookmarked">
         <ion-icon slot="icon-only" name="star"></ion-icon>
       </ion-button>
@@ -168,6 +169,42 @@
     </ion-col>
   </ion-row>
 
+  <ion-row *ngIf="contentType === 'wifi' && wifiSSID && qrCodeContent && qrCodeContent.trim().length > 0">
+    <ion-col class="ion-text-center ion-padding-horizontal">
+      <ion-item lines="none">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom"
+          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+          {{ 'WIFI_SSID' | translate }}
+        </ion-label>
+        <ion-textarea class="box" readonly [value]="wifiSSID" autoGrow="true" rows="1"></ion-textarea>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngIf="contentType === 'wifi' && wifiEncryption && qrCodeContent && qrCodeContent.trim().length > 0">
+    <ion-col class="ion-text-center ion-padding-horizontal">
+      <ion-item lines="none">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom"
+          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+          {{ 'WIFI_ENCRYPTION' | translate }}
+        </ion-label>
+        <ion-textarea class="box" readonly [value]="wifiEncryption === 'NONE'? ('NOT_AVAILABLE' | translate) : (wifiEncryption === 'WPA'? 'WPA/WPA2' : wifiEncryption)" autoGrow="true" rows="1"></ion-textarea>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  
+  <ion-row *ngIf="contentType === 'wifi' && qrCodeContent && qrCodeContent.trim().length > 0">
+    <ion-col class="ion-text-center ion-padding-horizontal">
+      <ion-item lines="none">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom"
+          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+          {{ 'WIFI_HIDDEN' | translate }}
+        </ion-label>
+        <ion-textarea class="box" readonly [value]="wifiHidden === true? ('YES' | translate) : ('NO' | translate)" autoGrow="true" rows="1"></ion-textarea>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
   <ion-row class="ion-padding-horizontal ion-margin-horizontal ion-padding-bottom">
     <ion-col></ion-col>
   </ion-row>
@@ -249,6 +286,17 @@
       <ion-button expand="full" color="secondary" mode="ios" (click)="sendEmail()">
         <ion-icon slot="start" name="mail"></ion-icon>
         <span>{{ 'SEND_EMAIL' | translate }}</span>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <!-- WiFi -->
+  <ion-row *ngIf="contentType === 'wifi'" class="ion-padding-horizontal ion-margin-horizontal">
+    <ion-col>
+      <ion-button expand="full" color="secondary" mode="ios" (click)="connectWifi()">
+        <ion-icon slot="start" name="wifi"></ion-icon>
+        <span>{{ 'CONNECT_WIFI' | translate }}</span>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
