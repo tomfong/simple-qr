@@ -282,13 +282,6 @@
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
-    <!-- <ion-col>
-      <ion-button expand="full" color="primary" mode="ios" (click)="saveQrCode()" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
-        <ion-icon slot="start" name="image"></ion-icon>
-        <span>Save QR Code</span>
-        <ion-ripple-effect></ion-ripple-effect>
-      </ion-button>
-    </ion-col> -->
     <ion-col size="6">
       <ion-button expand="full" color="primary" mode="ios" (click)="shareQrCode()"
         [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
@@ -298,13 +291,4 @@
       </ion-button>
     </ion-col>
   </ion-row>
-  <!-- <ion-row class="ion-padding-horizontal ion-margin-horizontal ion-padding-bottom">
-    <ion-col>
-      <ion-button expand="full" color="dimgray" mode="ios" (click)="returnScanPage()">
-        <ion-icon slot="start" name="chevron-back"></ion-icon>
-        <span>Return</span>
-        <ion-ripple-effect></ion-ripple-effect>
-      </ion-button>
-    </ion-col>
-  </ion-row> -->
 </ion-footer>
