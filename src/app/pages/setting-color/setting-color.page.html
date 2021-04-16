@@ -9,44 +9,51 @@
 </ion-header>
 
 <ion-content>
-  <ion-list mode="ios">
-    <ion-radio-group [(ngModel)]="env.selectedColorTheme" (ionChange)="saveColorTheme()">
-      <ion-item lines="none">
-        <ion-icon [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" src="assets/icon/default.svg"></ion-icon>
-        <ion-label>
-          <p class="ion-padding">
-            <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
-              {{ 'SYSTEM_DEFAULT' | translate }}
-            </ion-text>
-          </p>
-        </ion-label>
-        <ion-radio mode="md" slot="end" [value]="'default'" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"></ion-radio>
-        <ion-ripple-effect></ion-ripple-effect>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-icon color="warning" name="sunny"></ion-icon>
-        <ion-label>
-          <p class="ion-padding">
-            <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
-              {{ 'LIGHT' | translate }}
-            </ion-text>
-          </p>
-        </ion-label>
-        <ion-radio mode="md" slot="end" [value]="'light'" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"></ion-radio>
-        <ion-ripple-effect></ion-ripple-effect>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-icon color="medium" name="moon"></ion-icon>
-        <ion-label>
-          <p class="ion-padding">
-            <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
-              {{ 'DARK' | translate }}
-            </ion-text>
-          </p>
-        </ion-label>
-        <ion-radio mode="md" slot="end" [value]="'dark'" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"></ion-radio>
-        <ion-ripple-effect></ion-ripple-effect>
-      </ion-item>
-    </ion-radio-group>
-  </ion-list>
+
+  <ion-radio-group [(ngModel)]="env.selectedColorTheme" (ionChange)="saveColorTheme()">
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"
+        src="assets/icon/default.svg"></ion-icon>
+      <ion-label>
+        <p class="ion-padding">
+          <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+            {{ 'SYSTEM_DEFAULT' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+      <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="'default'"
+        [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'">
+      </ion-radio>
+      <ion-ripple-effect type="bounded"></ion-ripple-effect>
+    </ion-item>
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-icon class="ion-padding-start" color="warning" name="sunny"></ion-icon>
+      <ion-label>
+        <p class="ion-padding">
+          <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+            {{ 'LIGHT' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+      <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="'light'"
+        [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'">
+      </ion-radio>
+      <ion-ripple-effect type="bounded"></ion-ripple-effect>
+    </ion-item>
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-icon class="ion-padding-start" color="medium" name="moon"></ion-icon>
+      <ion-label>
+        <p class="ion-padding">
+          <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+            {{ 'DARK' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+      <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="'dark'"
+        [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'">
+      </ion-radio>
+      <ion-ripple-effect type="bounded"></ion-ripple-effect>
+    </ion-item>
+  </ion-radio-group>
+
 </ion-content>

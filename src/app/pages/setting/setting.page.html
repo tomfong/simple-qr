@@ -9,88 +9,95 @@
 </ion-header>
 
 <ion-content>
-  <ion-list mode="ios">
-    <ion-item lines="none" button (click)="setLanguage()">
-      <ion-icon [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="globe-sharp"></ion-icon>
-      <ion-label>
-        <p class="ion-padding">
-          <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
-            {{ 'LANGUAGE' | translate }}
-          </ion-text>
-        </p>
-      </ion-label>
-      <ion-ripple-effect></ion-ripple-effect>
-    </ion-item>
-    <ion-item lines="none" button (click)="setColorTheme()">
-      <ion-icon [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="color-palette"></ion-icon>
-      <ion-label>
-        <p class="ion-padding">
-          <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
-            {{ 'COLOR_THEME' | translate }}
-          </ion-text>
-        </p>
-      </ion-label>
-      <ion-ripple-effect></ion-ripple-effect>
-    </ion-item>
-    <ion-item lines="none" button (click)="setCameraPause()">
-      <ion-icon [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="camera"></ion-icon>
-      <ion-label>
-        <p class="ion-padding">
-          <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
-            {{ 'CAMERA_PAUSE_TRIGGER' | translate }}
-          </ion-text>
-        </p>
-      </ion-label>
-      <ion-ripple-effect></ion-ripple-effect>
-    </ion-item>
-    <ion-item lines="none" button (click)="setScanRecordLogging()">
-      <ion-icon [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" src="assets/icon/history.svg"></ion-icon>
-      <ion-label>
-        <p class="ion-padding">
-          <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
-            {{ 'SCAN_HISTORY_LOGGING' | translate }}
-          </ion-text>
-        </p>
-      </ion-label>
-      <ion-ripple-effect></ion-ripple-effect>
-    </ion-item>
-    <ion-item lines="none" button (click)="openRepoUrl()">
-      <ion-icon [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="logo-github"></ion-icon>
-      <ion-label>
-        <p class="ion-padding">
-          <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
-            {{ 'ABOUT_SIMPLE_QR' | translate }}
-          </ion-text>
-        </p>
-      </ion-label>
-      <ion-ripple-effect></ion-ripple-effect>
-    </ion-item>
-    <ion-item lines="none" button (click)="reportBug()">
-      <ion-icon [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="bug"></ion-icon>
-      <ion-label>
-        <p class="ion-padding">
-          <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
-            {{ 'REPORT_ISSUE' | translate }}
-          </ion-text>
-        </p>
-      </ion-label>
-      <ion-ripple-effect></ion-ripple-effect>
-    </ion-item>
-    <ion-item lines="none" button (click)="supportDeveloper()">
-      <ion-icon [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" src="assets/icon/dollar.svg"></ion-icon>
-      <ion-label>
-        <p class="ion-padding">
-          <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
-            {{ 'SUPPORT_DEVELOPER' | translate }}
-          </ion-text>
-        </p>
-      </ion-label>
-      <ion-ripple-effect></ion-ripple-effect>
-    </ion-item>
-  </ion-list>
+
+  <ion-item class="ion-no-padding" lines="none" button (click)="setLanguage()">
+    <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="globe-sharp">
+    </ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+          {{ 'LANGUAGE' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-ripple-effect type="bounded"></ion-ripple-effect>
+  </ion-item>
+  <ion-item class="ion-no-padding" lines="none" button (click)="setColorTheme()">
+    <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"
+      name="color-palette"></ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+          {{ 'COLOR_THEME' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-ripple-effect type="bounded"></ion-ripple-effect>
+  </ion-item>
+  <ion-item class="ion-no-padding" lines="none" button (click)="setCameraPause()">
+    <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="camera">
+    </ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+          {{ 'CAMERA_PAUSE_TRIGGER' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-ripple-effect type="bounded"></ion-ripple-effect>
+  </ion-item>
+  <ion-item class="ion-no-padding" lines="none" button (click)="setScanRecordLogging()">
+    <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"
+      src="assets/icon/history.svg"></ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+          {{ 'SCAN_HISTORY_LOGGING' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-ripple-effect type="bounded"></ion-ripple-effect>
+  </ion-item>
+  <ion-item class="ion-no-padding" lines="none" button (click)="openRepoUrl()">
+    <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="logo-github">
+    </ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+          {{ 'ABOUT_SIMPLE_QR' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-ripple-effect type="bounded"></ion-ripple-effect>
+  </ion-item>
+  <ion-item class="ion-no-padding" lines="none" button (click)="reportBug()">
+    <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="bug">
+    </ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+          {{ 'REPORT_ISSUE' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-ripple-effect type="bounded"></ion-ripple-effect>
+  </ion-item>
+  <ion-item class="ion-no-padding" lines="none" button (click)="supportDeveloper()">
+    <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"
+      src="assets/icon/dollar.svg"></ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+          {{ 'SUPPORT_DEVELOPER' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-ripple-effect type="bounded"></ion-ripple-effect>
+  </ion-item>
+
 </ion-content>
 
-<ion-footer mode="ios" >
+<ion-footer mode="ios">
   <ion-toolbar class="ion-text-center" mode="ios" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'">
     <span>{{ 'APP_VERSION' | translate }}</span>
     <span>{{ ' ' + env.version }}</span>

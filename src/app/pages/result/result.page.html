@@ -176,7 +176,8 @@
           [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
           {{ 'WIFI_SSID' | translate }}
         </ion-label>
-        <ion-textarea class="box" readonly [value]="wifiSSID? wifiSSID : ( 'NOT_PROVIDED' | translate )" autoGrow="true" rows="1"></ion-textarea>
+        <ion-textarea class="box" readonly [value]="wifiSSID? wifiSSID : ( 'NOT_PROVIDED' | translate )" autoGrow="true"
+          rows="1"></ion-textarea>
       </ion-item>
     </ion-col>
   </ion-row>
@@ -188,11 +189,13 @@
           [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
           {{ 'WIFI_ENCRYPTION' | translate }}
         </ion-label>
-        <ion-textarea class="box" readonly [value]="wifiEncryption === 'NONE'? ('NOT_AVAILABLE' | translate) : (wifiEncryption === 'WPA'? 'WPA/WPA2' : wifiEncryption)" autoGrow="true" rows="1"></ion-textarea>
+        <ion-textarea class="box" readonly
+          [value]="wifiEncryption === 'NONE'? ('NOT_AVAILABLE' | translate) : (wifiEncryption === 'WPA'? 'WPA/WPA2' : wifiEncryption)"
+          autoGrow="true" rows="1"></ion-textarea>
       </ion-item>
     </ion-col>
   </ion-row>
-  
+
   <ion-row *ngIf="contentType === 'wifi' && qrCodeContent && qrCodeContent.trim().length > 0">
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
@@ -200,7 +203,8 @@
           [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
           {{ 'WIFI_HIDDEN' | translate }}
         </ion-label>
-        <ion-textarea class="box" readonly [value]="wifiHidden === true? ('YES' | translate) : ('NO' | translate)" autoGrow="true" rows="1"></ion-textarea>
+        <ion-textarea class="box" readonly [value]="wifiHidden === true? ('YES' | translate) : ('NO' | translate)"
+          autoGrow="true" rows="1"></ion-textarea>
       </ion-item>
     </ion-col>
   </ion-row>
