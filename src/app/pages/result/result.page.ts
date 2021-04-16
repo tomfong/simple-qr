@@ -691,6 +691,14 @@ export class ResultPage implements OnInit {
                           await this.wifi.connect(this.wifiSSID, false, this.wifiPassword, this.wifiEncryption).then(
                             async value => {
                               connectLoading.dismiss()
+                              await this.wifi.canConnectToInternet().then(
+                                (value) => {
+                                  if (!value) {
+                                    this.presentToast(this.translate.instant("MSG.WIFI_NO_INTERNET"), 2000, "middle", "center", "long");
+                                  }
+                                }
+                              )
+                              await this.wifi.resetBindAll();
                               console.log("connect wifi", value)
                             },
                             async err => {

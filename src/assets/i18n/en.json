@@ -131,6 +131,7 @@
         "TURN_ON_WIFI": "Please turn on WiFi",
         "TURN_ON_LOCATION": "Please turn on Location",
         "WIFI_NOT_FOUND": "Your position is not inside this network coverage",
-        "FAIL_CONNECT_WIFI": "Failed to connect to this network"
+        "FAIL_CONNECT_WIFI": "Failed to connect to this network",
+        "WIFI_NO_INTERNET": "Network has no internet access"
     }
 }
