@@ -693,9 +693,13 @@ export class ResultPage implements OnInit {
                               connectLoading.dismiss()
                               await this.wifi.canConnectToInternet().then(
                                 (value) => {
+                                  console.log("wifi canConnectToInternet", value)
                                   if (!value) {
-                                    this.presentToast(this.translate.instant("MSG.WIFI_NO_INTERNET"), 2000, "middle", "center", "long");
+                                    this.presentToast(this.translate.instant("MSG.WIFI_NO_INTERNET"), 2000, "bottom", "center", "long");
                                   }
+                                },
+                                async err => {
+                                  console.error("wifi canConnectToInternet", err)
                                 }
                               )
                               await this.wifi.resetBindAll();
@@ -704,13 +708,13 @@ export class ResultPage implements OnInit {
                             async err => {
                               connectLoading.dismiss()
                               console.error("connect wifi", err)
-                              if (err === "WiFi not available") {
-                                this.presentToast(this.translate.instant("MSG.FAIL_CONNECT_WIFI"), 2000, "middle", "center", "long");
+                              if (err === "WiFi not available" || err === "ERROR_ADDING_NETWORK") {
+                                this.presentToast(this.translate.instant("MSG.FAIL_CONNECT_WIFI"), 2000, "bottom", "center", "long");
                               }
                             }
                           );
                         } else {
-                          this.presentToast(this.translate.instant("MSG.WIFI_NOT_FOUND"), 2000, "middle", "center", "long");
+                          this.presentToast(this.translate.instant("MSG.WIFI_NOT_FOUND"), 2000, "bottom", "center", "long");
                         }
                       }
                     },
