@@ -169,14 +169,14 @@
     </ion-col>
   </ion-row>
 
-  <ion-row *ngIf="contentType === 'wifi' && wifiSSID && qrCodeContent && qrCodeContent.trim().length > 0">
+  <ion-row *ngIf="contentType === 'wifi' && qrCodeContent && qrCodeContent.trim().length > 0">
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom"
           [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
           {{ 'WIFI_SSID' | translate }}
         </ion-label>
-        <ion-textarea class="box" readonly [value]="wifiSSID" autoGrow="true" rows="1"></ion-textarea>
+        <ion-textarea class="box" readonly [value]="wifiSSID? wifiSSID : ( 'NOT_PROVIDED' | translate )" autoGrow="true" rows="1"></ion-textarea>
       </ion-item>
     </ion-col>
   </ion-row>
@@ -294,7 +294,7 @@
   <!-- WiFi -->
   <ion-row *ngIf="contentType === 'wifi'" class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col>
-      <ion-button expand="full" color="secondary" mode="ios" (click)="connectWifi()">
+      <ion-button expand="full" color="secondary" mode="ios" [disabled]="!wifiSSID" (click)="connectWifi()">
         <ion-icon slot="start" name="wifi"></ion-icon>
         <span>{{ 'CONNECT_WIFI' | translate }}</span>
         <ion-ripple-effect></ion-ripple-effect>

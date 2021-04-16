@@ -35,6 +35,9 @@ export class ScanPage {
 
   pauseAlert: HTMLIonAlertElement;
 
+  resumeSubscription: Subscription;
+  pauseSubscription: Subscription;
+
   constructor(
     private platform: Platform,
     private qrScanner: QRScanner,
@@ -55,7 +58,7 @@ export class ScanPage {
             await this.confirmExitApp();
           }
         });
-        this.platform.pause.subscribe(
+        this.pauseSubscription = this.platform.pause.subscribe(
           async () => {
             await this.qrScanner.destroy().then(
               () => {
@@ -69,7 +72,7 @@ export class ScanPage {
             );
           }
         );
-        this.platform.resume.subscribe(
+        this.resumeSubscription = this.platform.resume.subscribe(
           async () => {
             await this.prepareScanner();
           }
@@ -94,8 +97,16 @@ export class ScanPage {
 
   async ionViewDidLeave(): Promise<void> {
     this.vibration.vibrate(0);
-    this.platform.resume.unsubscribe();
-    this.platform.pause.unsubscribe();
+    if (this.resumeSubscription) {
+      // this.platform.resume.unsubscribe();
+      this.resumeSubscription.unsubscribe();
+      this.resumeSubscription = undefined;
+    }
+    if (this.pauseSubscription) {
+      // this.platform.pause.unsubscribe();;
+      this.pauseSubscription.unsubscribe();
+      this.pauseSubscription = undefined;
+    }
     if (this.scanSubscription) {
       this.scanSubscription.unsubscribe();
       this.scanSubscription = undefined;

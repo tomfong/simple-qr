@@ -75,7 +75,7 @@ export class ResultPage implements OnInit {
     if (this.env.scanRecordLogging === 'on') {
       await this.env.saveScanRecord(this.qrCodeContent);
     }
-    if (this.env.bookmarks.find( x => x.text === this.qrCodeContent)) {
+    if (this.env.bookmarks.find(x => x.text === this.qrCodeContent)) {
       this.bookmarked = true;
     }
   }
@@ -108,24 +108,26 @@ export class ResultPage implements OnInit {
       this.webToast.present();
     }
     if (this.contentType === "wifi") {
-      this.webToast = await this.toastController.create({
-        header: this.translate.instant('WIFI_NETWORK'),
-        message: `SSID: ${this.wifiSSID}`,
-        duration: 3000,
-        mode: "ios",
-        color: "light",
-        position: "top",
-        buttons: [
-          {
-            text: this.translate.instant('CONNECT'),
-            side: 'end',
-            handler: () => {
-
+      if (this.wifiSSID) {
+        this.webToast = await this.toastController.create({
+          header: this.translate.instant('WIFI_NETWORK'),
+          message: `SSID: ${this.wifiSSID}`,
+          duration: 3000,
+          mode: "ios",
+          color: "light",
+          position: "top",
+          buttons: [
+            {
+              text: this.translate.instant('CONNECT'),
+              side: 'end',
+              handler: async () => {
+                await this.connectWifi();
+              }
             }
-          }
-        ]
-      });
-      this.webToast.present();
+          ]
+        });
+        this.webToast.present();
+      }
     }
   }
 
@@ -642,7 +644,7 @@ export class ResultPage implements OnInit {
         (part) => {
           if (part.toUpperCase().substr(0, encryptionPrefix.length) === encryptionPrefix) {
             const method = part.substr(encryptionPrefix.length) as 'WPA' | 'WEP' | 'nopass';
-            this.wifiEncryption = method === 'nopass'? 'NONE' : (method === 'WPA'? 'WPA' : 'WEP');
+            this.wifiEncryption = method === 'nopass' ? 'NONE' : (method === 'WPA' ? 'WPA' : 'WEP');
           }
           if (part.toUpperCase().substr(0, ssidPrefix.length) === ssidPrefix) {
             this.wifiSSID = part.substr(ssidPrefix.length).replace("ä", ";").replace("Ä", ":");
@@ -651,31 +653,86 @@ export class ResultPage implements OnInit {
             this.wifiPassword = part.substr(passwordPrefix.length).replace("ä", ";").replace("Ä", ":");
           }
           if (part.toUpperCase().substr(0, hiddenPrefix.length) === hiddenPrefix) {
-            this.wifiHidden = part.substr(hiddenPrefix.length).toLowerCase() === "true"? true : false;
+            this.wifiHidden = part.substr(hiddenPrefix.length).toLowerCase() === "true" ? true : false;
           }
         }
       );
     }
   }
 
-  async  connectWifi(): Promise<void> {
+  async connectWifi(): Promise<void> {
+    if (!this.wifiSSID) {
+      this.presentToast(this.translate.instant("MSG.WIFI_NO_SSID"), 2000, "middle", "center", "long");
+      return;
+    }
     if (this.platform.is("android")) {
-      await this.wifi.scan().then(
+      const requestLoading = await this.presentLoading(this.translate.instant("CHECK_PERMISSION"));
+      await this.wifi.requestPermission().then(
         async value => {
-          console.log("scanned wifi", value)
+          requestLoading.dismiss();
+          console.log("wifi permission", value)
+          if (value === "PERMISSION_GRANTED") {
+            const checkWifiLoading = await this.presentLoading(this.translate.instant("CHECK_WIFI"));
+            await this.wifi.isWifiEnabled().then(
+              async value => {
+                checkWifiLoading.dismiss();
+                console.log("is enabled wifi", value)
+                if (value) { // WiFi turned on
+                  const recognizeLoading = await this.presentLoading(this.translate.instant("RECOGNIZE_NETWORK"));
+                  await this.wifi.scan().then(
+                    async (value: any[]) => {
+                      console.log("scanned wifi", value)
+                      recognizeLoading.dismiss();
+                      if (!value || (value && value.length <= 0)) {
+                        this.presentToast(this.translate.instant("MSG.WIFI_NOT_FOUND"), 2000, "middle", "center", "long");
+                      } else {
+                        if (value.findIndex(x => x.SSID === this.wifiSSID) !== -1) {
+                          const connectLoading = await this.presentLoading(this.translate.instant("CONNECTING_NETWORK"));
+                          await this.wifi.connect(this.wifiSSID, false, this.wifiPassword, this.wifiEncryption).then(
+                            async value => {
+                              connectLoading.dismiss()
+                              console.log("connect wifi", value)
+                            },
+                            async err => {
+                              connectLoading.dismiss()
+                              console.error("connect wifi", err)
+                              if (err === "WiFi not available") {
+                                this.presentToast(this.translate.instant("MSG.FAIL_CONNECT_WIFI"), 2000, "middle", "center", "long");
+                              }
+                            }
+                          );
+                        } else {
+                          this.presentToast(this.translate.instant("MSG.WIFI_NOT_FOUND"), 2000, "middle", "center", "long");
+                        }
+                      }
+                    },
+                    async err => {
+                      recognizeLoading.dismiss();
+                      console.error("scan wifi", err);
+                      if (err === 'SCAN_FAILED') {
+                        this.presentToast(this.translate.instant("MSG.TURN_ON_LOCATION"), 2000, "bottom", "center", "long");
+                      }
+                    }
+                  )
+                } else {
+                  this.presentToast(this.translate.instant("MSG.TURN_ON_WIFI"), 2000, "bottom", "center", "long");
+                }
+              },
+              async err => {
+                checkWifiLoading.dismiss();
+                console.error("is enabled wifi", err);
+              }
+            )
+          }
         },
         async err => {
-          console.error("scan wifi", err);
+          requestLoading.dismiss();
+          console.error('wifi permission', err)
+          if (err === "PERMISSION_DENIED") {
+            this.presentToast(this.translate.instant("MSG.WIFI_PERMISSION"), 2000, "bottom", "center", "long");
+          }
         }
       )
-      // await this.wifi.connect(this.wifiSSID, false, this.wifiPassword, this.wifiEncryption).then(
-      //   async (value) => {
-      //     console.log("wifi", value);
-      //   },
-      //   err => {
-      //     console.error("wifi", err);
-      //   }
-      // );
     } else {
       this.presentToast(this.translate.instant('DEVELOPING'), 1500, "bottom", "center", "short");
     }
@@ -692,7 +749,7 @@ export class ResultPage implements OnInit {
     } else {
       this.presentToast(this.translate.instant("MSG.ALREADY_BOOKMARKED"), 1000, "bottom", "center", "short");
     }
-    if (this.env.bookmarks.find( x => x.text === this.qrCodeContent)) {
+    if (this.env.bookmarks.find(x => x.text === this.qrCodeContent)) {
       this.bookmarked = true;
     } else {
       this.bookmarked = false;
@@ -702,7 +759,7 @@ export class ResultPage implements OnInit {
   async removeBookmark() {
     await this.env.deleteBookmark(this.qrCodeContent);
     this.presentToast(this.translate.instant("MSG.UNBOOKMARKED"), 1000, "bottom", "center", "short");
-    if (this.env.bookmarks.find( x => x.text === this.qrCodeContent)) {
+    if (this.env.bookmarks.find(x => x.text === this.qrCodeContent)) {
       this.bookmarked = true;
     } else {
       this.bookmarked = false;

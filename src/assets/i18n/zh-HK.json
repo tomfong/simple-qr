@@ -95,6 +95,10 @@
     "WORK": "工作",
     "PREPARING": "準備中",
     "PLEASE_WAIT": "請稍候...",
+    "CHECK_PERMISSION": "檢查權限",
+    "CHECK_WIFI": "檢查 Wifi 開關",
+    "RECOGNIZE_NETWORK": "識別中",
+    "CONNECTING_NETWORK": "連接中",
     "MSG": {
         "CALL_PHONE": "確定要致電 {phoneNumber} ?",
         "FAIL_CALL_PHONE": "無法開啟電話",
@@ -121,6 +125,12 @@
         "ALREADY_BOOKMARKED": "已加入書籤",
         "BOOKMARKED": "成功加入書籤",
         "UNBOOKMARKED": "已移除書籤",
-        "REMOVE_ALL_BOOKMARKS": "確定要刪除所有書籤? <b>此動作無法被撤回。</b>"
+        "REMOVE_ALL_BOOKMARKS": "確定要刪除所有書籤? <b>此動作無法被撤回。</b>",
+        "WIFI_NO_SSID": "沒有提供 WiFi 名稱",
+        "WIFI_PERMISSION": "必須授權使用位置資訊才能連接WiFi",
+        "TURN_ON_WIFI": "請開啟 WiFi 功能",
+        "TURN_ON_LOCATION": "請開啟位置資訊",
+        "WIFI_NOT_FOUND": "您的位置不在此網絡覆蓋範圍內",
+        "FAIL_CONNECT_WIFI": "無法連接此網絡"
     }
 }
