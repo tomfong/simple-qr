@@ -40,7 +40,7 @@ export class ResultPage implements OnInit {
   wifiSSID: string;
   wifiPassword: string;
   wifiEncryption: 'NONE' | 'WEP' | 'WPA';
-  wifiHidden: boolean;
+  wifiHidden: boolean = false;
 
   base64Encoded: boolean = false;
   base64EncodedText: string = "";
@@ -659,16 +659,25 @@ export class ResultPage implements OnInit {
 
   async  connectWifi(): Promise<void> {
     if (this.platform.is("android")) {
-      await this.wifi.connect(this.wifiSSID, false, this.wifiPassword, this.wifiEncryption).then(
-        async (value) => {
-          console.log("wifi", value);
+      await this.wifi.scan().then(
+        async value => {
+          console.log("scanned wifi", value)
         },
-        err => {
-          console.error("wifi", err);
+        async err => {
+          console.error("scan wifi", err);
         }
-      );
+      )
+      // await this.wifi.connect(this.wifiSSID, false, this.wifiPassword, this.wifiEncryption).then(
+      //   async (value) => {
+      //     console.log("wifi", value);
+      //   },
+      //   err => {
+      //     console.error("wifi", err);
+      //   }
+      // );
+    } else {
+      this.presentToast(this.translate.instant('DEVELOPING'), 1500, "bottom", "center", "short");
     }
-    
   }
 
   returnScanPage(): void {
