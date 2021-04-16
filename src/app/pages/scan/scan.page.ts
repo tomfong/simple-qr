@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion/ngx';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
@@ -62,7 +62,7 @@ export class ScanPage {
                 this.cameraActive = false;
                 if (this.motionSubscription) {
                   this.motionSubscription.unsubscribe();
-                  this.motionSubscription = null;
+                  this.motionSubscription = undefined;
                   this.motionlessCount = 0;
                 }
               }
@@ -92,24 +92,25 @@ export class ScanPage {
     await this.prepareScanner();
   }
 
-  async ionViewWillLeave(): Promise<void> {
+  async ionViewDidLeave(): Promise<void> {
     this.vibration.vibrate(0);
     this.platform.resume.unsubscribe();
     this.platform.pause.unsubscribe();
+    if (this.scanSubscription) {
+      this.scanSubscription.unsubscribe();
+      this.scanSubscription = undefined;
+    }
+    if (this.motionSubscription) {
+      this.motionSubscription.unsubscribe();
+      this.motionSubscription = undefined;
+      this.motionlessCount = 0;
+    }
     if (this.cameraActive) {
       await this.qrScanner.destroy().then(
         () => {
           this.cameraActive = false;
         }
       );
-    }
-    if (this.scanSubscription) {
-      this.scanSubscription.unsubscribe();
-    }
-    if (this.motionSubscription) {
-      this.motionSubscription.unsubscribe();
-      this.motionSubscription = null;
-      this.motionlessCount = 0;
     }
   }
 

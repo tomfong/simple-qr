@@ -30,8 +30,8 @@ export class HistoryPage {
 
   async ionViewWillLeave() {
     if (this.deleteToast) {
-      await this.deleteToast.dismiss();
-      this.deleteToast = null;
+      this.deleteToast.dismiss();
+      this.deleteToast = undefined;
     }
   }
 

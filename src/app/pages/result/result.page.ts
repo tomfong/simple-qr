@@ -135,6 +135,7 @@ export class ResultPage implements OnInit {
     this.base64Encoded = false;
     if (this.webToast) {
       this.webToast.dismiss();
+      this.webToast = undefined;
     }
   }
 
