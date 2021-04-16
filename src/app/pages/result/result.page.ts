@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { Clipboard } from '@ionic-native/clipboard/ngx';
+import { Device } from '@ionic-native/device/ngx';
 import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
 import { SMS } from '@ionic-native/sms/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
@@ -69,6 +70,7 @@ export class ResultPage implements OnInit {
     public translate: TranslateService,
     private wifi: WifiWizard2,
     private openNativeSettings: OpenNativeSettings,
+    private device: Device,
   ) { }
 
   async ngOnInit() {
@@ -664,112 +666,113 @@ export class ResultPage implements OnInit {
 
   async connectWifi(): Promise<void> {
     if (this.platform.is("android")) {
-      const alert = await this.alertController.create(
-        {
-          header: this.translate.instant('CONNECT_WIFI'),
-          message: this.translate.instant('MSG.ANDROID_WIFI_NATIVE_SETTINGS'),
-          buttons: [
-            {
-              text: this.translate.instant('SETTINGS'),
-              handler: async () => {
-                alert.dismiss();
-                this.openNativeSettings.open('wifi');
+      if (Number(this.device.version) >= 10) {  // Android 10 (API 29) or later
+        const alert = await this.alertController.create(
+          {
+            header: this.translate.instant('CONNECT_WIFI'),
+            message: this.translate.instant('MSG.ANDROID_WIFI_NATIVE_SETTINGS'),
+            buttons: [
+              {
+                text: this.translate.instant('SETTINGS'),
+                handler: async () => {
+                  alert.dismiss();
+                  this.openNativeSettings.open('wifi');
+                }
+              }
+            ]
+          }
+        )
+        alert.present();
+      } else {
+        if (!this.wifiSSID) {
+          this.presentToast(this.translate.instant("MSG.WIFI_NO_SSID"), 2000, "middle", "center", "long");
+          return;
+        }
+        if (this.platform.is("android")) {
+          const requestLoading = await this.presentLoading(this.translate.instant("CHECK_PERMISSION"));
+          await this.wifi.requestPermission().then(
+            async value => {
+              requestLoading.dismiss();
+              console.log("wifi permission", value)
+              if (value === "PERMISSION_GRANTED") {
+                const checkWifiLoading = await this.presentLoading(this.translate.instant("CHECK_WIFI"));
+                await this.wifi.isWifiEnabled().then(
+                  async value => {
+                    checkWifiLoading.dismiss();
+                    console.log("is enabled wifi", value)
+                    if (value) { // WiFi turned on
+                      const recognizeLoading = await this.presentLoading(this.translate.instant("RECOGNIZE_NETWORK"));
+                      await this.wifi.scan().then(
+                        async (value: any[]) => {
+                          console.log("scanned wifi", value)
+                          recognizeLoading.dismiss();
+                          if (!value || (value && value.length <= 0)) {
+                            this.presentToast(this.translate.instant("MSG.WIFI_NOT_FOUND"), 2000, "middle", "center", "long");
+                          } else {
+                            if (value.findIndex(x => x.SSID === this.wifiSSID) !== -1) {
+                              const connectLoading = await this.presentLoading(this.translate.instant("CONNECTING_NETWORK"));
+                              await this.wifi.connect(this.wifiSSID, false, this.wifiPassword, this.wifiEncryption).then(
+                                async value => {
+                                  connectLoading.dismiss()
+                                  await this.wifi.canConnectToInternet().then(
+                                    (value) => {
+                                      console.log("wifi canConnectToInternet", value)
+                                      if (!value) {
+                                        this.presentToast(this.translate.instant("MSG.WIFI_NO_INTERNET"), 2000, "bottom", "center", "long");
+                                      }
+                                    },
+                                    async err => {
+                                      console.error("wifi canConnectToInternet", err)
+                                    }
+                                  )
+                                  await this.wifi.resetBindAll();
+                                  console.log("connect wifi", value)
+                                },
+                                async err => {
+                                  connectLoading.dismiss()
+                                  console.error("connect wifi", err)
+                                  if (err === "WiFi not available" || err === "ERROR_ADDING_NETWORK") {
+                                    this.presentToast(this.translate.instant("MSG.FAIL_CONNECT_WIFI"), 2000, "bottom", "center", "long");
+                                  }
+                                }
+                              );
+                            } else {
+                              this.presentToast(this.translate.instant("MSG.WIFI_NOT_FOUND"), 2000, "bottom", "center", "long");
+                            }
+                          }
+                        },
+                        async err => {
+                          recognizeLoading.dismiss();
+                          console.error("scan wifi", err);
+                          if (err === 'SCAN_FAILED') {
+                            this.presentToast(this.translate.instant("MSG.TURN_ON_LOCATION"), 2000, "bottom", "center", "long");
+                          }
+                        }
+                      )
+                    } else {
+                      this.presentToast(this.translate.instant("MSG.TURN_ON_WIFI"), 2000, "bottom", "center", "long");
+                    }
+                  },
+                  async err => {
+                    checkWifiLoading.dismiss();
+                    console.error("is enabled wifi", err);
+                  }
+                )
+              }
+            },
+            async err => {
+              requestLoading.dismiss();
+              console.error('wifi permission', err)
+              if (err === "PERMISSION_DENIED") {
+                this.presentToast(this.translate.instant("MSG.WIFI_PERMISSION"), 2000, "bottom", "center", "long");
               }
             }
-          ]
+          )
         }
-      )
-      alert.present();
+      }
     } else {
       this.presentToast(this.translate.instant('DEVELOPING'), 1500, "bottom", "center", "short");
     }
-    // if (!this.wifiSSID) {
-    //   this.presentToast(this.translate.instant("MSG.WIFI_NO_SSID"), 2000, "middle", "center", "long");
-    //   return;
-    // }
-    // if (this.platform.is("android")) {
-    //   const requestLoading = await this.presentLoading(this.translate.instant("CHECK_PERMISSION"));
-    //   await this.wifi.requestPermission().then(
-    //     async value => {
-    //       requestLoading.dismiss();
-    //       console.log("wifi permission", value)
-    //       if (value === "PERMISSION_GRANTED") {
-    //         const checkWifiLoading = await this.presentLoading(this.translate.instant("CHECK_WIFI"));
-    //         await this.wifi.isWifiEnabled().then(
-    //           async value => {
-    //             checkWifiLoading.dismiss();
-    //             console.log("is enabled wifi", value)
-    //             if (value) { // WiFi turned on
-    //               const recognizeLoading = await this.presentLoading(this.translate.instant("RECOGNIZE_NETWORK"));
-    //               await this.wifi.scan().then(
-    //                 async (value: any[]) => {
-    //                   console.log("scanned wifi", value)
-    //                   recognizeLoading.dismiss();
-    //                   if (!value || (value && value.length <= 0)) {
-    //                     this.presentToast(this.translate.instant("MSG.WIFI_NOT_FOUND"), 2000, "middle", "center", "long");
-    //                   } else {
-    //                     if (value.findIndex(x => x.SSID === this.wifiSSID) !== -1) {
-    //                       const connectLoading = await this.presentLoading(this.translate.instant("CONNECTING_NETWORK"));
-    //                       await this.wifi.connect(this.wifiSSID, false, this.wifiPassword, this.wifiEncryption).then(
-    //                         async value => {
-    //                           connectLoading.dismiss()
-    //                           await this.wifi.canConnectToInternet().then(
-    //                             (value) => {
-    //                               console.log("wifi canConnectToInternet", value)
-    //                               if (!value) {
-    //                                 this.presentToast(this.translate.instant("MSG.WIFI_NO_INTERNET"), 2000, "bottom", "center", "long");
-    //                               }
-    //                             },
-    //                             async err => {
-    //                               console.error("wifi canConnectToInternet", err)
-    //                             }
-    //                           )
-    //                           await this.wifi.resetBindAll();
-    //                           console.log("connect wifi", value)
-    //                         },
-    //                         async err => {
-    //                           connectLoading.dismiss()
-    //                           console.error("connect wifi", err)
-    //                           if (err === "WiFi not available" || err === "ERROR_ADDING_NETWORK") {
-    //                             this.presentToast(this.translate.instant("MSG.FAIL_CONNECT_WIFI"), 2000, "bottom", "center", "long");
-    //                           }
-    //                         }
-    //                       );
-    //                     } else {
-    //                       this.presentToast(this.translate.instant("MSG.WIFI_NOT_FOUND"), 2000, "bottom", "center", "long");
-    //                     }
-    //                   }
-    //                 },
-    //                 async err => {
-    //                   recognizeLoading.dismiss();
-    //                   console.error("scan wifi", err);
-    //                   if (err === 'SCAN_FAILED') {
-    //                     this.presentToast(this.translate.instant("MSG.TURN_ON_LOCATION"), 2000, "bottom", "center", "long");
-    //                   }
-    //                 }
-    //               )
-    //             } else {
-    //               this.presentToast(this.translate.instant("MSG.TURN_ON_WIFI"), 2000, "bottom", "center", "long");
-    //             }
-    //           },
-    //           async err => {
-    //             checkWifiLoading.dismiss();
-    //             console.error("is enabled wifi", err);
-    //           }
-    //         )
-    //       }
-    //     },
-    //     async err => {
-    //       requestLoading.dismiss();
-    //       console.error('wifi permission', err)
-    //       if (err === "PERMISSION_DENIED") {
-    //         this.presentToast(this.translate.instant("MSG.WIFI_PERMISSION"), 2000, "bottom", "center", "long");
-    //       }
-    //     }
-    //   )
-    // } else {
-    //   this.presentToast(this.translate.instant('DEVELOPING'), 1500, "bottom", "center", "short");
-    // }
   }
 
   returnScanPage(): void {
