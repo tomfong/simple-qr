@@ -4,7 +4,7 @@ import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
-import { AlertController, IonRouterOutlet, LoadingController, Platform } from '@ionic/angular';
+import { AlertController, IonRouterOutlet, LoadingController, Platform, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { EnvService } from 'src/app/services/env.service';
@@ -50,6 +50,7 @@ export class ScanPage {
     private env: EnvService,
     public translate: TranslateService,
     private splashScreen: SplashScreen,
+    private toastController: ToastController,
   ) {
     this.platform.ready().then(
       async () => {
@@ -181,12 +182,12 @@ export class ScanPage {
     }
     if (this.motionSubscription) {
       this.motionSubscription.unsubscribe();
-      this.motionSubscription = null;
+      this.motionSubscription = undefined;
       this.motionlessCount = 0;
     }
     if (this.pauseAlert) {
       this.pauseAlert.dismiss();
-      this.pauseAlert = null;
+      this.pauseAlert = undefined;
     }
     // await this.qrScanner.useCamera(this.cameraChoice);
     await this.qrScanner.show().then(
@@ -240,6 +241,11 @@ export class ScanPage {
         }
         this.scanSubscription = this.qrScanner.scan().subscribe(
           async (text: string) => {
+            if (text === undefined || text === null || (text && text.trim().length <= 0) || text === "") {
+              this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), 1000, "middle", "center", "long");
+              this.scanQr();
+              return;
+            }
             this.vibration.vibrate(200);
             const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
             if (this.scanSubscription) {
@@ -285,6 +291,11 @@ export class ScanPage {
           text: this.translate.instant('ENTER'),
           handler: async (data) => {
             const text = data.qrcode;
+            console.log("text", text)
+            if (text === undefined || text === null || (text && text.trim().length <= 0) || text === "") {
+              this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), 1000, "middle", "center", "long");
+              return;
+            }
             const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
             if (this.scanSubscription) {
               this.scanSubscription.unsubscribe();
@@ -375,6 +386,54 @@ export class ScanPage {
     });
     await loading.present();
     return loading;
+  }
+
+  async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {
+    if (size === "long") {
+      if (align === "left") {
+        const toast = await this.toastController.create({
+          message: msg,
+          duration: msTimeout,
+          mode: "ios",
+          color: "light",
+          cssClass: "text-start-toast",
+          position: pos
+        });
+        toast.present();
+      } else {
+        const toast = await this.toastController.create({
+          message: msg,
+          duration: msTimeout,
+          mode: "ios",
+          color: "light",
+          cssClass: "text-center-toast",
+          position: pos
+        });
+        toast.present();
+      }
+    } else {
+      if (align === "left") {
+        const toast = await this.toastController.create({
+          message: msg,
+          duration: msTimeout,
+          mode: "ios",
+          color: "light",
+          cssClass: "text-start-short-toast",
+          position: pos
+        });
+        toast.present();
+      } else {
+        const toast = await this.toastController.create({
+          message: msg,
+          duration: msTimeout,
+          mode: "ios",
+          color: "light",
+          cssClass: "text-center-short-toast",
+          position: pos
+        });
+        toast.present();
+      }
+    }
   }
 
 }

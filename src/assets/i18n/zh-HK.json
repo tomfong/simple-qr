@@ -133,6 +133,7 @@
         "WIFI_NOT_FOUND": "您的位置不在此網絡覆蓋範圍內",
         "FAIL_CONNECT_WIFI": "無法連接此網絡",
         "WIFI_NO_INTERNET": "此網絡無互聯網連接",
-        "ANDROID_WIFI_NATIVE_SETTINGS": "基於 Android 政策，我們建議您使用原生設定來掃描此QR碼以連接網絡。"
+        "ANDROID_WIFI_NATIVE_SETTINGS": "基於 Android 政策，我們建議您使用原生設定來掃描此QR碼以連接網絡。",
+        "QR_CODE_VALUE_NOT_EMPTY": "QR碼不能是空值"
     }
 }
