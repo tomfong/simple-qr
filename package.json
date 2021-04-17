@@ -1,6 +1,6 @@
 {
   "name": "simple-qr",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Tom Fong",
   "homepage": "http://github.com/tomfong/",
   "scripts": {
@@ -9,9 +9,9 @@
     "start": "ng serve",
     "start:an": "ionic cordova run android --device",
     "build:dev-an": "ionic cordova build android --dev",
-    "build:prod-an": "ionic cordova build android --prod",
+    "build:prod-an": "ionic cordova build android --prod --release",
     "build:dev-ios": "ionic cordova build ios --dev",
-    "build:prod-ios": "ionic cordova build ios --prod",
+    "build:prod-ios": "ionic cordova build ios --prod --release",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -135,7 +135,9 @@
       },
       "cordova-plugin-theme-detection": {},
       "cordova-plugin-app-version": {},
-      "cordova-plugin-purchase": {},
+      "cordova-plugin-purchase": {
+        "BILLING_KEY": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj8Vlad4gqW6FCL4+Pos7lWPMaFDndIhyDEkZ5XDIpu7vc7H6u1U2ASrY+kUFN8M8aYEAEoQpnINI34gJs/6716noWumR7hVhhSEMCuixO1E+uw3YYgN4wQ5Gpy+crDm0lQ+tcsshrVxG3UV+SpUvUEGyNbzqLWnSjvFv65VOIPLNczrGRGIqexO6taMhROrmcd/1HLwmGndltuPN/xf1XtxlzyO1qVwVgF2LL7UAs73Wmm7NNhkvBXJghJl6V4DHP8w3KUra4XmOV68Ajx+kHuCCs/A3ryNAP8T1xyo6R59DNrUsKCiG7s2VOEGUltqLMculaNouqQD5dT/Yl0urzQIDAQAB"
+      },
       "cordova-plugin-wifiwizard2": {},
       "cordova-open-native-settings": {}
     },

@@ -45,3 +45,14 @@
   </ion-item>
 
 </ion-content>
+<ion-footer mode="ios"
+  [ngStyle]="env.colorTheme === 'dark'?  {'background-color': '#121212'} : {'background-color': 'white'}" *ngIf="showRestoreBtn">
+  <ion-row class="ion-margin-horizontal ion-padding">
+    <ion-col>
+      <ion-button expand="full" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" mode="ios" (click)="restore()">
+        <span>{{ 'RESTORE_PURCHASE' | translate }}</span>
+        <ion-ripple-effect></ion-ripple-effect>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

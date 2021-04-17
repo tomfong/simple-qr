@@ -83,6 +83,12 @@
     "LARGE_MILKTEA": "Large － USD $5.00",
     "EXTRA_LARGE_MILKTEA": "Extra Large － USD $10.00",
     "PREMIUM_MILKTEA": "Premium － USD $20.00",
+    "SUCCESS": "Success",
+    "SUCCESS_BUY_MILK_TEA": "You have successfully bought me a milk tea! Thanks for your support.",
+    "FAIL_BUY_MILK_TEA": "Failed to buy me a milk tea",
+    "RESTORE_PURCHASE": "Restore Purchase",
+    "CONFIRM_RESTORE_PURCHASE": "Are you sure to restore the purchase?",
+    "RESTORED": "Restored",
     "SUPPORT_DEV_EXPLAIN": "Simple QR is a free-of-charge and open-source project. If you would like to contribute financially to the project or support me, please feel free to click to watch ads or buy me a milk tea. Thanks for your contribution!",
     "DEVELOPING": "Developing",
     "REPORT_ISSUE": "Report Issue",
@@ -143,6 +149,7 @@
         "FAIL_CONNECT_WIFI": "Failed to connect to this network",
         "WIFI_NO_INTERNET": "Network has no internet access",
         "ANDROID_WIFI_NATIVE_SETTINGS": "According to Android policies, we suggest you use native Settings to scan the QR code for adding the network.",
-        "QR_CODE_VALUE_NOT_EMPTY": "QR Code value cannot be empty"
+        "QR_CODE_VALUE_NOT_EMPTY": "QR Code value cannot be empty",
+        "FAIL_BUY_MILK_TEA": ""
     }
 }

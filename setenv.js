@@ -4,14 +4,22 @@ require('dotenv').config()
 const environmentFile = `export const environment = {
     production: false,
     storageScanRecordKey: "${process.env.STORAGE_SCAN_RECORD_KEY}",
-    storageBookmarkKey: "${process.env.STORAGE_BOOKMARK_KEY}"
+    storageBookmarkKey: "${process.env.STORAGE_BOOKMARK_KEY}",
+    smallMilkTeaProductKey: "${process.env.SMALL_MILK_TEA_PRODUCT_KEY}",
+    largeMilkTeaProductKey: "${process.env.LARGE_MILK_TEA_PRODUCT_KEY}",
+    extraLargeMilkTeaProductKey: "${process.env.EXTRA_LARGE_MILK_TEA_PRODUCT_KEY}",
+    premiumMilkTeaProductKey: "${process.env.PREMIUM_MILK_TEA_PRODUCT_KEY}"
 };
 `;
 
 const environmentProdFile = `export const environment = {
     production: true,
     storageScanRecordKey: "${process.env.STORAGE_SCAN_RECORD_KEY}",
-    storageBookmarkKey: "${process.env.STORAGE_BOOKMARK_KEY}"
+    storageBookmarkKey: "${process.env.STORAGE_BOOKMARK_KEY}",
+    smallMilkTeaProductKey: "${process.env.SMALL_MILK_TEA_PRODUCT_KEY}",
+    largeMilkTeaProductKey: "${process.env.LARGE_MILK_TEA_PRODUCT_KEY}",
+    extraLargeMilkTeaProductKey: "${process.env.EXTRA_LARGE_MILK_TEA_PRODUCT_KEY}",
+    premiumMilkTeaProductKey: "${process.env.PREMIUM_MILK_TEA_PRODUCT_KEY}"
 };
 `;
 const dir = './src/environments';
