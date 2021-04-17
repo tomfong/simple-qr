@@ -58,6 +58,15 @@
     --background: transparent;
 }
 
+.tutorial-modal-page .modal-wrapper {
+    max-height: 70%;
+    position: absolute;
+    display: block;
+    max-width: 80%;
+    border-radius: 5px;
+    --background: transparent;
+}
+
 .toolbar-start-btn {
     padding-left: 10px;
 }

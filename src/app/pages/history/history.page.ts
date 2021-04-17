@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, IonItemSliding, LoadingController, Platform, ToastController } from '@ionic/angular';
+import { AlertController, IonItemSliding, LoadingController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { EnvService } from 'src/app/services/env.service';
 import * as moment from 'moment';
 import { ScanRecord } from 'src/app/models/scan-record';
 import { TranslateService } from '@ngx-translate/core';
 import { Bookmark } from 'src/app/models/bookmark';
+import { HistoryTutorialPage } from 'src/app/modals/history-tutorial/history-tutorial.page';
 
 @Component({
   selector: 'app-history',
@@ -26,7 +27,21 @@ export class HistoryPage {
     public env: EnvService,
     public toastController: ToastController,
     public translate: TranslateService,
+    public modalController: ModalController,
   ) { }
+
+  async ionViewDidEnter() {
+    if (this.env.notShowHistoryTutorial === false) {
+      await this.env.storageSet("not-show-history-tutorial", 'no');
+      const modal = await this.modalController.create({
+        component: HistoryTutorialPage,
+        cssClass: 'tutorial-modal-page',
+        componentProps: {
+        }
+      });
+      modal.present();
+    }
+  }
 
   async ionViewWillLeave() {
     if (this.deleteToast) {
@@ -55,7 +70,7 @@ export class HistoryPage {
     );
   }
 
-  segmentChanged(ev: any) {}
+  segmentChanged(ev: any) { }
 
   async addFavourite(record: ScanRecord, slidingItem: IonItemSliding) {
     slidingItem.close();
@@ -119,7 +134,7 @@ export class HistoryPage {
       ]
     });
     await this.deleteToast.present();
-  
+
   }
 
   async removeAll() {

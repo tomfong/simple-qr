@@ -25,6 +25,7 @@ export class EnvService {
   public selectedColorTheme: 'default' | 'light' | 'dark' = 'default';
   public cameraPauseTimeout: 0 | 5 | 10 | 20 | 30 = 10;
   public scanRecordLogging: 'on' | 'off' = 'on';
+  public notShowHistoryTutorial: boolean = false;
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
   public readonly WEB_SEARCH_URL: string = "https://www.google.com/search?q=";
@@ -90,6 +91,15 @@ export class EnvService {
           this.scanRecordLogging = value;
         } else {
           this.scanRecordLogging = 'on';
+        }
+      }
+    );
+    await this.storageGet("not-show-history-tutorial").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.notShowHistoryTutorial = (value === 'yes'? true : false);
+        } else {
+          this.notShowHistoryTutorial = false;
         }
       }
     );
