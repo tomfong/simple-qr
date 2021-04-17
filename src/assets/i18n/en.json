@@ -3,6 +3,7 @@
     "MESSAGE": "Message",
     "CAMERA_PAUSED": "Camera Paused",
     "GENERATE_QRCODE": "Generate QR Code",
+    "GENERATE_QRCODE_MAX_LENGTH": "Max. 1817 characters",
     "QRCODE_CONTENT": "QR code content...",
     "EXIT_APP": "Exit the app",
     "WEBSITE": "Website",

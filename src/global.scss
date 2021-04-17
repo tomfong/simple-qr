@@ -73,3 +73,8 @@
     align-items: center;
     place-content: center;
 }
+
+.larger-alert .alert-wrapper {
+    max-width: 85%;
+    width: 85%;
+}
