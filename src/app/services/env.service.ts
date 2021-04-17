@@ -16,7 +16,7 @@ import { ScanRecord } from '../models/scan-record';
 })
 export class EnvService {
 
-  public version: string = '1.0.0';
+  public appVersionNumber: string = '1.0.0';
 
   public languages: string[] = ['en', 'zh-HK'];
   public language: 'en' | 'zh-HK' = 'en';
@@ -52,7 +52,7 @@ export class EnvService {
   }
 
   private async init() {
-    this.version = await this.appVersion.getVersionNumber();
+    this.appVersionNumber = await this.appVersion.getVersionNumber();
     const storage = await this.storage.create();
     this._storage = storage;
     await this.storageGet("language").then(
@@ -349,7 +349,7 @@ export class EnvService {
     const now = moment();
     const datetimestr1 = now.format("YYYYMMDDHHmmss");
     const datetimestr2 = now.format("YYYY-MM-DD  HH:mm:ss  ZZ");
-    const appVersion = this.version;
+    const appVersion = this.appVersionNumber;
     const model = `${this.device.manufacturer} ${this.device.model}`;
     const os = this.platform.is("android")? "Android" : (this.platform.is("ios")? "iOS" : "Other");
     const osVersion = this.device.version;
