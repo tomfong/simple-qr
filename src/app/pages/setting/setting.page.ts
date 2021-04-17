@@ -54,6 +54,35 @@ export class SettingPage {
     window.open(mailContent, '_system');
   }
 
+  async resetApp() {
+    const alert = await this.alertController.create({
+      header: this.translate.instant('RESET_APP'),
+      message: this.translate.instant('MSG.RESET_APP'),
+      buttons: [
+        {
+          text: this.translate.instant('YES'),
+          handler: async () => {
+            await window.caches.keys().then(
+              keys => {
+                keys.forEach(
+                  async key => {
+                    await window.caches.delete(key);
+                  }
+                );
+              }
+            );
+            await this.env.resetAll();
+          }
+        },
+        {
+          text: this.translate.instant('NO'),
+          role: 'cancel'
+        },
+      ]
+    });
+    alert.present();
+  }
+
   async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {
     if (size === "long") {
       if (align === "left") {

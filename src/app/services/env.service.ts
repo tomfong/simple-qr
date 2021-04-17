@@ -97,7 +97,7 @@ export class EnvService {
     await this.storageGet("not-show-history-tutorial").then(
       value => {
         if (value !== null && value !== undefined) {
-          this.notShowHistoryTutorial = (value === 'yes'? true : false);
+          this.notShowHistoryTutorial = (value === 'yes' ? true : false);
         } else {
           this.notShowHistoryTutorial = false;
         }
@@ -164,6 +164,19 @@ export class EnvService {
     return value;
   }
 
+  public async resetAll() {
+    await this._storage.clear();
+    this.selectedLanguage = 'default';
+    this.toggleLanguageChange();
+    this.selectedColorTheme = 'default';
+    await this.toggleColorTheme();
+    this.cameraPauseTimeout = 10;
+    this.scanRecordLogging = 'on';
+    this.notShowHistoryTutorial = false;
+    this._scanRecords = [];
+    this._bookmarks = [];
+  }
+
   get result(): string {
     return this._scannedData;
   }
@@ -222,7 +235,7 @@ export class EnvService {
   }
 
   async saveBookmark(value: string): Promise<boolean> {
-    const index = this._bookmarks.findIndex( x => x.text === value );
+    const index = this._bookmarks.findIndex(x => x.text === value);
     if (index === -1) {
       const bookmark = new Bookmark();
       const date = new Date();
@@ -361,7 +374,7 @@ export class EnvService {
     const datetimestr2 = now.format("YYYY-MM-DD  HH:mm:ss  ZZ");
     const appVersion = this.appVersionNumber;
     const model = `${this.device.manufacturer} ${this.device.model}`;
-    const os = this.platform.is("android")? "Android" : (this.platform.is("ios")? "iOS" : "Other");
+    const os = this.platform.is("android") ? "Android" : (this.platform.is("ios") ? "iOS" : "Other");
     const osVersion = this.device.version;
     let mailContent: string;
     switch (this.language) {
