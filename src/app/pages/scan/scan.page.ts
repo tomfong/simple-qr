@@ -125,12 +125,10 @@ export class ScanPage {
   }
 
   async prepareScanner(): Promise<void> {
-    const loading = await this.presentLoading(this.translate.instant("PREPARING"));
     let denied = false;
     await this.qrScanner.getStatus().then(
       async (status: QRScannerStatus) => {
         if (status.denied) {
-          loading.dismiss();
           const alert = await this.presentAlert(
             this.translate.instant("MSG.CAMERA_PERMISSION_1"),
             this.translate.instant("MESSAGE"),
@@ -142,22 +140,19 @@ export class ScanPage {
             }
           );
         }
-      },
+      }
     );
     if (denied) {
-      loading.dismiss();
       this.qrScanner.openSettings();
       return;
     }
     await this.qrScanner.prepare().then(
       async (status: QRScannerStatus) => {
-        loading.dismiss();
         if (status.authorized) {
           await this.scanQr();
         }
       },
       async err => {
-        loading.dismiss();
         if (err.name === "CAMERA_ACCESS_DENIED") {
           const alert = await this.presentAlert(
             this.translate.instant("MSG.CAMERA_PERMISSION_2"),
@@ -175,6 +170,7 @@ export class ScanPage {
   }
 
   async scanQr(): Promise<void> {
+    const loading = await this.presentLoading(this.translate.instant("PREPARING"));
     if (this.scanSubscription) {
       this.scanSubscription.unsubscribe();
     }
@@ -189,13 +185,14 @@ export class ScanPage {
     }
     await this.qrScanner.show().then(
       () => {
+        loading.dismiss();
         this.cameraActive = true;
         if (this.env.cameraPauseTimeout !== 0) {
           this.motionSubscription = this.deviceMotion.watchAcceleration({ frequency: 1000 }).subscribe(
             async (acceleration: DeviceMotionAccelerationData) => {
               if (this.detectMotionless(acceleration.x, acceleration.y, acceleration.z)) {
                 this.motionlessCount++;
-                console.log("motionless detected =>",this.motionlessCount)
+                console.log("motionless detected =>", this.motionlessCount)
                 if (this.motionlessCount > this.env.cameraPauseTimeout && this.cameraActive) {
                   await this.qrScanner.destroy().then(
                     async () => {
@@ -282,7 +279,7 @@ export class ScanPage {
         {
           name: 'qrcode',
           type: 'text',
-          value: inputData? inputData : "",
+          value: inputData ? inputData : "",
           placeholder: this.translate.instant('QRCODE_CONTENT')
         },
       ],
