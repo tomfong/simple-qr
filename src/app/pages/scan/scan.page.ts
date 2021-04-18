@@ -131,7 +131,7 @@ export class ScanPage {
         if (status.denied) {
           const alert = await this.presentAlert(
             this.translate.instant("MSG.CAMERA_PERMISSION_1"),
-            this.translate.instant("MESSAGE"),
+            this.translate.instant("PERMISSION_REQUIRED"),
             this.translate.instant("SETTING")
           );
           await alert.onDidDismiss().then(
@@ -156,7 +156,7 @@ export class ScanPage {
         if (err.name === "CAMERA_ACCESS_DENIED") {
           const alert = await this.presentAlert(
             this.translate.instant("MSG.CAMERA_PERMISSION_2"),
-            this.translate.instant("MESSAGE"),
+            this.translate.instant("PERMISSION_REQUIRED"),
             this.translate.instant("OK")
           );
           await alert.onDidDismiss().then(
