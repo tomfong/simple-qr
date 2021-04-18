@@ -70,6 +70,18 @@
     </ion-label>
     <ion-ripple-effect type="bounded"></ion-ripple-effect>
   </ion-item>
+  <ion-item class="ion-no-padding" lines="none" button (click)="viewPrivacyPolicy()">
+    <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="document-text-sharp">
+    </ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+          {{ 'PRIVACY_POLICY' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-ripple-effect type="bounded"></ion-ripple-effect>
+  </ion-item>
   <ion-item class="ion-no-padding" lines="none" button (click)="reportBug()">
     <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="bug">
     </ion-icon>

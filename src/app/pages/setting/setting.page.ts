@@ -45,6 +45,10 @@ export class SettingPage {
     window.open(this.env.GITHUB_REPO_URL, '_system');
   }
 
+  viewPrivacyPolicy(): void {
+    window.open(this.env.PRIVACY_POLICY, '_system');
+  }
+
   async supportDeveloper() {
     this.router.navigate(['support-developer', { t: new Date().getTime() }]);
   }
