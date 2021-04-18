@@ -1,12 +1,15 @@
 # Simple QR
 
-<center>
+
+<p align="center">
 <img alt="Simple QR" src="./resources/icon.png" width="100px">
-
+</p>
+<p align="center">
 Simple QR - First Product of Project Simple
-
+</p>
+<p align="center">
 made by Hongkonger
-</center>
+</p>
 
 <p align="center">
   <a href="#about">About</a>
@@ -26,7 +29,6 @@ made by Hongkonger
 
 ## About
 
----
 Simple QR (簡易QR) is the first product of my project - Project Simple. It is an is an open-source Android app which provides a simple way for users to scan, generate and manage QR codes. All activities can be done offline. No backend service connected. No data collected.
 
 ### Project Simple
@@ -35,7 +37,6 @@ The idea of Project Simple is to make applications or tools simple, light and ea
 
 ## Features
 
----
 
 - Fruitful post actions can be done after scanning a QR code,
   - Search - use scanned content as keyword to execute Google search
@@ -58,16 +59,16 @@ The idea of Project Simple is to make applications or tools simple, light and ea
 
 ## Screenshots
 
----
+<p align="center">
 <img alt="0-scan" src="./screenshots/0-scan.png" width="150px">
 <img alt="1-generate" src="./screenshots/1-generate.png" width="150px">
 <img alt="2-result" src="./screenshots/2-result.png" width="150px">
 <img alt="3-history" src="./screenshots/3-history.png" width="150px">
 <img alt="3-settings" src="./screenshots/4-settings.png" width="150px">
+ </p>
 
 ## Languages Supported
 
----
 
 - English (en)
 - Traditional Chinese 正體中文 (zh-HK)
@@ -76,14 +77,12 @@ You are welcomed to help us do translations in more languages! (see <a href="#ho
 
 ## Download
 
----
 Coming soon on
 
 <img src="https://cdn.rawgit.com/steverichey/google-play-badge-svg/master/img/en_get.svg" width="30%">
 
 ## Support Developer
 
----
 To support this project, Project Simple or developer, you can buy me a milk tea by making a donation :)
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/tomfongdev?locale.x=en_GB)
@@ -93,8 +92,6 @@ Or, watching optional ads in the app (Settings → Support Developer) is also ap
 Thanks for your support!
 
 ## Contribute
-
----
 
 - Star the project
 - Do translation for different languages
@@ -111,17 +108,13 @@ Thanks for your support!
 
 ## Contributors
 
----
 Coming soon!
 
 ## Changelogs
 
----
 Coming soon!
 
 ## Framework
-
----
 
 ```sh
     Ionic CLI                       : 6.13.1
@@ -140,10 +133,8 @@ Coming soon!
 
 ## Privacy Policy
 
----
 Please read the [Privacy Policy](https://www.privacypolicies.com/live/771b1123-99bb-4bfe-815e-1046c0437a0f)
 
 ## License
 
----
 Please view the [LICENSE](LICENSE)
