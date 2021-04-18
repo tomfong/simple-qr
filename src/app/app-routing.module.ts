@@ -42,6 +42,10 @@ const routes: Routes = [
     path: 'support-developer',
     loadChildren: () => import('./pages/support-developer/support-developer.module').then( m => m.SupportDeveloperPageModule)
   },
+  {
+    path: 'setting-search-engine',
+    loadChildren: () => import('./pages/setting-search-engine/setting-search-engine.module').then( m => m.SettingSearchEnginePageModule)
+  },
 
 
 ];

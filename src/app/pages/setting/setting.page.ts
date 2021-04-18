@@ -41,6 +41,10 @@ export class SettingPage {
     this.router.navigate(['setting-record', { t: new Date().getTime() }]);
   }
 
+  setSearchEngine() {
+    this.router.navigate(['setting-search-engine', { t: new Date().getTime() }]);
+  }
+
   openRepoUrl(): void {
     window.open(this.env.GITHUB_REPO_URL, '_system');
   }

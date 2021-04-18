@@ -26,9 +26,13 @@ export class EnvService {
   public cameraPauseTimeout: 0 | 5 | 10 | 20 | 30 = 10;
   public scanRecordLogging: 'on' | 'off' = 'on';
   public notShowHistoryTutorial: boolean = false;
+  public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' = 'google';
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
-  public readonly WEB_SEARCH_URL: string = "https://www.google.com/search?q=";
+  public readonly GOOGLE_SEARCH_URL: string = "https://www.google.com/search?q=";
+  public readonly BING_SEARCH_URL: string = "https://www.bing.com/search?q=";
+  public readonly YAHOO_SEARCH_URL: string = "https://search.yahoo.com/search?p=";
+  public readonly DUCK_DUCK_GO_SEARCH_URL: string = "https://duckduckgo.com/?q=";
   public readonly GITHUB_REPO_URL: string = "https://github.com/tomfong/simple-qr";
   public readonly PRIVACY_POLICY: string = "https://www.privacypolicies.com/live/771b1123-99bb-4bfe-815e-1046c0437a0f";
 
@@ -104,6 +108,15 @@ export class EnvService {
         }
       }
     );
+    await this.storageGet("search-engine").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.searchEngine = value;
+        } else {
+          this.searchEngine = 'google';
+        }
+      }
+    );
     await this.storageGet(environment.storageScanRecordKey).then(
       value => {
         if (value !== null && value !== undefined) {
@@ -174,6 +187,7 @@ export class EnvService {
     this.cameraPauseTimeout = 10;
     this.scanRecordLogging = 'on';
     this.notShowHistoryTutorial = false;
+    this.searchEngine = 'google';
     this._scanRecords = [];
     this._bookmarks = [];
   }

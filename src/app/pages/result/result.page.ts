@@ -313,6 +313,24 @@ export class ResultPage implements OnInit {
   }
 
   async webSearch(): Promise<void> {
+    let searchUrl: string = this.env.GOOGLE_SEARCH_URL;
+    switch (this.env.searchEngine) {
+      case 'google':
+        searchUrl = this.env.GOOGLE_SEARCH_URL;
+        break;
+      case 'bing':
+        searchUrl = this.env.BING_SEARCH_URL;
+        break;
+      case 'yahoo':
+        searchUrl = this.env.YAHOO_SEARCH_URL;
+        break;
+      case 'duckduckgo':
+        searchUrl = this.env.DUCK_DUCK_GO_SEARCH_URL;
+        break;
+      default:
+        searchUrl = this.env.GOOGLE_SEARCH_URL;
+        break;
+    }
     let url: string;
     if (this.base64Decoded) {
       const alert = await this.alertController.create(
@@ -324,7 +342,7 @@ export class ResultPage implements OnInit {
               text: this.translate.instant('ORIGINAL'),
               handler: () => {
                 alert.dismiss();
-                url = this.env.WEB_SEARCH_URL + encodeURIComponent(this.qrCodeContent);
+                url = searchUrl + encodeURIComponent(this.qrCodeContent);
                 window.open(url, '_system');
               }
             },
@@ -332,7 +350,7 @@ export class ResultPage implements OnInit {
               text: this.translate.instant('BASE64_DECODED'),
               handler: () => {
                 alert.dismiss();
-                url = this.env.WEB_SEARCH_URL + encodeURIComponent(this.base64DecodedText);
+                url = searchUrl + encodeURIComponent(this.base64DecodedText);
                 window.open(url, '_system');
               }
             }
@@ -341,7 +359,7 @@ export class ResultPage implements OnInit {
       )
       alert.present();
     } else {
-      url = this.env.WEB_SEARCH_URL + encodeURIComponent(this.qrCodeContent);
+      url = searchUrl + encodeURIComponent(this.qrCodeContent);
       window.open(url, '_system');
     }
   }

@@ -11,7 +11,7 @@
 <ion-content>
 
   <ion-item class="ion-no-padding" lines="none" button (click)="setLanguage()">
-    <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="globe-sharp">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="globe-sharp">
     </ion-icon>
     <ion-label>
       <p class="ion-padding">
@@ -23,7 +23,7 @@
     <ion-ripple-effect type="bounded"></ion-ripple-effect>
   </ion-item>
   <ion-item class="ion-no-padding" lines="none" button (click)="setColorTheme()">
-    <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"
       name="color-palette"></ion-icon>
     <ion-label>
       <p class="ion-padding">
@@ -35,7 +35,7 @@
     <ion-ripple-effect type="bounded"></ion-ripple-effect>
   </ion-item>
   <ion-item class="ion-no-padding" lines="none" button (click)="setCameraPause()">
-    <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="camera">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="camera">
     </ion-icon>
     <ion-label>
       <p class="ion-padding">
@@ -47,7 +47,7 @@
     <ion-ripple-effect type="bounded"></ion-ripple-effect>
   </ion-item>
   <ion-item class="ion-no-padding" lines="none" button (click)="setScanRecordLogging()">
-    <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"
       src="assets/icon/history.svg"></ion-icon>
     <ion-label>
       <p class="ion-padding">
@@ -58,8 +58,20 @@
     </ion-label>
     <ion-ripple-effect type="bounded"></ion-ripple-effect>
   </ion-item>
+  <ion-item class="ion-no-padding" lines="none" button (click)="setSearchEngine()">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"
+      src="assets/icon/search-web.svg"></ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+          {{ 'SEARCH_ENGINE' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-ripple-effect type="bounded"></ion-ripple-effect>
+  </ion-item>
   <ion-item class="ion-no-padding" lines="none" button (click)="openRepoUrl()">
-    <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="logo-github">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="logo-github">
     </ion-icon>
     <ion-label>
       <p class="ion-padding">
@@ -71,7 +83,7 @@
     <ion-ripple-effect type="bounded"></ion-ripple-effect>
   </ion-item>
   <ion-item class="ion-no-padding" lines="none" button (click)="viewPrivacyPolicy()">
-    <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="document-text-sharp">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="document-text-sharp">
     </ion-icon>
     <ion-label>
       <p class="ion-padding">
@@ -83,7 +95,7 @@
     <ion-ripple-effect type="bounded"></ion-ripple-effect>
   </ion-item>
   <ion-item class="ion-no-padding" lines="none" button (click)="reportBug()">
-    <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="bug">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="bug">
     </ion-icon>
     <ion-label>
       <p class="ion-padding">
@@ -95,7 +107,7 @@
     <ion-ripple-effect type="bounded"></ion-ripple-effect>
   </ion-item>
   <ion-item class="ion-no-padding" lines="none" button (click)="supportDeveloper()">
-    <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"
       src="assets/icon/dollar.svg"></ion-icon>
     <ion-label>
       <p class="ion-padding">
@@ -107,7 +119,7 @@
     <ion-ripple-effect type="bounded"></ion-ripple-effect>
   </ion-item>
   <ion-item class="ion-no-padding" lines="none" button (click)="resetApp()">
-    <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"
       src="assets/icon/reset.svg"></ion-icon>
     <ion-label>
       <p class="ion-padding">
