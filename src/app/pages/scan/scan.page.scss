@@ -4,27 +4,20 @@ body {
     --background: none transparent;
 }
 
-.scan-ready {
-    background: none transparent;
+.guide {
+    display: flex;
     height: 100%;
+    align-items: center;
+    justify-content: center;
+    opacity: 1.0;
+}
 
-    .guide {
-        display: flex;
-        height: 100%;
-        width: 100%;
-        align-items: center;
-        justify-content: center;
-        top: 0;
-        left: 0;
-
-        .guide-frame {
-            width: 60%;
-            max-width: 400px;
-            margin-bottom: 6em;
-            max-height: 50%;
-            opacity: 70%;
-        }
-    }
+.guide-frame {
+    width: 60%;
+    max-width: 400px;
+    margin-bottom: 6em;
+    max-height: 50%;
+    opacity: 0.7;
 }
 
 .master-fab-btn {
