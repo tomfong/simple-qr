@@ -139,15 +139,12 @@ export class SupportDeveloperPage {
           {
             text: this.translate.instant('SMALL_MILKTEA'),
             handler: async () => {
-              // this.presentToast(this.translate.instant("DEVELOPING"), 1500, 'bottom', 'center', 'short');
               const product = this.products.find(p => p.id === environment.smallMilkTeaProductKey);
               if (product !== undefined) {
                 await this.inAppPurchase.order(product).then(
                   async (value: any) => {
                     console.log("buying small milktea", value);
                     actionSheet.dismiss();
-                    // this.showRestoreBtn = true;
-                    // this.presentAlert(this.translate.instant("SUCCESS_BUY_MILK_TEA"), this.translate.instant("SUCCESS"), this.translate.instant("OK"), false);
                   },
                   async (err: any) => {
                     console.error("error in buying small milktea", err);
@@ -161,15 +158,12 @@ export class SupportDeveloperPage {
           {
             text: this.translate.instant('LARGE_MILKTEA'),
             handler: async () => {
-              // this.presentToast(this.translate.instant("DEVELOPING"), 1500, 'bottom', 'center', 'short');
               const product = this.products.find(p => p.id === environment.largeMilkTeaProductKey);
               if (product !== undefined) {
                 await this.inAppPurchase.order(product).then(
                   async (value: any) => {
                     console.log("buying small milktea", value);
                     actionSheet.dismiss();
-                    // this.showRestoreBtn = true;
-                    // this.presentAlert(this.translate.instant("SUCCESS_BUY_MILK_TEA"), this.translate.instant("SUCCESS"), this.translate.instant("OK"), false);
                   },
                   async (err: any) => {
                     console.error("error in buying small milktea", err);
@@ -183,15 +177,12 @@ export class SupportDeveloperPage {
           {
             text: this.translate.instant('EXTRA_LARGE_MILKTEA'),
             handler: async () => {
-              // this.presentToast(this.translate.instant("DEVELOPING"), 1500, 'bottom', 'center', 'short');
               const product = this.products.find(p => p.id === environment.extraLargeMilkTeaProductKey);
               if (product !== undefined) {
                 await this.inAppPurchase.order(product).then(
                   async (value: any) => {
                     console.log("buying small milktea", value);
                     actionSheet.dismiss();
-                    // this.showRestoreBtn = true;
-                    // this.presentAlert(this.translate.instant("SUCCESS_BUY_MILK_TEA"), this.translate.instant("SUCCESS"), this.translate.instant("OK"), false);
                   },
                   async (err: any) => {
                     console.error("error in buying small milktea", err);
@@ -205,15 +196,12 @@ export class SupportDeveloperPage {
           {
             text: this.translate.instant('PREMIUM_MILKTEA'),
             handler: async () => {
-              // this.presentToast(this.translate.instant("DEVELOPING"), 1500, 'bottom', 'center', 'short');
               const product = this.products.find(p => p.id === environment.premiumMilkTeaProductKey);
               if (product !== undefined) {
                 await this.inAppPurchase.order(product).then(
                   async (value: any) => {
                     console.log("buying small milktea", value);
                     actionSheet.dismiss();
-                    // this.showRestoreBtn = true;
-                    // this.presentAlert(this.translate.instant("SUCCESS_BUY_MILK_TEA"), this.translate.instant("SUCCESS"), this.translate.instant("OK"), false);
                   },
                   async (err: any) => {
                     console.error("error in buying small milktea", err);
@@ -239,6 +227,7 @@ export class SupportDeveloperPage {
           {
             text: this.translate.instant('YES'),
             handler: () => {
+              this.showRestoreBtn = false;
               this.inAppPurchase.refresh();
               this.presentToast(this.translate.instant("RESTORED"), 1000, 'middle', 'center', 'short');
             }

@@ -99,12 +99,10 @@ export class ScanPage {
   async ionViewDidLeave(): Promise<void> {
     this.vibration.vibrate(0);
     if (this.resumeSubscription) {
-      // this.platform.resume.unsubscribe();
       this.resumeSubscription.unsubscribe();
       this.resumeSubscription = undefined;
     }
     if (this.pauseSubscription) {
-      // this.platform.pause.unsubscribe();;
       this.pauseSubscription.unsubscribe();
       this.pauseSubscription = undefined;
     }
@@ -189,7 +187,6 @@ export class ScanPage {
       this.pauseAlert.dismiss();
       this.pauseAlert = undefined;
     }
-    // await this.qrScanner.useCamera(this.cameraChoice);
     await this.qrScanner.show().then(
       () => {
         this.cameraActive = true;

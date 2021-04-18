@@ -185,16 +185,6 @@ export class EnvService {
     this._scannedData = value;
   }
 
-  // get baseDir(): string {
-  //   let baseDir: string;
-  //   if (this.platform.is('android')) {
-  //     baseDir = this.file.externalDataDirectory;
-  //   } else {
-  //     baseDir = this.file.dataDirectory;
-  //   }
-  //   return baseDir;
-  // }
-
   get scanRecords(): ScanRecord[] {
     return this._scanRecords;
   }

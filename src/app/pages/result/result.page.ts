@@ -488,39 +488,6 @@ export class ResultPage implements OnInit {
     }
   }
 
-  // async saveQrCode(): Promise<void> {
-  //   const loading = await this.presentLoading("Saving");
-  //   const canvas = document.querySelector("canvas") as HTMLCanvasElement;
-  //   const imageDataUrl = canvas.toDataURL("image/png", 1);
-  //   const data = imageDataUrl.split(',')[1];
-  //   const blob = this.base64toBlob(data, 'image/png');
-  //   const filename = "qrcode_" + (new Date()).getTime() + '.png';
-  //   await this.file.checkDir(this.env.baseDir, this.env.APP_FOLDER_NAME).then(
-  //     async value => {
-  //       if (!value) {
-  //         await this.file.createDir(this.env.baseDir, this.env.APP_FOLDER_NAME, true).catch(err => console.error('createDir error', err));
-  //       }
-  //     },
-  //     async err => {
-  //       console.error("error in checkDir", err);
-  //       await this.file.createDir(this.env.baseDir, this.env.APP_FOLDER_NAME, true).catch(err => console.error('createDir error', err));
-  //     }
-  //   );
-  //   await this.file.writeFile(`${this.env.baseDir}/${this.env.APP_FOLDER_NAME}`, filename, blob as Blob, { replace: true, append: false }).then(
-  //     async _ => {
-  //       console.log('writeFile succeed');
-  //       loading.dismiss();
-  //       const finalPath = `${this.env.baseDir}${this.env.APP_FOLDER_NAME}/${filename}`.replace(/(^\w+:|^)\/\//, '');
-  //       await this.presentToast(`Saved as ${finalPath}`, 5000, "middle", "left", "long");
-  //     },
-  //     async err => {
-  //       console.error('writeFile error', err);
-  //       loading.dismiss();
-  //       await this.presentToast("Failed to save the QR code", 3000, "middle", "center", "long");
-  //     }
-  //   );
-  // }
-
   async shareQrCode(): Promise<void> {
     const loading = await this.presentLoading(this.translate.instant('PREPARING'));
     const canvas = document.querySelector("canvas") as HTMLCanvasElement;
