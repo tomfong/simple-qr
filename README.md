@@ -100,7 +100,7 @@ Thanks for your support!
 
 ### How to do translation?
 
-0. (Optional) Clone or folk this project
+0. (Optional) Clone or fork this project
 1. Take a look at this [JSON](https://github.com/tomfong/simple-qr/blob/master/src/assets/i18n/en.json)
 2. Copy the JSON, rename it to <i>locale</i>.json, e.g. ja.json for Japanese, de.json for German
 3. Change the values of each key. Try to stick to the meaning of the original wordings. <b>DO NOT</b> change key names.
