@@ -1,6 +1,5 @@
 # Simple QR
 
-
 <p align="center">
 <img alt="Simple QR" src="./resources/icon.png" width="100px">
 </p>
@@ -37,7 +36,6 @@ The idea of Project Simple is to make applications or tools simple, light and ea
 
 ## Features
 
-
 - Fruitful post actions can be done after scanning a QR code,
   - Search - use scanned content as keyword to execute Google search
   - Copy - one click to copy scanned content
@@ -69,7 +67,6 @@ The idea of Project Simple is to make applications or tools simple, light and ea
 
 ## Languages Supported
 
-
 - English (en)
 - Traditional Chinese 正體中文 (zh-HK)
 
@@ -77,7 +74,7 @@ You are welcomed to help us do translations in more languages! (see <a href="#ho
 
 ## Download
 
-Coming soon on
+Coming soon on Google Play
 
 <img src="https://cdn.rawgit.com/steverichey/google-play-badge-svg/master/img/en_get.svg" width="30%">
 
@@ -98,7 +95,42 @@ Thanks for your support!
 - Open issue for bug reports
 - Email me for any ideas regarding Simple QR or Project Simple
 
-### How to do translation?
+### If you want to build the project
+
+- run ```npm install``` to all dependencies
+- Prepare a .env file in the root directory with the following keys
+  - STORAGE_SCAN_RECORD_KEY
+  - STORAGE_BOOKMARK_KEY
+  - SMALL_MILK_TEA_PRODUCT_KEY
+  - LARGE_MILK_TEA_PRODUCT_KEY
+  - EXTRA_LARGE_MILK_TEA_PRODUCT_KEY
+  - PREMIUM_MILK_TEA_PRODUCT_KEY
+
+  Then, run ```npm run setenv``` to generate angular environment files
+- If you want to run on Android device, run ```npm run start:an```. You may encounter an error like
+
+  ```sh
+  ...APPLICATION_ID at AndroidManifest.xml Error: duplicated...
+  ```
+
+  Then, you need to go to ```platforms/android/android.json``` and then delete the following lines
+
+  ```json
+  {
+    "xml": "<meta-data android:name=\"com.google.android.gms.ads.APPLICATION_ID\"      android:value=\"ca-app-pub-xxx~yyy\" />",
+    "count": 1
+  }
+  ```
+
+  and, go to ```platforms/android/app/src/AndroidManifest.xml``` and then delete the following lines
+
+  ```xml
+  <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-xxx~yyy" />
+  ```
+
+  After that, re-run ```npm run start:an```.
+
+### How to help to do translation?
 
 0. (Optional) Clone or fork this project
 1. Take a look at this [JSON](https://github.com/tomfong/simple-qr/blob/master/src/assets/i18n/en.json)
