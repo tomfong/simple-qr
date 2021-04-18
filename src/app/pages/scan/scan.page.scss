@@ -26,3 +26,11 @@ body {
         }
     }
 }
+
+.master-fab-btn {
+    --background: var(--ion-color-primary);
+}
+
+.master-fab-btn.fab-button-close-active {
+    --background: var(--ion-color-secondary);
+}

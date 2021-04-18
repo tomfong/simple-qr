@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -24,3 +24,66 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.text-center-toast {
+    text-align: center;
+    --max-width: 320px;
+    overflow-wrap: anywhere;
+}
+
+.text-start-toast {
+    text-align: left;
+    --max-width: 320px;
+    overflow-wrap: anywhere;
+}
+
+.text-center-short-toast {
+    text-align: center;
+    --max-width: 150px;
+    overflow-wrap: anywhere;
+}
+
+.text-start-short-toast {
+    text-align: left;
+    --max-width: 150px;
+    overflow-wrap: anywhere;
+}
+
+.modal-page .modal-wrapper {
+    max-height: 70%;
+    position: absolute;
+    display: block;
+    max-width: 90%;
+    border-radius: 15px;
+    --background: transparent;
+}
+
+.tutorial-modal-page .modal-wrapper {
+    max-height: 70%;
+    position: absolute;
+    display: block;
+    max-width: 80%;
+    border-radius: 5px;
+    --background: transparent;
+}
+
+.toolbar-start-btn {
+    padding-left: 10px;
+}
+
+.toolbar-end-btn {
+    padding-right: 10px;
+}
+
+.fullscreen-vertical-center {
+    height: 85%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    place-content: center;
+}
+
+.larger-alert .alert-wrapper {
+    max-width: 85%;
+    width: 85%;
+}

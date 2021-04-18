@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { ConfigService } from './services/config.service';
+import { EnvService } from './services/env.service';
 
 @Component({
   selector: 'app-root',
@@ -11,8 +12,10 @@ export class AppComponent {
 
   constructor(
     translate: TranslateService,
-    public config: ConfigService
+    public env: EnvService,
+    private platform: Platform,
   ) {
-    translate.setDefaultLang(config.language);
+    translate.addLangs(this.env.languages);
+    translate.setDefaultLang('en');
   }
 }

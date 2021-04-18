@@ -1,0 +1,81 @@
+<ion-header mode="ios">
+  <ion-toolbar [color]="env.colorTheme === 'dark'? 'dark' : 'white'" mode="md" style="--border-width: 0px;">
+    <ion-title>
+      <span style="padding-left: 10px;">{{ 'TUTORIAL' | translate }}</span>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="toolbar-end-btn" (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [color]="env.colorTheme === 'dark'? 'dark' : 'white'" #content>
+
+  <ion-item class="content-item ion-no-padding" lines="none" [color]="env.colorTheme === 'dark'? 'dark' : 'white'">
+    <ion-icon class="ion-padding-horizontal" src="assets/icon/history.svg"
+      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"></ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="white-space: normal;">
+          {{ 'TUTORIAL_TOUCH_HISTORY' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item class="content-item ion-no-padding" lines="none" [color]="env.colorTheme === 'dark'? 'dark' : 'white'">
+    <ion-icon class="ion-padding-horizontal" name="star" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'">
+    </ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="white-space: normal;">
+          {{ 'TUTORIAL_TOUCH_BOOKMARK' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item class="content-item ion-no-padding" lines="none" [color]="env.colorTheme === 'dark'? 'dark' : 'white'">
+    <ion-icon class="ion-padding-horizontal" src="assets/icon/swipe-left.svg"
+      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"></ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="white-space: normal;">
+          {{ 'TUTORIAL_SWIPE_LEFT' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item class="content-item ion-no-padding" lines="none" [color]="env.colorTheme === 'dark'? 'dark' : 'white'">
+    <ion-icon class="ion-padding-horizontal" src="assets/icon/swipe-right.svg"
+      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"></ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="white-space: normal;">
+          {{ 'TUTORIAL_SWIPE_RIGHT' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+  </ion-item>
+
+</ion-content>
+
+<ion-footer mode="md">
+
+  <ion-item lines="none" [color]="env.colorTheme === 'dark'? 'dark' : 'white'" style="--ripple-color: transparent;">
+    <ion-checkbox class="ion-margin-horizontal" [(ngModel)]="env.notShowHistoryTutorial"
+      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" (ionChange)="saveTutorialShowing()"></ion-checkbox>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="white-space: normal;">
+          {{ 'TUTORIAL_NOT_SHOW_AGAIN' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+  </ion-item>
+
+</ion-footer>

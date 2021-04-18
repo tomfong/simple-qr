@@ -1,0 +1,30 @@
+.box {
+    border-color: #403e39;
+    border-width: thin;
+    border-style: dotted;
+    border-radius: 5px;
+}
+
+.content-label {
+    opacity: 1 !important;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+ion-textarea[readonly] {
+    opacity: 1 !important;
+    --padding-top: 16px;
+    --padding-bottom: 16px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    max-height: 250px;
+}
+
+:host ngx-qrcode::ng-deep .qrcode {
+    margin-left: auto;
+    margin-right: auto;
+    canvas {
+        max-width: 150px;
+        max-height: 150px;
+    }
+}

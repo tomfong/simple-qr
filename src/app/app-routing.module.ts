@@ -15,6 +15,39 @@ const routes: Routes = [
     path: 'result',
     loadChildren: () => import('./pages/result/result.module').then( m => m.ResultPageModule)
   },
+  {
+    path: 'history',
+    loadChildren: () => import('./pages/history/history.module').then( m => m.HistoryPageModule)
+  },
+  {
+    path: 'setting',
+    loadChildren: () => import('./pages/setting/setting.module').then( m => m.SettingPageModule)
+  },  {
+    path: 'setting-language',
+    loadChildren: () => import('./pages/setting-language/setting-language.module').then( m => m.SettingLanguagePageModule)
+  },
+  {
+    path: 'setting-color',
+    loadChildren: () => import('./pages/setting-color/setting-color.module').then( m => m.SettingColorPageModule)
+  },
+  {
+    path: 'setting-camera-pause',
+    loadChildren: () => import('./pages/setting-camera-pause/setting-camera-pause.module').then( m => m.SettingCameraPausePageModule)
+  },
+  {
+    path: 'setting-record',
+    loadChildren: () => import('./pages/setting-record/setting-record.module').then( m => m.SettingRecordPageModule)
+  },
+  {
+    path: 'support-developer',
+    loadChildren: () => import('./pages/support-developer/support-developer.module').then( m => m.SupportDeveloperPageModule)
+  },
+  {
+    path: 'setting-search-engine',
+    loadChildren: () => import('./pages/setting-search-engine/setting-search-engine.module').then( m => m.SettingSearchEnginePageModule)
+  },
+
+
 ];
 
 @NgModule({

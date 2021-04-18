@@ -1,0 +1,90 @@
+<ion-header [translucent]="true" mode="ios">
+  <ion-toolbar color="dark" mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'CAMERA_PAUSE_TRIGGER' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-radio-group [(ngModel)]="env.cameraPauseTimeout" (ionChange)="saveCameraPause()">
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding">
+          <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+            {{ 'NEVER' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+      <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="0"
+        [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'">
+      </ion-radio>
+      <ion-ripple-effect type="bounded"></ion-ripple-effect>
+    </ion-item>
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding">
+          <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+            5 {{ 'SECONDS' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+      <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="5"
+        [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'">
+      </ion-radio>
+      <ion-ripple-effect type="bounded"></ion-ripple-effect>
+    </ion-item>
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding">
+          <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+            10 {{ 'SECONDS' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+      <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="10"
+        [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'">
+      </ion-radio>
+      <ion-ripple-effect type="bounded"></ion-ripple-effect>
+    </ion-item>
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding">
+          <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+            20 {{ 'SECONDS' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+      <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="20"
+        [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'">
+      </ion-radio>
+      <ion-ripple-effect type="bounded"></ion-ripple-effect>
+    </ion-item>
+    <ion-item class="ion-no-padding" lines="full">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding">
+          <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+            30 {{ 'SECONDS' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+      <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="30"
+        [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'">
+      </ion-radio>
+      <ion-ripple-effect type="bounded"></ion-ripple-effect>
+    </ion-item>
+  </ion-radio-group>
+  <ion-item class="ion-no-padding" lines="none">
+    <ion-label class="ion-padding-start">
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="white-space: normal;">
+          {{ 'CAMERA_PAUSE_EXPLAIN' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+  </ion-item>
+
+</ion-content>
