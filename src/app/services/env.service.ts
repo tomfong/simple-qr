@@ -61,7 +61,7 @@ export class EnvService {
     this.appVersionNumber = await this.appVersion.getVersionNumber();
     const storage = await this.storage.create();
     this._storage = storage;
-    await this.storageGet("language").then(
+    this.storageGet("language").then(
       async value => {
         if (value !== null && value !== undefined) {
           this.selectedLanguage = value;
@@ -71,7 +71,7 @@ export class EnvService {
         this.toggleLanguageChange();
       }
     );
-    await this.storageGet("color").then(
+    this.storageGet("color").then(
       async value => {
         if (value !== null && value !== undefined) {
           this.selectedColorTheme = value;
@@ -81,7 +81,7 @@ export class EnvService {
         await this.toggleColorTheme();
       }
     );
-    await this.storageGet("camera-pause-timeout").then(
+    this.storageGet("camera-pause-timeout").then(
       value => {
         if (value !== null && value !== undefined) {
           this.cameraPauseTimeout = value;
@@ -90,7 +90,7 @@ export class EnvService {
         }
       }
     );
-    await this.storageGet("scan-record-logging").then(
+    this.storageGet("scan-record-logging").then(
       value => {
         if (value !== null && value !== undefined) {
           this.scanRecordLogging = value;
@@ -99,7 +99,7 @@ export class EnvService {
         }
       }
     );
-    await this.storageGet("not-show-history-tutorial").then(
+    this.storageGet("not-show-history-tutorial").then(
       value => {
         if (value !== null && value !== undefined) {
           this.notShowHistoryTutorial = (value === 'yes' ? true : false);
@@ -108,7 +108,7 @@ export class EnvService {
         }
       }
     );
-    await this.storageGet("search-engine").then(
+    this.storageGet("search-engine").then(
       value => {
         if (value !== null && value !== undefined) {
           this.searchEngine = value;
@@ -117,7 +117,7 @@ export class EnvService {
         }
       }
     );
-    await this.storageGet(environment.storageScanRecordKey).then(
+    this.storageGet(environment.storageScanRecordKey).then(
       value => {
         if (value !== null && value !== undefined) {
           try {
@@ -138,7 +138,7 @@ export class EnvService {
         }
       }
     );
-    await this.storageGet(environment.storageBookmarkKey).then(
+    this.storageGet(environment.storageBookmarkKey).then(
       value => {
         if (value !== null && value !== undefined) {
           try {
