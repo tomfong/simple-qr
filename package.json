@@ -35,7 +35,7 @@
     "@ionic-native/device": "^5.32.0",
     "@ionic-native/device-motion": "^5.31.1",
     "@ionic-native/in-app-purchase-2": "^5.32.0",
-    "@ionic-native/ionic-webview": "^5.32.0",
+    "@ionic-native/ionic-webview": "^5.32.1",
     "@ionic-native/open-native-settings": "^5.32.1",
     "@ionic-native/qr-scanner": "^5.31.1",
     "@ionic-native/sms": "^5.31.1",
@@ -83,7 +83,7 @@
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-device-motion": "^2.0.1",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
-    "cordova-plugin-ionic-webview": "^4.2.1",
+    "cordova-plugin-ionic-webview": "^5.0.0",
     "cordova-plugin-purchase": "^10.5.3",
     "cordova-plugin-qrscanner": "^3.0.1",
     "cordova-plugin-splashscreen": "^5.0.2",
@@ -125,9 +125,6 @@
       "mx.ferreyra.callnumber": {},
       "cordova-plugin-contacts": {},
       "cordova-sms-plugin": {},
-      "cordova-plugin-ionic-webview": {
-        "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
-      },
       "admob-plus-cordova": {
         "APP_ID_ANDROID": "ca-app-pub-1258868559061405~8296554504",
         "APP_ID_IOS": "test",
@@ -139,7 +136,8 @@
         "BILLING_KEY": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj8Vlad4gqW6FCL4+Pos7lWPMaFDndIhyDEkZ5XDIpu7vc7H6u1U2ASrY+kUFN8M8aYEAEoQpnINI34gJs/6716noWumR7hVhhSEMCuixO1E+uw3YYgN4wQ5Gpy+crDm0lQ+tcsshrVxG3UV+SpUvUEGyNbzqLWnSjvFv65VOIPLNczrGRGIqexO6taMhROrmcd/1HLwmGndltuPN/xf1XtxlzyO1qVwVgF2LL7UAs73Wmm7NNhkvBXJghJl6V4DHP8w3KUra4XmOV68Ajx+kHuCCs/A3ryNAP8T1xyo6R59DNrUsKCiG7s2VOEGUltqLMculaNouqQD5dT/Yl0urzQIDAQAB"
       },
       "cordova-plugin-wifiwizard2": {},
-      "cordova-open-native-settings": {}
+      "cordova-open-native-settings": {},
+      "cordova-plugin-ionic-webview": {}
     },
     "platforms": [
       "android"
