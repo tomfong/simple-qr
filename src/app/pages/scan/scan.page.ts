@@ -333,11 +333,11 @@ export class ScanPage {
   }
 
   async navigateHistory(): Promise<void> {
-    this.router.navigate(['history', { t: new Date().getTime() }]);
+    this.router.navigate(['history']);
   }
 
   async navigateSetting(): Promise<void> {
-    this.router.navigate(['setting', { t: new Date().getTime() }]);
+    this.router.navigate(['setting']);
   }
 
   async confirmExitApp(): Promise<void> {
