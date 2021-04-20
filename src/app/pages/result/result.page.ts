@@ -183,11 +183,13 @@ export class ResultPage implements OnInit {
   }
 
   get qrColorDark(): string {
-    return this.env.colorTheme === "dark" ? "#ffffff" : "#222428";
+    // return this.env.colorTheme === "dark" ? "#ffffff" : "#222428";
+    return "#222428";
   }
 
   get qrColorLight(): string {
-    return this.env.colorTheme === "dark" ? "#121212" : "#ffffff";
+    // return this.env.colorTheme === "dark" ? "#121212" : "#ffffff";
+    return "#ffffff";
   }
 
   browseWebsite(): void {
