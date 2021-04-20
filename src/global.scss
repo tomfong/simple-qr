@@ -92,3 +92,7 @@
     position: relative;
     overflow: hidden;
 }
+
+ion-item {
+    --background-hover-opacity: 0;
+}
