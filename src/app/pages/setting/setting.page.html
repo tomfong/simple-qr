@@ -136,6 +136,6 @@
 <ion-footer mode="ios">
   <ion-toolbar class="ion-text-center" mode="ios" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'">
     <span>{{ 'APP_VERSION' | translate }}</span>
-    <span>{{ ' ' + env.appVersionNumber }}</span>
+    <span>{{ ' ' + env.appVersionNumber + '_' + env.BUILD_NUMBER }}</span>
   </ion-toolbar>
 </ion-footer>

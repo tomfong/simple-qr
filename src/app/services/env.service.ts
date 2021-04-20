@@ -28,6 +28,7 @@ export class EnvService {
   public notShowHistoryTutorial: boolean = false;
   public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' = 'google';
 
+  public readonly BUILD_NUMBER: string = "20210420a";
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
   public readonly GOOGLE_SEARCH_URL: string = "https://www.google.com/search?q=";
   public readonly BING_SEARCH_URL: string = "https://www.bing.com/search?q=";
