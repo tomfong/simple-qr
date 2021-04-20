@@ -26,23 +26,23 @@ export class SettingPage {
   }
 
   setLanguage() {
-    this.router.navigate(['setting-language', { t: new Date().getTime() }]);
+    this.router.navigate(['setting-language']);
   }
 
   setColorTheme() {
-    this.router.navigate(['setting-color', { t: new Date().getTime() }]);
+    this.router.navigate(['setting-color']);
   }
 
   setCameraPause() {
-    this.router.navigate(['setting-camera-pause', { t: new Date().getTime() }]);
+    this.router.navigate(['setting-camera-pause']);
   }
 
   setScanRecordLogging() {
-    this.router.navigate(['setting-record', { t: new Date().getTime() }]);
+    this.router.navigate(['setting-record']);
   }
 
   setSearchEngine() {
-    this.router.navigate(['setting-search-engine', { t: new Date().getTime() }]);
+    this.router.navigate(['setting-search-engine']);
   }
 
   openRepoUrl(): void {
@@ -54,7 +54,7 @@ export class SettingPage {
   }
 
   async supportDeveloper() {
-    this.router.navigate(['support-developer', { t: new Date().getTime() }]);
+    this.router.navigate(['support-developer']);
   }
 
   async reportBug() {

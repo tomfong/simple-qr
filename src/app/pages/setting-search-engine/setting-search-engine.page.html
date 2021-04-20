@@ -11,7 +11,7 @@
 <ion-content>
 
   <ion-radio-group [(ngModel)]="env.searchEngine" (ionChange)="saveSearchEngine()">
-    <ion-item class="ion-no-padding" lines="none">
+    <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="logo-google"></ion-icon>
       <ion-label>
         <p class="ion-padding">
@@ -25,7 +25,7 @@
       </ion-radio>
       <ion-ripple-effect type="bounded"></ion-ripple-effect>
     </ion-item>
-    <ion-item class="ion-no-padding" lines="none">
+    <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" src="assets/icon/microsoft-bing.svg"></ion-icon>
       <ion-label>
         <p class="ion-padding">
@@ -39,7 +39,7 @@
       </ion-radio>
       <ion-ripple-effect type="bounded"></ion-ripple-effect>
     </ion-item>
-    <ion-item class="ion-no-padding" lines="none">
+    <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" src="assets/icon/yahoo.svg"></ion-icon>
       <ion-label>
         <p class="ion-padding">
@@ -53,7 +53,7 @@
       </ion-radio>
       <ion-ripple-effect type="bounded"></ion-ripple-effect>
     </ion-item>
-    <ion-item class="ion-no-padding" lines="full">
+    <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="full">
       <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" src="assets/icon/duck-duck-go.svg"></ion-icon>
       <ion-label>
         <p class="ion-padding">

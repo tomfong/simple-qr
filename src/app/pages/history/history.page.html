@@ -43,8 +43,8 @@
   <ng-container *ngIf="segmentModel === 'history' && env.scanRecords && env.scanRecords.length > 0">
     <ion-list mode="ios">
       <ion-item-sliding *ngFor="let record of env.scanRecords; index as i" #slidingItem>
-        <ion-item class="ion-no-padding" [lines]="i === env.scanRecords.length - 1? 'none' : 'full'" button
-          (click)="processQrCode(record.text)">
+        <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false"
+          [lines]="i === env.scanRecords.length - 1? 'none' : 'full'" button (click)="processQrCode(record.text)">
           <ion-label class="ion-padding-start">
             <p class="ion-padding-top ion-padding-horizontal">
               <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
@@ -86,8 +86,8 @@
   <ng-container *ngIf="segmentModel === 'bookmarks' && env.bookmarks && env.bookmarks.length > 0">
     <ion-list mode="ios">
       <ion-item-sliding *ngFor="let bookmark of env.bookmarks; index as i" #slidingItem>
-        <ion-item class="ion-no-padding" [lines]="i === env.bookmarks.length - 1? 'none' : 'full'" button
-          (click)="processQrCode(bookmark.text)">
+        <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false"
+          [lines]="i === env.bookmarks.length - 1? 'none' : 'full'" button (click)="processQrCode(bookmark.text)">
           <ion-label class="ion-padding-start">
             <p class="ion-padding">
               <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">

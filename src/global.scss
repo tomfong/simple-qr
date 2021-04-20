@@ -87,3 +87,12 @@
     max-width: 85%;
     width: 85%;
 }
+
+.ripple-parent {
+    position: relative;
+    overflow: hidden;
+}
+
+ion-item {
+    --background-hover-opacity: 0;
+}
