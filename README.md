@@ -76,7 +76,9 @@ You are welcomed to help us do translations in more languages! (see <a href="#ho
 
 Coming soon on Google Play
 
-<img src="https://cdn.rawgit.com/steverichey/google-play-badge-svg/master/img/en_get.svg" width="30%">
+<a href="https://play.google.com/store/apps/details?id=com.tomfong.simpleqr">
+  <img src="https://cdn.rawgit.com/steverichey/google-play-badge-svg/master/img/en_get.svg" width="30%">
+</a>
 
 ## Support Developer
 
