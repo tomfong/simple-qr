@@ -16,6 +16,11 @@ export class SupportDeveloperPage {
   products: IAPProducts;
   showRestoreBtn: boolean = false;
 
+  smallMilkTeaDonorUnlocked: boolean = false;
+  largeMilkTeaDonorUnlocked: boolean = false;
+  extraLargeMilkTeaDonorUnlocked: boolean = false;
+  premiumMilkTeaDonorUnlocked: boolean = false;
+
   constructor(
     public env: EnvService,
     private admob: AdMob,
@@ -31,48 +36,56 @@ export class SupportDeveloperPage {
         this.inAppPurchase.verbosity = this.inAppPurchase.DEBUG;
         this.inAppPurchase.register({
           id: environment.smallMilkTeaProductKey,
-          type: this.inAppPurchase.CONSUMABLE
+          type: this.inAppPurchase.NON_CONSUMABLE
         });
         this.inAppPurchase.register({
           id: environment.largeMilkTeaProductKey,
-          type: this.inAppPurchase.CONSUMABLE
+          type: this.inAppPurchase.NON_CONSUMABLE
         });
         this.inAppPurchase.register({
           id: environment.extraLargeMilkTeaProductKey,
-          type: this.inAppPurchase.CONSUMABLE
+          type: this.inAppPurchase.NON_CONSUMABLE
         });
         this.inAppPurchase.register({
           id: environment.premiumMilkTeaProductKey,
-          type: this.inAppPurchase.CONSUMABLE
+          type: this.inAppPurchase.NON_CONSUMABLE
         });
         this.inAppPurchase.when(environment.smallMilkTeaProductKey)
+          .owned((p: IAPProduct) => {
+            this.smallMilkTeaDonorUnlocked = true;
+          })
           .approved((p: IAPProduct) => p.verify())
           .verified((p: IAPProduct) => p.finish())
           .finished((p: IAPProduct) => {
             this.showRestoreBtn = true;
-            this.presentAlert(this.translate.instant("SUCCESS_BUY_MILK_TEA"), this.translate.instant("SUCCESS"), this.translate.instant("OK"), false);
           });
         this.inAppPurchase.when(environment.largeMilkTeaProductKey)
+          .owned((p: IAPProduct) => {
+            this.largeMilkTeaDonorUnlocked = true;
+          })
           .approved((p: IAPProduct) => p.verify())
           .verified((p: IAPProduct) => p.finish())
           .finished((p: IAPProduct) => {
             this.showRestoreBtn = true;
-            this.presentAlert(this.translate.instant("SUCCESS_BUY_MILK_TEA"), this.translate.instant("SUCCESS"), this.translate.instant("OK"), false);
-          });;
+          });
         this.inAppPurchase.when(environment.extraLargeMilkTeaProductKey)
+          .owned((p: IAPProduct) => {
+            this.extraLargeMilkTeaDonorUnlocked = true;
+          })
           .approved((p: IAPProduct) => p.verify())
           .verified((p: IAPProduct) => p.finish())
           .finished((p: IAPProduct) => {
             this.showRestoreBtn = true;
-            this.presentAlert(this.translate.instant("SUCCESS_BUY_MILK_TEA"), this.translate.instant("SUCCESS"), this.translate.instant("OK"), false);
-          });;
+          });
         this.inAppPurchase.when(environment.premiumMilkTeaProductKey)
+          .owned((p: IAPProduct) => {
+            this.premiumMilkTeaDonorUnlocked = true;
+          })
           .approved((p: IAPProduct) => p.verify())
           .verified((p: IAPProduct) => p.finish())
           .finished((p: IAPProduct) => {
             this.showRestoreBtn = true;
-            this.presentAlert(this.translate.instant("SUCCESS_BUY_MILK_TEA"), this.translate.instant("SUCCESS"), this.translate.instant("OK"), false);
-          });;
+          });
         this.inAppPurchase.refresh();
         this.inAppPurchase.ready(() => {
           this.products = this.inAppPurchase.products;
@@ -83,6 +96,7 @@ export class SupportDeveloperPage {
 
   async watchAds() {
     let thanksToast = await this.presentToast(this.translate.instant("THANKS_SUPPORT"), 0, "bottom", "center", "long");
+    let notLoadToast: HTMLIonToastElement;
     await this.admob.start().catch(
       async err => {
         if (thanksToast) {
@@ -90,7 +104,14 @@ export class SupportDeveloperPage {
           thanksToast = null;
         }
         console.error("start ad failed", err);
-        await this.presentToast(this.translate.instant("MSG.FAIL_LOAD_ADS"), 2000, "bottom", "center", "long");
+        if (!notLoadToast) {
+          notLoadToast = await this.presentToast(this.translate.instant("MSG.FAIL_START_ADS"), 2000, "bottom", "center", "long");
+          notLoadToast.onDidDismiss().then(
+            () => {
+              notLoadToast = undefined;
+            }
+          );
+        }
       }
     );
     const interstitial = new this.admob.InterstitialAd({
@@ -103,7 +124,14 @@ export class SupportDeveloperPage {
           thanksToast = null;
         }
         console.error("load ad failed", err);
-        await this.presentToast(this.translate.instant("MSG.FAIL_LOAD_ADS"), 2000, "bottom", "center", "long");
+        if (!notLoadToast) {
+          notLoadToast = await this.presentToast(this.translate.instant("MSG.FAIL_LOAD_ADS"), 2000, "bottom", "center", "long");
+          notLoadToast.onDidDismiss().then(
+            () => {
+              notLoadToast = undefined;
+            }
+          );
+        }
       }
     );
     await interstitial.show().then(
@@ -120,7 +148,14 @@ export class SupportDeveloperPage {
           thanksToast = null;
         }
         console.error("show ad failed", err);
-        await this.presentToast(this.translate.instant("MSG.FAIL_LOAD_ADS"), 2000, "bottom", "center", "long");
+        if (!notLoadToast) {
+          notLoadToast = await this.presentToast(this.translate.instant("MSG.FAIL_SHOW_ADS"), 2000, "bottom", "center", "long");
+          notLoadToast.onDidDismiss().then(
+            () => {
+              notLoadToast = undefined;
+            }
+          );
+        }
       }
     );
     if (thanksToast) {
@@ -145,6 +180,7 @@ export class SupportDeveloperPage {
                   async (value: any) => {
                     console.log("buying small milktea", value);
                     actionSheet.dismiss();
+                    // this.presentAlert(this.translate.instant("SUCCESS_BUY_MILK_TEA"), this.translate.instant("SUCCESS"), this.translate.instant("OK"), false);
                   },
                   async (err: any) => {
                     console.error("error in buying small milktea", err);
@@ -164,6 +200,7 @@ export class SupportDeveloperPage {
                   async (value: any) => {
                     console.log("buying small milktea", value);
                     actionSheet.dismiss();
+                    // this.presentAlert(this.translate.instant("SUCCESS_BUY_MILK_TEA"), this.translate.instant("SUCCESS"), this.translate.instant("OK"), false);
                   },
                   async (err: any) => {
                     console.error("error in buying small milktea", err);
@@ -183,6 +220,7 @@ export class SupportDeveloperPage {
                   async (value: any) => {
                     console.log("buying small milktea", value);
                     actionSheet.dismiss();
+                    // this.presentAlert(this.translate.instant("SUCCESS_BUY_MILK_TEA"), this.translate.instant("SUCCESS"), this.translate.instant("OK"), false);
                   },
                   async (err: any) => {
                     console.error("error in buying small milktea", err);
@@ -202,6 +240,7 @@ export class SupportDeveloperPage {
                   async (value: any) => {
                     console.log("buying small milktea", value);
                     actionSheet.dismiss();
+                    // this.presentAlert(this.translate.instant("SUCCESS_BUY_MILK_TEA"), this.translate.instant("SUCCESS"), this.translate.instant("OK"), false);
                   },
                   async (err: any) => {
                     console.error("error in buying small milktea", err);
@@ -216,6 +255,22 @@ export class SupportDeveloperPage {
       }
     )
     actionSheet.present();
+  }
+
+  async showPremiumMilkTeaDonorUnlocked() {
+    await this.presentAlert(this.translate.instant('MSG.UNLOCKED_P_MILKTEA_DONATE_BADGE'), this.translate.instant('P_MILKTEA_DONATE_BADGE'), this.translate.instant('OK'), false);
+  }
+
+  async showExtraLargeMilkTeaDonorUnlocked() {
+    await this.presentAlert(this.translate.instant('MSG.UNLOCKED_XL_MILKTEA_DONATE_BADGE'), this.translate.instant('XL_MILKTEA_DONATE_BADGE'), this.translate.instant('OK'), false);
+  }
+
+  async showLargeMilkTeaDonorUnlocked() {
+    await this.presentAlert(this.translate.instant('MSG.UNLOCKED_L_MILKTEA_DONATE_BADGE'), this.translate.instant('L_MILKTEA_DONATE_BADGE'), this.translate.instant('OK'), false);
+  }
+
+  async showSmallMilkTeaDonorUnlocked() {
+    await this.presentAlert(this.translate.instant('MSG.UNLOCKED_S_MILKTEA_DONATE_BADGE'), this.translate.instant('S_MILKTEA_DONATE_BADGE'), this.translate.instant('OK'), false);
   }
 
   async restore() {
