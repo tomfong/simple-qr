@@ -8,7 +8,8 @@ const environmentFile = `export const environment = {
     classicMilkTeaPK: "${process.env.CLASSIC_MILKTEA_PK}",
     pearlMilkTeaPK: "${process.env.PEARL_MILKTEA_PK}",
     fancyMilkTeaPK: "${process.env.FANCY_MILKTEA_PK}",
-    premiumMilkTeaPK: "${process.env.PREMIUM_MILKTEA_PK}"
+    premiumMilkTeaPK: "${process.env.PREMIUM_MILKTEA_PK}",
+    paypalDonateUrl: "${process.env.PAYPAL_DONATE_URL}"
 };
 `;
 
@@ -19,7 +20,8 @@ const environmentProdFile = `export const environment = {
     classicMilkTeaPK: "${process.env.CLASSIC_MILKTEA_PK}",
     pearlMilkTeaPK: "${process.env.PEARL_MILKTEA_PK}",
     fancyMilkTeaPK: "${process.env.FANCY_MILKTEA_PK}",
-    premiumMilkTeaPK: "${process.env.PREMIUM_MILKTEA_PK}"
+    premiumMilkTeaPK: "${process.env.PREMIUM_MILKTEA_PK}",
+    paypalDonateUrl: "${process.env.PAYPAL_DONATE_URL}"
 };
 `;
 const dir = './src/environments';

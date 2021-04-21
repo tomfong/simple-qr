@@ -164,6 +164,10 @@ export class SupportDeveloperPage {
     }
   }
 
+  openPaypal() {
+    window.open(environment.paypalDonateUrl, '_system');
+  }
+
   async buyMilkTea() {
     const actionSheet = await this.actionSheetController.create(
       {
