@@ -84,7 +84,7 @@ Coming soon on Google Play
 
 To support this project, Project Simple or developer, you can buy me a milk tea by making a donation :)
 
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/tomfongdev?locale.x=en_GB)
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/tomfongdev)
 
 Or, watching optional ads in the app (Settings → Support Developer) is also appreciated.
 
@@ -103,10 +103,11 @@ Thanks for your support!
 - Prepare a .env file in the root directory with the following keys
   - STORAGE_SCAN_RECORD_KEY
   - STORAGE_BOOKMARK_KEY
-  - SMALL_MILK_TEA_PRODUCT_KEY
-  - LARGE_MILK_TEA_PRODUCT_KEY
-  - EXTRA_LARGE_MILK_TEA_PRODUCT_KEY
-  - PREMIUM_MILK_TEA_PRODUCT_KEY
+  - CLASSIC_MILKTEA_PK
+  - PEARL_MILKTEA_PK
+  - FANCY_MILKTEA_PK
+  - PREMIUM_MILKTEA_PK
+  - PAYPAL_DONATE_URL
 
   Then, run ```npm run setenv``` to generate angular environment files
 - If you want to run on Android device, run ```npm run start:an```. You may encounter an error like

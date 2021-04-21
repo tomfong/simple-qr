@@ -16,6 +16,11 @@ export class SupportDeveloperPage {
   products: IAPProducts;
   showRestoreBtn: boolean = false;
 
+  smallMilkTeaDonorUnlocked: boolean = false;
+  largeMilkTeaDonorUnlocked: boolean = false;
+  extraLargeMilkTeaDonorUnlocked: boolean = false;
+  premiumMilkTeaDonorUnlocked: boolean = false;
+
   constructor(
     public env: EnvService,
     private admob: AdMob,
@@ -30,49 +35,57 @@ export class SupportDeveloperPage {
       async () => {
         this.inAppPurchase.verbosity = this.inAppPurchase.DEBUG;
         this.inAppPurchase.register({
-          id: environment.smallMilkTeaProductKey,
-          type: this.inAppPurchase.CONSUMABLE
+          id: environment.classicMilkTeaPK,
+          type: this.inAppPurchase.NON_CONSUMABLE
         });
         this.inAppPurchase.register({
-          id: environment.largeMilkTeaProductKey,
-          type: this.inAppPurchase.CONSUMABLE
+          id: environment.pearlMilkTeaPK,
+          type: this.inAppPurchase.NON_CONSUMABLE
         });
         this.inAppPurchase.register({
-          id: environment.extraLargeMilkTeaProductKey,
-          type: this.inAppPurchase.CONSUMABLE
+          id: environment.fancyMilkTeaPK,
+          type: this.inAppPurchase.NON_CONSUMABLE
         });
         this.inAppPurchase.register({
-          id: environment.premiumMilkTeaProductKey,
-          type: this.inAppPurchase.CONSUMABLE
+          id: environment.premiumMilkTeaPK,
+          type: this.inAppPurchase.NON_CONSUMABLE
         });
-        this.inAppPurchase.when(environment.smallMilkTeaProductKey)
+        this.inAppPurchase.when(environment.classicMilkTeaPK)
+          .owned((p: IAPProduct) => {
+            this.smallMilkTeaDonorUnlocked = true;
+          })
           .approved((p: IAPProduct) => p.verify())
           .verified((p: IAPProduct) => p.finish())
           .finished((p: IAPProduct) => {
             this.showRestoreBtn = true;
-            this.presentAlert(this.translate.instant("SUCCESS_BUY_MILK_TEA"), this.translate.instant("SUCCESS"), this.translate.instant("OK"), false);
           });
-        this.inAppPurchase.when(environment.largeMilkTeaProductKey)
+        this.inAppPurchase.when(environment.pearlMilkTeaPK)
+          .owned((p: IAPProduct) => {
+            this.largeMilkTeaDonorUnlocked = true;
+          })
           .approved((p: IAPProduct) => p.verify())
           .verified((p: IAPProduct) => p.finish())
           .finished((p: IAPProduct) => {
             this.showRestoreBtn = true;
-            this.presentAlert(this.translate.instant("SUCCESS_BUY_MILK_TEA"), this.translate.instant("SUCCESS"), this.translate.instant("OK"), false);
-          });;
-        this.inAppPurchase.when(environment.extraLargeMilkTeaProductKey)
+          });
+        this.inAppPurchase.when(environment.fancyMilkTeaPK)
+          .owned((p: IAPProduct) => {
+            this.extraLargeMilkTeaDonorUnlocked = true;
+          })
           .approved((p: IAPProduct) => p.verify())
           .verified((p: IAPProduct) => p.finish())
           .finished((p: IAPProduct) => {
             this.showRestoreBtn = true;
-            this.presentAlert(this.translate.instant("SUCCESS_BUY_MILK_TEA"), this.translate.instant("SUCCESS"), this.translate.instant("OK"), false);
-          });;
-        this.inAppPurchase.when(environment.premiumMilkTeaProductKey)
+          });
+        this.inAppPurchase.when(environment.premiumMilkTeaPK)
+          .owned((p: IAPProduct) => {
+            this.premiumMilkTeaDonorUnlocked = true;
+          })
           .approved((p: IAPProduct) => p.verify())
           .verified((p: IAPProduct) => p.finish())
           .finished((p: IAPProduct) => {
             this.showRestoreBtn = true;
-            this.presentAlert(this.translate.instant("SUCCESS_BUY_MILK_TEA"), this.translate.instant("SUCCESS"), this.translate.instant("OK"), false);
-          });;
+          });
         this.inAppPurchase.refresh();
         this.inAppPurchase.ready(() => {
           this.products = this.inAppPurchase.products;
@@ -83,6 +96,7 @@ export class SupportDeveloperPage {
 
   async watchAds() {
     let thanksToast = await this.presentToast(this.translate.instant("THANKS_SUPPORT"), 0, "bottom", "center", "long");
+    let notLoadToast: HTMLIonToastElement;
     await this.admob.start().catch(
       async err => {
         if (thanksToast) {
@@ -90,7 +104,14 @@ export class SupportDeveloperPage {
           thanksToast = null;
         }
         console.error("start ad failed", err);
-        await this.presentToast(this.translate.instant("MSG.FAIL_LOAD_ADS"), 2000, "bottom", "center", "long");
+        if (!notLoadToast) {
+          notLoadToast = await this.presentToast(this.translate.instant("MSG.FAIL_START_ADS"), 2000, "bottom", "center", "long");
+          notLoadToast.onDidDismiss().then(
+            () => {
+              notLoadToast = undefined;
+            }
+          );
+        }
       }
     );
     const interstitial = new this.admob.InterstitialAd({
@@ -103,7 +124,14 @@ export class SupportDeveloperPage {
           thanksToast = null;
         }
         console.error("load ad failed", err);
-        await this.presentToast(this.translate.instant("MSG.FAIL_LOAD_ADS"), 2000, "bottom", "center", "long");
+        if (!notLoadToast) {
+          notLoadToast = await this.presentToast(this.translate.instant("MSG.FAIL_LOAD_ADS"), 2000, "bottom", "center", "long");
+          notLoadToast.onDidDismiss().then(
+            () => {
+              notLoadToast = undefined;
+            }
+          );
+        }
       }
     );
     await interstitial.show().then(
@@ -120,7 +148,14 @@ export class SupportDeveloperPage {
           thanksToast = null;
         }
         console.error("show ad failed", err);
-        await this.presentToast(this.translate.instant("MSG.FAIL_LOAD_ADS"), 2000, "bottom", "center", "long");
+        if (!notLoadToast) {
+          notLoadToast = await this.presentToast(this.translate.instant("MSG.FAIL_SHOW_ADS"), 2000, "bottom", "center", "long");
+          notLoadToast.onDidDismiss().then(
+            () => {
+              notLoadToast = undefined;
+            }
+          );
+        }
       }
     );
     if (thanksToast) {
@@ -129,22 +164,27 @@ export class SupportDeveloperPage {
     }
   }
 
+  openPaypal() {
+    window.open(environment.paypalDonateUrl, '_system');
+  }
+
   async buyMilkTea() {
     const actionSheet = await this.actionSheetController.create(
       {
         mode: "ios",
         translucent: true,
-        header: this.translate.instant('CUP_SIZE'),
+        header: this.translate.instant('TASTE_MILKTEA'),
         buttons: [
           {
-            text: this.translate.instant('SMALL_MILKTEA'),
+            text: this.translate.instant('CL_MILKTEA'),
             handler: async () => {
-              const product = this.products.find(p => p.id === environment.smallMilkTeaProductKey);
+              const product = this.products.find(p => p.id === environment.classicMilkTeaPK);
               if (product !== undefined) {
                 await this.inAppPurchase.order(product).then(
                   async (value: any) => {
                     console.log("buying small milktea", value);
                     actionSheet.dismiss();
+                    // this.presentAlert(this.translate.instant("SUCCESS_BUY_MILK_TEA"), this.translate.instant("SUCCESS"), this.translate.instant("OK"), false);
                   },
                   async (err: any) => {
                     console.error("error in buying small milktea", err);
@@ -156,14 +196,15 @@ export class SupportDeveloperPage {
             }
           },
           {
-            text: this.translate.instant('LARGE_MILKTEA'),
+            text: this.translate.instant('PE_MILKTEA'),
             handler: async () => {
-              const product = this.products.find(p => p.id === environment.largeMilkTeaProductKey);
+              const product = this.products.find(p => p.id === environment.pearlMilkTeaPK);
               if (product !== undefined) {
                 await this.inAppPurchase.order(product).then(
                   async (value: any) => {
                     console.log("buying small milktea", value);
                     actionSheet.dismiss();
+                    // this.presentAlert(this.translate.instant("SUCCESS_BUY_MILK_TEA"), this.translate.instant("SUCCESS"), this.translate.instant("OK"), false);
                   },
                   async (err: any) => {
                     console.error("error in buying small milktea", err);
@@ -175,14 +216,15 @@ export class SupportDeveloperPage {
             }
           },
           {
-            text: this.translate.instant('EXTRA_LARGE_MILKTEA'),
+            text: this.translate.instant('FA_MILKTEA'),
             handler: async () => {
-              const product = this.products.find(p => p.id === environment.extraLargeMilkTeaProductKey);
+              const product = this.products.find(p => p.id === environment.fancyMilkTeaPK);
               if (product !== undefined) {
                 await this.inAppPurchase.order(product).then(
                   async (value: any) => {
                     console.log("buying small milktea", value);
                     actionSheet.dismiss();
+                    // this.presentAlert(this.translate.instant("SUCCESS_BUY_MILK_TEA"), this.translate.instant("SUCCESS"), this.translate.instant("OK"), false);
                   },
                   async (err: any) => {
                     console.error("error in buying small milktea", err);
@@ -194,14 +236,15 @@ export class SupportDeveloperPage {
             }
           },
           {
-            text: this.translate.instant('PREMIUM_MILKTEA'),
+            text: this.translate.instant('PR_MILKTEA'),
             handler: async () => {
-              const product = this.products.find(p => p.id === environment.premiumMilkTeaProductKey);
+              const product = this.products.find(p => p.id === environment.premiumMilkTeaPK);
               if (product !== undefined) {
                 await this.inAppPurchase.order(product).then(
                   async (value: any) => {
                     console.log("buying small milktea", value);
                     actionSheet.dismiss();
+                    // this.presentAlert(this.translate.instant("SUCCESS_BUY_MILK_TEA"), this.translate.instant("SUCCESS"), this.translate.instant("OK"), false);
                   },
                   async (err: any) => {
                     console.error("error in buying small milktea", err);
@@ -216,6 +259,22 @@ export class SupportDeveloperPage {
       }
     )
     actionSheet.present();
+  }
+
+  async showPremiumMilkTeaDonorUnlocked() {
+    await this.presentAlert(this.translate.instant('MSG.UNLOCKED_PR_MILKTEA_DONATE_BADGE'), this.translate.instant('PR_MILKTEA_DONATE_BADGE'), this.translate.instant('OK'), false);
+  }
+
+  async showExtraLargeMilkTeaDonorUnlocked() {
+    await this.presentAlert(this.translate.instant('MSG.UNLOCKED_FA_MILKTEA_DONATE_BADGE'), this.translate.instant('FA_MILKTEA_DONATE_BADGE'), this.translate.instant('OK'), false);
+  }
+
+  async showLargeMilkTeaDonorUnlocked() {
+    await this.presentAlert(this.translate.instant('MSG.UNLOCKED_PE_MILKTEA_DONATE_BADGE'), this.translate.instant('PE_MILKTEA_DONATE_BADGE'), this.translate.instant('OK'), false);
+  }
+
+  async showSmallMilkTeaDonorUnlocked() {
+    await this.presentAlert(this.translate.instant('MSG.UNLOCKED_CL_MILKTEA_DONATE_BADGE'), this.translate.instant('CL_MILKTEA_DONATE_BADGE'), this.translate.instant('OK'), false);
   }
 
   async restore() {
