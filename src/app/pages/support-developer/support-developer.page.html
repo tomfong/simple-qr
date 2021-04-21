@@ -46,37 +46,37 @@
 
   <ion-row *ngIf="premiumMilkTeaDonorUnlocked">
     <ion-col class="ion-text-center">
-      <ion-chip color="gold" (click)="showPremiumMilkTeaDonorUnlocked()">
-        <ion-icon name="cafe"></ion-icon>
-        <ion-label>{{ 'P_MILKTEA_DONATE_BADGE' | translate }}</ion-label>
-      </ion-chip>
+      <ion-button mode="ios" color="gold" (click)="showPremiumMilkTeaDonorUnlocked()" fill="clear" size="large">
+        <ion-icon class="ion-padding-horizontal" src="assets/icon/premium-cup.svg"></ion-icon>
+        <span class="ion-padding-horizontal">PREMIUM</span>
+      </ion-button>
     </ion-col>
   </ion-row>
 
-  <ion-row *ngIf="extraLargeMilkTeaDonorUnlocked">
+  <ion-row *ngIf="extraLargeMilkTeaDonorUnlocked && !premiumMilkTeaDonorUnlocked">
     <ion-col class="ion-text-center">
-      <ion-chip color="silver" (click)="showExtraLargeMilkTeaDonorUnlocked()">
-        <ion-icon name="cafe"></ion-icon>
-        <ion-label>{{ 'XL_MILKTEA_DONATE_BADGE' | translate }}</ion-label>
-      </ion-chip>
+      <ion-button mode="ios" color="silver" (click)="showExtraLargeMilkTeaDonorUnlocked()" fill="clear" size="large">
+        <ion-icon class="ion-padding-horizontal" name="cafe"></ion-icon>
+        <span class="ion-padding-horizontal">FANCY</span>
+      </ion-button>
     </ion-col>
   </ion-row>
 
-  <ion-row *ngIf="largeMilkTeaDonorUnlocked">
+  <ion-row *ngIf="largeMilkTeaDonorUnlocked && !premiumMilkTeaDonorUnlocked && !extraLargeMilkTeaDonorUnlocked">
     <ion-col class="ion-text-center">
-      <ion-chip color="primary" (click)="showLargeMilkTeaDonorUnlocked()">
-        <ion-icon name="cafe"></ion-icon>
-        <ion-label>{{ 'L_MILKTEA_DONATE_BADGE' | translate }}</ion-label>
-      </ion-chip>
+      <ion-button mode="ios" color="primary" (click)="showLargeMilkTeaDonorUnlocked()" fill="clear" size="large">
+        <ion-icon class="ion-padding-horizontal" src="assets/icon/pearl-cup.svg"></ion-icon>
+        <span class="ion-padding-horizontal">PEARL</span>
+      </ion-button>
     </ion-col>
   </ion-row>
 
-  <ion-row *ngIf="smallMilkTeaDonorUnlocked">
+  <ion-row *ngIf="smallMilkTeaDonorUnlocked && !premiumMilkTeaDonorUnlocked && !extraLargeMilkTeaDonorUnlocked && !largeMilkTeaDonorUnlocked">
     <ion-col class="ion-text-center">
-      <ion-chip color="secondary" (click)="showSmallMilkTeaDonorUnlocked()">
-        <ion-icon name="cafe"></ion-icon>
-        <ion-label>{{ 'S_MILKTEA_DONATE_BADGE' | translate }}</ion-label>
-      </ion-chip>
+      <ion-button mode="ios" color="secondary" (click)="showSmallMilkTeaDonorUnlocked()" fill="clear" size="large">
+        <ion-icon class="ion-padding-horizontal" name="cafe"></ion-icon>
+        <span class="ion-padding-horizontal">CLASSIC</span>
+      </ion-button>
     </ion-col>
   </ion-row>
 

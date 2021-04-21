@@ -35,22 +35,22 @@ export class SupportDeveloperPage {
       async () => {
         this.inAppPurchase.verbosity = this.inAppPurchase.DEBUG;
         this.inAppPurchase.register({
-          id: environment.smallMilkTeaProductKey,
+          id: environment.classicMilkTeaPK,
           type: this.inAppPurchase.NON_CONSUMABLE
         });
         this.inAppPurchase.register({
-          id: environment.largeMilkTeaProductKey,
+          id: environment.pearlMilkTeaPK,
           type: this.inAppPurchase.NON_CONSUMABLE
         });
         this.inAppPurchase.register({
-          id: environment.extraLargeMilkTeaProductKey,
+          id: environment.fancyMilkTeaPK,
           type: this.inAppPurchase.NON_CONSUMABLE
         });
         this.inAppPurchase.register({
-          id: environment.premiumMilkTeaProductKey,
+          id: environment.premiumMilkTeaPK,
           type: this.inAppPurchase.NON_CONSUMABLE
         });
-        this.inAppPurchase.when(environment.smallMilkTeaProductKey)
+        this.inAppPurchase.when(environment.classicMilkTeaPK)
           .owned((p: IAPProduct) => {
             this.smallMilkTeaDonorUnlocked = true;
           })
@@ -59,7 +59,7 @@ export class SupportDeveloperPage {
           .finished((p: IAPProduct) => {
             this.showRestoreBtn = true;
           });
-        this.inAppPurchase.when(environment.largeMilkTeaProductKey)
+        this.inAppPurchase.when(environment.pearlMilkTeaPK)
           .owned((p: IAPProduct) => {
             this.largeMilkTeaDonorUnlocked = true;
           })
@@ -68,7 +68,7 @@ export class SupportDeveloperPage {
           .finished((p: IAPProduct) => {
             this.showRestoreBtn = true;
           });
-        this.inAppPurchase.when(environment.extraLargeMilkTeaProductKey)
+        this.inAppPurchase.when(environment.fancyMilkTeaPK)
           .owned((p: IAPProduct) => {
             this.extraLargeMilkTeaDonorUnlocked = true;
           })
@@ -77,7 +77,7 @@ export class SupportDeveloperPage {
           .finished((p: IAPProduct) => {
             this.showRestoreBtn = true;
           });
-        this.inAppPurchase.when(environment.premiumMilkTeaProductKey)
+        this.inAppPurchase.when(environment.premiumMilkTeaPK)
           .owned((p: IAPProduct) => {
             this.premiumMilkTeaDonorUnlocked = true;
           })
@@ -169,12 +169,12 @@ export class SupportDeveloperPage {
       {
         mode: "ios",
         translucent: true,
-        header: this.translate.instant('CUP_SIZE'),
+        header: this.translate.instant('TASTE_MILKTEA'),
         buttons: [
           {
-            text: this.translate.instant('SMALL_MILKTEA'),
+            text: this.translate.instant('CL_MILKTEA'),
             handler: async () => {
-              const product = this.products.find(p => p.id === environment.smallMilkTeaProductKey);
+              const product = this.products.find(p => p.id === environment.classicMilkTeaPK);
               if (product !== undefined) {
                 await this.inAppPurchase.order(product).then(
                   async (value: any) => {
@@ -192,9 +192,9 @@ export class SupportDeveloperPage {
             }
           },
           {
-            text: this.translate.instant('LARGE_MILKTEA'),
+            text: this.translate.instant('PE_MILKTEA'),
             handler: async () => {
-              const product = this.products.find(p => p.id === environment.largeMilkTeaProductKey);
+              const product = this.products.find(p => p.id === environment.pearlMilkTeaPK);
               if (product !== undefined) {
                 await this.inAppPurchase.order(product).then(
                   async (value: any) => {
@@ -212,9 +212,9 @@ export class SupportDeveloperPage {
             }
           },
           {
-            text: this.translate.instant('EXTRA_LARGE_MILKTEA'),
+            text: this.translate.instant('FA_MILKTEA'),
             handler: async () => {
-              const product = this.products.find(p => p.id === environment.extraLargeMilkTeaProductKey);
+              const product = this.products.find(p => p.id === environment.fancyMilkTeaPK);
               if (product !== undefined) {
                 await this.inAppPurchase.order(product).then(
                   async (value: any) => {
@@ -232,9 +232,9 @@ export class SupportDeveloperPage {
             }
           },
           {
-            text: this.translate.instant('PREMIUM_MILKTEA'),
+            text: this.translate.instant('PR_MILKTEA'),
             handler: async () => {
-              const product = this.products.find(p => p.id === environment.premiumMilkTeaProductKey);
+              const product = this.products.find(p => p.id === environment.premiumMilkTeaPK);
               if (product !== undefined) {
                 await this.inAppPurchase.order(product).then(
                   async (value: any) => {
@@ -258,19 +258,19 @@ export class SupportDeveloperPage {
   }
 
   async showPremiumMilkTeaDonorUnlocked() {
-    await this.presentAlert(this.translate.instant('MSG.UNLOCKED_P_MILKTEA_DONATE_BADGE'), this.translate.instant('P_MILKTEA_DONATE_BADGE'), this.translate.instant('OK'), false);
+    await this.presentAlert(this.translate.instant('MSG.UNLOCKED_PR_MILKTEA_DONATE_BADGE'), this.translate.instant('PR_MILKTEA_DONATE_BADGE'), this.translate.instant('OK'), false);
   }
 
   async showExtraLargeMilkTeaDonorUnlocked() {
-    await this.presentAlert(this.translate.instant('MSG.UNLOCKED_XL_MILKTEA_DONATE_BADGE'), this.translate.instant('XL_MILKTEA_DONATE_BADGE'), this.translate.instant('OK'), false);
+    await this.presentAlert(this.translate.instant('MSG.UNLOCKED_FA_MILKTEA_DONATE_BADGE'), this.translate.instant('FA_MILKTEA_DONATE_BADGE'), this.translate.instant('OK'), false);
   }
 
   async showLargeMilkTeaDonorUnlocked() {
-    await this.presentAlert(this.translate.instant('MSG.UNLOCKED_L_MILKTEA_DONATE_BADGE'), this.translate.instant('L_MILKTEA_DONATE_BADGE'), this.translate.instant('OK'), false);
+    await this.presentAlert(this.translate.instant('MSG.UNLOCKED_PE_MILKTEA_DONATE_BADGE'), this.translate.instant('PE_MILKTEA_DONATE_BADGE'), this.translate.instant('OK'), false);
   }
 
   async showSmallMilkTeaDonorUnlocked() {
-    await this.presentAlert(this.translate.instant('MSG.UNLOCKED_S_MILKTEA_DONATE_BADGE'), this.translate.instant('S_MILKTEA_DONATE_BADGE'), this.translate.instant('OK'), false);
+    await this.presentAlert(this.translate.instant('MSG.UNLOCKED_CL_MILKTEA_DONATE_BADGE'), this.translate.instant('CL_MILKTEA_DONATE_BADGE'), this.translate.instant('OK'), false);
   }
 
   async restore() {
