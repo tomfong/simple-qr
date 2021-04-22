@@ -11,7 +11,8 @@
 <ion-content>
 
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="setLanguage()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="globe-sharp">
+    <ion-icon class="ion-margin-start ion-padding-horizontal"
+      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="globe-sharp">
     </ion-icon>
     <ion-label>
       <p class="ion-padding">
@@ -22,9 +23,10 @@
     </ion-label>
     <ion-ripple-effect type="bounded"></ion-ripple-effect>
   </ion-item>
-  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="setColorTheme()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"
-      name="color-palette"></ion-icon>
+  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
+    (click)="setColorTheme()">
+    <ion-icon class="ion-margin-start ion-padding-horizontal"
+      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="color-palette"></ion-icon>
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
@@ -34,8 +36,10 @@
     </ion-label>
     <ion-ripple-effect type="bounded"></ion-ripple-effect>
   </ion-item>
-  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="setCameraPause()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="camera">
+  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
+    (click)="setCameraPause()">
+    <ion-icon class="ion-margin-start ion-padding-horizontal"
+      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="camera">
     </ion-icon>
     <ion-label>
       <p class="ion-padding">
@@ -46,9 +50,10 @@
     </ion-label>
     <ion-ripple-effect type="bounded"></ion-ripple-effect>
   </ion-item>
-  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="setScanRecordLogging()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"
-      src="assets/icon/history.svg"></ion-icon>
+  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
+    (click)="setScanRecordLogging()">
+    <ion-icon class="ion-margin-start ion-padding-horizontal"
+      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" src="assets/icon/history.svg"></ion-icon>
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
@@ -58,9 +63,10 @@
     </ion-label>
     <ion-ripple-effect type="bounded"></ion-ripple-effect>
   </ion-item>
-  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="setSearchEngine()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"
-      src="assets/icon/search-web.svg"></ion-icon>
+  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
+    (click)="setSearchEngine()">
+    <ion-icon class="ion-margin-start ion-padding-horizontal"
+      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" src="assets/icon/search-web.svg"></ion-icon>
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
@@ -71,44 +77,58 @@
     <ion-ripple-effect type="bounded"></ion-ripple-effect>
   </ion-item>
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="openRepoUrl()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="logo-github">
+    <ion-icon class="ion-margin-start ion-padding-horizontal"
+      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="logo-github">
     </ion-icon>
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
           {{ 'ABOUT_SIMPLE_QR' | translate }}
         </ion-text>
+        <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'light' : 'dark'"
+          src="assets/icon/external-link.svg">
+        </ion-icon>
       </p>
     </ion-label>
     <ion-ripple-effect type="bounded"></ion-ripple-effect>
   </ion-item>
-  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="viewPrivacyPolicy()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="document-text-sharp">
+  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
+    (click)="viewPrivacyPolicy()">
+    <ion-icon class="ion-margin-start ion-padding-horizontal"
+      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="document-text-sharp">
     </ion-icon>
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
           {{ 'PRIVACY_POLICY' | translate }}
         </ion-text>
+        <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'light' : 'dark'"
+          src="assets/icon/external-link.svg">
+        </ion-icon>
       </p>
     </ion-label>
     <ion-ripple-effect type="bounded"></ion-ripple-effect>
   </ion-item>
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="reportBug()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="bug">
+    <ion-icon class="ion-margin-start ion-padding-horizontal"
+      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="bug">
     </ion-icon>
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
           {{ 'REPORT_ISSUE' | translate }}
         </ion-text>
+        <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'light' : 'dark'"
+          src="assets/icon/external-link.svg">
+        </ion-icon>
       </p>
     </ion-label>
     <ion-ripple-effect type="bounded"></ion-ripple-effect>
   </ion-item>
-  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="supportDeveloper()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"
-      src="assets/icon/dollar.svg"></ion-icon>
+  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
+    (click)="supportDeveloper()">
+    <ion-icon class="ion-margin-start ion-padding-horizontal"
+      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" src="assets/icon/dollar.svg"></ion-icon>
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
@@ -119,8 +139,8 @@
     <ion-ripple-effect type="bounded"></ion-ripple-effect>
   </ion-item>
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="resetApp()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'"
-      src="assets/icon/reset.svg"></ion-icon>
+    <ion-icon class="ion-margin-start ion-padding-horizontal"
+      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" src="assets/icon/reset.svg"></ion-icon>
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
