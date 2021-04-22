@@ -228,6 +228,8 @@
       <ion-button expand="full" color="secondary" mode="ios" (click)="browseWebsite()">
         <ion-icon slot="start" name="globe-outline"></ion-icon>
         <span>{{ 'BROWSE_WEBSITE' | translate }}</span>
+        <ion-icon class="external-link-icon" src="assets/icon/external-link.svg">
+        </ion-icon>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
@@ -249,12 +251,10 @@
     <ion-col>
       <ion-button expand="full" color="secondary" mode="ios" (click)="callPhone()">
         <ion-icon slot="start" name="call"></ion-icon>
-        <span class="overflow: hidden; text-overflow: ellipsis;">{{ 'CALL' | translate }} {{phoneNumber}}</span>
+        <span class="overflow: hidden; text-overflow: ellipsis;">{{ 'CALL' | translate }}</span>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
-  </ion-row>
-  <ion-row *ngIf="contentType === 'phone'" class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col>
       <ion-button expand="full" color="secondary" mode="ios" (click)="addContact()">
         <ion-icon slot="start" name="person-add-sharp"></ion-icon>
@@ -273,8 +273,6 @@
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
-  </ion-row>
-  <ion-row *ngIf="contentType === 'sms'" class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col>
       <ion-button expand="full" color="secondary" mode="ios" (click)="addContact()">
         <ion-icon slot="start" name="person-add-sharp"></ion-icon>
@@ -290,6 +288,8 @@
       <ion-button expand="full" color="secondary" mode="ios" (click)="sendEmail()">
         <ion-icon slot="start" name="mail"></ion-icon>
         <span>{{ 'SEND_EMAIL' | translate }}</span>
+        <ion-icon class="external-link-icon" src="assets/icon/external-link.svg">
+        </ion-icon>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
@@ -313,6 +313,8 @@
         [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
         <ion-icon slot="start" src="assets/icon/search-web.svg"></ion-icon>
         <span>{{ 'WEB_SEARCH' | translate }}</span>
+        <ion-icon class="external-link-icon" src="assets/icon/external-link.svg">
+        </ion-icon>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
