@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.tomfong.simpleqr" version="0.1.5" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.tomfong.simpleqr" version="0.1.6" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Simple QR</name>
     <description>A simple app for scanning and managing QR code</description>
-    <author email="tom.fonglamhang@gmail.com" href="https://github.com/tomfong/">Tom Fong</author>
+    <author email="tomfong.dev@gmail.com" href="https://tomfong-personal-page.web.app/">Tom Fong</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
