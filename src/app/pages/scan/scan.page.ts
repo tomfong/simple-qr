@@ -61,14 +61,14 @@ export class ScanPage {
         });
         this.pauseSubscription = this.platform.pause.subscribe(
           async () => {
+            if (this.motionSubscription) {
+              this.motionSubscription.unsubscribe();
+              this.motionSubscription = undefined;
+              this.motionlessCount = 0;
+            }
             await this.qrScanner.destroy().then(
               () => {
                 this.cameraActive = false;
-                if (this.motionSubscription) {
-                  this.motionSubscription.unsubscribe();
-                  this.motionSubscription = undefined;
-                  this.motionlessCount = 0;
-                }
               }
             );
           }
@@ -132,6 +132,11 @@ export class ScanPage {
   }
 
   async prepareScanner(): Promise<void> {
+    if (this.motionSubscription) {
+      this.motionSubscription.unsubscribe();
+      this.motionSubscription = undefined;
+      this.motionlessCount = 0;
+    }
     let denied = false;
     await this.qrScanner.getStatus().then(
       async (status: QRScannerStatus) => {
@@ -305,6 +310,7 @@ export class ScanPage {
   }
 
   async createQrcode(inputData?: string): Promise<void> {
+    let enterPressed: boolean = false;
     const alert = await this.alertController.create({
       header: this.translate.instant('GENERATE_QRCODE'),
       subHeader: this.translate.instant('GENERATE_QRCODE_MAX_LENGTH'),
@@ -321,6 +327,7 @@ export class ScanPage {
         {
           text: this.translate.instant('ENTER'),
           handler: async (data) => {
+            enterPressed = true;
             const text = data.qrcode as string | undefined | null;
             if (text === undefined || text === null || (text && text.trim().length <= 0) || text === "") {
               this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), 1500, "bottom", "center", "long");
@@ -346,7 +353,24 @@ export class ScanPage {
         }
       ]
     });
-    alert.present();
+    await this.qrScanner.destroy().then(
+      () => {
+        this.cameraActive = false;
+      }
+    );
+    if (this.motionSubscription) {
+      this.motionSubscription.unsubscribe();
+      this.motionSubscription = undefined;
+      this.motionlessCount = 0;
+    }
+    alert.onDidDismiss().then(
+      async () => {
+        if (!enterPressed) {
+          await this.prepareScanner();
+        }
+      }
+    )
+    await alert.present();
   }
 
   async toggleFlash(): Promise<void> {
