@@ -57,12 +57,14 @@ The idea of Project Simple is to make applications or tools simple, light and ea
 
 ## Screenshots
 
-<p align="center">
-<img alt="0-scan" src="./screenshots/0-scan.png" width="150px">
-<img alt="1-generate" src="./screenshots/1-generate.png" width="150px">
-<img alt="2-result" src="./screenshots/2-result.png" width="150px">
-<img alt="3-history" src="./screenshots/3-history.png" width="150px">
-<img alt="3-settings" src="./screenshots/4-settings.png" width="150px">
+<p align="start">
+<img alt="0" src="./screenshots/0.png" width="125px">
+<img alt="1" src="./screenshots/1.png" width="125px">
+<img alt="2" src="./screenshots/2.png" width="125px">
+<img alt="3" src="./screenshots/3.png" width="125px">
+<img alt="4" src="./screenshots/4.png" width="125px">
+<img alt="5" src="./screenshots/5.png" width="125px">
+<img alt="6" src="./screenshots/6.png" width="125px">
  </p>
 
 ## Languages Supported
