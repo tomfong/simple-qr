@@ -96,6 +96,14 @@ export class ScanPage {
     await this.prepareScanner();
   }
 
+  ionViewWillLeave() {
+    if (this.motionSubscription) {
+      this.motionSubscription.unsubscribe();
+      this.motionSubscription = undefined;
+      this.motionlessCount = 0;
+    }
+  }
+
   async ionViewDidLeave(): Promise<void> {
     this.vibration.vibrate(0);
     if (this.resumeSubscription) {
@@ -110,17 +118,16 @@ export class ScanPage {
       this.scanSubscription.unsubscribe();
       this.scanSubscription = undefined;
     }
-    if (this.motionSubscription) {
-      this.motionSubscription.unsubscribe();
-      this.motionSubscription = undefined;
-      this.motionlessCount = 0;
-    }
     if (this.cameraActive) {
       await this.qrScanner.destroy().then(
         () => {
           this.cameraActive = false;
         }
       );
+    }
+    if (this.pauseAlert) {
+      this.pauseAlert.dismiss();
+      this.pauseAlert = undefined;
     }
   }
 
@@ -197,17 +204,44 @@ export class ScanPage {
                   await this.qrScanner.destroy().then(
                     async () => {
                       this.cameraActive = false;
-                      this.pauseAlert = await this.presentAlert(
-                        this.translate.instant("MSG.CAMERA_PAUSED"),
-                        this.translate.instant("CAMERA_PAUSED"),
-                        null,
-                        true
-                      );
+                      this.pauseAlert = await this.alertController.create({
+                        header: this.translate.instant("CAMERA_PAUSED"),
+                        message: this.translate.instant("MSG.CAMERA_PAUSED"),
+                        backdropDismiss: false,
+                        buttons: [
+                          {
+                            text: this.translate.instant("RESUME"),
+                            handler: async () => {
+                              if (this.pauseAlert) {
+                                this.pauseAlert.dismiss();
+                                this.pauseAlert = undefined;
+                              }
+                              this.motionX = Math.round(acceleration.x);
+                              this.motionY = Math.round(acceleration.y);
+                              this.motionZ = Math.round(acceleration.z);
+                              this.motionlessCount = 0;
+                              const showing = (await this.qrScanner.getStatus()).showing;
+                              const previewing = (await this.qrScanner.getStatus()).previewing;
+                              if (!showing || !previewing) {
+                                this.motionSubscription.unsubscribe();
+                                await this.prepareScanner();
+                              }
+                            }
+                          },
+                          {
+                            text: this.translate.instant("SETTING"),
+                            handler: () => {
+                              this.router.navigate(['setting-camera-pause']);
+                            }
+                          }
+                        ]
+                      })
                       this.pauseAlert.onDidDismiss().then(
                         () => {
-                          this.pauseAlert = null;
+                          this.pauseAlert = undefined;
                         }
                       );
+                      await this.pauseAlert.present();
                     }
                   );
                 }
@@ -215,7 +249,7 @@ export class ScanPage {
                 console.log("motion detected!")
                 if (this.pauseAlert) {
                   this.pauseAlert.dismiss();
-                  this.pauseAlert = null;
+                  this.pauseAlert = undefined;
                 }
                 this.motionX = Math.round(acceleration.x);
                 this.motionY = Math.round(acceleration.y);
