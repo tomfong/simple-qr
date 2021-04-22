@@ -61,14 +61,14 @@ export class ScanPage {
         });
         this.pauseSubscription = this.platform.pause.subscribe(
           async () => {
+            if (this.motionSubscription) {
+              this.motionSubscription.unsubscribe();
+              this.motionSubscription = undefined;
+              this.motionlessCount = 0;
+            }
             await this.qrScanner.destroy().then(
               () => {
                 this.cameraActive = false;
-                if (this.motionSubscription) {
-                  this.motionSubscription.unsubscribe();
-                  this.motionSubscription = undefined;
-                  this.motionlessCount = 0;
-                }
               }
             );
           }
@@ -96,6 +96,14 @@ export class ScanPage {
     await this.prepareScanner();
   }
 
+  ionViewWillLeave() {
+    if (this.motionSubscription) {
+      this.motionSubscription.unsubscribe();
+      this.motionSubscription = undefined;
+      this.motionlessCount = 0;
+    }
+  }
+
   async ionViewDidLeave(): Promise<void> {
     this.vibration.vibrate(0);
     if (this.resumeSubscription) {
@@ -110,11 +118,6 @@ export class ScanPage {
       this.scanSubscription.unsubscribe();
       this.scanSubscription = undefined;
     }
-    if (this.motionSubscription) {
-      this.motionSubscription.unsubscribe();
-      this.motionSubscription = undefined;
-      this.motionlessCount = 0;
-    }
     if (this.cameraActive) {
       await this.qrScanner.destroy().then(
         () => {
@@ -122,9 +125,18 @@ export class ScanPage {
         }
       );
     }
+    if (this.pauseAlert) {
+      this.pauseAlert.dismiss();
+      this.pauseAlert = undefined;
+    }
   }
 
   async prepareScanner(): Promise<void> {
+    if (this.motionSubscription) {
+      this.motionSubscription.unsubscribe();
+      this.motionSubscription = undefined;
+      this.motionlessCount = 0;
+    }
     let denied = false;
     await this.qrScanner.getStatus().then(
       async (status: QRScannerStatus) => {
@@ -197,17 +209,44 @@ export class ScanPage {
                   await this.qrScanner.destroy().then(
                     async () => {
                       this.cameraActive = false;
-                      this.pauseAlert = await this.presentAlert(
-                        this.translate.instant("MSG.CAMERA_PAUSED"),
-                        this.translate.instant("CAMERA_PAUSED"),
-                        null,
-                        true
-                      );
+                      this.pauseAlert = await this.alertController.create({
+                        header: this.translate.instant("CAMERA_PAUSED"),
+                        message: this.translate.instant("MSG.CAMERA_PAUSED"),
+                        backdropDismiss: false,
+                        buttons: [
+                          {
+                            text: this.translate.instant("RESUME"),
+                            handler: async () => {
+                              if (this.pauseAlert) {
+                                this.pauseAlert.dismiss();
+                                this.pauseAlert = undefined;
+                              }
+                              this.motionX = Math.round(acceleration.x);
+                              this.motionY = Math.round(acceleration.y);
+                              this.motionZ = Math.round(acceleration.z);
+                              this.motionlessCount = 0;
+                              const showing = (await this.qrScanner.getStatus()).showing;
+                              const previewing = (await this.qrScanner.getStatus()).previewing;
+                              if (!showing || !previewing) {
+                                this.motionSubscription.unsubscribe();
+                                await this.prepareScanner();
+                              }
+                            }
+                          },
+                          {
+                            text: this.translate.instant("SETTING"),
+                            handler: () => {
+                              this.router.navigate(['setting-camera-pause']);
+                            }
+                          }
+                        ]
+                      })
                       this.pauseAlert.onDidDismiss().then(
                         () => {
-                          this.pauseAlert = null;
+                          this.pauseAlert = undefined;
                         }
                       );
+                      await this.pauseAlert.present();
                     }
                   );
                 }
@@ -215,7 +254,7 @@ export class ScanPage {
                 console.log("motion detected!")
                 if (this.pauseAlert) {
                   this.pauseAlert.dismiss();
-                  this.pauseAlert = null;
+                  this.pauseAlert = undefined;
                 }
                 this.motionX = Math.round(acceleration.x);
                 this.motionY = Math.round(acceleration.y);
@@ -271,6 +310,7 @@ export class ScanPage {
   }
 
   async createQrcode(inputData?: string): Promise<void> {
+    let enterPressed: boolean = false;
     const alert = await this.alertController.create({
       header: this.translate.instant('GENERATE_QRCODE'),
       subHeader: this.translate.instant('GENERATE_QRCODE_MAX_LENGTH'),
@@ -287,6 +327,7 @@ export class ScanPage {
         {
           text: this.translate.instant('ENTER'),
           handler: async (data) => {
+            enterPressed = true;
             const text = data.qrcode as string | undefined | null;
             if (text === undefined || text === null || (text && text.trim().length <= 0) || text === "") {
               this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), 1500, "bottom", "center", "long");
@@ -312,7 +353,24 @@ export class ScanPage {
         }
       ]
     });
-    alert.present();
+    await this.qrScanner.destroy().then(
+      () => {
+        this.cameraActive = false;
+      }
+    );
+    if (this.motionSubscription) {
+      this.motionSubscription.unsubscribe();
+      this.motionSubscription = undefined;
+      this.motionlessCount = 0;
+    }
+    alert.onDidDismiss().then(
+      async () => {
+        if (!enterPressed) {
+          await this.prepareScanner();
+        }
+      }
+    )
+    await alert.present();
   }
 
   async toggleFlash(): Promise<void> {

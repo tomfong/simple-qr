@@ -1,8 +1,8 @@
 {
   "name": "simple-qr",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "author": "Tom Fong",
-  "homepage": "http://github.com/tomfong/simple-qr",
+  "homepage": "https://tomfong-personal-page.web.app/",
   "scripts": {
     "ng": "ng",
     "setenv": "node setenv",
