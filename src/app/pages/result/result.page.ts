@@ -49,7 +49,7 @@ export class ResultPage implements OnInit {
   base64Decoded: boolean = false;
   base64DecodedText: string = "";
 
-  webToast: HTMLIonToastElement;
+  // webToast: HTMLIonToastElement;
 
   bookmarked: boolean = false;
 
@@ -90,59 +90,59 @@ export class ResultPage implements OnInit {
     } else {
       this.vibration.vibrate(100);
     }
-    if (this.contentType === "url") {
-      this.webToast = await this.toastController.create({
-        header: this.translate.instant('WEBSITE'),
-        message: `${this.qrCodeContent}`,
-        duration: 3000,
-        mode: "ios",
-        color: "light",
-        position: "top",
-        buttons: [
-          {
-            text: this.translate.instant('OPEN'),
-            side: 'end',
-            handler: () => {
-              this.browseWebsite();
-              this.webToast.dismiss();
-            }
-          }
-        ]
-      });
-      this.webToast.present();
-    }
-    if (this.contentType === "wifi") {
-      if (this.wifiSSID) {
-        this.webToast = await this.toastController.create({
-          header: this.translate.instant('WIFI_NETWORK'),
-          message: `SSID: ${this.wifiSSID}`,
-          duration: 3000,
-          mode: "ios",
-          color: "light",
-          position: "top",
-          buttons: [
-            {
-              text: this.translate.instant('CONNECT'),
-              side: 'end',
-              handler: async () => {
-                await this.connectWifi();
-              }
-            }
-          ]
-        });
-        this.webToast.present();
-      }
-    }
+    // if (this.contentType === "url") {
+    //   this.webToast = await this.toastController.create({
+    //     header: this.translate.instant('WEBSITE'),
+    //     message: `${this.qrCodeContent}`,
+    //     duration: 3000,
+    //     mode: "ios",
+    //     color: "light",
+    //     position: "top",
+    //     buttons: [
+    //       {
+    //         text: this.translate.instant('OPEN'),
+    //         side: 'end',
+    //         handler: () => {
+    //           this.browseWebsite();
+    //           this.webToast.dismiss();
+    //         }
+    //       }
+    //     ]
+    //   });
+    //   this.webToast.present();
+    // }
+    // if (this.contentType === "wifi") {
+    //   if (this.wifiSSID) {
+    //     this.webToast = await this.toastController.create({
+    //       header: this.translate.instant('WIFI_NETWORK'),
+    //       message: `SSID: ${this.wifiSSID}`,
+    //       duration: 3000,
+    //       mode: "ios",
+    //       color: "light",
+    //       position: "top",
+    //       buttons: [
+    //         {
+    //           text: this.translate.instant('CONNECT'),
+    //           side: 'end',
+    //           handler: async () => {
+    //             await this.connectWifi();
+    //           }
+    //         }
+    //       ]
+    //     });
+    //     this.webToast.present();
+    //   }
+    // }
   }
 
   async ionViewWillLeave(): Promise<void> {
     this.vibration.vibrate(0);
     this.base64Decoded = false;
     this.base64Encoded = false;
-    if (this.webToast) {
-      this.webToast.dismiss();
-      this.webToast = undefined;
-    }
+    // if (this.webToast) {
+    //   this.webToast.dismiss();
+    //   this.webToast = undefined;
+    // }
   }
 
   setContentType(): void {
