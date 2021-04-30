@@ -72,11 +72,11 @@ The idea of Project Simple is to make applications or tools simple, light and ea
 - English (en)
 - Traditional Chinese 正體中文 (zh-HK)
 
-You are welcomed to help us do translations in more languages! (see <a href="#how-to-do-translation">section</a>)
+You are welcomed to help us do translations in more languages! (see <a href="#how-to-help-to-do-translation">section</a>)
 
 ## Download
 
-Coming soon on Google Play
+Please download the app from Google Play.
 
 <a href="https://play.google.com/store/apps/details?id=com.tomfong.simpleqr">
   <img src="https://cdn.rawgit.com/steverichey/google-play-badge-svg/master/img/en_get.svg" width="30%">
@@ -149,13 +149,15 @@ Coming soon!
 
 ## Changelogs
 
-Coming soon!
+### 1.0.0 (Current)
+
+- The first release version. Thanks for your support! Please feel free to rate the app and leave comments.
 
 ## Framework
 
 ```sh
     Ionic CLI                       : 6.13.1
-    Ionic Framework                 : @ionic/angular 5.6.1
+    Ionic Framework                 : @ionic/angular 5.6.4
     @angular-devkit/build-angular   : 0.1102.5
     @angular-devkit/schematics      : 11.2.5
     @angular/cli                    : 11.2.5
