@@ -28,7 +28,6 @@ export class EnvService {
   public notShowHistoryTutorial: boolean = false;
   public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' = 'google';
 
-  public readonly BUILD_NUMBER: string = "20210426A";
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
   public readonly GOOGLE_SEARCH_URL: string = "https://www.google.com/search?q=";
   public readonly BING_SEARCH_URL: string = "https://www.bing.com/search?q=";
@@ -369,7 +368,7 @@ export class EnvService {
     const now = moment();
     const datetimestr1 = now.format("YYYYMMDDHHmmss");
     const datetimestr2 = now.format("YYYY-MM-DD HH:mm:ss ZZ");
-    const appVersion = this.appVersionNumber + '.' + this.BUILD_NUMBER + '.' + this.buildEnv;
+    const appVersion = this.appVersionNumber + '.' + this.buildEnv;
     const model = `${this.device.manufacturer} ${this.device.model}`;
     const os = this.platform.is("android") ? "Android" : (this.platform.is("ios") ? "iOS" : "Other");
     const osVersion = this.device.version;
