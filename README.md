@@ -153,7 +153,11 @@ Coming soon!
 
 ## Changelogs
 
-### 1.0.1 (Current)
+### 1.0.2 (Current)
+
+- Removed in-app purchase
+
+#### 1.0.1
 
 - Support Android 6.0 or above devices
 
