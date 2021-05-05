@@ -102,14 +102,18 @@ Thanks for your support!
 ### If you want to build the project
 
 - run ```npm install``` to all dependencies
-- Prepare a .env file in the root directory with the following keys
+- Prepare a .env file in the root directory with the following keys with arbitrary values
   - STORAGE_SCAN_RECORD_KEY
   - STORAGE_BOOKMARK_KEY
-  - CLASSIC_MILKTEA_PK
-  - PEARL_MILKTEA_PK
-  - FANCY_MILKTEA_PK
-  - PREMIUM_MILKTEA_PK
   - PAYPAL_DONATE_URL
+  
+  e.g.
+
+  ```env
+    STORAGE_SCAN_RECORD_KEY = "testing-scan-record"
+    STORAGE_BOOKMARK_KEY = "testing-bookmark"
+    PAYPAL_DONATE_URL = "https://github.com/tomfong/simple-qr#support-developer"
+  ```
 
   Then, run ```npm run setenv``` to generate angular environment files
 - If you want to run on Android device, run ```npm run start:an```. You may encounter an error like
@@ -149,7 +153,11 @@ Coming soon!
 
 ## Changelogs
 
-### 1.0.1 (Current)
+### 1.0.2 (Current)
+
+- Removed in-app purchase
+
+#### 1.0.1
 
 - Support Android 6.0 or above devices
 

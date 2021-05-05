@@ -32,7 +32,8 @@ export class HistoryPage {
 
   async ionViewDidEnter() {
     if (this.env.notShowHistoryTutorial === false) {
-      await this.env.storageSet("not-show-history-tutorial", 'no');
+      this.env.notShowHistoryTutorial = true;
+      await this.env.storageSet("not-show-history-tutorial", 'yes');
       const modal = await this.modalController.create({
         component: HistoryTutorialPage,
         cssClass: 'tutorial-modal-page',
