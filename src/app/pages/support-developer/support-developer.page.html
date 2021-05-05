@@ -22,7 +22,7 @@
     </ion-label>
     <ion-ripple-effect type="bounded"></ion-ripple-effect>
   </ion-item>
-  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="openPaypal()">
+  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="full" button (click)="openPaypal()">
     <ion-icon class="ion-margin-start ion-padding-horizontal"
       [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="logo-paypal"></ion-icon>
     <ion-label>
@@ -37,18 +37,6 @@
     </ion-label>
     <ion-ripple-effect type="bounded"></ion-ripple-effect>
   </ion-item>
-  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="full" button (click)="buyMilkTea()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="cafe"></ion-icon>
-    <ion-label>
-      <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;"
-          [innerHTML]="'BUY_ME_MILKTEA' | translate">
-        </ion-text>
-      </p>
-    </ion-label>
-    <ion-ripple-effect type="bounded"></ion-ripple-effect>
-  </ion-item>
   <ion-item class="ion-no-padding" lines="none">
     <ion-label class="ion-padding-start">
       <p class="ion-padding">
@@ -59,56 +47,8 @@
     </ion-label>
   </ion-item>
 
-  <ion-row *ngIf="premiumMilkTeaDonorUnlocked">
-    <ion-col class="ion-text-center">
-      <ion-button mode="ios" color="gold" (click)="showPremiumMilkTeaDonorUnlocked()" fill="clear" size="large">
-        <ion-icon class="ion-padding-horizontal" src="assets/icon/premium-cup.svg"></ion-icon>
-        <span class="ion-padding-horizontal">PREMIUM</span>
-      </ion-button>
-    </ion-col>
-  </ion-row>
-
-  <ion-row *ngIf="extraLargeMilkTeaDonorUnlocked && !premiumMilkTeaDonorUnlocked">
-    <ion-col class="ion-text-center">
-      <ion-button mode="ios" color="silver" (click)="showExtraLargeMilkTeaDonorUnlocked()" fill="clear" size="large">
-        <ion-icon class="ion-padding-horizontal" name="cafe"></ion-icon>
-        <span class="ion-padding-horizontal">FANCY</span>
-      </ion-button>
-    </ion-col>
-  </ion-row>
-
-  <ion-row *ngIf="largeMilkTeaDonorUnlocked && !premiumMilkTeaDonorUnlocked && !extraLargeMilkTeaDonorUnlocked">
-    <ion-col class="ion-text-center">
-      <ion-button mode="ios" color="primary" (click)="showLargeMilkTeaDonorUnlocked()" fill="clear" size="large">
-        <ion-icon class="ion-padding-horizontal" src="assets/icon/pearl-cup.svg"></ion-icon>
-        <span class="ion-padding-horizontal">PEARL</span>
-      </ion-button>
-    </ion-col>
-  </ion-row>
-
-  <ion-row
-    *ngIf="smallMilkTeaDonorUnlocked && !premiumMilkTeaDonorUnlocked && !extraLargeMilkTeaDonorUnlocked && !largeMilkTeaDonorUnlocked">
-    <ion-col class="ion-text-center">
-      <ion-button mode="ios" color="secondary" (click)="showSmallMilkTeaDonorUnlocked()" fill="clear" size="large">
-        <ion-icon class="ion-padding-horizontal" name="cafe"></ion-icon>
-        <span class="ion-padding-horizontal">CLASSIC</span>
-      </ion-button>
-    </ion-col>
-  </ion-row>
-
   <ion-row class="ion-padding-bottom">
     <ion-col></ion-col>
   </ion-row>
 
 </ion-content>
-<!-- <ion-footer mode="ios"
-  [ngStyle]="env.colorTheme === 'dark'?  {'background-color': '#121212'} : {'background-color': 'white'}" *ngIf="showRestoreBtn">
-  <ion-row class="ion-margin-horizontal ion-padding">
-    <ion-col>
-      <ion-button expand="full" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" mode="ios" (click)="restore()">
-        <span>{{ 'RESTORE_PURCHASE' | translate }}</span>
-        <ion-ripple-effect></ion-ripple-effect>
-      </ion-button>
-    </ion-col>
-  </ion-row>
-</ion-footer> -->
