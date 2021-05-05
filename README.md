@@ -149,7 +149,11 @@ Coming soon!
 
 ## Changelogs
 
-### 1.0.0 (Current)
+### 1.0.1 (Current)
+
+- Support Android 6.0 or above devices
+
+#### 1.0.0
 
 - The first release version. Thanks for your support! Please feel free to rate the app and leave comments.
 
