@@ -44,7 +44,7 @@
     "EMAIL_SUBJECT": "Subject",
     "EMAIL_BODY": "Body",
     "CONTACT_NAME": "Contact Name",
-    "QR_CODE_CONTENT": "QR Code Content",
+    "BARCODE_CONTENT": "Barcode Content",
     "BROWSE_WEBSITE": "Browse Website",
     "ADD_CONTACT": "Add Contact",
     "CALL": "Call",

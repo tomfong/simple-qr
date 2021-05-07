@@ -115,7 +115,36 @@ Thanks for your support!
     PAYPAL_DONATE_URL = "https://github.com/tomfong/simple-qr#support-developer"
   ```
 
-  Then, run ```npm run setenv``` to generate angular environment files
+  Then, run ```npm run setenv``` to generate angular environment files.
+- Go to ```platforms/android/app/src/main/java/com/bitpay/cordova/qrscanner/QRScanner.java``` and find the following codes
+
+  ```java
+    ArrayList<BarcodeFormat> formatList = new ArrayList<BarcodeFormat>();
+    formatList.add(BarcodeFormat.QR_CODE);
+  ```
+
+  and then replace it by
+
+  ```java
+    ArrayList<BarcodeFormat> formatList = new ArrayList<BarcodeFormat>();
+    formatList.add(BarcodeFormat.AZTEC);
+    formatList.add(BarcodeFormat.CODABAR);
+    formatList.add(BarcodeFormat.CODE_128);
+    formatList.add(BarcodeFormat.CODE_39);
+    formatList.add(BarcodeFormat.CODE_93);
+    formatList.add(BarcodeFormat.DATA_MATRIX);
+    formatList.add(BarcodeFormat.EAN_13);
+    formatList.add(BarcodeFormat.EAN_8);
+    formatList.add(BarcodeFormat.ITF);
+    formatList.add(BarcodeFormat.PDF_417);
+    formatList.add(BarcodeFormat.QR_CODE);
+    formatList.add(BarcodeFormat.RSS_14);
+    formatList.add(BarcodeFormat.RSS_EXPANDED);
+    formatList.add(BarcodeFormat.UPC_A);
+    formatList.add(BarcodeFormat.UPC_E);
+    formatList.add(BarcodeFormat.UPC_EAN_EXTENSION);
+  ```
+
 - If you want to run on Android device, run ```npm run start:an```. You may encounter an error like
 
   ```sh
