@@ -3,12 +3,6 @@
 <p align="center">
 <img alt="Simple QR" src="./resources/icon.png" width="100px">
 </p>
-<p align="center">
-Simple QR - First Product of Project Simple
-</p>
-<p align="center">
-made by Hongkonger
-</p>
 
 <p align="center">
   <a href="#about">About</a>
@@ -28,7 +22,7 @@ made by Hongkonger
 
 ## About
 
-Simple QR (簡易QR) is the first product of my project - Project Simple. It is an is an open-source Android app which provides a simple way for users to scan, generate and manage QR codes. All activities can be done offline. No backend service connected. No data collected.
+Simple QR (簡易QR) is an open-source app, providing a simple way for you to scan, generate and manage QR codes. No backend service connected. No data collected from you. No mandatory ads.
 
 ### Project Simple
 
