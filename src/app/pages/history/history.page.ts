@@ -19,6 +19,9 @@ export class HistoryPage {
 
   deleteToast: HTMLIonToastElement;
 
+  scanRecords: ScanRecord[] = [];
+  bookmarks: Bookmark[] = [];
+
   constructor(
     private platform: Platform,
     public alertController: AlertController,
@@ -30,10 +33,18 @@ export class HistoryPage {
     public modalController: ModalController,
   ) { }
 
+  async loadItems() {
+    this.scanRecords = this.env.scanRecords;
+    this.bookmarks = this.env.bookmarks;
+  }
+
   async ionViewDidEnter() {
+    const loading = await this.presentLoading(this.translate.instant("PLEASE_WAIT"));
+    await this.loadItems();
+    loading.dismiss();
     if (this.env.notShowHistoryTutorial === false) {
       this.env.notShowHistoryTutorial = true;
-      await this.env.storageSet("not-show-history-tutorial", 'yes');
+      this.env.storageSet("not-show-history-tutorial", 'yes');
       const modal = await this.modalController.create({
         component: HistoryTutorialPage,
         cssClass: 'tutorial-modal-page',
@@ -76,6 +87,7 @@ export class HistoryPage {
   async addFavourite(record: ScanRecord, slidingItem: IonItemSliding) {
     slidingItem.close();
     const flag = await this.env.saveBookmark(record.text);
+    await this.loadItems();
     if (flag === true) {
       this.presentToast(this.translate.instant("MSG.BOOKMARKED"), 1000, "bottom", "center", "short");
     } else {
@@ -90,6 +102,7 @@ export class HistoryPage {
       this.deleteToast = null;
     }
     await this.env.deleteBookmark(bookmark.text);
+    await this.loadItems();
     this.deleteToast = await this.toastController.create({
       message: this.translate.instant('MSG.UNDO_DELETE'),
       duration: 5000,
@@ -102,6 +115,7 @@ export class HistoryPage {
           side: 'end',
           handler: async () => {
             await this.env.undoBookmarkDeletion(bookmark);
+            await this.loadItems();
             this.deleteToast.dismiss();
           }
         }
@@ -117,6 +131,7 @@ export class HistoryPage {
       this.deleteToast = null;
     }
     await this.env.deleteScanRecord(record.id);
+    await this.loadItems();
     this.deleteToast = await this.toastController.create({
       message: this.translate.instant('MSG.UNDO_DELETE'),
       duration: 5000,
@@ -129,6 +144,7 @@ export class HistoryPage {
           side: 'end',
           handler: async () => {
             await this.env.undoScanRecordDeletion(record);
+            await this.loadItems();
             this.deleteToast.dismiss();
           }
         }
@@ -148,6 +164,7 @@ export class HistoryPage {
             text: this.translate.instant('YES'),
             handler: async () => {
               await this.env.deleteAllScanRecords();
+              await this.loadItems();
             }
           },
           {
@@ -166,6 +183,7 @@ export class HistoryPage {
             text: this.translate.instant('YES'),
             handler: async () => {
               await this.env.deleteAllBookmarks();
+              await this.loadItems();
             }
           },
           {
