@@ -79,8 +79,8 @@ $app-light-theme: mat-light-theme(
 $app-dark-theme: mat-dark-theme(
   (
     color: (
-      primary: $app-primary,
-      accent: $app-accent,
+      primary: $app-accent,
+      accent: $app-primary,
       warn: $app-warn,
     ),
   )

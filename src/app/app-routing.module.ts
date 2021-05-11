@@ -46,6 +46,10 @@ const routes: Routes = [
     path: 'setting-search-engine',
     loadChildren: () => import('./pages/setting-search-engine/setting-search-engine.module').then( m => m.SettingSearchEnginePageModule)
   },
+  {
+    path: 'generate',
+    loadChildren: () => import('./pages/generate/generate.module').then( m => m.GeneratePageModule)
+  },
 
 
 ];

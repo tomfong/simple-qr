@@ -1,0 +1,49 @@
+<ion-header [translucent]="true" mode="ios">
+  <ion-toolbar color="dark" mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'GENERATE_QRCODE' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-row class="ion-padding-horizontal ion-padding">
+    <ion-col size="2" style="display: flex; align-items: center;">
+      <mat-icon [style]="env.colorTheme === 'dark'? 'color: rgba(255, 255, 255, 0.6);' : 'color: rgba(0, 0, 0, 0.6);'">
+        info
+      </mat-icon>
+    </ion-col>
+    <ion-col size="10" style="display: flex; align-items: center;">
+      <mat-hint [style]="env.colorTheme === 'dark'? 'color: rgba(255, 255, 255, 0.6);' : 'color: rgba(0, 0, 0, 0.6);'">
+        {{ 'NEW_CONTACT_TIP' | translate}}
+      </mat-hint>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-padding-horizontal">
+    <ion-col>
+      <mat-form-field [class]="env.colorTheme === 'dark'? 'ng-mat-dark' : 'ng-mat-light' " appearance="outline"
+        color="accent">
+        <mat-label>{{ 'CONTENT_TYPE' | translate}}</mat-label>
+        <mat-select [(ngModel)]="contentType">
+          <mat-select-trigger>
+            <div style="display: flex; align-items: center;">
+              <mat-icon style="margin-left: 16px; margin-right: 16px; vertical-align: middle;">
+                {{ getIcon(contentType) }}
+              </mat-icon>
+              <span>{{ getText(contentType) }}</span>
+            </div>
+          </mat-select-trigger>
+          <mat-option [value]="type.value" *ngFor="let type of contentTypes">
+            <mat-icon>{{ getIcon(type.value) }}</mat-icon>
+            <span>{{ type.text }}</span>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ion-col>
+  </ion-row>
+
+</ion-content>
