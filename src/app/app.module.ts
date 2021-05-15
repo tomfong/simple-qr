@@ -29,6 +29,8 @@ import { CreateContactPageModule } from './modals/create-contact/create-contact.
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { HistoryTutorialPageModule } from './modals/history-tutorial/history-tutorial.module';
+import { DatePipe } from '@angular/common';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -56,6 +58,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     HistoryTutorialPageModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
+    MatSlideToggleModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
@@ -73,6 +76,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     SplashScreen,
     WifiWizard2,
     OpenNativeSettings,
+    DatePipe,
   ],
   bootstrap: [AppComponent],
 })

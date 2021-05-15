@@ -14,6 +14,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatMomentDateModule } from "@angular/material-moment-adapter";
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -27,6 +30,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     MatIconModule,
     MatInputModule,
     MatSelectModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
+    MatSlideToggleModule,
     IonicModule,
     TranslateModule.forChild({
       loader: {
@@ -35,7 +41,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         deps: [HttpClient]
       }
     }),
-    GeneratePageRoutingModule
+    GeneratePageRoutingModule,
   ],
   declarations: [GeneratePage]
 })

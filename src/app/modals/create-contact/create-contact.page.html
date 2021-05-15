@@ -17,12 +17,7 @@
 <ion-content>
 
   <ion-row class="ion-padding-horizontal ion-padding">
-    <ion-col size="2" style="display: flex; align-items: center;">
-      <mat-icon [style]="env.colorTheme === 'dark'? 'color: rgba(255, 255, 255, 0.6);' : 'color: rgba(0, 0, 0, 0.6);'">
-        info
-      </mat-icon>
-    </ion-col>
-    <ion-col size="10" style="display: flex; align-items: center;">
+    <ion-col>
       <mat-hint [style]="env.colorTheme === 'dark'? 'color: rgba(255, 255, 255, 0.6);' : 'color: rgba(0, 0, 0, 0.6);'">
         {{ 'NEW_CONTACT_TIP' | translate}}
       </mat-hint>
@@ -36,6 +31,7 @@
         <mat-label>{{ 'FIRST_NAME' | translate}}</mat-label>
         <input #givenNameInput="matInput" matInput [(ngModel)]="givenName" type="text" />
         <mat-hint>{{ 'REQUIRED' | translate}}</mat-hint>
+        <mat-icon matSuffix color="accent">badge</mat-icon>
       </mat-form-field>
     </ion-col>
   </ion-row>
@@ -45,6 +41,7 @@
       <mat-form-field [class]="env.colorTheme === 'dark'? 'ng-mat-dark' : 'ng-mat-light' " appearance="outline" color="accent">
         <mat-label>{{ 'LAST_NAME' | translate}}</mat-label>
         <input matInput [(ngModel)]="familyName" type="text">
+        <mat-icon matSuffix color="accent">badge</mat-icon>
       </mat-form-field>
     </ion-col>
   </ion-row>
