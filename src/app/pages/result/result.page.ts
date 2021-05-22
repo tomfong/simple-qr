@@ -529,16 +529,22 @@ export class ResultPage implements OnInit {
     const fullNameId2 = "FN;CHARSET=UTF-8:";
     const defaultEmailId1 = "EMAIL;TYPE=INTERNET:";
     const defaultEmailId2 = "EMAIL;CHARSET=UTF-8;TYPE=INTERNET:";
+    const defaultEmailId3 = "EMAIL;INTERNET:";
     const homeEmailId1 = "EMAIL;CHARSET=UTF-8;TYPE=HOME,INTERNET:";
     const homeEmailId2 = "EMAIL;TYPE=HOME,INTERNET:"
+    const homeEmailId3 = "EMAIL;HOME;INTERNET:"
     const workEmailId1 = "EMAIL;CHARSET=UTF-8;TYPE=WORK,INTERNET:";
     const workEmailId2 = "EMAIL;TYPE=WORK,INTERNET:";
+    const workEmailId3 = "EMAIL;WORK;INTERNET:"
     const defaultPhoneNumberId = "TEL:";
-    const mobilePhoneNumberId = "TEL;TYPE=CELL:";
+    const mobilePhoneNumberId1 = "TEL;TYPE=CELL:";
+    const mobilePhoneNumberId2 = "TEL;CELL:";
     const homePhoneNumberId1 = "TEL;TYPE=HOME:";
     const homePhoneNumberId2 = "TEL;TYPE=HOME,VOICE:";
+    const homePhoneNumberId3 = "TEL;HOME;VOICE:";
     const workPhoneNumberId1 = "TEL;TYPE=WORK:";
     const workPhoneNumberId2 = "TEL;TYPE=WORK,VOICE:";
+    const workPhoneNumberId3 = "TEL;WORK;VOICE:";
     lines.forEach(
       line => {
         const tLine = line.trim();
@@ -561,29 +567,41 @@ export class ResultPage implements OnInit {
           this.vCardContact.workEmail = tLine.substr(workEmailId1.length);
         } else if (tLine.toUpperCase().substr(0, workEmailId2.length) === workEmailId2) {
           this.vCardContact.workEmail = tLine.substr(workEmailId2.length);
+        } else if (tLine.toUpperCase().substr(0, workEmailId3.length) === workEmailId3) {
+          this.vCardContact.workEmail = tLine.substr(workEmailId3.length);
         }
         if (tLine.toUpperCase().substr(0, homeEmailId1.length) === homeEmailId1) {
           this.vCardContact.homeEmail = tLine.substr(homeEmailId1.length);
         } else if (tLine.toUpperCase().substr(0, homeEmailId2.length) === homeEmailId2) {
           this.vCardContact.homeEmail = tLine.substr(homeEmailId2.length);
+        } else if (tLine.toUpperCase().substr(0, homeEmailId3.length) === homeEmailId3) {
+          this.vCardContact.homeEmail = tLine.substr(homeEmailId3.length);
         }
         if (tLine.toUpperCase().substr(0, defaultEmailId1.length) === defaultEmailId1) {
           this.vCardContact.defaultEmail = tLine.substr(defaultEmailId1.length);
         } else if (tLine.toUpperCase().substr(0, defaultEmailId2.length) === defaultEmailId2) {
           this.vCardContact.defaultEmail = tLine.substr(defaultEmailId2.length);
+        } else if (tLine.toUpperCase().substr(0, defaultEmailId3.length) === defaultEmailId3) {
+          this.vCardContact.defaultEmail = tLine.substr(defaultEmailId3.length);
         }
         if (tLine.toUpperCase().substr(0, workPhoneNumberId1.length) === workPhoneNumberId1) {
           this.vCardContact.workPhoneNumber = tLine.substr(workPhoneNumberId1.length);
         } else if (tLine.toUpperCase().substr(0, workPhoneNumberId2.length) === workPhoneNumberId2) {
           this.vCardContact.workPhoneNumber = tLine.substr(workPhoneNumberId2.length);
+        } else if (tLine.toUpperCase().substr(0, workPhoneNumberId3.length) === workPhoneNumberId3) {
+          this.vCardContact.homePhoneNumber = tLine.substr(workPhoneNumberId3.length);
         }
         if (tLine.toUpperCase().substr(0, homePhoneNumberId1.length) === homePhoneNumberId1) {
           this.vCardContact.homePhoneNumber = tLine.substr(homePhoneNumberId1.length);
         } else if (tLine.toUpperCase().substr(0, homePhoneNumberId2.length) === homePhoneNumberId2) {
           this.vCardContact.homePhoneNumber = tLine.substr(homePhoneNumberId2.length);
+        } else if (tLine.toUpperCase().substr(0, homePhoneNumberId3.length) === homePhoneNumberId3) {
+          this.vCardContact.homePhoneNumber = tLine.substr(homePhoneNumberId3.length);
         }
-        if (tLine.toUpperCase().substr(0, mobilePhoneNumberId.length) === mobilePhoneNumberId) {
-          this.vCardContact.mobilePhoneNumber = tLine.substr(mobilePhoneNumberId.length);
+        if (tLine.toUpperCase().substr(0, mobilePhoneNumberId1.length) === mobilePhoneNumberId1) {
+          this.vCardContact.mobilePhoneNumber = tLine.substr(mobilePhoneNumberId1.length);
+        } else if (tLine.toUpperCase().substr(0, mobilePhoneNumberId2.length) === mobilePhoneNumberId2) {
+          this.vCardContact.mobilePhoneNumber = tLine.substr(mobilePhoneNumberId2.length);
         }
         if (tLine.toUpperCase().substr(0, defaultPhoneNumberId.length) === defaultPhoneNumberId) {
           this.vCardContact.defaultPhoneNumber = tLine.substr(defaultPhoneNumberId.length);

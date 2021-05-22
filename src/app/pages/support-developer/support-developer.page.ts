@@ -93,7 +93,7 @@ export class SupportDeveloperPage {
     }
   }
 
-  openPaypal() {
+  seeMore() {
     window.open(environment.paypalDonateUrl, '_system');
   }
 

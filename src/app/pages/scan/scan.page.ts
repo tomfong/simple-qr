@@ -309,68 +309,8 @@ export class ScanPage {
     );
   }
 
-  async createQrcode(inputData?: string): Promise<void> {
-    let enterPressed: boolean = false;
-    const alert = await this.alertController.create({
-      header: this.translate.instant('GENERATE_QRCODE'),
-      subHeader: this.translate.instant('GENERATE_QRCODE_MAX_LENGTH'),
-      cssClass: 'larger-alert',
-      inputs: [
-        {
-          name: 'qrcode',
-          type: 'text',
-          value: inputData ? inputData : "",
-          placeholder: this.translate.instant('QRCODE_CONTENT')
-        },
-      ],
-      buttons: [
-        {
-          text: this.translate.instant('ENTER'),
-          handler: async (data) => {
-            enterPressed = true;
-            const text = data.qrcode as string | undefined | null;
-            if (text === undefined || text === null || (text && text.trim().length <= 0) || text === "") {
-              this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), 1500, "bottom", "center", "long");
-              this.createQrcode();
-              return false;
-            } else if (text.length > 1817) {
-              this.presentToast(this.translate.instant('GENERATE_QRCODE_MAX_LENGTH'), 1500, "bottom", "center", "long");
-              this.createQrcode(text);
-              return false;
-            } else {
-              const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
-              if (this.scanSubscription) {
-                this.scanSubscription.unsubscribe();
-              }
-              if (this.motionSubscription) {
-                this.motionSubscription.unsubscribe();
-                this.motionSubscription = null;
-                this.motionlessCount = 0;
-              }
-              await this.processQrCode(text, loading);
-            }
-          }
-        }
-      ]
-    });
-    await this.qrScanner.destroy().then(
-      () => {
-        this.cameraActive = false;
-      }
-    );
-    if (this.motionSubscription) {
-      this.motionSubscription.unsubscribe();
-      this.motionSubscription = undefined;
-      this.motionlessCount = 0;
-    }
-    alert.onDidDismiss().then(
-      async () => {
-        if (!enterPressed) {
-          await this.prepareScanner();
-        }
-      }
-    )
-    await alert.present();
+  createQrcode(): void {
+    this.router.navigate(['generate']);
   }
 
   async toggleFlash(): Promise<void> {

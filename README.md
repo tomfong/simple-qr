@@ -3,12 +3,6 @@
 <p align="center">
 <img alt="Simple QR" src="./resources/icon.png" width="100px">
 </p>
-<p align="center">
-Simple QR - First Product of Project Simple
-</p>
-<p align="center">
-made by Hongkonger
-</p>
 
 <p align="center">
   <a href="#about">About</a>
@@ -28,7 +22,7 @@ made by Hongkonger
 
 ## About
 
-Simple QR (簡易QR) is the first product of my project - Project Simple. It is an is an open-source Android app which provides a simple way for users to scan, generate and manage QR codes. All activities can be done offline. No backend service connected. No data collected.
+Simple QR (簡易QR) is an open-source app, providing a simple way for you to scan, generate and manage QR codes. No backend service connected. No data collected from you. No mandatory ads.
 
 ### Project Simple
 
@@ -115,7 +109,36 @@ Thanks for your support!
     PAYPAL_DONATE_URL = "https://github.com/tomfong/simple-qr#support-developer"
   ```
 
-  Then, run ```npm run setenv``` to generate angular environment files
+  Then, run ```npm run setenv``` to generate angular environment files.
+- Go to ```platforms/android/app/src/main/java/com/bitpay/cordova/qrscanner/QRScanner.java``` and find the following codes
+
+  ```java
+    ArrayList<BarcodeFormat> formatList = new ArrayList<BarcodeFormat>();
+    formatList.add(BarcodeFormat.QR_CODE);
+  ```
+
+  and then replace it by
+
+  ```java
+    ArrayList<BarcodeFormat> formatList = new ArrayList<BarcodeFormat>();
+    formatList.add(BarcodeFormat.AZTEC);
+    formatList.add(BarcodeFormat.CODABAR);
+    formatList.add(BarcodeFormat.CODE_128);
+    formatList.add(BarcodeFormat.CODE_39);
+    formatList.add(BarcodeFormat.CODE_93);
+    formatList.add(BarcodeFormat.DATA_MATRIX);
+    formatList.add(BarcodeFormat.EAN_13);
+    formatList.add(BarcodeFormat.EAN_8);
+    formatList.add(BarcodeFormat.ITF);
+    formatList.add(BarcodeFormat.PDF_417);
+    formatList.add(BarcodeFormat.QR_CODE);
+    formatList.add(BarcodeFormat.RSS_14);
+    formatList.add(BarcodeFormat.RSS_EXPANDED);
+    formatList.add(BarcodeFormat.UPC_A);
+    formatList.add(BarcodeFormat.UPC_E);
+    formatList.add(BarcodeFormat.UPC_EAN_EXTENSION);
+  ```
+
 - If you want to run on Android device, run ```npm run start:an```. You may encounter an error like
 
   ```sh
@@ -153,7 +176,13 @@ Coming soon!
 
 ## Changelogs
 
-### 1.0.2 (Current)
+### 1.1.2 (Current)
+
+- Support 1D Barcode, Aztec Code, Data Matrix Code and PDF417 Barcode scanning
+- Support generating QR code with templates (Free Text, Email, Phone, Message, URL, vCard Contact and Wi-Fi)
+- Improve performance of loading records on History page
+
+#### 1.0.2
 
 - Removed in-app purchase
 
