@@ -275,7 +275,10 @@ export class GeneratePage {
     vCard += `ORG:${this.organization.trim()}\n`;
     vCard += `TITLE:${this.jobTitle.trim()}\n`;
     vCard += `ADR:;;${this.street.trim()};${this.city.trim()};${this.state.trim()};${this.postalCode.trim()};${this.country.trim()}\n`;
-    vCard += `BDAY:${moment(this.birthday).format('YYYYMMDD')}\n`;
+    console.log("birthday => " + this.birthday)
+    if (this.birthday && this.birthday !== null && this.birthday !== undefined) {
+      vCard += `BDAY:${moment(this.birthday).format('YYYYMMDD')}\n`;
+    }
     vCard += `URL:${this.personalUrl.trim()}\n`;
     vCard += `GENDER:${this.gender}\n`;
     vCard += `END:VCARD`;

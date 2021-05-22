@@ -176,7 +176,13 @@ Coming soon!
 
 ## Changelogs
 
-### 1.0.2 (Current)
+### 1.1.2 (Current)
+
+- Support 1D Barcode, Aztec Code, Data Matrix Code and PDF417 Barcode scanning
+- Support generating QR code with templates (Free Text, Email, Phone, Message, URL, vCard Contact and Wi-Fi)
+- Improve performance of loading records on History page
+
+#### 1.0.2
 
 - Removed in-app purchase
 
