@@ -9,7 +9,7 @@
 • <a href="#features">Features</a>
 • <a href="#screenshots">Screenshots</a>
 • <a href="#download">Download</a>
-• <a href="#support-developer">Support Developer (Donate)</a>
+• <a href="#support-developer">Support Developer</a>
 </p>
 <p align="center">
   <a href="#contribute">Contribute</a>
@@ -24,9 +24,7 @@
 
 Simple QR (簡易QR) is an open-source app, providing a simple way for you to scan, generate and manage QR codes. No backend service connected. No data collected from you. No mandatory ads.
 
-### Project Simple
-
-The idea of Project Simple is to make applications or tools simple, light and easy to be used. Feel free to [email me]('mailto:tomfong.dev@gmail.com') if you have any idea to the project.
+The idea of Simple App is to make applications or tools simple, light and easy to be used. Feel free to <a href="mailto:tomfong.dev@gmail.com">email me</a> if you have any idea to the project.
 
 ## Features
 
@@ -78,9 +76,7 @@ Please download the app from Google Play.
 
 ## Support Developer
 
-To support this project, Project Simple or developer, you can buy me a milk tea by making a donation :)
-
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/tomfongdev)
+To support this project, you can buy me a milk tea by making a donation :) (<a href="mailto:tomfong.dev@gmail.com">Email me</a> for details)
 
 Or, watching optional ads in the app (Settings → Support Developer) is also appreciated.
 
@@ -149,7 +145,7 @@ Thanks for your support!
 
   ```json
   {
-    "xml": "<meta-data android:name=\"com.google.android.gms.ads.APPLICATION_ID\"      android:value=\"ca-app-pub-xxx~yyy\" />",
+    "xml": "<meta-data android:name=\"com.google.android.gms.ads.APPLICATION_ID\" android:value=\"ca-app-pub-xxx~yyy\" />",
     "count": 1
   }
   ```
@@ -176,7 +172,7 @@ Coming soon!
 
 ## Changelogs
 
-### 1.1.2 (Current)
+### 1.1.4 (Current)
 
 - Support 1D Barcode, Aztec Code, Data Matrix Code and PDF417 Barcode scanning
 - Support generating QR code with templates (Free Text, Email, Phone, Message, URL, vCard Contact and Wi-Fi)
