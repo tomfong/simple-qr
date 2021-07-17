@@ -1,7 +1,7 @@
 {
     "SIMPLE_QR": "Simple QR",
     "MESSAGE": "Message",
-    "UPDATE_NOTES": "Update Notes",
+    "UPDATE_NOTES": "Patch Notes",
     "PERMISSION_REQUIRED": "Permission Required",
     "CAMERA_PAUSED": "Camera Paused",
     "GENERATE_QRCODE": "Generate QR Code",
@@ -83,6 +83,7 @@
     "DUCK_DUCK_GO": "DuckDuckGo",
     "SEARCG_ENGINE_EXPLAIN": "Set the search engine for doing web search in the Result page.",
     "ABOUT_SIMPLE_QR": "About Simple QR",
+    "CHECK_GOOGLE_PLAY": "App Details on Google Play",
     "PRIVACY_POLICY": "Privacy Policy",
     "SUPPORT_DEVELOPER": "Support Developer",
     "WATCH_ADS": "Watch an Ad",
@@ -202,6 +203,6 @@
         "NO_QR_CODE": "QR Code cannot be detected from image."
     },
     "UPDATE": {
-        "UPDATE_NOTES": "<ul><li>New feature - scan QR code from image</li><li>Updated UI</li><li>Improved performace and fixed issues</li></ul>"
+        "UPDATE_NOTES": "<ul><li>New feature - scan QR code from image</li><li>Added link to Google Play</li><li>Updated UI</li><li>Improved performace and fixed issues</li></ul>"
     }
 }
