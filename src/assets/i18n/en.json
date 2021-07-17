@@ -1,6 +1,7 @@
 {
     "SIMPLE_QR": "Simple QR",
     "MESSAGE": "Message",
+    "UPDATE_NOTES": "Update Notes",
     "PERMISSION_REQUIRED": "Permission Required",
     "CAMERA_PAUSED": "Camera Paused",
     "GENERATE_QRCODE": "Generate QR Code",
@@ -176,7 +177,7 @@
         "EXIT_APP": "Do you want to leave now?",
         "CAMERA_PERMISSION_1": "Press Setting to grant camera permission.",
         "CAMERA_PERMISSION_2": "You must grant the camera permission for scanning.",
-        "READ_IMAGE_PERMISSION": "You must grant the storage read permission for reading image.",
+        "READ_IMAGE_PERMISSION": "You must grant the storage read permission for scanning image.",
         "CAMERA_PAUSED": "The camera is paused to save battery. To resume, hold the device or press Resume.<br><br>Or, press Setting to configure the function.",
         "UNDO_DELETE": "You can undo the deletion in 5 seconds",
         "REMOVE_ALL_RECORD": "Are you sure to remove all records? <b>This action cannot be undone.</b>",
@@ -199,5 +200,8 @@
         "ANDROID_WIFI_NATIVE_SETTINGS": "According to Android policies, we suggest you use native Settings to scan the QR code for adding the network.",
         "QR_CODE_VALUE_NOT_EMPTY": "QR Code value cannot be empty",
         "NO_QR_CODE": "QR Code cannot be detected from image."
+    },
+    "UPDATE": {
+        "UPDATE_NOTES": "<ul><li>New feature - scan QR code from image</li><li>Updated UI</li><li>Improved performace and fixed issues</li></ul>"
     }
 }

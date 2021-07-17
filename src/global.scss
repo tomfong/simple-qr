@@ -101,3 +101,10 @@ ion-item {
     padding-left: 0.5rem;
     font-size: small;
 }
+
+.left-align .alert-message {
+    text-align: left;
+    ul {
+        padding-inline-start: 16px;
+    }
+}

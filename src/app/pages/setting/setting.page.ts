@@ -48,6 +48,17 @@ export class SettingPage {
     window.open(this.env.GITHUB_REPO_URL, '_system');
   }
 
+  async showUpdateNotes() {
+    const alert = await this.alertController.create({
+      header: this.translate.instant("UPDATE_NOTES"),
+      subHeader: this.env.appVersionNumber,
+      message: this.translate.instant("UPDATE.UPDATE_NOTES"),
+      buttons: [this.translate.instant("OK")],
+      cssClass: 'left-align'
+    });
+    await alert.present();
+  }
+
   viewPrivacyPolicy(): void {
     window.open(this.env.PRIVACY_POLICY, '_system');
   }

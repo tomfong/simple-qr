@@ -1,6 +1,7 @@
 {
     "SIMPLE_QR": "簡易QR",
     "MESSAGE": "信息",
+    "UPDATE_NOTES": "更新內容",
     "PERMISSION_REQUIRED": "需要授權",
     "CAMERA_PAUSED": "掃描已暫停",
     "GENERATE_QRCODE": "產生QR碼",
@@ -176,7 +177,7 @@
         "EXIT_APP": "確定要離開?",
         "CAMERA_PERMISSION_1": "按「設定」以授權「簡易QR」使用相機。",
         "CAMERA_PERMISSION_2": "使用掃描功能，您必須授權「簡易QR」使用相機。",
-        "READ_IMAGE_PERMISSION": "要載入圖片，您必須授權「簡易QR」存取儲存空間。",
+        "READ_IMAGE_PERMISSION": "要掃描圖片，您必須授權「簡易QR」存取儲存空間。",
         "CAMERA_PAUSED": "為節省電力已暫停掃描，提起裝置或按「恢復」可繼續使用。<br><br>按「設定」可調校此功能。",
         "UNDO_DELETE": "您可在5秒內復原記錄",
         "RESET_APP": "確定要重設應用程式和刪除所有數據? <b>此動作無法被撤回。</b>",
@@ -199,5 +200,8 @@
         "ANDROID_WIFI_NATIVE_SETTINGS": "基於 Android 政策，我們建議您使用原生設定來掃描此QR碼以連接網絡。",
         "QR_CODE_VALUE_NOT_EMPTY": "QR碼不能是空值",
         "NO_QR_CODE": "此圖片沒有QR碼！"
+    },
+    "UPDATE": {
+        "UPDATE_NOTES": "<ul><li>新功能 - 從圖片掃描QR碼</li><li>更新的界面</li><li>改善效能及修正已知問題</li></ul>"
     }
 }
