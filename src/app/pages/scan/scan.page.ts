@@ -323,6 +323,7 @@ export class ScanPage {
     await this.qrScanner.destroy().then(
       () => {
         this.cameraActive = false;
+        this.flashActive = false;
       }
     );
     const getPictureLoading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
