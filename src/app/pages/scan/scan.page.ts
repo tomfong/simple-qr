@@ -328,7 +328,7 @@ export class ScanPage {
     );
     const getPictureLoading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
     const options = {
-      quality: 50,
+      quality: 100,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.PNG,
@@ -356,22 +356,14 @@ export class ScanPage {
               },
               async err => {
                 decodingLoading.dismiss();
-                await this.presentAlert(
-                  this.translate.instant("MSG.NO_QR_CODE"),
-                  this.translate.instant("MESSAGE"),
-                  this.translate.instant("OK")
-                );
+                this.presentToast(this.translate.instant("MSG.NO_QR_CODE"), 2000, "middle", "center", "long");
                 await this.prepareScanner();
               }
             )
           },
           async err => {
             decodingLoading.dismiss();
-            await this.presentAlert(
-              this.translate.instant("MSG.NO_QR_CODE"),
-              this.translate.instant("MESSAGE"),
-              this.translate.instant("OK")
-            );
+            this.presentToast(this.translate.instant("MSG.NO_QR_CODE"), 2000, "middle", "center", "long");
             await this.prepareScanner();
           }
         );
@@ -379,7 +371,7 @@ export class ScanPage {
       async err => {
         getPictureLoading.dismiss();
         if (err === 20) {
-          this.presentAlert(
+          await this.presentAlert(
             this.translate.instant("MSG.READ_IMAGE_PERMISSION"),
             this.translate.instant("PERMISSION_REQUIRED"),
             this.translate.instant("OK")
@@ -412,7 +404,7 @@ export class ScanPage {
 
   private async getJsQr(imageData: Uint8ClampedArray, width: number, height: number): Promise<string> {
     return await new Promise((resolve, reject) => {
-      const qrcode = jsQR(imageData, width, height);
+      const qrcode = jsQR(imageData, width, height, { inversionAttempts: "dontInvert" });
       if (qrcode) {
         return resolve(qrcode.data);
       } else {
