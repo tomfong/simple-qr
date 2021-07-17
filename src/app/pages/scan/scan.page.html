@@ -13,6 +13,9 @@
       <ion-icon name="chevron-up"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
+      <ion-fab-button color="secondary" (click)="importImage()">
+        <ion-icon name="image"></ion-icon>
+      </ion-fab-button>
       <ion-fab-button color="secondary" *ngIf="!flashActive" (click)="toggleFlash()">
         <ion-icon name="flash-off"></ion-icon>
       </ion-fab-button>
