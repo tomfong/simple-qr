@@ -24,6 +24,8 @@ import { AppVersion } from '@ionic-native/app-version/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { WifiWizard2 } from '@ionic-native/wifi-wizard-2/ngx';
 import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
+import { File } from '@ionic-native/file/ngx';
 
 import { CreateContactPageModule } from './modals/create-contact/create-contact.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -77,6 +79,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     WifiWizard2,
     OpenNativeSettings,
     DatePipe,
+    Camera,
+    File
   ],
   bootstrap: [AppComponent],
 })

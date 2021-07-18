@@ -20,8 +20,13 @@ export class SettingPage {
     public toastController: ToastController,
     public translate: TranslateService,
     public appVersion: AppVersion,
+    private platform: Platform,
   ) { 
     
+  }
+
+  get isAndroid(): boolean {
+    return this.platform.is('android');
   }
 
   setLanguage() {
@@ -46,6 +51,21 @@ export class SettingPage {
 
   openRepoUrl(): void {
     window.open(this.env.GITHUB_REPO_URL, '_system');
+  }
+
+  openGooglePlay(): void {
+    window.open(this.env.GOOGLE_PLAY_URL, '_system');
+  }
+
+  async showUpdateNotes() {
+    const alert = await this.alertController.create({
+      header: this.translate.instant("UPDATE_NOTES"),
+      subHeader: this.env.appVersionNumber,
+      message: this.translate.instant("UPDATE.UPDATE_NOTES"),
+      buttons: [this.translate.instant("OK")],
+      cssClass: 'left-align'
+    });
+    await alert.present();
   }
 
   viewPrivacyPolicy(): void {

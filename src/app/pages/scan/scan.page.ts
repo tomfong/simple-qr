@@ -8,6 +8,9 @@ import { AlertController, IonRouterOutlet, LoadingController, Platform, ToastCon
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { EnvService } from 'src/app/services/env.service';
+import { Camera } from '@ionic-native/camera/ngx';
+import { File } from '@ionic-native/file/ngx';
+import jsQR from "jsqr";
 
 enum CameraChoice {
   BACK,
@@ -51,6 +54,8 @@ export class ScanPage {
     public translate: TranslateService,
     private splashScreen: SplashScreen,
     private toastController: ToastController,
+    private camera: Camera,
+    private file: File
   ) {
     this.platform.ready().then(
       async () => {
@@ -307,6 +312,105 @@ export class ScanPage {
         loading.dismiss();
       }
     );
+  }
+
+  async importImage() {
+    if (this.motionSubscription) {
+      this.motionSubscription.unsubscribe();
+      this.motionSubscription = undefined;
+      this.motionlessCount = 0;
+    }
+    await this.qrScanner.destroy().then(
+      () => {
+        this.cameraActive = false;
+        this.flashActive = false;
+      }
+    );
+    const getPictureLoading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
+    const options = {
+      quality: 100,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.PNG,
+      mediaType: this.camera.MediaType.PICTURE
+    };
+    await this.camera.getPicture(options).then(
+      async (imageDataUrl) => {
+        getPictureLoading.dismiss();
+        const decodingLoading = await this.presentLoading(this.translate.instant('DECODING'));
+        await this.convertDataUrlToImageData(imageDataUrl).then(
+          async imageData => {
+            await this.getJsQr(imageData.imageData.data, imageData.width, imageData.height).then(
+              async qrValue => {
+                decodingLoading.dismiss();
+                const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
+                if (this.scanSubscription) {
+                  this.scanSubscription.unsubscribe();
+                }
+                if (this.motionSubscription) {
+                  this.motionSubscription.unsubscribe();
+                  this.motionSubscription = null;
+                  this.motionlessCount = 0;
+                }
+                await this.processQrCode(qrValue, loading);
+              },
+              async err => {
+                decodingLoading.dismiss();
+                this.presentToast(this.translate.instant("MSG.NO_QR_CODE"), 2000, "middle", "center", "long");
+                await this.prepareScanner();
+              }
+            )
+          },
+          async err => {
+            decodingLoading.dismiss();
+            this.presentToast(this.translate.instant("MSG.NO_QR_CODE"), 2000, "middle", "center", "long");
+            await this.prepareScanner();
+          }
+        );
+      },
+      async err => {
+        getPictureLoading.dismiss();
+        if (err === 20) {
+          await this.presentAlert(
+            this.translate.instant("MSG.READ_IMAGE_PERMISSION"),
+            this.translate.instant("PERMISSION_REQUIRED"),
+            this.translate.instant("OK")
+          );
+        }
+        await this.prepareScanner();
+      }
+    );
+  }
+
+  private async convertDataUrlToImageData(uri: string): Promise<{ imageData: ImageData, width: number, height: number }> {
+    return await new Promise((resolve, reject) => {
+      if (uri == null) return reject();
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      const image = new Image();
+      image.addEventListener('load', function () {
+        canvas.width = image.width;
+        canvas.height = image.height;
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        resolve({ imageData: context.getImageData(0, 0, canvas.width, canvas.height), width: image.width, height: image.height });
+      }, false);
+      if (uri.startsWith("data")) {
+        image.src = uri;
+      } else {
+        image.src = "data:image/png;base64," + uri;
+      }
+    });
+  }
+
+  private async getJsQr(imageData: Uint8ClampedArray, width: number, height: number): Promise<string> {
+    return await new Promise((resolve, reject) => {
+      const qrcode = jsQR(imageData, width, height, { inversionAttempts: "dontInvert" });
+      if (qrcode) {
+        return resolve(qrcode.data);
+      } else {
+        return reject();
+      }
+    });
   }
 
   createQrcode(): void {

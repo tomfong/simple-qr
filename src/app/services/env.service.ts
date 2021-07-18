@@ -34,6 +34,7 @@ export class EnvService {
   public readonly YAHOO_SEARCH_URL: string = "https://search.yahoo.com/search?p=";
   public readonly DUCK_DUCK_GO_SEARCH_URL: string = "https://duckduckgo.com/?q=";
   public readonly GITHUB_REPO_URL: string = "https://github.com/tomfong/simple-qr";
+  public readonly GOOGLE_PLAY_URL: string = "https://play.google.com/store/apps/details?id=com.tomfong.simpleqr";
   public readonly PRIVACY_POLICY: string = "https://www.privacypolicies.com/live/771b1123-99bb-4bfe-815e-1046c0437a0f";
 
   private _storage: Storage | null = null;
