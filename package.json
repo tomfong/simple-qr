@@ -6,10 +6,9 @@
   "scripts": {
     "ng": "ng",
     "setenv": "node setenv",
-    "start": "ng serve",
-    "start:an": "ionic cordova run android --device",
+    "start": "ionic cordova run android --device",
     "build:dev-an": "ionic cordova build android --dev",
-    "build:prod-an": "ionic cordova build android --configuration production --release",
+    "build": "ionic cordova build android --configuration production --release",
     "build:dev-ios": "ionic cordova build ios --dev",
     "build:prod-ios": "ionic cordova build ios --configuration production --release",
     "test": "ng test",

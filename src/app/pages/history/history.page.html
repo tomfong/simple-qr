@@ -49,7 +49,7 @@
     <ion-list mode="ios">
       <ion-item-sliding *ngFor="let record of scanRecords; index as i" #slidingItem>
         <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false"
-          [lines]="i === scanRecords.length - 1? 'none' : 'full'" button (click)="processQrCode(record.text)">
+          [lines]="i === scanRecords.length - 1? 'none' : 'full'" (click)="processQrCode(record.text)">
           <ion-label class="ion-padding-start">
             <p class="ion-padding-top ion-padding-horizontal">
               <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
@@ -92,7 +92,7 @@
     <ion-list mode="ios">
       <ion-item-sliding *ngFor="let bookmark of bookmarks; index as i" #slidingItem>
         <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false"
-          [lines]="i === bookmarks.length - 1? 'none' : 'full'" button (click)="processQrCode(bookmark.text)">
+          [lines]="i === bookmarks.length - 1? 'none' : 'full'" (click)="processQrCode(bookmark.text)">
           <ion-label class="ion-padding-start">
             <p class="ion-padding">
               <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
