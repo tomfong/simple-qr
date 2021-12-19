@@ -172,7 +172,7 @@ Coming soon!
 
 ## Changelogs
 
-### 1.2.0 (Current)
+### 1.2.0 / 1.2.1 (Current)
 
 - Support image scanning to read QR code
 - UI updated

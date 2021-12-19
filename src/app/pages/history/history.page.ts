@@ -22,6 +22,8 @@ export class HistoryPage {
   scanRecords: ScanRecord[] = [];
   bookmarks: Bookmark[] = [];
 
+  firstLoad: boolean = true;
+
   constructor(
     private platform: Platform,
     public alertController: AlertController,
@@ -39,9 +41,10 @@ export class HistoryPage {
   }
 
   async ionViewDidEnter() {
-    const loading = await this.presentLoading(this.translate.instant("PLEASE_WAIT"));
+    // const loading = await this.presentLoading(this.translate.instant("PLEASE_WAIT"));
     await this.loadItems();
-    loading.dismiss();
+    // loading.dismiss();
+    this.firstLoad = false;
     if (this.env.notShowHistoryTutorial === false) {
       this.env.notShowHistoryTutorial = true;
       this.env.storageSet("not-show-history-tutorial", 'yes');
