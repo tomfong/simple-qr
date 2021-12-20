@@ -394,6 +394,6 @@ export class EnvService {
   }
 
   get buildEnv(): string {
-    return environment.production? 'P' : 'D';
+    return environment.production? '' : '.Dev';
   }
 }

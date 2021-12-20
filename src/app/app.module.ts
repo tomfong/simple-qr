@@ -33,6 +33,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { HistoryTutorialPageModule } from './modals/history-tutorial/history-tutorial.module';
 import { DatePipe } from '@angular/common';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -60,7 +61,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     HistoryTutorialPageModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatButtonModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
@@ -80,7 +82,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     OpenNativeSettings,
     DatePipe,
     Camera,
-    File
+    File,
   ],
   bootstrap: [AppComponent],
 })

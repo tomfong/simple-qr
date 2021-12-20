@@ -22,7 +22,7 @@
 
 ## About
 
-Simple QR (簡易QR) is an open-source app, providing a simple way for you to scan, generate and manage QR codes. No backend service connected. No data collected from you. No mandatory ads.
+Simple QR (簡易QR) is an open-source app, providing a simple way for you to scan, create and manage QR codes. No backend service connected. No data collected from you. No mandatory ads.
 
 The idea of Simple App is to make applications or tools simple, light and easy to be used. Feel free to <a href="mailto:tomfong.dev@gmail.com">email me</a> if you have any idea to the project.
 
@@ -43,7 +43,7 @@ The idea of Simple App is to make applications or tools simple, light and easy t
   - Email (mailto: prefix) - in-app email preparing
   - Wi-Fi (wifi: prefix) - one click to connect to the Wi-Fi network (for Android 9 or before)
 - Flashlight can be enabled during scanning
-- A simple UI is provided to generate QR codes by inputting text
+- A simple UI is provided to create QR codes by inputting text
 - Previous scanning records and bookmarks can be viewed and managed
 - Settings can be personalized to fit users' requirements, e.g. language, color theme
 

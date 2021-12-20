@@ -1,9 +1,9 @@
 <ion-header [translucent]="true" mode="ios">
   <ion-toolbar color="dark" mode="ios">
-    <ion-buttons slot="start">
+    <!-- <ion-buttons slot="start">
       <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
       </ion-back-button>
-    </ion-buttons>
+    </ion-buttons> -->
     <ion-title>{{ 'RESULT' | translate }}</ion-title>
     <ion-buttons slot="end"
       *ngIf="qrCodeContent !== null && qrCodeContent !== undefined && qrCodeContent.trim().length > 0">

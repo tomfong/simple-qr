@@ -78,7 +78,7 @@ export class HistoryPage {
   async processQrCode(scannedData: string): Promise<void> {
     const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
     this.env.result = scannedData;
-    this.router.navigate(['result', { t: new Date().getTime() }]).then(
+    this.router.navigate(['tabs/result', { t: new Date().getTime() }]).then(
       () => {
         loading.dismiss();
       }

@@ -1,10 +1,10 @@
 <ion-header [translucent]="true" mode="ios">
   <ion-toolbar color="dark" mode="ios">
-    <ion-buttons slot="start">
+    <!-- <ion-buttons slot="start">
       <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
       </ion-back-button>
-    </ion-buttons>
-    <ion-title>{{ 'GENERATE_QRCODE' | translate }}</ion-title>
+    </ion-buttons> -->
+    <ion-title>{{ 'CREATE_QRCODE' | translate }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="goGenerate()" [disabled]="disableGenerateBtn">
         <ion-icon slot="icon-only" name="qr-code-outline"></ion-icon>
@@ -18,7 +18,7 @@
   <ion-row class="ion-padding-horizontal ion-padding">
     <ion-col>
       <mat-hint [style]="env.colorTheme === 'dark'? 'color: rgba(255, 255, 255, 0.6);' : 'color: rgba(0, 0, 0, 0.6);'">
-        {{ 'GENERATE_QRCODE_MAX_LENGTH_EXPLAIN' | translate}}
+        {{ 'CREATE_QRCODE_MAX_LENGTH_EXPLAIN' | translate}}
       </mat-hint>
     </ion-col>
   </ion-row>
@@ -55,7 +55,7 @@
           <textarea matInput [(ngModel)]="qrCodeContent" [matTextareaAutosize]="true" [matAutosizeMinRows]="5"
             [matAutosizeMaxRows]="10" [maxLength]="1817" #freeTxtInput></textarea>
           <mat-hint align="end">{{ freeTxtInput.value?.length || 0 }}/1817</mat-hint>
-          <mat-hint>{{'GENERATE_QRCODE_MAX_LENGTH' | translate}}</mat-hint>
+          <mat-hint>{{'CREATE_QRCODE_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -173,7 +173,7 @@
           <textarea matInput [(ngModel)]="emailBody" [matTextareaAutosize]="true" [matAutosizeMinRows]="5"
             [matAutosizeMaxRows]="10" [maxLength]="1817" #emailBodyInput></textarea>
           <mat-hint align="end">{{ emailBodyInput.value?.length || 0 }}/1817</mat-hint>
-          <mat-hint>{{'GENERATE_QRCODE_MAX_LENGTH' | translate}}</mat-hint>
+          <mat-hint>{{'CREATE_QRCODE_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -227,7 +227,7 @@
           <input matInput [(ngModel)]="url" type="url" #urlInput maxlength="1817">
           <mat-icon matSuffix color="accent">link</mat-icon>
           <mat-hint align="end">{{ (urlInput.value?.length) || 0 }}/1817</mat-hint>
-          <mat-hint>{{'GENERATE_QRCODE_MAX_LENGTH' | translate}}</mat-hint>
+          <mat-hint>{{'CREATE_QRCODE_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>
       </ion-col>
     </ion-row>

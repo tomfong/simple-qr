@@ -110,6 +110,27 @@ export class SettingPage {
     alert.present();
   }
 
+  async confirmExitApp(): Promise<void> {
+    const alert = await this.alertController.create({
+      header: this.translate.instant('EXIT_APP'),
+      message: this.translate.instant('MSG.EXIT_APP'),
+      buttons: [
+        {
+          text: this.translate.instant('YES'),
+          handler: () => {
+            navigator['app'].exitApp();
+          }
+        },
+        {
+          text: this.translate.instant('NO'),
+          role: 'cancel',
+          cssClass: 'btn-inverse'
+        }
+      ]
+    });
+    await alert.present();
+  }
+
   async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {
     if (size === "long") {
       if (align === "left") {
