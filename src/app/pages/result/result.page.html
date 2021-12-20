@@ -295,17 +295,6 @@
     </ion-col>
   </ion-row>
 
-  <!-- WiFi -->
-  <ion-row *ngIf="contentType === 'wifi'" class="ion-padding-horizontal ion-margin-horizontal">
-    <ion-col>
-      <ion-button expand="full" color="secondary" mode="ios" [disabled]="!wifiSSID" (click)="connectWifi()">
-        <ion-icon slot="start" name="wifi"></ion-icon>
-        <span>{{ 'CONNECT_WIFI' | translate }}</span>
-        <ion-ripple-effect></ion-ripple-effect>
-      </ion-button>
-    </ion-col>
-  </ion-row>
-
   <!-- General -->
   <ion-row class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col size="6">

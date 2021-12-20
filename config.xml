@@ -162,5 +162,4 @@
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-clipboard" spec="^1.3.0" />
     <plugin name="cordova-plugin-x-socialsharing" spec="^6.0.3" />
-    <plugin name="cordova-plugin-wifiwizard2" spec="https://github.com/tripflex/WifiWizard2.git" />
 </widget>
