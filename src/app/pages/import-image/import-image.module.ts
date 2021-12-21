@@ -9,8 +9,12 @@ import { ImportImagePageRoutingModule } from './import-image-routing.module';
 import { ImportImagePage } from './import-image.page';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpLoaderFactory } from '../scan/scan.module';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   imports: [

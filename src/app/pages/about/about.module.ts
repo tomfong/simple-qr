@@ -4,12 +4,12 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { SupportDeveloperPageRoutingModule } from './support-developer-routing.module';
+import { AboutPageRoutingModule } from './about-routing.module';
 
-import { SupportDeveloperPage } from './support-developer.page';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { AboutPage } from './about.page';
 import { HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -27,8 +27,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         deps: [HttpClient]
       }
     }),
-    SupportDeveloperPageRoutingModule
+    AboutPageRoutingModule
   ],
-  declarations: [SupportDeveloperPage]
+  declarations: [AboutPage]
 })
-export class SupportDeveloperPageModule {}
+export class AboutPageModule {}

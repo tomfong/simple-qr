@@ -23,13 +23,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/setting-record/setting-record.module').then( m => m.SettingRecordPageModule)
   },
   {
-    path: 'support-developer',
-    loadChildren: () => import('./pages/support-developer/support-developer.module').then( m => m.SupportDeveloperPageModule)
-  },
-  {
     path: 'setting-search-engine',
     loadChildren: () => import('./pages/setting-search-engine/setting-search-engine.module').then( m => m.SettingSearchEnginePageModule)
   },
+  {
+    path: 'about',
+    loadChildren: () => import('./pages/about/about.module').then( m => m.AboutPageModule)
+  },
+
 ];
 
 @NgModule({

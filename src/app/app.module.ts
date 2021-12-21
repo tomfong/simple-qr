@@ -17,7 +17,6 @@ import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { SMS } from '@ionic-native/sms/ngx';
-import { AdMob } from '@admob-plus/ionic/ngx';
 import { ThemeDetection } from '@ionic-native/theme-detection/ngx';
 import { Device } from '@ionic-native/device/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
@@ -72,7 +71,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     SocialSharing,
     CallNumber,
     SMS,
-    AdMob,
     ThemeDetection,
     Device,
     AppVersion,
