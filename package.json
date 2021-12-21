@@ -43,7 +43,7 @@
     "@ionic-native/splash-screen": "^5.32.0",
     "@ionic-native/theme-detection": "^5.32.0",
     "@ionic-native/vibration": "^5.31.1",
-    "@ionic/angular": "^5.6.13",
+    "@ionic/angular": "^5.9.3",
     "@ionic/storage": "^3.0.2",
     "@ionic/storage-angular": "^3.0.2",
     "@ngx-translate/core": "^13.0.0",
