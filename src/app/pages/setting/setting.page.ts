@@ -41,6 +41,10 @@ export class SettingPage {
     this.router.navigate(['setting-camera-pause']);
   }
 
+  setVibration() {
+    this.router.navigate(['setting-vibration']);
+  }
+
   setScanRecordLogging() {
     this.router.navigate(['setting-record']);
   }

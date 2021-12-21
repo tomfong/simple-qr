@@ -25,6 +25,7 @@ export class EnvService {
   public selectedColorTheme: 'default' | 'light' | 'dark' = 'default';
   public cameraPauseTimeout: 0 | 5 | 10 | 20 | 30 = 10;
   public scanRecordLogging: 'on' | 'off' = 'on';
+  public vibration: 'on' | 'off' = 'on';
   public notShowHistoryTutorial: boolean = false;
   public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' = 'google';
 
@@ -97,6 +98,15 @@ export class EnvService {
           this.scanRecordLogging = value;
         } else {
           this.scanRecordLogging = 'on';
+        }
+      }
+    );
+    this.storageGet("vibration").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.vibration = value;
+        } else {
+          this.vibration = 'on';
         }
       }
     );
@@ -187,6 +197,7 @@ export class EnvService {
     await this.toggleColorTheme();
     this.cameraPauseTimeout = 10;
     this.scanRecordLogging = 'on';
+    this.vibration = 'on';
     this.notShowHistoryTutorial = false;
     this.searchEngine = 'google';
     this._scanRecords = [];

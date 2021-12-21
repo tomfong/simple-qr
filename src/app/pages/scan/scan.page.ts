@@ -271,7 +271,9 @@ export class ScanPage implements OnInit {
               this.scanQr();
               return;
             }
-            this.vibration.vibrate(200);
+            if (this.env.vibration === 'on') {
+              this.vibration.vibrate(200);
+            }
             const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
             if (this.scanSubscription) {
               this.scanSubscription.unsubscribe();

@@ -166,6 +166,7 @@
     "IMPORT_IMAGE": "匯入圖片",
     "VIEW_SOURCE": "查閱源代碼",
     "ON_OFF_TORCH": "開關電筒",
+    "VIBRATION": "震動效果",
     "MSG": {
         "CALL_PHONE": "確定要致電 {phoneNumber} ?",
         "FAIL_CALL_PHONE": "無法開啟電話",

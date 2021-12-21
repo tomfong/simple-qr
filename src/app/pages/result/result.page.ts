@@ -83,10 +83,12 @@ export class ResultPage implements OnInit {
   }
 
   async ionViewDidEnter(): Promise<void> {
-    if (this.platform.is("android")) {
-      this.vibration.vibrate([100, 100, 100]);
-    } else {
-      this.vibration.vibrate(100);
+    if (this.env.vibration === 'on') {
+      if (this.platform.is("android")) {
+        this.vibration.vibrate([100, 100, 100]);
+      } else {
+        this.vibration.vibrate(100);
+      }
     }
     // if (this.contentType === "url") {
     //   this.webToast = await this.toastController.create({
