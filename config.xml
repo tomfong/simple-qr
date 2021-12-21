@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.tomfong.simpleqr" version="1.2.1.20211013" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.tomfong.simpleqr" version="1.3.0.20211221" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Simple QR</name>
     <description>A simple app for scanning and managing QR code</description>
     <author email="tomfong.dev@gmail.com" href="https://tomfong-personal-page.web.app">Tom Fong</author>
@@ -31,7 +31,7 @@
         <resource-file src="resources/android/xml/network_security_config.xml" target="app/src/main/res/xml/network_security_config.xml" />
         <allow-intent href="market:*" />
         <preference name="android-minSdkVersion" value="23" />
-        <preference name="android-targetSdkVersion" value="30" />
+        <preference name="android-targetSdkVersion" value="31" />
         <preference name="AndroidXEnabled" value="true" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />

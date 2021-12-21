@@ -211,6 +211,6 @@
         "SCAN_QR_FROM_IMAGE": "匯入圖片以進行掃描"
     },
     "UPDATE": {
-        "UPDATE_NOTES": "<ul><li>新功能 - 從圖片掃描 QR 碼</li><li>新增 Google Play 連結</li><li>更新的界面</li><li>改善效能及修正已知問題</li></ul>"
+        "UPDATE_NOTES": "<ul><li>重新設計的界面和體驗</li><li>新增震動效果的設定</li><li>移除 WiFi 連接功能</li><li>移除廣告</li><li>改善效能及修正已知問題</li></ul>"
     }
 }
