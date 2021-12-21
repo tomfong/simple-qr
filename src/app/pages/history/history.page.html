@@ -6,16 +6,6 @@
     </ion-buttons> -->
     <ion-title *ngIf="segmentModel === 'history'">{{ 'HISTORY' | translate }}</ion-title>
     <ion-title *ngIf="segmentModel === 'bookmarks'">{{ 'BOOKMARKS' | translate }}</ion-title>
-    <ion-buttons slot="end" *ngIf="segmentModel === 'history' && scanRecords && scanRecords.length > 0">
-      <ion-button mode="md" (click)="removeAll()">
-        <ion-icon slot="icon-only" name="trash-bin"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-buttons slot="end" *ngIf="segmentModel === 'bookmarks' && bookmarks && bookmarks.length > 0">
-      <ion-button mode="md" (click)="removeAll()">
-        <ion-icon slot="icon-only" name="trash-bin"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -110,4 +100,9 @@
       </ion-item-sliding>
     </ion-list>
   </ng-container>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="primary" (click)="openActionSheet()">
+      <ion-icon name="menu"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

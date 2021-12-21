@@ -1,15 +1,6 @@
 <ion-header [translucent]="true" mode="ios">
   <ion-toolbar color="dark" mode="ios">
-    <!-- <ion-buttons slot="start">
-      <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
-      </ion-back-button>
-    </ion-buttons> -->
     <ion-title>{{ 'CREATE_QRCODE' | translate }}</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="goGenerate()" [disabled]="disableGenerateBtn">
-        <ion-icon slot="icon-only" name="qr-code-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -505,5 +496,9 @@
       </ion-col>
     </ion-row>
   </ng-container>
-
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="primary" (click)="goGenerate()" [disabled]="disableGenerateBtn">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

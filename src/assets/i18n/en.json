@@ -165,6 +165,7 @@
     "IMPORT": "Import",
     "IMPORT_IMAGE": "Import Image",
     "VIEW_SOURCE": "View Source",
+    "ON_OFF_TORCH": "Turn on/off Torch",
     "MSG": {
         "CALL_PHONE": "Are you sure to call {phoneNumber} now?",
         "FAIL_CALL_PHONE": "Failed to open dialer",
