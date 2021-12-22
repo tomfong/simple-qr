@@ -1,9 +1,9 @@
 <ion-header [translucent]="true" mode="ios">
   <ion-toolbar color="dark" mode="ios">
-    <ion-buttons slot="start">
+    <!-- <ion-buttons slot="start">
       <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
       </ion-back-button>
-    </ion-buttons>
+    </ion-buttons> -->
     <ion-title>{{ 'RESULT' | translate }}</ion-title>
     <ion-buttons slot="end"
       *ngIf="qrCodeContent !== null && qrCodeContent !== undefined && qrCodeContent.trim().length > 0">
@@ -290,17 +290,6 @@
         <span>{{ 'SEND_EMAIL' | translate }}</span>
         <ion-icon class="external-link-icon" src="assets/icon/external-link.svg">
         </ion-icon>
-        <ion-ripple-effect></ion-ripple-effect>
-      </ion-button>
-    </ion-col>
-  </ion-row>
-
-  <!-- WiFi -->
-  <ion-row *ngIf="contentType === 'wifi'" class="ion-padding-horizontal ion-margin-horizontal">
-    <ion-col>
-      <ion-button expand="full" color="secondary" mode="ios" [disabled]="!wifiSSID" (click)="connectWifi()">
-        <ion-icon slot="start" name="wifi"></ion-icon>
-        <span>{{ 'CONNECT_WIFI' | translate }}</span>
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>

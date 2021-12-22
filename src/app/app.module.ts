@@ -17,12 +17,10 @@ import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { SMS } from '@ionic-native/sms/ngx';
-import { AdMob } from '@admob-plus/ionic/ngx';
 import { ThemeDetection } from '@ionic-native/theme-detection/ngx';
 import { Device } from '@ionic-native/device/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { WifiWizard2 } from '@ionic-native/wifi-wizard-2/ngx';
 import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
@@ -33,6 +31,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { HistoryTutorialPageModule } from './modals/history-tutorial/history-tutorial.module';
 import { DatePipe } from '@angular/common';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -60,7 +59,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     HistoryTutorialPageModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatButtonModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
@@ -71,16 +71,14 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     SocialSharing,
     CallNumber,
     SMS,
-    AdMob,
     ThemeDetection,
     Device,
     AppVersion,
     SplashScreen,
-    WifiWizard2,
     OpenNativeSettings,
     DatePipe,
     Camera,
-    File
+    File,
   ],
   bootstrap: [AppComponent],
 })

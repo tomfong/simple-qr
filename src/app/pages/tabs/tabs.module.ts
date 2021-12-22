@@ -1,15 +1,14 @@
+import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { IonicModule } from '@ionic/angular';
+import { TabsPageRoutingModule } from './tabs-routing.module';
 
-import { SupportDeveloperPageRoutingModule } from './support-developer-routing.module';
-
-import { SupportDeveloperPage } from './support-developer.page';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TabsPage } from './tabs.page';
 import { HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -17,9 +16,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 
 @NgModule({
   imports: [
+    IonicModule,
     CommonModule,
     FormsModule,
-    IonicModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
@@ -27,8 +26,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         deps: [HttpClient]
       }
     }),
-    SupportDeveloperPageRoutingModule
+    TabsPageRoutingModule
   ],
-  declarations: [SupportDeveloperPage]
+  declarations: [TabsPage]
 })
-export class SupportDeveloperPageModule {}
+export class TabsPageModule {}

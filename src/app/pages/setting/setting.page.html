@@ -1,9 +1,9 @@
 <ion-header [translucent]="true" mode="ios">
   <ion-toolbar color="dark" mode="ios">
-    <ion-buttons slot="start">
+    <!-- <ion-buttons slot="start">
       <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
       </ion-back-button>
-    </ion-buttons>
+    </ion-buttons> -->
     <ion-title>{{ 'SETTINGS' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -50,6 +50,19 @@
     <!--<ion-ripple-effect type="bounded"></ion-ripple-effect> -->
   </ion-item>
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
+    (click)="setVibration()">
+    <ion-icon class="ion-margin-start ion-padding-horizontal"
+      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" src="assets/icon/vibration.svg">
+    </ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+          {{ 'VIBRATION' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+  </ion-item>
+  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
     (click)="setScanRecordLogging()">
     <ion-icon class="ion-margin-start ion-padding-horizontal"
       [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" src="assets/icon/history.svg"></ion-icon>
@@ -75,98 +88,16 @@
     </ion-label>
     <!--<ion-ripple-effect type="bounded"></ion-ripple-effect> -->
   </ion-item>
-  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="openRepoUrl()">
+  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="navigateAbout()">
     <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="logo-github">
-    </ion-icon>
+      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="information-circle-sharp"></ion-icon>
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
-          {{ 'ABOUT_SIMPLE_QR' | translate }}
-        </ion-text>
-        <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'light' : 'dark'"
-          src="assets/icon/external-link.svg">
-        </ion-icon>
-      </p>
-    </ion-label>
-    <!--<ion-ripple-effect type="bounded"></ion-ripple-effect> -->
-  </ion-item>
-  <ion-item *ngIf="isAndroid" mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
-    (click)="openGooglePlay()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="logo-google-playstore">
-    </ion-icon>
-    <ion-label>
-      <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
-          {{ 'CHECK_GOOGLE_PLAY' | translate }}
-        </ion-text>
-        <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'light' : 'dark'"
-          src="assets/icon/external-link.svg">
-        </ion-icon>
-      </p>
-    </ion-label>
-    <!--<ion-ripple-effect type="bounded"></ion-ripple-effect> -->
-  </ion-item>
-  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
-    (click)="showUpdateNotes()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" src="assets/icon/patch-update.svg">
-    </ion-icon>
-    <ion-label>
-      <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
-          {{ 'UPDATE_NOTES' | translate }}
+          {{ 'ABOUT' | translate }}
         </ion-text>
       </p>
     </ion-label>
-    <!--<ion-ripple-effect type="bounded"></ion-ripple-effect> -->
-  </ion-item>
-  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
-    (click)="viewPrivacyPolicy()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="document-text-sharp">
-    </ion-icon>
-    <ion-label>
-      <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
-          {{ 'PRIVACY_POLICY' | translate }}
-        </ion-text>
-        <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'light' : 'dark'"
-          src="assets/icon/external-link.svg">
-        </ion-icon>
-      </p>
-    </ion-label>
-    <!--<ion-ripple-effect type="bounded"></ion-ripple-effect> -->
-  </ion-item>
-  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="reportBug()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="bug">
-    </ion-icon>
-    <ion-label>
-      <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
-          {{ 'REPORT_ISSUE' | translate }}
-        </ion-text>
-        <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'light' : 'dark'"
-          src="assets/icon/external-link.svg">
-        </ion-icon>
-      </p>
-    </ion-label>
-    <!--<ion-ripple-effect type="bounded"></ion-ripple-effect> -->
-  </ion-item>
-  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
-    (click)="supportDeveloper()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" src="assets/icon/dollar.svg"></ion-icon>
-    <ion-label>
-      <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
-          {{ 'SUPPORT_DEVELOPER' | translate }}
-        </ion-text>
-      </p>
-    </ion-label>
-    <!--<ion-ripple-effect type="bounded"></ion-ripple-effect> -->
   </ion-item>
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="resetApp()">
     <ion-icon class="ion-margin-start ion-padding-horizontal"
@@ -180,12 +111,15 @@
     </ion-label>
     <!--<ion-ripple-effect type="bounded"></ion-ripple-effect> -->
   </ion-item>
-  
-</ion-content>
+  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="confirmExitApp()">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" color="danger" name="exit"></ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+          {{ 'EXIT_APP' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+  </ion-item>
 
-<ion-footer mode="ios">
-  <ion-toolbar class="ion-text-center" mode="ios" [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'">
-    <span>{{ 'APP_VERSION' | translate }}</span>
-    <span>{{ ' ' + env.appVersionNumber + '.' + env.buildEnv }}</span>
-  </ion-toolbar>
-</ion-footer>
+</ion-content>

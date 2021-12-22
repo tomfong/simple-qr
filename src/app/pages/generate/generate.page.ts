@@ -146,6 +146,39 @@ export class GeneratePage {
     ];
   }
 
+  ionViewDidEnter() {
+    this.freeTxtText = this.translate.instant("FREE_TEXT");
+    this.urlText = this.translate.instant("URL");
+    this.contactText = this.translate.instant("VCARD_CONTACT");
+    this.phoneText = this.translate.instant("PHONE");
+    this.smsText = this.translate.instant("SMS");
+    this.emailText = this.translate.instant("EMAIL");
+    this.wifiText = this.translate.instant("WIFI");
+    this.contentTypes = [
+      { text: this.freeTxtText, value: 'freeText' },
+      { text: this.emailText, value: 'email' },
+      { text: this.phoneText, value: 'phone' },
+      { text: this.smsText, value: 'sms' },
+      { text: this.urlText, value: 'url' },
+      { text: this.contactText, value: 'contact' },
+      { text: this.wifiText, value: 'wifi' },
+    ];
+    this.noneGenderText = this.translate.instant("NOT_TO_DISCLOSE");
+    this.maleText = this.translate.instant("MALE");
+    this.femaleText = this.translate.instant("FEMALE");
+    this.genders = [
+      { text: this.noneGenderText, value: "O" },
+      { text: this.maleText, value: "M" },
+      { text: this.femaleText, value: "F" },
+    ]
+    this.noneWifiEncText = this.translate.instant("NONE");
+    this.wifiEncryptions = [
+      { text: this.noneWifiEncText, value: "nopass" },
+      { text: this.wepText, value: "WEP" },
+      { text: this.wpaText, value: "WPA" },
+    ];
+  }
+
   trackByIndex(index: number, obj: any): any {
     return index;
   }
@@ -247,7 +280,7 @@ export class GeneratePage {
     if ((this.qrCodeContent && this.qrCodeContent.trim().length <= 0) || this.qrCodeContent === "") {
       this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), 1500, "bottom", "center", "long");
     } else if (this.qrCodeContent.length > 1817) {
-      this.presentToast(this.translate.instant('GENERATE_QRCODE_MAX_LENGTH'), 1500, "bottom", "center", "long");
+      this.presentToast(this.translate.instant('CREATE_QRCODE_MAX_LENGTH'), 1500, "bottom", "center", "long");
     } else {
       const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
       await this.processQrCode(loading);
@@ -256,7 +289,8 @@ export class GeneratePage {
 
   async processQrCode(loading: HTMLIonLoadingElement): Promise<void> {
     this.env.result = this.qrCodeContent;
-    this.router.navigate(['result', { t: new Date().getTime() }], { replaceUrl: true }).then(
+    this.qrCodeContent = '';
+    this.router.navigate(['tabs/result', { t: new Date().getTime() }]).then(
       () => {
         loading.dismiss();
       }

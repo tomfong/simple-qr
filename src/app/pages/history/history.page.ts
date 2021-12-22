@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, IonItemSliding, LoadingController, ModalController, Platform, ToastController } from '@ionic/angular';
+import { ActionSheetController, AlertController, IonItemSliding, LoadingController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { EnvService } from 'src/app/services/env.service';
 import * as moment from 'moment';
 import { ScanRecord } from 'src/app/models/scan-record';
@@ -33,6 +33,7 @@ export class HistoryPage {
     public toastController: ToastController,
     public translate: TranslateService,
     public modalController: ModalController,
+    public actionSheetController: ActionSheetController,
   ) { }
 
   async loadItems() {
@@ -78,7 +79,7 @@ export class HistoryPage {
   async processQrCode(scannedData: string): Promise<void> {
     const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
     this.env.result = scannedData;
-    this.router.navigate(['result', { t: new Date().getTime() }]).then(
+    this.router.navigate(['tabs/result', { t: new Date().getTime() }]).then(
       () => {
         loading.dismiss();
       }
@@ -197,6 +198,21 @@ export class HistoryPage {
       });
       alert.present();
     }
+  }
+
+  async openActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      mode: 'ios',
+      buttons: [
+        {
+          text: this.translate.instant("REMOVE_ALL"),
+          role: 'destructive',
+          handler: async () => {
+            await this.removeAll();
+          }
+        }]
+    });
+    await actionSheet.present();
   }
 
   async presentAlert(msg: string, head: string, buttonText: string, buttonless: boolean = false): Promise<HTMLIonAlertElement> {

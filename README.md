@@ -22,9 +22,7 @@
 
 ## About
 
-Simple QR (簡易QR) is an open-source app, providing a simple way for you to scan, generate and manage QR codes. No backend service connected. No data collected from you. No mandatory ads.
-
-The idea of Simple App is to make applications or tools simple, light and easy to be used. Feel free to <a href="mailto:tomfong.dev@gmail.com">email me</a> if you have any idea to the project.
+Simple QR (簡易QR) is an open-source app, providing a simple way for you to scan, create and manage QR codes. No backend service connected. No data collected from you. No ads.
 
 ## Features
 
@@ -43,20 +41,19 @@ The idea of Simple App is to make applications or tools simple, light and easy t
   - Email (mailto: prefix) - in-app email preparing
   - Wi-Fi (wifi: prefix) - one click to connect to the Wi-Fi network (for Android 9 or before)
 - Flashlight can be enabled during scanning
-- A simple UI is provided to generate QR codes by inputting text
+- A simple UI is provided to create QR codes by inputting text
 - Previous scanning records and bookmarks can be viewed and managed
 - Settings can be personalized to fit users' requirements, e.g. language, color theme
 
 ## Screenshots
 
 <p align="start">
-<img alt="0" src="./screenshots/0.png" width="125px">
-<img alt="1" src="./screenshots/1.png" width="125px">
-<img alt="2" src="./screenshots/2.png" width="125px">
-<img alt="3" src="./screenshots/3.png" width="125px">
-<img alt="4" src="./screenshots/4.png" width="125px">
-<img alt="5" src="./screenshots/5.png" width="125px">
-<img alt="6" src="./screenshots/6.png" width="125px">
+<img alt="scan" src="./screenshots/scan.png" width="125px">
+<img alt="result" src="./screenshots/result.png" width="125px">
+<img alt="create" src="./screenshots/create.png" width="125px">
+<img alt="image" src="./screenshots/image.png" width="125px">
+<img alt="history" src="./screenshots/history.png" width="125px">
+<img alt="setting" src="./screenshots/setting.png" width="125px">
  </p>
 
 ## Languages Supported
@@ -78,8 +75,6 @@ Please download the app from Google Play.
 
 To support this project, you can buy me a milk tea by making a donation :) (<a href="mailto:tomfong.dev@gmail.com">Email me</a> for details)
 
-Or, watching optional ads in the app (Settings → Support Developer) is also appreciated.
-
 Thanks for your support!
 
 ## Contribute
@@ -91,21 +86,7 @@ Thanks for your support!
 
 ### If you want to build the project
 
-- run ```npm install``` to all dependencies
-- Prepare a .env file in the root directory with the following keys with arbitrary values
-  - STORAGE_SCAN_RECORD_KEY
-  - STORAGE_BOOKMARK_KEY
-  - PAYPAL_DONATE_URL
-  
-  e.g.
-
-  ```env
-    STORAGE_SCAN_RECORD_KEY = "testing-scan-record"
-    STORAGE_BOOKMARK_KEY = "testing-bookmark"
-    PAYPAL_DONATE_URL = "https://github.com/tomfong/simple-qr#support-developer"
-  ```
-
-  Then, run ```npm run setenv``` to generate angular environment files.
+- Run ```npm install``` to install all dependencies
 - Go to ```platforms/android/app/src/main/java/com/bitpay/cordova/qrscanner/QRScanner.java``` and find the following codes
 
   ```java
@@ -135,28 +116,7 @@ Thanks for your support!
     formatList.add(BarcodeFormat.UPC_EAN_EXTENSION);
   ```
 
-- If you want to run on Android device, run ```npm run start:an```. You may encounter an error like
-
-  ```sh
-  ...APPLICATION_ID at AndroidManifest.xml Error: duplicated...
-  ```
-
-  Then, you need to go to ```platforms/android/android.json``` and then delete the following lines
-
-  ```json
-  {
-    "xml": "<meta-data android:name=\"com.google.android.gms.ads.APPLICATION_ID\" android:value=\"ca-app-pub-xxx~yyy\" />",
-    "count": 1
-  }
-  ```
-
-  and, go to ```platforms/android/app/src/AndroidManifest.xml``` and then delete the following lines
-
-  ```xml
-  <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-xxx~yyy" />
-  ```
-
-  After that, re-run ```npm run start:an```.
+- If you want to run on Android device, run ```npm run start```.
 
 ### How to help to do translation?
 
@@ -166,13 +126,17 @@ Thanks for your support!
 3. Change the values of each key. Try to stick to the meaning of the original wordings. <b>DO NOT</b> change key names.
 4. Commit it (please place the JSON in the same directory, i.e. src/assets/i18n), or [email]('mailto:tomfong.dev@gmail.com') me the JSON.
 
-## Contributors
-
-Coming soon!
-
 ## Changelogs
 
-### 1.2.0 / 1.2.1 (Current)
+### 1.3.0 (Current)
+
+- Redesign UI/UX
+- Add vibration on/off setting
+- Remove WiFi connection feature
+- Remove ads
+- Improve performance and fix issues
+
+#### 1.2.0 / 1.2.1
 
 - Support image scanning to read QR code
 - UI updated
@@ -200,11 +164,11 @@ Coming soon!
 
 ```sh
     Ionic CLI                       : 6.13.1
-    Ionic Framework                 : @ionic/angular 5.6.4
-    @angular-devkit/build-angular   : 0.1102.5
-    @angular-devkit/schematics      : 11.2.5
-    @angular/cli                    : 11.2.5
-    @ionic/angular-toolkit          : 3.1.1
+    Ionic Framework                 : @ionic/angular 5.9.3
+    @angular-devkit/build-angular   : 12.2.1
+    @angular-devkit/schematics      : 12.2.1
+    @angular/cli                    : 12.2.1
+    @ionic/angular-toolkit          : 4.0.0
 
     Cordova CLI                     : 10.0.0
 

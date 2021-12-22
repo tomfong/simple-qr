@@ -4,10 +4,10 @@
     "UPDATE_NOTES": "Patch Notes",
     "PERMISSION_REQUIRED": "Permission Required",
     "CAMERA_PAUSED": "Camera Paused",
-    "GENERATE_QRCODE": "Generate QR Code",
-    "GENERATE_QRCODE_MAX_LENGTH": "Max. 1817 characters",
+    "CREATE_QRCODE": "Create QR Code",
+    "CREATE_QRCODE_MAX_LENGTH": "Max. 1817 characters",
     "QRCODE_CONTENT": "QR code content",
-    "EXIT_APP": "Exit the app",
+    "EXIT_APP": "Exit App",
     "WEBSITE": "Website",
     "PHONE_CALL": "Phone Call",
     "SEARCH": "Search",
@@ -16,6 +16,7 @@
     "YES": "Yes",
     "NO": "No",
     "OK": "OK",
+    "ABOUT": "About",
     "ENTER": "Enter",
     "CONFIRM": "Confirm",
     "CANCEL": "Cancel",
@@ -92,7 +93,7 @@
     "SEE_MORE": "See More",
     "SUCCESS": "Success",
     "RESTORED": "Restored",
-    "SUPPORT_DEV_EXPLAIN": "Simple QR is a free and open-source app. If you would like to support me and my other projects, please feel free to watch ads. Thank you for your support!",
+    "SUPPORT_DEV_EXPLAIN": "Simple QR is a free and open-source app. If you want to support me and my projects, please feel free to contribute to the projects!",
     "DEVELOPING": "Developing",
     "REPORT_ISSUE": "Report Issue",
     "RESET_APP": "Reset App",
@@ -125,8 +126,8 @@
     "SMS": "Message",
     "EMAIL": "Email",
     "WIFI": "WiFi",
-    "GENERATE_QRCODE_MAX_LENGTH_EXPLAIN": "The length of generated QR Code content must not exceed 1817 characters",
-    "GENERATE": "Generate",
+    "CREATE_QRCODE_MAX_LENGTH_EXPLAIN": "The length of generated QR Code content must not exceed 1817 characters",
+    "CREATE": "Create",
     "EMAIL_RECIPIENT": "Email Recipient",
     "EMAIL_MAX_LENGTH": "Max. 254 characters",
     "ADD_RECIPIENT": "Add Recipient",
@@ -160,6 +161,12 @@
     "SSID_MAX_LENGTH": "Max. 32 characters",
     "NONE": "None",
     "PASSWORD": "Password",
+    "SCAN": "Scan",
+    "IMPORT": "Import",
+    "IMPORT_IMAGE": "Import Image",
+    "VIEW_SOURCE": "View Source",
+    "ON_OFF_TORCH": "Turn on/off Torch",
+    "VIBRATION": "Vibration",
     "MSG": {
         "CALL_PHONE": "Are you sure to call {phoneNumber} now?",
         "FAIL_CALL_PHONE": "Failed to open dialer",
@@ -200,9 +207,10 @@
         "WIFI_NO_INTERNET": "Network has no internet access",
         "ANDROID_WIFI_NATIVE_SETTINGS": "According to Android policies, we suggest you use native Settings to scan the QR code for adding the network.",
         "QR_CODE_VALUE_NOT_EMPTY": "QR Code value cannot be empty",
-        "NO_QR_CODE": "QR Code cannot be detected from image."
+        "NO_QR_CODE": "QR Code cannot be detected from image.",
+        "SCAN_QR_FROM_IMAGE": "Tap to Scan QR Code from Image"
     },
     "UPDATE": {
-        "UPDATE_NOTES": "<ul><li>New feature - scan QR code from image</li><li>Added link to Google Play</li><li>Updated UI</li><li>Improved performace and fixed issues</li></ul>"
+        "UPDATE_NOTES": "<ul><li>Redesigned UI and UX</li><li>Added vibration on/off</li><li>Removed WiFi connection feature</li><li>Removed ads</li><li>Improved performace and fixed issues</li></ul>"
     }
 }

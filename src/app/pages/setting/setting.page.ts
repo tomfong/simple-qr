@@ -41,6 +41,10 @@ export class SettingPage {
     this.router.navigate(['setting-camera-pause']);
   }
 
+  setVibration() {
+    this.router.navigate(['setting-vibration']);
+  }
+
   setScanRecordLogging() {
     this.router.navigate(['setting-record']);
   }
@@ -49,36 +53,8 @@ export class SettingPage {
     this.router.navigate(['setting-search-engine']);
   }
 
-  openRepoUrl(): void {
-    window.open(this.env.GITHUB_REPO_URL, '_system');
-  }
-
-  openGooglePlay(): void {
-    window.open(this.env.GOOGLE_PLAY_URL, '_system');
-  }
-
-  async showUpdateNotes() {
-    const alert = await this.alertController.create({
-      header: this.translate.instant("UPDATE_NOTES"),
-      subHeader: this.env.appVersionNumber,
-      message: this.translate.instant("UPDATE.UPDATE_NOTES"),
-      buttons: [this.translate.instant("OK")],
-      cssClass: 'left-align'
-    });
-    await alert.present();
-  }
-
-  viewPrivacyPolicy(): void {
-    window.open(this.env.PRIVACY_POLICY, '_system');
-  }
-
-  async supportDeveloper() {
-    this.router.navigate(['support-developer']);
-  }
-
-  async reportBug() {
-    const mailContent = await this.env.getBugReportMailContent();
-    window.open(mailContent, '_system');
+  navigateAbout() {
+    this.router.navigate(['about']);
   }
 
   async resetApp() {
@@ -108,6 +84,27 @@ export class SettingPage {
       ]
     });
     alert.present();
+  }
+
+  async confirmExitApp(): Promise<void> {
+    const alert = await this.alertController.create({
+      header: this.translate.instant('EXIT_APP'),
+      message: this.translate.instant('MSG.EXIT_APP'),
+      buttons: [
+        {
+          text: this.translate.instant('YES'),
+          handler: () => {
+            navigator['app'].exitApp();
+          }
+        },
+        {
+          text: this.translate.instant('NO'),
+          role: 'cancel',
+          cssClass: 'btn-inverse'
+        }
+      ]
+    });
+    await alert.present();
   }
 
   async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {

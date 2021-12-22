@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.tomfong.simpleqr" version="1.2.1.20211013" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.tomfong.simpleqr" version="1.3.0.20211221" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Simple QR</name>
     <description>A simple app for scanning and managing QR code</description>
     <author email="tomfong.dev@gmail.com" href="https://tomfong-personal-page.web.app">Tom Fong</author>
@@ -19,19 +19,17 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="ShowSplashScreenSpinner" value="false" />
     <preference name="AutoHideSplashScreen" value="false" />
-    <preference name="SplashScreenDelay" value="1000" />
+    <preference name="SplashScreenDelay" value="500" />
     <preference name="orientation" value="portrait" />
     <platform name="android">
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
             <application android:networkSecurityConfig="@xml/network_security_config" />
+            <application android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher" />
         </edit-config>
-        <config-file parent="/manifest/application" target="AndroidManifest.xml">
-            <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="ca-app-pub-1258868559061405~8296554504" />
-        </config-file>
         <resource-file src="resources/android/xml/network_security_config.xml" target="app/src/main/res/xml/network_security_config.xml" />
         <allow-intent href="market:*" />
         <preference name="android-minSdkVersion" value="23" />
-        <preference name="android-targetSdkVersion" value="30" />
+        <preference name="android-targetSdkVersion" value="31" />
         <preference name="AndroidXEnabled" value="true" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
@@ -162,5 +160,4 @@
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-clipboard" spec="^1.3.0" />
     <plugin name="cordova-plugin-x-socialsharing" spec="^6.0.3" />
-    <plugin name="cordova-plugin-wifiwizard2" spec="https://github.com/tripflex/WifiWizard2.git" />
 </widget>
