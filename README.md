@@ -128,7 +128,7 @@ Thanks for your support!
 
 ## Changelogs
 
-### 1.3.0 (Current)
+### 1.3.0 / 1.3.1 (Current)
 
 - Redesign UI/UX
 - Add vibration on/off setting

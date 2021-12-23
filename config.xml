@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.tomfong.simpleqr" version="1.3.0.20211221" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.tomfong.simpleqr" version="1.3.1.20211223" xmlns="http://www.w3.org/ns/widgets" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Simple QR</name>
     <description>A simple app for scanning and managing QR code</description>
     <author email="tomfong.dev@gmail.com" href="https://tomfong-personal-page.web.app">Tom Fong</author>
@@ -24,13 +24,13 @@
     <platform name="android">
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application" xmlns:android="http://schemas.android.com/apk/res/android">
             <application android:networkSecurityConfig="@xml/network_security_config" />
-            <application android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher" />
         </edit-config>
         <resource-file src="resources/android/xml/network_security_config.xml" target="app/src/main/res/xml/network_security_config.xml" />
         <allow-intent href="market:*" />
         <preference name="android-minSdkVersion" value="23" />
         <preference name="android-targetSdkVersion" value="31" />
         <preference name="AndroidXEnabled" value="true" />
+        <resource-file src="resources/icon.png" target="app/src/main/res/mipmap/ic_launcher_foreground.png" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
         <icon density="hdpi" src="resources/android/icon/drawable-hdpi-icon.png" />

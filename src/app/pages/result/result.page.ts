@@ -7,7 +7,7 @@ import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
 import { SMS } from '@ionic-native/sms/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
-import { AlertController, LoadingController, ModalController, Platform, ToastController } from '@ionic/angular';
+import { ActionSheetController, AlertController, LoadingController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
 import { CreateContactPage } from 'src/app/modals/create-contact/create-contact.page';
@@ -67,8 +67,7 @@ export class ResultPage implements OnInit {
     public modalController: ModalController,
     private sms: SMS,
     public translate: TranslateService,
-    private openNativeSettings: OpenNativeSettings,
-    private device: Device,
+    private actionSheetController: ActionSheetController,
   ) { }
 
   async ngOnInit() {
@@ -695,6 +694,70 @@ export class ResultPage implements OnInit {
     } else {
       this.bookmarked = false;
     }
+  }
+
+  async openActionSheet() {
+    const buttons = [];
+    switch (this.contentType) {
+      case "url":
+        buttons.push({
+          text: this.translate.instant("BROWSE_WEBSITE"),
+          handler: async () => {
+            this.browseWebsite();
+          }
+        });
+        break;
+      case "contact":
+        buttons.push({
+          text: this.translate.instant("ADD_CONTACT"),
+          handler: async () => {
+            this.addContact();
+          }
+        });
+        break;
+      case "phone":
+        buttons.push({
+          text: this.translate.instant("CALL"),
+          handler: async () => {
+            this.callPhone();
+          }
+        }, {
+          text: this.translate.instant("ADD_CONTACT"),
+          handler: async () => {
+            this.addContact();
+          }
+        });
+        break;
+      case "sms":
+        if (this.smsContent) {
+          buttons.push({
+            text: this.translate.instant("SEND_MESSAGE"),
+            handler: async () => {
+              this.sendSms();
+            }
+          });
+        }
+        buttons.push({
+          text: this.translate.instant("ADD_CONTACT"),
+          handler: async () => {
+            this.addContact();
+          }
+        });
+        break;
+      case "email":
+        buttons.push({
+          text: this.translate.instant("SEND_EMAIL"),
+          handler: async () => {
+            this.sendEmail();
+          }
+        });
+        break;
+    }
+    const actionSheet = await this.actionSheetController.create({
+      mode: 'ios',
+      buttons: buttons
+    });
+    await actionSheet.present();
   }
 
   async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {

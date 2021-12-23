@@ -32,6 +32,7 @@ import { HistoryTutorialPageModule } from './modals/history-tutorial/history-tut
 import { DatePipe } from '@angular/common';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -61,6 +62,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     MatFormFieldModule,
     MatSlideToggleModule,
     MatButtonModule,
+    NgbModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

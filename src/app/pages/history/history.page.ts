@@ -205,6 +205,18 @@ export class HistoryPage {
       mode: 'ios',
       buttons: [
         {
+          text: this.translate.instant("TUTORIAL"),
+          handler: async () => {
+            const modal = await this.modalController.create({
+              component: HistoryTutorialPage,
+              cssClass: 'tutorial-modal-page',
+              componentProps: {
+              }
+            });
+            modal.present();
+          }
+        },
+        {
           text: this.translate.instant("REMOVE_ALL"),
           role: 'destructive',
           handler: async () => {
