@@ -5,15 +5,6 @@
       </ion-back-button>
     </ion-buttons> -->
     <ion-title>{{ 'RESULT' | translate }}</ion-title>
-    <ion-buttons slot="end"
-      *ngIf="qrCodeContent !== null && qrCodeContent !== undefined && qrCodeContent.trim().length > 0">
-      <ion-button mode="md" (click)="addBookmark()" *ngIf="!bookmarked">
-        <ion-icon slot="icon-only" name="star"></ion-icon>
-      </ion-button>
-      <ion-button mode="md" (click)="removeBookmark()" *ngIf="bookmarked">
-        <ion-icon slot="icon-only" name="star" color="warning"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -213,17 +204,22 @@
     <ion-col></ion-col>
   </ion-row>
 
+  <ion-fab *ngIf="contentType !== 'freeText' && contentType !== 'wifi'" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="primary" (click)="openActionSheet()">
+      <ion-icon name="menu"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
 
-<ion-footer mode="md"
+<ion-footer mode="ios"
   [ngStyle]="env.colorTheme === 'dark'?  {'background-color': '#222428'} : {'background-color': 'white'}">
 
-  <ion-row class="ion-padding-horizontal ion-margin-horizontal">
+  <!-- <ion-row class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col></ion-col>
-  </ion-row>
+  </ion-row> -->
 
   <!-- URL -->
-  <ion-row *ngIf="contentType === 'url'" class="ion-padding-horizontal ion-margin-horizontal">
+  <!-- <ion-row *ngIf="contentType === 'url'" class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col>
       <ion-button expand="full" color="secondary" mode="ios" (click)="browseWebsite()">
         <ion-icon slot="start" name="globe-outline"></ion-icon>
@@ -233,10 +229,10 @@
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
-  </ion-row>
+  </ion-row> -->
 
   <!-- Contact -->
-  <ion-row *ngIf="contentType === 'contact'" class="ion-padding-horizontal ion-margin-horizontal">
+  <!-- <ion-row *ngIf="contentType === 'contact'" class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col>
       <ion-button expand="full" color="secondary" mode="ios" (click)="addContact()">
         <ion-icon slot="start" name="person-add-sharp"></ion-icon>
@@ -244,10 +240,10 @@
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
-  </ion-row>
+  </ion-row> -->
 
   <!-- Phone Number -->
-  <ion-row *ngIf="contentType === 'phone'" class="ion-padding-horizontal ion-margin-horizontal">
+  <!-- <ion-row *ngIf="contentType === 'phone'" class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col>
       <ion-button expand="full" color="secondary" mode="ios" (click)="callPhone()">
         <ion-icon slot="start" name="call"></ion-icon>
@@ -262,10 +258,10 @@
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
-  </ion-row>
+  </ion-row> -->
 
   <!-- SMS -->
-  <ion-row *ngIf="contentType === 'sms'" class="ion-padding-horizontal ion-margin-horizontal">
+  <!-- <ion-row *ngIf="contentType === 'sms'" class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col>
       <ion-button expand="full" color="secondary" mode="ios" (click)="sendSms()" [disabled]="!smsContent">
         <ion-icon slot="start" name="send"></ion-icon>
@@ -280,10 +276,10 @@
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
-  </ion-row>
+  </ion-row> -->
 
   <!-- Email -->
-  <ion-row *ngIf="contentType === 'email'" class="ion-padding-horizontal ion-margin-horizontal">
+  <!-- <ion-row *ngIf="contentType === 'email'" class="ion-padding-horizontal justify-content-around">
     <ion-col>
       <ion-button expand="full" color="secondary" mode="ios" (click)="sendEmail()">
         <ion-icon slot="start" name="mail"></ion-icon>
@@ -293,10 +289,67 @@
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
+  </ion-row> -->
+  
+  <!-- <ion-row *ngIf="contentType !== 'freeText'" class="ion-padding-horizontal justify-content-around">
+    <ion-button *ngIf="contentType === 'url'" mode="md" (click)="browseWebsite()"
+      [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear">
+      <ion-icon slot="icon-only" name="globe-outline"></ion-icon>
+    </ion-button>
+    <ion-button *ngIf="contentType === 'contact'" mode="md" (click)="addContact()"
+      [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear">
+      <ion-icon slot="icon-only" name="person-add-sharp"></ion-icon>
+    </ion-button>
+    <ion-button *ngIf="contentType === 'phone'" mode="md" (click)="callPhone()"
+      [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear">
+      <ion-icon slot="icon-only" name="call"></ion-icon>
+    </ion-button>
+    <ion-button *ngIf="contentType === 'phone'" mode="md" (click)="addContact()"
+      [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear">
+      <ion-icon slot="icon-only" name="person-add-sharp"></ion-icon>
+    </ion-button>
+    <ion-button *ngIf="contentType === 'sms'" mode="md" [disabled]="!smsContent" (click)="sendSms()"
+      [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear">
+      <ion-icon slot="icon-only" name="send"></ion-icon>
+    </ion-button>
+    <ion-button *ngIf="contentType === 'sms'" mode="md" (click)="addContact()"
+      [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear">
+      <ion-icon slot="icon-only" name="person-add-sharp"></ion-icon>
+    </ion-button>
+    <ion-button *ngIf="contentType === 'email'" mode="md" (click)="sendEmail()"
+      [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear">
+      <ion-icon slot="icon-only" name="mail"></ion-icon>
+    </ion-button>
+  </ion-row> -->
+  <ion-row class="ion-padding-horizontal justify-content-between">
+    <!-- General -->
+    <ion-button mode="md" (click)="webSearch()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
+      [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+      <ion-icon slot="icon-only" src="assets/icon/search-web.svg"></ion-icon>
+    </ion-button>
+    <ion-button mode="md" (click)="copyText()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
+      [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+      <ion-icon slot="icon-only" name="copy"></ion-icon>
+    </ion-button>
+    <ion-button mode="md" (click)="base64()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
+      [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+      <ion-icon slot="icon-only" name="code-working"></ion-icon>
+    </ion-button>
+    <ion-button mode="md" (click)="shareQrCode()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
+      [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+      <ion-icon slot="icon-only" name="share-social"></ion-icon>
+    </ion-button>
+    <ion-button mode="md" (click)="addBookmark()" *ngIf="!bookmarked"
+      [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
+      [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+      <ion-icon slot="icon-only" name="star"></ion-icon>
+    </ion-button>
+    <ion-button mode="md" (click)="removeBookmark()" *ngIf="bookmarked" [color]="'warning'" fill="clear"
+      [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+      <ion-icon slot="icon-only" name="star"></ion-icon>
+    </ion-button>
   </ion-row>
-
-  <!-- General -->
-  <ion-row class="ion-padding-horizontal ion-margin-horizontal">
+  <!-- <ion-row class="ion-padding-horizontal ion-margin-horizontal">
     <ion-col size="6">
       <ion-button expand="full" color="primary" mode="ios" (click)="webSearch()"
         [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
@@ -333,5 +386,5 @@
         <ion-ripple-effect></ion-ripple-effect>
       </ion-button>
     </ion-col>
-  </ion-row>
+  </ion-row> -->
 </ion-footer>

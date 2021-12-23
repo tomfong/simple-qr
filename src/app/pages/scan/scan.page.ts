@@ -308,7 +308,7 @@ export class ScanPage implements OnInit {
       mode: 'ios',
       buttons: [
         {
-          text: this.translate.instant("ON_OFF_TORCH"),
+          text: this.flashActive ? this.translate.instant("TURN_OFF_TORCH") : this.translate.instant("TURN_ON_TORCH"),
           handler: async () => {
             await this.toggleFlash();
           }
