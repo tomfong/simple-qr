@@ -109,7 +109,7 @@ export class HistoryPage {
     await this.loadItems();
     this.deleteToast = await this.toastController.create({
       message: this.translate.instant('MSG.UNDO_DELETE'),
-      duration: 5000,
+      duration: 3000,
       mode: "ios",
       color: "light",
       position: "bottom",
@@ -138,7 +138,7 @@ export class HistoryPage {
     await this.loadItems();
     this.deleteToast = await this.toastController.create({
       message: this.translate.instant('MSG.UNDO_DELETE'),
-      duration: 5000,
+      duration: 3000,
       mode: "ios",
       color: "light",
       position: "bottom",

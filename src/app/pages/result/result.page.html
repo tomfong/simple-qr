@@ -56,7 +56,7 @@
   </ion-row>
 
   <ion-row
-    *ngIf="(contentType === 'phone' || contentType === 'sms') && qrCodeContent && qrCodeContent.trim().length > 0">
+    *ngIf="(contentType === 'phone' || contentType === 'sms') && qrCodeContent && qrCodeContent.trim().length > 0 && phoneNumber && phoneNumber.length > 0">
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom"
@@ -212,115 +212,8 @@
 </ion-content>
 
 <ion-footer mode="ios"
-  [ngStyle]="env.colorTheme === 'dark'?  {'background-color': '#222428'} : {'background-color': 'white'}">
+  [ngStyle]="env.colorTheme === 'dark'?  {'background-color': '#222428'} : {'background-color': '#F0F0F0'}">
 
-  <!-- <ion-row class="ion-padding-horizontal ion-margin-horizontal">
-    <ion-col></ion-col>
-  </ion-row> -->
-
-  <!-- URL -->
-  <!-- <ion-row *ngIf="contentType === 'url'" class="ion-padding-horizontal ion-margin-horizontal">
-    <ion-col>
-      <ion-button expand="full" color="secondary" mode="ios" (click)="browseWebsite()">
-        <ion-icon slot="start" name="globe-outline"></ion-icon>
-        <span>{{ 'BROWSE_WEBSITE' | translate }}</span>
-        <ion-icon class="external-link-icon" src="assets/icon/external-link.svg">
-        </ion-icon>
-        <ion-ripple-effect></ion-ripple-effect>
-      </ion-button>
-    </ion-col>
-  </ion-row> -->
-
-  <!-- Contact -->
-  <!-- <ion-row *ngIf="contentType === 'contact'" class="ion-padding-horizontal ion-margin-horizontal">
-    <ion-col>
-      <ion-button expand="full" color="secondary" mode="ios" (click)="addContact()">
-        <ion-icon slot="start" name="person-add-sharp"></ion-icon>
-        <span>{{ 'ADD_CONTACT' | translate }}</span>
-        <ion-ripple-effect></ion-ripple-effect>
-      </ion-button>
-    </ion-col>
-  </ion-row> -->
-
-  <!-- Phone Number -->
-  <!-- <ion-row *ngIf="contentType === 'phone'" class="ion-padding-horizontal ion-margin-horizontal">
-    <ion-col>
-      <ion-button expand="full" color="secondary" mode="ios" (click)="callPhone()">
-        <ion-icon slot="start" name="call"></ion-icon>
-        <span class="overflow: hidden; text-overflow: ellipsis;">{{ 'CALL' | translate }}</span>
-        <ion-ripple-effect></ion-ripple-effect>
-      </ion-button>
-    </ion-col>
-    <ion-col>
-      <ion-button expand="full" color="secondary" mode="ios" (click)="addContact()">
-        <ion-icon slot="start" name="person-add-sharp"></ion-icon>
-        <span>{{ 'ADD_CONTACT' | translate }}</span>
-        <ion-ripple-effect></ion-ripple-effect>
-      </ion-button>
-    </ion-col>
-  </ion-row> -->
-
-  <!-- SMS -->
-  <!-- <ion-row *ngIf="contentType === 'sms'" class="ion-padding-horizontal ion-margin-horizontal">
-    <ion-col>
-      <ion-button expand="full" color="secondary" mode="ios" (click)="sendSms()" [disabled]="!smsContent">
-        <ion-icon slot="start" name="send"></ion-icon>
-        <span>{{ 'SEND_MESSAGE' | translate }}</span>
-        <ion-ripple-effect></ion-ripple-effect>
-      </ion-button>
-    </ion-col>
-    <ion-col>
-      <ion-button expand="full" color="secondary" mode="ios" (click)="addContact()">
-        <ion-icon slot="start" name="person-add-sharp"></ion-icon>
-        <span>{{ 'ADD_CONTACT' | translate }}</span>
-        <ion-ripple-effect></ion-ripple-effect>
-      </ion-button>
-    </ion-col>
-  </ion-row> -->
-
-  <!-- Email -->
-  <!-- <ion-row *ngIf="contentType === 'email'" class="ion-padding-horizontal justify-content-around">
-    <ion-col>
-      <ion-button expand="full" color="secondary" mode="ios" (click)="sendEmail()">
-        <ion-icon slot="start" name="mail"></ion-icon>
-        <span>{{ 'SEND_EMAIL' | translate }}</span>
-        <ion-icon class="external-link-icon" src="assets/icon/external-link.svg">
-        </ion-icon>
-        <ion-ripple-effect></ion-ripple-effect>
-      </ion-button>
-    </ion-col>
-  </ion-row> -->
-  
-  <!-- <ion-row *ngIf="contentType !== 'freeText'" class="ion-padding-horizontal justify-content-around">
-    <ion-button *ngIf="contentType === 'url'" mode="md" (click)="browseWebsite()"
-      [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear">
-      <ion-icon slot="icon-only" name="globe-outline"></ion-icon>
-    </ion-button>
-    <ion-button *ngIf="contentType === 'contact'" mode="md" (click)="addContact()"
-      [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear">
-      <ion-icon slot="icon-only" name="person-add-sharp"></ion-icon>
-    </ion-button>
-    <ion-button *ngIf="contentType === 'phone'" mode="md" (click)="callPhone()"
-      [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear">
-      <ion-icon slot="icon-only" name="call"></ion-icon>
-    </ion-button>
-    <ion-button *ngIf="contentType === 'phone'" mode="md" (click)="addContact()"
-      [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear">
-      <ion-icon slot="icon-only" name="person-add-sharp"></ion-icon>
-    </ion-button>
-    <ion-button *ngIf="contentType === 'sms'" mode="md" [disabled]="!smsContent" (click)="sendSms()"
-      [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear">
-      <ion-icon slot="icon-only" name="send"></ion-icon>
-    </ion-button>
-    <ion-button *ngIf="contentType === 'sms'" mode="md" (click)="addContact()"
-      [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear">
-      <ion-icon slot="icon-only" name="person-add-sharp"></ion-icon>
-    </ion-button>
-    <ion-button *ngIf="contentType === 'email'" mode="md" (click)="sendEmail()"
-      [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear">
-      <ion-icon slot="icon-only" name="mail"></ion-icon>
-    </ion-button>
-  </ion-row> -->
   <ion-row class="ion-padding-horizontal justify-content-between">
     <!-- General -->
     <ion-button mode="md" (click)="webSearch()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
