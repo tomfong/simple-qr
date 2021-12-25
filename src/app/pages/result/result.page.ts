@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CallNumber } from '@ionic-native/call-number/ngx';
-import { Clipboard } from '@ionic-native/clipboard/ngx';
-import { Device } from '@ionic-native/device/ngx';
-import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
+// import { Clipboard } from '@ionic-native/clipboard/ngx';
+import { Clipboard } from '@capacitor/clipboard';
+import { Contacts, ContactType, EmailAddress, NewContact, PhoneNumber } from '@capacitor-community/contacts'
 import { SMS } from '@ionic-native/sms/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
@@ -61,7 +61,6 @@ export class ResultPage implements OnInit {
     private router: Router,
     public env: EnvService,
     public toastController: ToastController,
-    private clipboard: Clipboard,
     private socialSharing: SocialSharing,
     private callNumber: CallNumber,
     public modalController: ModalController,
@@ -152,6 +151,7 @@ export class ResultPage implements OnInit {
     const smsPrefix = "SMSTO:";
     const emailPrefix = "MAILTO:";
     const wifiPrefix = "WIFI:";
+    const content0 = this.qrCodeContent.trim();
     const tContent = this.qrCodeContent.trim().toUpperCase();
     if (tContent.substr(0, urlPrefix1.length) === urlPrefix1 || tContent.substr(0, urlPrefix2.length) === urlPrefix2) {
       this.contentType = "url";
@@ -163,7 +163,7 @@ export class ResultPage implements OnInit {
       this.phoneNumber = tContent.substr(phonePrefix.length);
     } else if (tContent.substr(0, smsPrefix.length) === smsPrefix) {
       this.contentType = "sms";
-      const tContent2 = tContent.substr(smsPrefix.length);
+      const tContent2 = content0.substr(smsPrefix.length);
       if (tContent2.indexOf(':') !== -1) {
         this.phoneNumber = tContent2.substr(0, tContent2.indexOf(':'));
         this.smsContent = tContent2.substr(tContent2.indexOf(':') + 1);
@@ -196,76 +196,59 @@ export class ResultPage implements OnInit {
   }
 
   async addContact(): Promise<void> {
-    let modal: HTMLIonModalElement;
     if (this.contentType === "contact") {
-      modal = await this.modalController.create({
-        component: CreateContactPage,
-        cssClass: 'modal-page',
-        componentProps: {
-          vCardContact: this.vCardContact
-        }
-      });
-    } else if (this.contentType === "phone" || this.contentType === "sms") {
-      modal = await this.modalController.create({
-        component: CreateContactPage,
-        cssClass: 'modal-page',
-        componentProps: {
-          phoneNumber: this.phoneNumber
-        }
-      });
-    } else {
-      modal = await this.modalController.create({
-        component: CreateContactPage,
-        cssClass: 'modal-page',
-        componentProps: {}
-      });
-    }
-    modal.onDidDismiss().then(
-      async (result) => {
-        if (result.data) {
-          const data = result.data;
-          if (!data.cancelled) {
-            const contact = navigator.contacts.create({
-              name: data.name,
-              emails: [data.email],
-              phoneNumbers: [data.phone]
-            });
-            contact.save(() => {
-              this.presentToast(this.translate.instant('MSG.SAVED'), 2000, "bottom", "center", "short");
-            }, err => {
-              this.presentToast(this.translate.instant('MSG.FAIL_SAVE_CONTACT'), 3000, "middle", "center", "long");
-            })
-          }
-        }
+      const phoneNumbers = [];
+      if (this.vCardContact?.defaultPhoneNumber != null) {
+        const phoneNumber = { number: this.vCardContact?.defaultPhoneNumber } as PhoneNumber;
+        phoneNumbers.push(phoneNumber);
       }
-    );
-    await modal.present();
+      if (this.vCardContact?.homePhoneNumber != null) {
+        const phoneNumber = { number: this.vCardContact?.homePhoneNumber } as PhoneNumber;
+        phoneNumbers.push(phoneNumber);
+      }
+      if (this.vCardContact?.workPhoneNumber != null) {
+        const phoneNumber = { number: this.vCardContact?.homePhoneNumber } as PhoneNumber;
+        phoneNumbers.push(phoneNumber);
+      }
+      if (this.vCardContact?.mobilePhoneNumber != null) {
+        const phoneNumber = { number: this.vCardContact?.mobilePhoneNumber } as PhoneNumber;
+        phoneNumbers.push(phoneNumber);
+      }
+      const emails = [];
+      if (this.vCardContact?.defaultEmail != null) {
+        const address = { address: this.vCardContact?.defaultEmail } as EmailAddress;
+        emails.push(address);
+      }
+      if (this.vCardContact?.homeEmail != null) {
+        const address = { address: this.vCardContact?.homeEmail } as EmailAddress;
+        emails.push(address);
+      }
+      if (this.vCardContact?.workEmail != null) {
+        const address = { address: this.vCardContact?.workEmail } as EmailAddress;
+        emails.push(address);
+      }
+      const newContact = {
+        contactType: ContactType.Person,
+        givenName: this.vCardContact?.givenName ?? this.vCardContact?.fullName ?? '',
+        familyName: this.vCardContact?.familyName,
+        phoneNumbers: phoneNumbers,
+        emailAddresses: emails
+      } as NewContact;
+      await Contacts.saveContact(newContact);
+    } else if (this.contentType === "sms" || this.contentType === "phone") {
+      const phoneNumbers = [];
+      const phoneNumber = { number: this.phoneNumber } as PhoneNumber;
+      phoneNumbers.push(phoneNumber);
+      const newContact = {
+        contactType: ContactType.Person,
+        phoneNumbers: phoneNumbers
+      } as NewContact;
+      await Contacts.saveContact(newContact);
+    }
   }
 
   async callPhone(): Promise<void> {
-    const alert = await this.alertController.create({
-      header: this.translate.instant('PHONE_CALL'),
-      message: this.translate.instant('MSG.CALL_PHONE').replace('{phoneNumber}', this.phoneNumber),
-      buttons: [
-        {
-          text: this.translate.instant('YES'),
-          handler: async () => {
-            alert.dismiss();
-            await this.callNumber.callNumber(this.phoneNumber, false).catch(
-              async (err) => {
-                this.presentToast(this.translate.instant('MSG.FAIL_CALL_PHONE'), 3000, "middle", "center", "long");
-              }
-            );
-          }
-        },
-        {
-          text: this.translate.instant('NO'),
-          role: 'cancel',
-          cssClass: 'btn-inverse'
-        }
-      ]
-    });
-    await alert.present();
+    window.open(this.qrCodeContent);
   }
 
   async sendSms(): Promise<void> {
@@ -282,7 +265,7 @@ export class ResultPage implements OnInit {
           }
         ).then(
           (value) => {
-            this.presentToast(this.translate.instant('MSG.PREPARE_SMS'), 2000, "middle", "center", "long");
+            this.presentToast(this.translate.instant('MSG.PREPARE_SMS'), 1000, "middle", "center", "long");
           },
           async (err) => {
             console.error("error in send sms", err)
@@ -376,7 +359,7 @@ export class ResultPage implements OnInit {
               text: this.translate.instant('ORIGINAL'),
               handler: async () => {
                 alert.dismiss();
-                await this.clipboard.copy(this.qrCodeContent).then(
+                await Clipboard.write({ string: this.qrCodeContent }).then(
                   async () => {
                     await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
                   }
@@ -387,7 +370,7 @@ export class ResultPage implements OnInit {
               text: this.translate.instant('BASE64_ENCODED'),
               handler: async () => {
                 alert.dismiss();
-                await this.clipboard.copy(this.base64EncodedText).then(
+                await Clipboard.write({ string: this.base64EncodedText }).then(
                   async () => {
                     await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
                   }
@@ -398,7 +381,7 @@ export class ResultPage implements OnInit {
               text: this.translate.instant('BASE64_DECODED'),
               handler: async () => {
                 alert.dismiss();
-                await this.clipboard.copy(this.base64DecodedText).then(
+                await Clipboard.write({ string: this.base64DecodedText }).then(
                   async () => {
                     await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
                   }
@@ -419,7 +402,7 @@ export class ResultPage implements OnInit {
               text: this.translate.instant('ORIGINAL'),
               handler: async () => {
                 alert.dismiss();
-                await this.clipboard.copy(this.qrCodeContent).then(
+                await Clipboard.write({ string: this.qrCodeContent }).then(
                   async () => {
                     await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
                   }
@@ -430,7 +413,7 @@ export class ResultPage implements OnInit {
               text: this.translate.instant('BASE64_ENCODED'),
               handler: async () => {
                 alert.dismiss();
-                await this.clipboard.copy(this.base64EncodedText).then(
+                await Clipboard.write({ string: this.base64EncodedText }).then(
                   async () => {
                     await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
                   }
@@ -451,7 +434,7 @@ export class ResultPage implements OnInit {
               text: this.translate.instant('ORIGINAL'),
               handler: async () => {
                 alert.dismiss();
-                await this.clipboard.copy(this.qrCodeContent).then(
+                await Clipboard.write({ string: this.qrCodeContent }).then(
                   async () => {
                     await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
                   }
@@ -462,7 +445,7 @@ export class ResultPage implements OnInit {
               text: this.translate.instant('BASE64_DECODED'),
               handler: async () => {
                 alert.dismiss();
-                await this.clipboard.copy(this.base64DecodedText).then(
+                await Clipboard.write({ string: this.base64DecodedText }).then(
                   async () => {
                     await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
                   }
@@ -474,7 +457,7 @@ export class ResultPage implements OnInit {
       )
       alert.present();
     } else {
-      await this.clipboard.copy(this.qrCodeContent).then(
+      await Clipboard.write({ string: this.qrCodeContent }).then(
         async () => {
           await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
         }

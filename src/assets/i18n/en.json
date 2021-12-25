@@ -46,7 +46,7 @@
     "EMAIL_SUBJECT": "Subject",
     "EMAIL_BODY": "Body",
     "CONTACT_NAME": "Contact Name",
-    "BARCODE_CONTENT": "Barcode Content",
+    "BARCODE_CONTENT": "Code Content",
     "BROWSE_WEBSITE": "Browse Website",
     "ADD_CONTACT": "Add Contact",
     "CALL": "Call",
@@ -169,6 +169,8 @@
     "TURN_OFF_TORCH": "Turn off Torch",
     "VIBRATION": "Vibration",
     "CLOSE": "Close",
+    "SUPPORTED_BARCODE_TYPE": "Supported Barcode Type",
+    "SUPPORTED_TYPE": "Supported Type",
     "MSG": {
         "CALL_PHONE": "Are you sure to call {phoneNumber} now?",
         "FAIL_CALL_PHONE": "Failed to open dialer",
@@ -210,9 +212,10 @@
         "ANDROID_WIFI_NATIVE_SETTINGS": "According to Android policies, we suggest you use native Settings to scan the QR code for adding the network.",
         "QR_CODE_VALUE_NOT_EMPTY": "QR Code value cannot be empty",
         "NO_QR_CODE": "QR Code cannot be detected from image.",
-        "SCAN_QR_FROM_IMAGE": "Tap to Scan QR Code from Image"
+        "SCAN_QR_FROM_IMAGE": "Tap to Scan QR Code from Image",
+        "BARCODE_TYPE": "Scan<ul><li>QR Code</li><li>1D Barcode</li><li>Aztec Code</li><li>Data Matrix</li><li>PDF417</li></ul>Import Image<ul><li>QR Code</li></ul>Create<ul><li>QR Code</li></ul>"
     },
     "UPDATE": {
-        "UPDATE_NOTES": "<ul><li>Redesigned UI and UX</li><li>Added vibration on/off</li><li>Removed WiFi connection feature</li><li>Removed ads</li><li>Improved performace and fixed issues</li></ul>"
+        "UPDATE_NOTES": "<ul><li>Improve experience when using \"Special Actions\" feature in Result page</li><li>Show barcode type when scanning</li><li>Redesigned UI and UX</li><li>Improved performace and fixed issues</li></ul>"
     }
 }

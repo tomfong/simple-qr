@@ -1,6 +1,7 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatInput } from '@angular/material/input';
+import { EmailAddress, PhoneNumber } from '@capacitor-community/contacts';
 import { ModalController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { VCardContact } from 'src/app/models/v-card-contact';
@@ -20,17 +21,17 @@ export class CreateContactPage implements OnInit {
 
   @Input() vCardContact: VCardContact;
 
-  name: ContactName;
+  // name: ContactName;
   @Input() givenName: string = '';
   @ViewChild('givenNameInput') givenNameInput: MatInput;
   @Input() familyName: string = '';
 
-  phoneNumberObject: ContactField;
+  phoneNumberObject: PhoneNumber;
   phoneNumberTypes = [{ text: this.defaultText, value: 'other' }, { text: this.mobileText, value: 'mobile' }, { text: this.homeText, value: 'home' }, { text: this.workText, value: 'work' }];
   phoneNumberType: string = 'other';
   @Input() phoneNumber: string = '';
 
-  emailObject: ContactField;
+  emailObject: EmailAddress;
   emailTypes = [{ text: this.defaultText, value: 'other' }, { text: this.homeText, value: 'home' }, { text: this.workText, value: 'work' }];
   emailType: string = 'other';
   @Input() emailAddress: string = '';
@@ -100,15 +101,16 @@ export class CreateContactPage implements OnInit {
   }
 
   saveContent(): void {
-    if (this.givenName.trim().length <= 0) {
+    if (this.givenName?.trim().length <= 0) {
       this.presentToast(this.translate.instant("MSG.GIVE_NAME_CONTACT"), 2000, "bottom", "center", "long");
       this.givenNameInput.focus();
       return;
     }
-    const name = new ContactName('', this.familyName.trim(), this.givenName.trim());
-    const phone = new ContactField(this.phoneNumberType, this.phoneNumber, true);
-    const email = new ContactField(this.emailType, this.emailAddress, true);
-    this.modalController.dismiss({ cancelled: false, name, phone, email });
+    const givenName = this.givenName;
+    const familyName = this.familyName;
+    const phone = { label: this.phoneNumberType, number: this.phoneNumber } as PhoneNumber;
+    const email = { label: this.emailType, address: this.emailAddress } as EmailAddress;
+    this.modalController.dismiss({ cancelled: false, givenName, familyName, phone, email });
   }
 
   async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {

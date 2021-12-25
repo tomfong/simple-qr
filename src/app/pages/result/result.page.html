@@ -75,7 +75,7 @@
           [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
           {{ 'MESSAGE_CONTENT' | translate }}
         </ion-label>
-        <ion-textarea class="box" readonly [value]="smsContent.length > 0? smsContent : ' '" autoGrow="true" rows="1">
+        <ion-textarea class="box" readonly [value]="smsContent?.length > 0? smsContent : ' '" autoGrow="true" rows="1">
         </ion-textarea>
       </ion-item>
     </ion-col>

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
-import { Camera } from '@ionic-native/camera/ngx';
+import { Camera, CameraResultType, CameraSource, GalleryImageOptions, GalleryPhotos, ImageOptions, Photo } from '@capacitor/camera';
 import jsQR from 'jsqr';
 import { Router } from '@angular/router';
 
@@ -19,7 +19,7 @@ export class ImportImagePage {
     private alertController: AlertController,
     private loadingController: LoadingController,
     private toastController: ToastController,
-    private camera: Camera,
+    // private camera: Camera,
     private router: Router,
   ) { }
 
@@ -27,16 +27,15 @@ export class ImportImagePage {
     const getPictureLoading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
     const options = {
       quality: 100,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.PNG,
-      mediaType: this.camera.MediaType.PICTURE
-    };
-    await this.camera.getPicture(options).then(
-      async (imageDataUrl) => {
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Photos
+    } as ImageOptions;
+    await Camera.getPhoto(options).then(
+      async (photo: Photo) => {
         getPictureLoading.dismiss();
         const decodingLoading = await this.presentLoading(this.translate.instant('DECODING'));
-        await this.convertDataUrlToImageData(imageDataUrl).then(
+        await this.convertDataUrlToImageData(photo?.dataUrl ?? '').then(
           async imageData => {
             await this.getJsQr(imageData.imageData.data, imageData.width, imageData.height).then(
               async qrValue => {
@@ -58,7 +57,7 @@ export class ImportImagePage {
       },
       async err => {
         getPictureLoading.dismiss();
-        if (err === 20) {
+        if (err?.message != null && err?.message == 'User denied access to photos') {
           await this.presentAlert(
             this.translate.instant("MSG.READ_IMAGE_PERMISSION"),
             this.translate.instant("PERMISSION_REQUIRED"),
@@ -107,7 +106,7 @@ export class ImportImagePage {
     return loading;
   }
 
-  
+
   async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {
     if (size === "long") {
       if (align === "left") {

@@ -13,17 +13,17 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { IonicStorageModule } from '@ionic/storage-angular';
-import { Clipboard } from '@ionic-native/clipboard/ngx';
+//import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { SMS } from '@ionic-native/sms/ngx';
 import { ThemeDetection } from '@ionic-native/theme-detection/ngx';
-import { Device } from '@ionic-native/device/ngx';
+//import { Device } from '@ionic-native/device/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
-import { Camera } from '@ionic-native/camera/ngx';
+//import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
+
 
 import { CreateContactPageModule } from './modals/create-contact/create-contact.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -66,21 +66,18 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    QRScanner,
-    DeviceMotion,
-    Vibration,
-    Clipboard,
-    SocialSharing,
-    CallNumber,
-    SMS,
-    ThemeDetection,
-    Device,
     AppVersion,
-    SplashScreen,
-    OpenNativeSettings,
+    CallNumber,
+    // Camera,
     DatePipe,
-    Camera,
+    DeviceMotion,
     File,
+    OpenNativeSettings,
+    QRScanner,
+    SMS,
+    SocialSharing,
+    ThemeDetection,
+    Vibration,
   ],
   bootstrap: [AppComponent],
 })
