@@ -150,12 +150,16 @@ Thanks for your support!
 ## Framework
 
 ```sh
-    Ionic CLI                       : 6.13.1
+    Ionic CLI                       : 6.18.1
     Ionic Framework                 : @ionic/angular 5.9.3
     @angular-devkit/build-angular   : 12.2.1
     @angular-devkit/schematics      : 12.2.1
     @angular/cli                    : 12.2.1
     @ionic/angular-toolkit          : 4.0.0
+
+    Capacitor CLI                   : 3.3.3
+    @capacitor/android              : 3.3.3
+    @capacitor/core                 : 3.3.3
 
     Cordova CLI                     : 10.0.0
 
