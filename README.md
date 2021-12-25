@@ -115,7 +115,7 @@ Thanks for your support!
 - Show barcode type when scanning
 - Improve performance and fix issues
 
-### 1.3.0 - 1.3.3 (Current)
+#### 1.3.0 - 1.3.3
 
 - Redesign UI/UX
 - Add vibration on/off setting
