@@ -29,6 +29,16 @@ export class AboutPage {
     window.open(this.env.GOOGLE_PLAY_URL, '_system');
   }
 
+  async showBarcodeType() {
+    const alert = await this.alertController.create({
+      header: this.translate.instant("SUPPORTED_TYPE"),
+      message: this.translate.instant("MSG.BARCODE_TYPE"),
+      buttons: [this.translate.instant("OK")],
+      cssClass: 'left-align'
+    });
+    await alert.present();
+  }
+
   async showUpdateNotes() {
     const alert = await this.alertController.create({
       header: this.translate.instant("UPDATE_NOTES"),

@@ -1,7 +1,8 @@
 {
   "name": "simple-qr",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }

@@ -84,39 +84,19 @@ Thanks for your support!
 - Open issue for bug reports
 - Email me for any ideas regarding Simple QR or Project Simple
 
-### If you want to build the project
+### Build the project
 
 - Run ```npm install``` to install all dependencies
-- Go to ```platforms/android/app/src/main/java/com/bitpay/cordova/qrscanner/QRScanner.java``` and find the following codes
+- Run ```npm run build```
+- Replace ```android/app/src/main/java/com/bitpay/cordova/qrscanner/QRScanner.java``` by ```backup/QRScanner.java```
+- In ```android/capacitor-cordova-android-plugins/src/main/AndroidManifest.xml```, add ```android:exported="false"``` inside receiver tag.
+- In ```android/app/src/main/res/values/styles.xml```, change
 
-  ```java
-    ArrayList<BarcodeFormat> formatList = new ArrayList<BarcodeFormat>();
-    formatList.add(BarcodeFormat.QR_CODE);
+  ```xml
+  <style name="AppTheme.NoActionBarLaunch" parent="AppTheme.NoActionBar">
+    <item name="android:background">#00a5aa</item>
+  </style>
   ```
-
-  and then replace it by
-
-  ```java
-    ArrayList<BarcodeFormat> formatList = new ArrayList<BarcodeFormat>();
-    formatList.add(BarcodeFormat.AZTEC);
-    formatList.add(BarcodeFormat.CODABAR);
-    formatList.add(BarcodeFormat.CODE_128);
-    formatList.add(BarcodeFormat.CODE_39);
-    formatList.add(BarcodeFormat.CODE_93);
-    formatList.add(BarcodeFormat.DATA_MATRIX);
-    formatList.add(BarcodeFormat.EAN_13);
-    formatList.add(BarcodeFormat.EAN_8);
-    formatList.add(BarcodeFormat.ITF);
-    formatList.add(BarcodeFormat.PDF_417);
-    formatList.add(BarcodeFormat.QR_CODE);
-    formatList.add(BarcodeFormat.RSS_14);
-    formatList.add(BarcodeFormat.RSS_EXPANDED);
-    formatList.add(BarcodeFormat.UPC_A);
-    formatList.add(BarcodeFormat.UPC_E);
-    formatList.add(BarcodeFormat.UPC_EAN_EXTENSION);
-  ```
-
-- If you want to run on Android device, run ```npm run start```.
 
 ### How to help to do translation?
 
@@ -128,7 +108,14 @@ Thanks for your support!
 
 ## Changelogs
 
-### 1.3.0 - 1.3.2 (Current)
+### 1.4.0 (Current)
+
+- Migrated the app to Capacitor
+- Improve experience when using "Special Actions" feature in Result page
+- Show barcode type when scanning
+- Improve performance and fix issues
+
+### 1.3.0 - 1.3.3 (Current)
 
 - Redesign UI/UX
 - Add vibration on/off setting

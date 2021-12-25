@@ -1,7 +1,7 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Injectable } from '@angular/core';
 import { AppVersion } from '@ionic-native/app-version/ngx';
-import { Device } from '@ionic-native/device/ngx';
+import { Device, DeviceInfo } from '@capacitor/device';
 import { ThemeDetection, ThemeDetectionResponse } from '@ionic-native/theme-detection/ngx';
 import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
@@ -42,6 +42,7 @@ export class EnvService {
   private _scannedData: string = '';
   private _scanRecords: ScanRecord[] = [];
   private _bookmarks: Bookmark[] = [];
+  private _deviceInfo: DeviceInfo | undefined = undefined;
 
   constructor(
     private platform: Platform,
@@ -49,7 +50,6 @@ export class EnvService {
     public translate: TranslateService,
     private overlayContainer: OverlayContainer,
     private themeDetection: ThemeDetection,
-    private device: Device,
     private appVersion: AppVersion,
   ) {
     this.platform.ready().then(
@@ -60,6 +60,7 @@ export class EnvService {
   }
 
   private async init() {
+    this._deviceInfo = await Device.getInfo();
     this.appVersionNumber = await this.appVersion.getVersionNumber();
     const storage = await this.storage.create();
     this._storage = storage;
@@ -309,7 +310,7 @@ export class EnvService {
   async toggleColorTheme(): Promise<void> {
     console.log("toggle color!")
     if (this.selectedColorTheme === 'default') {
-      const version = Number(this.device.version.split(".")[0]);
+      const version = Number(this._deviceInfo?.osVersion.split(".")[0] ?? 0);
       if (this.platform.is("android") && version <= 9) {  // Android 9 or below
         this.colorTheme = 'light';
         document.body.classList.toggle('dark', false);
@@ -381,9 +382,9 @@ export class EnvService {
     const datetimestr1 = now.format("YYYYMMDDHHmmss");
     const datetimestr2 = now.format("YYYY-MM-DD HH:mm:ss ZZ");
     const appVersion = this.appVersionNumber + '.' + this.buildEnv;
-    const model = `${this.device.manufacturer} ${this.device.model}`;
+    const model = `${this._deviceInfo?.manufacturer} ${this._deviceInfo?.model}`;
     const os = this.platform.is("android") ? "Android" : (this.platform.is("ios") ? "iOS" : "Other");
-    const osVersion = this.device.version;
+    const osVersion = this._deviceInfo?.osVersion;
     let mailContent: string;
     switch (this.language) {
       case 'en':

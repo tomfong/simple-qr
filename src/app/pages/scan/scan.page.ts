@@ -2,7 +2,7 @@ import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion/ngx';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { SplashScreen } from '@capacitor/splash-screen';
 import { Vibration } from '@ionic-native/vibration/ngx';
 import { ActionSheetController, AlertController, IonRouterOutlet, LoadingController, Platform, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -49,7 +49,6 @@ export class ScanPage implements OnInit {
     private router: Router,
     private env: EnvService,
     public translate: TranslateService,
-    private splashScreen: SplashScreen,
     private toastController: ToastController,
     private actionSheetController: ActionSheetController,
   ) { }
@@ -81,11 +80,7 @@ export class ScanPage implements OnInit {
   }
 
   async ionViewDidEnter(): Promise<void> {
-    setTimeout(
-      () => {
-        this.splashScreen.hide();
-      }, 100
-    );
+    await SplashScreen.hide();
     this.qrScanner.disableLight().then(
       () => {
         this.flashActive = false;
