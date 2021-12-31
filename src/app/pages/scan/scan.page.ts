@@ -206,6 +206,7 @@ export class ScanPage implements OnInit {
                         header: this.translate.instant("CAMERA_PAUSED"),
                         message: this.translate.instant("MSG.CAMERA_PAUSED"),
                         backdropDismiss: false,
+                        cssClass: ['alert-bg'],
                         buttons: [
                           {
                             text: this.translate.instant("RESUME"),
@@ -335,14 +336,16 @@ export class ScanPage implements OnInit {
       alert = await this.alertController.create({
         header: head,
         message: msg,
-        buttons: [buttonText]
+        buttons: [buttonText],
+        cssClass: ['alert-bg']
       });
     } else {
       alert = await this.alertController.create({
         header: head,
         message: msg,
         buttons: [],
-        backdropDismiss: false
+        backdropDismiss: false,
+        cssClass: ['alert-bg']
       });
     }
     await alert.present();

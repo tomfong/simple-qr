@@ -1,5 +1,5 @@
-<ion-header [translucent]="true" mode="ios">
-  <ion-toolbar color="dark" mode="ios">
+<ion-header mode="ios">
+  <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'" mode="ios">
     <!-- <ion-buttons slot="start">
       <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
       </ion-back-button>
@@ -23,7 +23,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
           {{ 'BARCODE_CONTENT' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="qrCodeContent" autoGrow="true" rows="1"></ion-textarea>
@@ -35,7 +35,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
           {{ 'BASE64_ENCODED' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="base64EncodedText" autoGrow="true" rows="1"></ion-textarea>
@@ -47,7 +47,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
           {{ 'BASE64_DECODED' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="base64DecodedText" autoGrow="true" rows="1"></ion-textarea>
@@ -60,7 +60,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
           {{ 'PHONE_NUMBER' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="phoneNumber" rows="1"></ion-textarea>
@@ -72,7 +72,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
           {{ 'MESSAGE_CONTENT' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="smsContent?.length > 0? smsContent : ' '" autoGrow="true" rows="1">
@@ -85,7 +85,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
           {{ 'EMAIL_TO' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="toEmails" autoGrow="true" rows="1"></ion-textarea>
@@ -97,7 +97,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
           {{ 'CC' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="ccEmails" autoGrow="true" rows="1"></ion-textarea>
@@ -109,7 +109,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
           {{ 'BCC' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="bccEmails" autoGrow="true" rows="1"></ion-textarea>
@@ -121,7 +121,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
           {{ 'EMAIL_SUBJECT' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="emailSubject" autoGrow="true" rows="1"></ion-textarea>
@@ -133,7 +133,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
           {{ 'EMAIL_BODY' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="emailBody" autoGrow="true" rows="1"></ion-textarea>
@@ -145,7 +145,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
           {{ 'CONTACT_NAME' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="vCardContact.fullName? 
@@ -164,7 +164,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
           {{ 'WIFI_SSID' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="wifiSSID? wifiSSID : ( 'NOT_PROVIDED' | translate )" autoGrow="true"
@@ -177,7 +177,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
           {{ 'WIFI_ENCRYPTION' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly
@@ -191,7 +191,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
         <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'dark'? 'light' : 'dark'" position="floating">
+          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
           {{ 'WIFI_HIDDEN' | translate }}
         </ion-label>
         <ion-textarea class="box" readonly [value]="wifiHidden === true? ('YES' | translate) : ('NO' | translate)"
@@ -212,7 +212,7 @@
 </ion-content>
 
 <ion-footer mode="ios"
-  [ngStyle]="env.colorTheme === 'dark'?  {'background-color': '#222428'} : {'background-color': '#F0F0F0'}">
+  [ngStyle]="env.colorTheme === 'dark'?  {'background-color': '#222428'} : (env.colorTheme === 'black'? {'background-color': '#000000'} : {'background-color': '#F0F0F0'})">
 
   <ion-row class="ion-padding-horizontal justify-content-between">
     <!-- General -->

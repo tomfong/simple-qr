@@ -70,6 +70,7 @@
     "COLOR_THEME": "Color Theme",
     "LIGHT": "Light",
     "DARK": "Dark",
+    "BLACK": "Black",
     "CAMERA_PAUSE_TRIGGER": "Camera Pause Trigger",
     "NEVER": "Never",
     "SECONDS": "seconds",

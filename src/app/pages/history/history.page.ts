@@ -163,6 +163,7 @@ export class HistoryPage {
       const alert = await this.alertController.create({
         header: this.translate.instant('REMOVE_ALL'),
         message: this.translate.instant('MSG.REMOVE_ALL_RECORD'),
+        cssClass: ['alert-bg'],
         buttons: [
           {
             text: this.translate.instant('YES'),
@@ -182,6 +183,7 @@ export class HistoryPage {
       const alert = await this.alertController.create({
         header: this.translate.instant('REMOVE_ALL'),
         message: this.translate.instant('MSG.REMOVE_ALL_BOOKMARKS'),
+        cssClass: ['alert-bg'],
         buttons: [
           {
             text: this.translate.instant('YES'),
@@ -233,6 +235,7 @@ export class HistoryPage {
       alert = await this.alertController.create({
         header: head,
         message: msg,
+        cssClass: ['alert-bg'],
         buttons: [buttonText]
       });
     } else {
@@ -240,6 +243,7 @@ export class HistoryPage {
         header: head,
         message: msg,
         buttons: [],
+        cssClass: ['alert-bg'],
         backdropDismiss: false
       });
     }

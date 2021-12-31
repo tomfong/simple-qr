@@ -109,3 +109,8 @@ ion-item {
         padding-inline-start: 16px;
     }
 }
+
+.alert-bg .alert-wrapper {
+    background: var(--background);
+    opacity: 0.5;
+}

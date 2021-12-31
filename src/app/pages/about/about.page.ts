@@ -34,7 +34,7 @@ export class AboutPage {
       header: this.translate.instant("SUPPORTED_TYPE"),
       message: this.translate.instant("MSG.BARCODE_TYPE"),
       buttons: [this.translate.instant("OK")],
-      cssClass: 'left-align'
+      cssClass: ['left-align', 'alert-bg']
     });
     await alert.present();
   }
@@ -45,7 +45,7 @@ export class AboutPage {
       subHeader: this.env.appVersionNumber,
       message: this.translate.instant("UPDATE.UPDATE_NOTES"),
       buttons: [this.translate.instant("OK")],
-      cssClass: 'left-align'
+      cssClass: ['left-align', 'alert-bg']
     });
     await alert.present();
   }

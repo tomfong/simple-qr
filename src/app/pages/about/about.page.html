@@ -1,5 +1,5 @@
-<ion-header [translucent]="true" mode="ios">
-  <ion-toolbar color="dark" mode="ios">
+<ion-header mode="ios">
+  <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'" mode="ios">
     <ion-buttons slot="start">
       <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
       </ion-back-button>
@@ -16,11 +16,11 @@
   </div>
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="showBarcodeType()">
     <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="barcode-sharp">
+      [color]="'primary'" name="barcode-sharp">
     </ion-icon>
     <ion-label>
       <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'SUPPORTED_BARCODE_TYPE' | translate }}
         </ion-text>
       </p>
@@ -29,11 +29,11 @@
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
     (click)="showUpdateNotes()">
     <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" src="assets/icon/patch-update.svg">
+      [color]="'primary'" src="assets/icon/patch-update.svg">
     </ion-icon>
     <ion-label>
       <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'UPDATE_NOTES' | translate }}
         </ion-text>
       </p>
@@ -41,14 +41,14 @@
   </ion-item>
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="openRepoUrl()">
     <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="logo-github">
+      [color]="'primary'" name="logo-github">
     </ion-icon>
     <ion-label>
       <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'VIEW_SOURCE' | translate }}
         </ion-text>
-        <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'light' : 'dark'"
+        <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
           src="assets/icon/external-link.svg">
         </ion-icon>
       </p>
@@ -57,14 +57,14 @@
   <ion-item *ngIf="isAndroid" mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
     (click)="openGooglePlay()">
     <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="logo-google-playstore">
+      [color]="'primary'" name="logo-google-playstore">
     </ion-icon>
     <ion-label>
       <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'CHECK_GOOGLE_PLAY' | translate }}
         </ion-text>
-        <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'light' : 'dark'"
+        <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
           src="assets/icon/external-link.svg">
         </ion-icon>
       </p>
@@ -73,14 +73,14 @@
   </ion-item>
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="reportBug()">
     <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="bug">
+      [color]="'primary'" name="bug">
     </ion-icon>
     <ion-label>
       <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'REPORT_ISSUE' | translate }}
         </ion-text>
-        <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'light' : 'dark'"
+        <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
           src="assets/icon/external-link.svg">
         </ion-icon>
       </p>
@@ -90,14 +90,14 @@
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
     (click)="viewPrivacyPolicy()">
     <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="document-text-sharp">
+      [color]="'primary'" name="document-text-sharp">
     </ion-icon>
     <ion-label>
       <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'PRIVACY_POLICY' | translate }}
         </ion-text>
-        <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'dark'? 'light' : 'dark'"
+        <ion-icon class="ion-padding-start" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
           src="assets/icon/external-link.svg">
         </ion-icon>
       </p>

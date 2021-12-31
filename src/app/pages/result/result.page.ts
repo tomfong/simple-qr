@@ -321,6 +321,7 @@ export class ResultPage implements OnInit {
         {
           header: this.translate.instant('SEARCH'),
           message: this.translate.instant('MSG.SEARCH'),
+          cssClass: ['alert-bg'],
           buttons: [
             {
               text: this.translate.instant('ORIGINAL'),
@@ -354,6 +355,7 @@ export class ResultPage implements OnInit {
         {
           header: this.translate.instant('COPY'),
           message: this.translate.instant('MSG.COPY_TEXT'),
+          cssClass: ['alert-bg'],
           buttons: [
             {
               text: this.translate.instant('ORIGINAL'),
@@ -397,6 +399,7 @@ export class ResultPage implements OnInit {
         {
           header: this.translate.instant('COPY'),
           message: this.translate.instant('MSG.COPY_TEXT'),
+          cssClass: ['alert-bg'],
           buttons: [
             {
               text: this.translate.instant('ORIGINAL'),
@@ -429,6 +432,7 @@ export class ResultPage implements OnInit {
         {
           header: this.translate.instant('COPY'),
           message: this.translate.instant('MSG.COPY_TEXT'),
+          cssClass: ['alert-bg'],
           buttons: [
             {
               text: this.translate.instant('ORIGINAL'),

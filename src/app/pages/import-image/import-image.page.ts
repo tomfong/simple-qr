@@ -83,6 +83,7 @@ export class ImportImagePage {
       alert = await this.alertController.create({
         header: head,
         message: msg,
+        cssClass: ['alert-bg'],
         buttons: [buttonText]
       });
     } else {
@@ -90,6 +91,7 @@ export class ImportImagePage {
         header: head,
         message: msg,
         buttons: [],
+        cssClass: ['alert-bg'],
         backdropDismiss: false
       });
     }

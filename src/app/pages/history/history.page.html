@@ -1,5 +1,5 @@
-<ion-header [translucent]="true" mode="ios">
-  <ion-toolbar color="dark" mode="ios">
+<ion-header mode="ios">
+  <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'" mode="ios">
     <!-- <ion-buttons slot="start">
       <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
       </ion-back-button>
@@ -11,7 +11,7 @@
 
 <ion-content>
   <ion-segment mode="md" [(ngModel)]="segmentModel" (ionChange)="segmentChanged($event)"
-    [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'">
+    [color]="'primary'">
     <ion-segment-button [value]="'history'">
       <ion-icon src="assets/icon/history.svg"></ion-icon>
     </ion-segment-button>
@@ -21,15 +21,15 @@
   </ion-segment>
   <ng-container *ngIf="segmentModel === 'history' && firstLoad">
     <div class="ion-padding-horizontal fullscreen-vertical-center" style="height: 85%">
-      <ion-spinner name="crescent" [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="width: 3rem; height: 3rem"></ion-spinner>
+      <ion-spinner name="crescent" [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="width: 3rem; height: 3rem"></ion-spinner>
     </div>
   </ng-container>
   <ng-container *ngIf="segmentModel === 'history' && (!scanRecords || (scanRecords.length <= 0)) && !firstLoad">
     <div class="ion-padding-horizontal fullscreen-vertical-center" style="height: 85%">
-      <ion-icon src="assets/icon/history.svg" [color]="env.colorTheme === 'dark'? 'light' : 'dark'"
+      <ion-icon src="assets/icon/history.svg" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
         style="font-size: 3rem"></ion-icon>
       <p class="ion-text-center">
-        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'SCANNING_HISTORY_SHOWN' | translate }}
         </ion-text>
       </p>
@@ -42,7 +42,7 @@
           [lines]="i === scanRecords.length - 1? 'none' : 'full'" (click)="processQrCode(record.text)">
           <ion-label class="ion-padding-start">
             <p class="ion-padding-top ion-padding-horizontal">
-              <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+              <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
                 {{ record.text }}
               </ion-text>
             </p>
@@ -55,7 +55,7 @@
           <!--<ion-ripple-effect type="bounded"></ion-ripple-effect> -->
         </ion-item>
         <ion-item-options side="start" (ionSwipe)="addFavourite(record, slidingItem)">
-          <ion-item-option [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" expandable
+          <ion-item-option [color]="'primary'" expandable
             (click)="addFavourite(record, slidingItem)">
             <ion-icon slot="icon-only" name="star"></ion-icon>
           </ion-item-option>
@@ -70,9 +70,9 @@
   </ng-container>
   <ng-container *ngIf="segmentModel === 'bookmarks' && (!bookmarks || (bookmarks.length <= 0))">
     <div class="ion-padding-horizontal fullscreen-vertical-center" style="height: 85%">
-      <ion-icon name="star" [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: 3rem"></ion-icon>
+      <ion-icon name="star" [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: 3rem"></ion-icon>
       <p class="ion-text-center">
-        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'FAVOURITE_TEXT_SHOWN' | translate }}
         </ion-text>
       </p>
@@ -85,7 +85,7 @@
           [lines]="i === bookmarks.length - 1? 'none' : 'full'" (click)="processQrCode(bookmark.text)">
           <ion-label class="ion-padding-start">
             <p class="ion-padding">
-              <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+              <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
                 {{ bookmark.text }}
               </ion-text>
             </p>

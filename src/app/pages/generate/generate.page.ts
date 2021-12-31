@@ -380,14 +380,16 @@ export class GeneratePage {
       alert = await this.alertController.create({
         header: head,
         message: msg,
-        buttons: [buttonText]
+        buttons: [buttonText],
+        cssClass: ['alert-bg']
       });
     } else {
       alert = await this.alertController.create({
         header: head,
         message: msg,
         buttons: [],
-        backdropDismiss: false
+        backdropDismiss: false,
+        cssClass: ['alert-bg']
       });
     }
     await alert.present();
@@ -448,6 +450,19 @@ export class GeneratePage {
         });
         toast.present();
       }
+    }
+  }
+
+  get ngMatThemeClass() {
+    switch (this.env.colorTheme) {
+      case 'dark':
+        return 'ng-mat-dark';
+      case 'light':
+        return 'ng-mat-light';
+      case 'black':
+        return 'ng-mat-black';
+      default:
+        return 'ng-mat-light';
     }
   }
 }
