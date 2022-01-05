@@ -10,7 +10,6 @@ import { Vibration } from '@ionic-native/vibration/ngx';
 import { AlertController, LoadingController, ModalController, Platform, PopoverController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
-import { CreateContactPage } from 'src/app/modals/create-contact/create-contact.page';
 import { VCardContact } from 'src/app/models/v-card-contact';
 import { EnvService } from 'src/app/services/env.service';
 import { MenuItem } from 'src/app/models/menu-item';

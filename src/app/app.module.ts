@@ -24,8 +24,6 @@ import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
 //import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 
-
-import { CreateContactPageModule } from './modals/create-contact/create-contact.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { HistoryTutorialPageModule } from './modals/history-tutorial/history-tutorial.module';
@@ -58,7 +56,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
       }
     }),
     IonicStorageModule.forRoot(),
-    CreateContactPageModule,
     HistoryTutorialPageModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
