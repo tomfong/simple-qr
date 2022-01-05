@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ActionSheetController, AlertController, IonItemSliding, LoadingController, ModalController, Platform, ToastController } from '@ionic/angular';
+import { AlertController, IonItemSliding, LoadingController, ModalController, Platform, PopoverController, ToastController } from '@ionic/angular';
 import { EnvService } from 'src/app/services/env.service';
 import * as moment from 'moment';
 import { ScanRecord } from 'src/app/models/scan-record';
 import { TranslateService } from '@ngx-translate/core';
 import { Bookmark } from 'src/app/models/bookmark';
 import { HistoryTutorialPage } from 'src/app/modals/history-tutorial/history-tutorial.page';
+import { MenuComponent } from 'src/app/components/menu/menu.component';
+import { MenuItem } from 'src/app/models/menu-item';
 
 @Component({
   selector: 'app-history',
@@ -33,7 +35,7 @@ export class HistoryPage {
     public toastController: ToastController,
     public translate: TranslateService,
     public modalController: ModalController,
-    public actionSheetController: ActionSheetController,
+    public popoverController: PopoverController,
   ) { }
 
   async loadItems() {
@@ -202,31 +204,59 @@ export class HistoryPage {
     }
   }
 
-  async openActionSheet() {
-    const actionSheet = await this.actionSheetController.create({
-      mode: 'ios',
-      buttons: [
-        {
-          text: this.translate.instant("TUTORIAL"),
-          handler: async () => {
-            const modal = await this.modalController.create({
-              component: HistoryTutorialPage,
-              cssClass: 'tutorial-modal-page',
-              componentProps: {
-              }
-            });
-            modal.present();
-          }
-        },
-        {
-          text: this.translate.instant("REMOVE_ALL"),
-          role: 'destructive',
-          handler: async () => {
-            await this.removeAll();
-          }
-        }]
+  async openMenu(ev: Event) {
+    const menuItems = [];
+
+    const tutorialMenuItem = new MenuItem();
+    tutorialMenuItem.icon = {
+      nameOrSrc: 'name',
+      ref: 'book',
+      color: 'primary'
+    };
+    tutorialMenuItem.label = 'TUTORIAL';
+    tutorialMenuItem.action = 'tutorial';
+    menuItems.push(tutorialMenuItem);
+
+    const removeAllMenuItem = new MenuItem();
+    removeAllMenuItem.icon = {
+      nameOrSrc: 'name',
+      ref: 'trash',
+      color: 'danger'
+    };
+    removeAllMenuItem.label = 'REMOVE_ALL';
+    removeAllMenuItem.action = 'remove';
+    menuItems.push(removeAllMenuItem);
+
+    const popover = await this.popoverController.create({
+      component: MenuComponent,
+      mode: "ios",
+      animated: true,
+      event: ev,
+      translucent: false,
+      showBackdrop: true,
+      componentProps: { menuItems }
     });
-    await actionSheet.present();
+    popover.onWillDismiss().then(
+      async (result) => {
+        if (result.data != null && result.data?.action != null) {
+          const action = result.data?.action as 'tutorial' | 'remove';
+          switch (action) {
+            case 'tutorial':
+              const modal = await this.modalController.create({
+                component: HistoryTutorialPage,
+                cssClass: 'tutorial-modal-page',
+                componentProps: {
+                }
+              });
+              modal.present();
+              break;
+            case 'remove':
+              await this.removeAll();
+              break;
+          }
+        }
+      });
+    await popover.present();
   }
 
   async presentAlert(msg: string, head: string, buttonText: string, buttonless: boolean = false): Promise<HTMLIonAlertElement> {

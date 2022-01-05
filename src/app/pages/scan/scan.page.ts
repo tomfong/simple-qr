@@ -4,7 +4,7 @@ import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { Vibration } from '@ionic-native/vibration/ngx';
-import { ActionSheetController, AlertController, IonRouterOutlet, LoadingController, Platform, ToastController } from '@ionic/angular';
+import { AlertController, IonRouterOutlet, LoadingController, Platform, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { EnvService } from 'src/app/services/env.service';
@@ -50,7 +50,6 @@ export class ScanPage implements OnInit {
     private env: EnvService,
     public translate: TranslateService,
     private toastController: ToastController,
-    private actionSheetController: ActionSheetController,
   ) { }
 
   ngOnInit(): void {
@@ -297,20 +296,6 @@ export class ScanPage implements OnInit {
         loading.dismiss();
       }
     );
-  }
-
-  async openActionSheet() {
-    const actionSheet = await this.actionSheetController.create({
-      mode: 'ios',
-      buttons: [
-        {
-          text: this.flashActive ? this.translate.instant("TURN_OFF_TORCH") : this.translate.instant("TURN_ON_TORCH"),
-          handler: async () => {
-            await this.toggleFlash();
-          }
-        }]
-    });
-    await actionSheet.present();
   }
 
   async toggleFlash(): Promise<void> {

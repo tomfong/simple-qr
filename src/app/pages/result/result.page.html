@@ -205,7 +205,7 @@
   </ion-row>
 
   <ion-fab *ngIf="contentType !== 'freeText' && contentType !== 'wifi'" vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" (click)="openActionSheet()">
+    <ion-fab-button color="primary" (click)="openMenu($event)">
       <ion-icon name="menu"></ion-icon>
     </ion-fab-button>
   </ion-fab>

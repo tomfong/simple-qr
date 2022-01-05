@@ -7,12 +7,14 @@ import { Contacts, ContactType, EmailAddress, NewContact, PhoneNumber } from '@c
 import { SMS } from '@ionic-native/sms/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Vibration } from '@ionic-native/vibration/ngx';
-import { ActionSheetController, AlertController, LoadingController, ModalController, Platform, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController, Platform, PopoverController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
 import { CreateContactPage } from 'src/app/modals/create-contact/create-contact.page';
 import { VCardContact } from 'src/app/models/v-card-contact';
 import { EnvService } from 'src/app/services/env.service';
+import { MenuItem } from 'src/app/models/menu-item';
+import { MenuComponent } from 'src/app/components/menu/menu.component';
 
 @Component({
   selector: 'app-result',
@@ -66,7 +68,7 @@ export class ResultPage implements OnInit {
     public modalController: ModalController,
     private sms: SMS,
     public translate: TranslateService,
-    private actionSheetController: ActionSheetController,
+    private popoverController: PopoverController,
   ) { }
 
   async ngOnInit() {
@@ -683,68 +685,109 @@ export class ResultPage implements OnInit {
     }
   }
 
-  async openActionSheet() {
-    const buttons = [];
+  async openMenu(ev: Event) {
+    const menuItems = [];
+
+    const browseWebsiteMenuItem = new MenuItem();
+    browseWebsiteMenuItem.icon = {
+      nameOrSrc: 'name',
+      ref: 'globe',
+      color: 'primary'
+    };
+    browseWebsiteMenuItem.label = 'BROWSE_WEBSITE';
+    browseWebsiteMenuItem.action = 'browse';
+
+    const addContactMenuItem = new MenuItem();
+    addContactMenuItem.icon = {
+      nameOrSrc: 'name',
+      ref: 'person-add-sharp',
+      color: 'primary'
+    };
+    addContactMenuItem.label = 'ADD_CONTACT';
+    addContactMenuItem.action = 'contact';
+
+    const callMenuItem = new MenuItem();
+    callMenuItem.icon = {
+      nameOrSrc: 'name',
+      ref: 'call',
+      color: 'primary'
+    };
+    callMenuItem.label = 'CALL';
+    callMenuItem.action = 'call';
+
+    const sendMessageMenuItem = new MenuItem();
+    sendMessageMenuItem.icon = {
+      nameOrSrc: 'name',
+      ref: 'send',
+      color: 'primary'
+    };
+    sendMessageMenuItem.label = 'SEND_MESSAGE';
+    sendMessageMenuItem.action = 'message';
+
+    const sendEmailMenuItem = new MenuItem();
+    sendEmailMenuItem.icon = {
+      nameOrSrc: 'name',
+      ref: 'mail',
+      color: 'primary'
+    };
+    sendEmailMenuItem.label = 'SEND_EMAIL';
+    sendEmailMenuItem.action = 'email';
+
     switch (this.contentType) {
       case "url":
-        buttons.push({
-          text: this.translate.instant("BROWSE_WEBSITE"),
-          handler: async () => {
-            this.browseWebsite();
-          }
-        });
+        menuItems.push(browseWebsiteMenuItem);
         break;
       case "contact":
-        buttons.push({
-          text: this.translate.instant("ADD_CONTACT"),
-          handler: async () => {
-            this.addContact();
-          }
-        });
+        menuItems.push(addContactMenuItem);
         break;
       case "phone":
-        buttons.push({
-          text: this.translate.instant("CALL"),
-          handler: async () => {
-            this.callPhone();
-          }
-        }, {
-          text: this.translate.instant("ADD_CONTACT"),
-          handler: async () => {
-            this.addContact();
-          }
-        });
+        menuItems.push(callMenuItem);
+        menuItems.push(addContactMenuItem);
         break;
       case "sms":
         if (this.smsContent) {
-          buttons.push({
-            text: this.translate.instant("SEND_MESSAGE"),
-            handler: async () => {
-              this.sendSms();
-            }
-          });
+          menuItems.push(sendMessageMenuItem);
         }
-        buttons.push({
-          text: this.translate.instant("ADD_CONTACT"),
-          handler: async () => {
-            this.addContact();
-          }
-        });
+        menuItems.push(addContactMenuItem);
         break;
       case "email":
-        buttons.push({
-          text: this.translate.instant("SEND_EMAIL"),
-          handler: async () => {
-            this.sendEmail();
-          }
-        });
+        menuItems.push(sendEmailMenuItem);
         break;
     }
-    const actionSheet = await this.actionSheetController.create({
-      mode: 'ios',
-      buttons: buttons
+
+    const popover = await this.popoverController.create({
+      component: MenuComponent,
+      mode: "ios",
+      animated: true,
+      event: ev,
+      translucent: false,
+      showBackdrop: true,
+      componentProps: { menuItems }
     });
-    await actionSheet.present();
+    popover.onWillDismiss().then(
+      async (result) => {
+        if (result.data != null && result.data?.action != null) {
+          const action = result.data?.action as 'browse' | 'contact' | 'call' | 'message' | 'email';
+          switch (action) {
+            case 'browse':
+              this.browseWebsite();
+              break;
+            case 'contact':
+              this.addContact();
+              break;
+            case 'call':
+              this.callPhone();
+              break;
+            case 'message':
+              this.sendSms();
+              break;
+            case 'email':
+              this.sendEmail();
+              break;
+          }
+        }
+      });
+    await popover.present();
   }
 
   async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {

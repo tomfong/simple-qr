@@ -1,0 +1,9 @@
+<ion-list>
+  <ng-container *ngFor="let item of menuItems; index as i">
+    <ion-item button [lines]="i === menuItems.length - 1? 'none' : 'full'" (click)="onPress(item.action)" detail="false">
+      <ion-icon *ngIf="item.icon?.nameOrSrc === 'name'" slot="start" [name]="item.icon?.ref" [color]="item.icon?.color"></ion-icon>
+      <ion-icon *ngIf="item.icon?.nameOrSrc === 'src'" slot="start" [src]="item.icon?.ref" [color]="item.icon?.color"></ion-icon>
+      <ion-label style="white-space: initial;">{{ item.label | translate }}</ion-label>
+    </ion-item>
+  </ng-container>
+</ion-list>

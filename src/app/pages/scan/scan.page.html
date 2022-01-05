@@ -9,8 +9,8 @@
     <img class="svg guide-frame" src="assets/img/guide-frame.svg">
   </div>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" (click)="openActionSheet()">
-      <ion-icon name="menu"></ion-icon>
+    <ion-fab-button [color]="flashActive? 'warning' : 'primary'" (click)="toggleFlash()">
+      <ion-icon name="flashlight"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>

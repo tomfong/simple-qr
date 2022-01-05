@@ -412,6 +412,11 @@ body.dark {
   --ion-item-background: #121212;
 
   --ion-card-background: #1c1c1d;
+
+  ion-list {
+    --background: #1c1c1d !important;
+    --ion-item-background: #1c1c1d !important;
+  }
 }
 
 .ios body.dark ion-modal {
@@ -456,6 +461,13 @@ body.dark {
   --ion-tab-bar-background: #1f1f1f;
 
   --ion-card-background: #1e1e1e;
+
+  app-menu {
+    ion-list {
+      --background: #1c1c1d !important;
+      --ion-item-background: #1c1c1d !important;
+    }
+  }
 }
 
 .ios body.black {
@@ -504,6 +516,13 @@ body.dark {
 
   ion-loading {
     --background: #0d0d0d !important;
+  }
+
+  app-menu {
+    ion-list {
+      --background: #0d0d0d !important;
+      --ion-item-background: #0d0d0d !important;
+    }
   }
 }
 
@@ -559,6 +578,13 @@ body.dark {
 
   ion-loading {
     --background: #0d0d0d !important;
+  }
+
+  app-menu {
+    ion-list {
+      --background: #0d0d0d !important;
+      --ion-item-background: #0d0d0d !important;
+    }
   }
 }
 
