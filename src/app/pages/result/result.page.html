@@ -14,8 +14,9 @@
     <ion-col class="ion-text-center ion-padding-horizontal ion-padding-top">
       <ngx-qrcode [elementType]="qrElementType" [value]="qrCodeContent" [width]="800"
         [errorCorrectionLevel]="errorCorrectionLevel" [colorDark]="qrColorDark" [colorLight]="qrColorLight"
-        [margin]="qrMargin">
+        [margin]="qrMargin" (click)="enlarge()">
       </ngx-qrcode>
+      <p>{{ 'MSG.TAP_TO_ZOOM_IN' | translate }}</p>
     </ion-col>
   </ion-row>
 

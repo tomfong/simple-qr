@@ -32,6 +32,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MenuComponent } from './components/menu/menu.component';
+import { QrcodeComponent } from './components/qrcode/qrcode.component';
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -40,7 +42,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent
+    MenuComponent,
+    QrcodeComponent
   ],
   entryComponents: [],
   imports: [
@@ -62,6 +65,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     MatSlideToggleModule,
     MatButtonModule,
     NgbModule,
+    NgxQRCodeModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

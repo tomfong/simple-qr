@@ -14,6 +14,7 @@ import { VCardContact } from 'src/app/models/v-card-contact';
 import { EnvService } from 'src/app/services/env.service';
 import { MenuItem } from 'src/app/models/menu-item';
 import { MenuComponent } from 'src/app/components/menu/menu.component';
+import { QrcodeComponent } from 'src/app/components/qrcode/qrcode.component';
 
 @Component({
   selector: 'app-result',
@@ -295,6 +296,18 @@ export class ResultPage implements OnInit {
 
   async sendEmail(): Promise<void> {
     window.open(this.qrCodeContent, "_system");
+  }
+
+  async enlarge(): Promise<void> {
+    if (this.env.vibration === 'on') {
+      this.vibration.vibrate(50);
+    }
+    const modal = await this.modalController.create({
+      component: QrcodeComponent,
+      cssClass: 'qrcode-modal',
+      componentProps: { qrCodeContent: this.qrCodeContent }
+    });
+    modal.present();
   }
 
   async webSearch(): Promise<void> {
