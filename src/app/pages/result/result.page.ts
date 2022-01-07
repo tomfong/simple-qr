@@ -6,7 +6,7 @@ import { Clipboard } from '@capacitor/clipboard';
 import { Contacts, ContactType, EmailAddress, NewContact, PhoneNumber } from '@capacitor-community/contacts'
 import { SMS } from '@ionic-native/sms/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { Vibration } from '@ionic-native/vibration/ngx';
+import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
 import { AlertController, LoadingController, ModalController, Platform, PopoverController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
@@ -59,7 +59,6 @@ export class ResultPage implements OnInit {
     public alertController: AlertController,
     public loadingController: LoadingController,
     private route: ActivatedRoute,
-    private vibration: Vibration,
     private router: Router,
     public env: EnvService,
     public toastController: ToastController,
@@ -83,13 +82,6 @@ export class ResultPage implements OnInit {
   }
 
   async ionViewDidEnter(): Promise<void> {
-    if (this.env.vibration === 'on') {
-      if (this.platform.is("android")) {
-        this.vibration.vibrate([100, 100, 100]);
-      } else {
-        this.vibration.vibrate(100);
-      }
-    }
     // if (this.contentType === "url") {
     //   this.webToast = await this.toastController.create({
     //     header: this.translate.instant('WEBSITE'),
@@ -136,7 +128,6 @@ export class ResultPage implements OnInit {
   }
 
   async ionViewWillLeave(): Promise<void> {
-    this.vibration.vibrate(0);
     this.base64Decoded = false;
     this.base64Encoded = false;
     // if (this.webToast) {
@@ -299,9 +290,6 @@ export class ResultPage implements OnInit {
   }
 
   async enlarge(): Promise<void> {
-    if (this.env.vibration === 'on') {
-      this.vibration.vibrate(50);
-    }
     const modal = await this.modalController.create({
       component: QrcodeComponent,
       cssClass: 'qrcode-modal',
@@ -870,4 +858,9 @@ export class ResultPage implements OnInit {
     return loading;
   }
 
+  async tapHaptic() {
+    if (this.env.vibration === 'on') {
+      await Haptics.impact({ style: ImpactStyle.Medium });
+    }
+  }
 }

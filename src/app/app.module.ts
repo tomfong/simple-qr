@@ -11,7 +11,6 @@ import { DeviceMotion } from '@ionic-native/device-motion/ngx';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Vibration } from '@ionic-native/vibration/ngx';
 import { IonicStorageModule } from '@ionic/storage-angular';
 //import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
@@ -80,7 +79,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     SMS,
     SocialSharing,
     ThemeDetection,
-    Vibration,
   ],
   bootstrap: [AppComponent],
 })

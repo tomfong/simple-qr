@@ -466,7 +466,7 @@
     </ion-row>
   </ng-container>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" (click)="goGenerate()" [disabled]="disableGenerateBtn">
+    <ion-fab-button color="primary" (click)="tapHaptic(); goGenerate()" [disabled]="disableGenerateBtn">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

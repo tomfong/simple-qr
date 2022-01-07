@@ -9,6 +9,7 @@ import { Bookmark } from 'src/app/models/bookmark';
 import { HistoryTutorialPage } from 'src/app/modals/history-tutorial/history-tutorial.page';
 import { MenuComponent } from 'src/app/components/menu/menu.component';
 import { MenuItem } from 'src/app/models/menu-item';
+import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
 
 @Component({
   selector: 'app-history',
@@ -339,6 +340,12 @@ export class HistoryPage {
         });
         toast.present();
       }
+    }
+  }
+
+  async tapHaptic() {
+    if (this.env.vibration === 'on') {
+      await Haptics.impact({ style: ImpactStyle.Medium });
     }
   }
 }

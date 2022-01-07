@@ -14,7 +14,7 @@
     <ion-col class="ion-text-center ion-padding-horizontal ion-padding-top">
       <ngx-qrcode [elementType]="qrElementType" [value]="qrCodeContent" [width]="800"
         [errorCorrectionLevel]="errorCorrectionLevel" [colorDark]="qrColorDark" [colorLight]="qrColorLight"
-        [margin]="qrMargin" (click)="enlarge()">
+        [margin]="qrMargin" (click)="tapHaptic(); enlarge()">
       </ngx-qrcode>
       <p>{{ 'MSG.TAP_TO_ZOOM_IN' | translate }}</p>
     </ion-col>
@@ -206,53 +206,53 @@
   </ion-row>
 
   <ion-fab *ngIf="contentType === 'url'" vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" (click)="browseWebsite()">
+    <ion-fab-button color="primary" (click)="tapHaptic(); browseWebsite()">
       <ion-icon name="globe"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
   <ion-fab *ngIf="contentType === 'contact'" vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" (click)="addContact()">
+    <ion-fab-button color="primary" (click)="tapHaptic(); addContact()">
       <ion-icon name="person-add-sharp"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
   <ion-fab *ngIf="contentType === 'phone'" vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" closeIcon="chevron-down">
+    <ion-fab-button color="primary" closeIcon="chevron-down" (click)="tapHaptic(); ">
       <ion-icon name="menu"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button color="primary" (click)="addContact()">
+      <ion-fab-button color="primary" (click)="tapHaptic(); addContact()">
         <ion-icon name="person-add-sharp"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button color="primary" (click)="callPhone()">
+      <ion-fab-button color="primary" (click)="tapHaptic(); callPhone()">
         <ion-icon name="call"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
 
   <ion-fab *ngIf="smsContent && contentType === 'sms'" vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" closeIcon="chevron-down">
+    <ion-fab-button color="primary" closeIcon="chevron-down" (click)="tapHaptic(); ">
       <ion-icon name="menu"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button color="primary" (click)="addContact()">
+      <ion-fab-button color="primary" (click)="tapHaptic(); addContact()">
         <ion-icon name="person-add-sharp"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button color="primary" (click)="sendSms()">
+      <ion-fab-button color="primary" (click)="tapHaptic(); sendSms()">
         <ion-icon name="send"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
 
   <ion-fab *ngIf="!smsContent && contentType === 'sms'" vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" (click)="addContact()">
+    <ion-fab-button color="primary" (click)="tapHaptic(); addContact()">
       <ion-icon name="person-add-sharp"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
   <ion-fab *ngIf="contentType === 'email'" vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" (click)="sendEmail()">
+    <ion-fab-button color="primary" (click)="tapHaptic(); sendEmail()">
       <ion-icon name="mail"></ion-icon>
     </ion-fab-button>
   </ion-fab>
@@ -264,28 +264,28 @@
 
   <ion-row class="ion-padding-horizontal justify-content-between">
     <!-- General -->
-    <ion-button mode="md" (click)="webSearch()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
+    <ion-button mode="md" (click)="tapHaptic(); webSearch()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
       [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
       <ion-icon slot="icon-only" src="assets/icon/search-web.svg"></ion-icon>
     </ion-button>
-    <ion-button mode="md" (click)="copyText()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
+    <ion-button mode="md" (click)="tapHaptic(); copyText()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
       [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
       <ion-icon slot="icon-only" name="copy"></ion-icon>
     </ion-button>
-    <ion-button mode="md" (click)="base64()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
+    <ion-button mode="md" (click)="tapHaptic(); base64()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
       [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
       <ion-icon slot="icon-only" name="code-working"></ion-icon>
     </ion-button>
-    <ion-button mode="md" (click)="shareQrCode()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
+    <ion-button mode="md" (click)="tapHaptic(); shareQrCode()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
       [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
       <ion-icon slot="icon-only" name="share-social"></ion-icon>
     </ion-button>
-    <ion-button mode="md" (click)="addBookmark()" *ngIf="!bookmarked"
+    <ion-button mode="md" (click)="tapHaptic(); addBookmark()" *ngIf="!bookmarked"
       [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
       [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
       <ion-icon slot="icon-only" name="star"></ion-icon>
     </ion-button>
-    <ion-button mode="md" (click)="removeBookmark()" *ngIf="bookmarked" [color]="'warning'" fill="clear"
+    <ion-button mode="md" (click)="tapHaptic(); removeBookmark()" *ngIf="bookmarked" [color]="'warning'" fill="clear"
       [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
       <ion-icon slot="icon-only" name="star"></ion-icon>
     </ion-button>

@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion/ngx';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { SplashScreen } from '@capacitor/splash-screen';
-import { Vibration } from '@ionic-native/vibration/ngx';
 import { AlertController, IonRouterOutlet, LoadingController, Platform, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { EnvService } from 'src/app/services/env.service';
+import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
 
 enum CameraChoice {
   BACK,
@@ -45,7 +45,6 @@ export class ScanPage implements OnInit {
     public loadingController: LoadingController,
     public routerOutlet: IonRouterOutlet,
     private deviceMotion: DeviceMotion,
-    private vibration: Vibration,
     private router: Router,
     private env: EnvService,
     public translate: TranslateService,
@@ -97,7 +96,6 @@ export class ScanPage implements OnInit {
   }
 
   async ionViewDidLeave(): Promise<void> {
-    this.vibration.vibrate(0);
     if (this.resumeSubscription) {
       this.resumeSubscription.unsubscribe();
       this.resumeSubscription = undefined;
@@ -267,7 +265,7 @@ export class ScanPage implements OnInit {
               return;
             }
             if (this.env.vibration === 'on') {
-              this.vibration.vibrate(200);
+              await Haptics.vibrate();
             }
             const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
             if (this.scanSubscription) {
@@ -394,4 +392,9 @@ export class ScanPage implements OnInit {
     }
   }
 
+  async tapHaptic() {
+    if (this.env.vibration === 'on') {
+      await Haptics.impact({ style: ImpactStyle.Medium });
+    }
+  }
 }

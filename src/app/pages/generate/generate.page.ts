@@ -1,6 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
@@ -463,6 +464,12 @@ export class GeneratePage {
         return 'ng-mat-black';
       default:
         return 'ng-mat-light';
+    }
+  }
+
+  async tapHaptic() {
+    if (this.env.vibration === 'on') {
+      await Haptics.impact({ style: ImpactStyle.Medium });
     }
   }
 }
