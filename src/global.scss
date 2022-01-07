@@ -70,12 +70,12 @@
 }
 
 .qrcode-modal .modal-wrapper {
-    max-height: 70%;
+    max-height: 350px;
     position: absolute;
     display: block;
     max-width: 90%;
     border-radius: 5px;
-    --background: transparent;
+    --background: transparent !important;
 }
 
 .toolbar-start-btn {
