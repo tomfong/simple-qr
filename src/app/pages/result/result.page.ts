@@ -697,110 +697,110 @@ export class ResultPage implements OnInit {
     }
   }
 
-  async openMenu(ev: Event) {
-    const menuItems = [];
+  // async openMenu(ev: Event) {
+  //   const menuItems = [];
 
-    const browseWebsiteMenuItem = new MenuItem();
-    browseWebsiteMenuItem.icon = {
-      nameOrSrc: 'name',
-      ref: 'globe',
-      color: 'primary'
-    };
-    browseWebsiteMenuItem.label = 'BROWSE_WEBSITE';
-    browseWebsiteMenuItem.action = 'browse';
+  //   const browseWebsiteMenuItem = new MenuItem();
+  //   browseWebsiteMenuItem.icon = {
+  //     nameOrSrc: 'name',
+  //     ref: 'globe',
+  //     color: 'primary'
+  //   };
+  //   browseWebsiteMenuItem.label = 'BROWSE_WEBSITE';
+  //   browseWebsiteMenuItem.action = 'browse';
 
-    const addContactMenuItem = new MenuItem();
-    addContactMenuItem.icon = {
-      nameOrSrc: 'name',
-      ref: 'person-add-sharp',
-      color: 'primary'
-    };
-    addContactMenuItem.label = 'ADD_CONTACT';
-    addContactMenuItem.action = 'contact';
+  //   const addContactMenuItem = new MenuItem();
+  //   addContactMenuItem.icon = {
+  //     nameOrSrc: 'name',
+  //     ref: 'person-add-sharp',
+  //     color: 'primary'
+  //   };
+  //   addContactMenuItem.label = 'ADD_CONTACT';
+  //   addContactMenuItem.action = 'contact';
 
-    const callMenuItem = new MenuItem();
-    callMenuItem.icon = {
-      nameOrSrc: 'name',
-      ref: 'call',
-      color: 'primary'
-    };
-    callMenuItem.label = 'CALL';
-    callMenuItem.action = 'call';
+  //   const callMenuItem = new MenuItem();
+  //   callMenuItem.icon = {
+  //     nameOrSrc: 'name',
+  //     ref: 'call',
+  //     color: 'primary'
+  //   };
+  //   callMenuItem.label = 'CALL';
+  //   callMenuItem.action = 'call';
 
-    const sendMessageMenuItem = new MenuItem();
-    sendMessageMenuItem.icon = {
-      nameOrSrc: 'name',
-      ref: 'send',
-      color: 'primary'
-    };
-    sendMessageMenuItem.label = 'SEND_MESSAGE';
-    sendMessageMenuItem.action = 'message';
+  //   const sendMessageMenuItem = new MenuItem();
+  //   sendMessageMenuItem.icon = {
+  //     nameOrSrc: 'name',
+  //     ref: 'send',
+  //     color: 'primary'
+  //   };
+  //   sendMessageMenuItem.label = 'SEND_MESSAGE';
+  //   sendMessageMenuItem.action = 'message';
 
-    const sendEmailMenuItem = new MenuItem();
-    sendEmailMenuItem.icon = {
-      nameOrSrc: 'name',
-      ref: 'mail',
-      color: 'primary'
-    };
-    sendEmailMenuItem.label = 'SEND_EMAIL';
-    sendEmailMenuItem.action = 'email';
+  //   const sendEmailMenuItem = new MenuItem();
+  //   sendEmailMenuItem.icon = {
+  //     nameOrSrc: 'name',
+  //     ref: 'mail',
+  //     color: 'primary'
+  //   };
+  //   sendEmailMenuItem.label = 'SEND_EMAIL';
+  //   sendEmailMenuItem.action = 'email';
 
-    switch (this.contentType) {
-      case "url":
-        menuItems.push(browseWebsiteMenuItem);
-        break;
-      case "contact":
-        menuItems.push(addContactMenuItem);
-        break;
-      case "phone":
-        menuItems.push(callMenuItem);
-        menuItems.push(addContactMenuItem);
-        break;
-      case "sms":
-        if (this.smsContent) {
-          menuItems.push(sendMessageMenuItem);
-        }
-        menuItems.push(addContactMenuItem);
-        break;
-      case "email":
-        menuItems.push(sendEmailMenuItem);
-        break;
-    }
+  //   switch (this.contentType) {
+  //     case "url":
+  //       menuItems.push(browseWebsiteMenuItem);
+  //       break;
+  //     case "contact":
+  //       menuItems.push(addContactMenuItem);
+  //       break;
+  //     case "phone":
+  //       menuItems.push(callMenuItem);
+  //       menuItems.push(addContactMenuItem);
+  //       break;
+  //     case "sms":
+  //       if (this.smsContent) {
+  //         menuItems.push(sendMessageMenuItem);
+  //       }
+  //       menuItems.push(addContactMenuItem);
+  //       break;
+  //     case "email":
+  //       menuItems.push(sendEmailMenuItem);
+  //       break;
+  //   }
 
-    const popover = await this.popoverController.create({
-      component: MenuComponent,
-      mode: "ios",
-      animated: true,
-      event: ev,
-      translucent: false,
-      showBackdrop: true,
-      componentProps: { menuItems }
-    });
-    popover.onWillDismiss().then(
-      async (result) => {
-        if (result.data != null && result.data?.action != null) {
-          const action = result.data?.action as 'browse' | 'contact' | 'call' | 'message' | 'email';
-          switch (action) {
-            case 'browse':
-              this.browseWebsite();
-              break;
-            case 'contact':
-              this.addContact();
-              break;
-            case 'call':
-              this.callPhone();
-              break;
-            case 'message':
-              this.sendSms();
-              break;
-            case 'email':
-              this.sendEmail();
-              break;
-          }
-        }
-      });
-    await popover.present();
-  }
+  //   const popover = await this.popoverController.create({
+  //     component: MenuComponent,
+  //     mode: "ios",
+  //     animated: true,
+  //     event: ev,
+  //     translucent: false,
+  //     showBackdrop: true,
+  //     componentProps: { menuItems }
+  //   });
+  //   popover.onWillDismiss().then(
+  //     async (result) => {
+  //       if (result.data != null && result.data?.action != null) {
+  //         const action = result.data?.action as 'browse' | 'contact' | 'call' | 'message' | 'email';
+  //         switch (action) {
+  //           case 'browse':
+  //             this.browseWebsite();
+  //             break;
+  //           case 'contact':
+  //             this.addContact();
+  //             break;
+  //           case 'call':
+  //             this.callPhone();
+  //             break;
+  //           case 'message':
+  //             this.sendSms();
+  //             break;
+  //           case 'email':
+  //             this.sendEmail();
+  //             break;
+  //         }
+  //       }
+  //     });
+  //   await popover.present();
+  // }
 
   async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {
     if (size === "long") {

@@ -10,8 +10,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-segment mode="md" [(ngModel)]="segmentModel" (ionChange)="segmentChanged($event)"
-    [color]="'primary'">
+  <ion-segment mode="md" [(ngModel)]="segmentModel" (ionChange)="segmentChanged($event)" [color]="'primary'">
     <ion-segment-button [value]="'history'">
       <ion-icon src="assets/icon/history.svg"></ion-icon>
     </ion-segment-button>
@@ -21,7 +20,8 @@
   </ion-segment>
   <ng-container *ngIf="segmentModel === 'history' && firstLoad">
     <div class="ion-padding-horizontal fullscreen-vertical-center" style="height: 85%">
-      <ion-spinner name="crescent" [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="width: 3rem; height: 3rem"></ion-spinner>
+      <ion-spinner name="crescent" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
+        style="width: 3rem; height: 3rem"></ion-spinner>
     </div>
   </ng-container>
   <ng-container *ngIf="segmentModel === 'history' && (!scanRecords || (scanRecords.length <= 0)) && !firstLoad">
@@ -55,8 +55,7 @@
           <!--<ion-ripple-effect type="bounded"></ion-ripple-effect> -->
         </ion-item>
         <ion-item-options side="start" (ionSwipe)="addFavourite(record, slidingItem)">
-          <ion-item-option [color]="'primary'" expandable
-            (click)="addFavourite(record, slidingItem)">
+          <ion-item-option [color]="'primary'" expandable (click)="addFavourite(record, slidingItem)">
             <ion-icon slot="icon-only" name="star"></ion-icon>
           </ion-item-option>
         </ion-item-options>
@@ -100,9 +99,43 @@
       </ion-item-sliding>
     </ion-list>
   </ng-container>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" (click)="openMenu($event)">
-      <ion-icon name="menu"></ion-icon>
+
+  <ion-fab *ngIf="segmentModel === 'history' && (!scanRecords || scanRecords.length <= 0)" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="primary" (click)="showTutorial()">
+      <ion-icon name="book"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+  <ion-fab *ngIf="segmentModel === 'history' && scanRecords && scanRecords.length > 0" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="primary" closeIcon="chevron-down">
+      <ion-icon name="menu"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button color="danger" (click)="removeAll()">
+        <ion-icon name="trash-bin"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="primary" (click)="showTutorial()">
+        <ion-icon name="book"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <ion-fab *ngIf="segmentModel === 'bookmarks' && (!bookmarks || bookmarks.length <= 0)" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="primary" (click)="showTutorial()">
+      <ion-icon name="book"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-fab *ngIf="segmentModel === 'bookmarks' && bookmarks && bookmarks.length > 0" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="primary" closeIcon="chevron-down">
+      <ion-icon name="menu"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button color="danger" (click)="removeAll()">
+        <ion-icon name="trash-bin"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="primary" (click)="showTutorial()">
+        <ion-icon name="book"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+  
 </ion-content>

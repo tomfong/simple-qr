@@ -205,11 +205,58 @@
     <ion-col></ion-col>
   </ion-row>
 
-  <ion-fab *ngIf="contentType !== 'freeText' && contentType !== 'wifi'" vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" (click)="openMenu($event)">
-      <ion-icon name="menu"></ion-icon>
+  <ion-fab *ngIf="contentType === 'url'" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="primary" (click)="browseWebsite()">
+      <ion-icon name="globe"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
+  <ion-fab *ngIf="contentType === 'contact'" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="primary" (click)="addContact()">
+      <ion-icon name="person-add-sharp"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab *ngIf="contentType === 'phone'" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="primary" closeIcon="chevron-down">
+      <ion-icon name="menu"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button color="primary" (click)="addContact()">
+        <ion-icon name="person-add-sharp"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="primary" (click)="callPhone()">
+        <ion-icon name="call"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <ion-fab *ngIf="smsContent && contentType === 'sms'" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="primary" closeIcon="chevron-down">
+      <ion-icon name="menu"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button color="primary" (click)="addContact()">
+        <ion-icon name="person-add-sharp"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="primary" (click)="sendSms()">
+        <ion-icon name="send"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <ion-fab *ngIf="!smsContent && contentType === 'sms'" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="primary" (click)="addContact()">
+      <ion-icon name="person-add-sharp"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab *ngIf="contentType === 'email'" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="primary" (click)="sendEmail()">
+      <ion-icon name="mail"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
 </ion-content>
 
 <ion-footer mode="ios"
