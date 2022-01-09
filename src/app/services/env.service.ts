@@ -27,6 +27,7 @@ export class EnvService {
   public scanRecordLogging: 'on' | 'off' = 'on';
   public vibration: 'on' | 'on-haptic' | 'on-scanned' | 'off' = 'on';
   public notShowHistoryTutorial: boolean = false;
+  public notShowUpdateNotes: boolean = false;
   public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' = 'google';
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
@@ -120,6 +121,15 @@ export class EnvService {
         }
       }
     );
+    this.storageGet("not-show-update-notes").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.notShowUpdateNotes = (value === 'yes' ? true : false);
+        } else {
+          this.notShowUpdateNotes = false;
+        }
+      }
+    );
     this.storageGet("search-engine").then(
       value => {
         if (value !== null && value !== undefined) {
@@ -200,6 +210,7 @@ export class EnvService {
     this.scanRecordLogging = 'on';
     this.vibration = 'on';
     this.notShowHistoryTutorial = false;
+    this.notShowUpdateNotes = false;
     this.searchEngine = 'google';
     this._scanRecords = [];
     this._bookmarks = [];

@@ -220,6 +220,6 @@
         "TAP_TO_ZOOM_IN": "Tap to zoom in"
     },
     "UPDATE": {
-        "UPDATE_NOTES": "<ul><li>Improve experience when using \"Special Actions\" feature in Result page</li><li>Show barcode type when scanning</li><li>Redesigned UI and UX</li><li>Improved performace and fixed issues</li></ul>"
+        "UPDATE_NOTES": "<ul><li>Support Black color theme</li><li>Support zooming in QR code</li><li>Vibration effect update</li><li>Minor UI update</li><li>Improve performace and fix known issues</li></ul>"
     }
 }

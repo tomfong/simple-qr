@@ -151,6 +151,11 @@ export class ScanPage implements OnInit {
     await this.qrScanner.prepare().then(
       async (status: QRScannerStatus) => {
         if (status.authorized) {
+          if (this.env.notShowUpdateNotes === false) {
+            this.env.notShowUpdateNotes = true;
+            this.env.storageSet("not-show-update-notes", 'yes');
+            await this.showUpdateNotes();
+          }
           await this.scanQr();
         }
       },
@@ -396,5 +401,16 @@ export class ScanPage implements OnInit {
     if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
       await Haptics.impact({ style: ImpactStyle.Medium });
     }
+  }
+
+  async showUpdateNotes() {
+    const alert = await this.alertController.create({
+      header: this.translate.instant("UPDATE_NOTES"),
+      subHeader: this.env.appVersionNumber,
+      message: this.translate.instant("UPDATE.UPDATE_NOTES"),
+      buttons: [this.translate.instant("OK")],
+      cssClass: ['left-align', 'alert-bg']
+    });
+    await alert.present();
   }
 }

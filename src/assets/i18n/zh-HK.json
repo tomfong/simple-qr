@@ -220,6 +220,6 @@
         "TAP_TO_ZOOM_IN": "輕觸以放大"
     },
     "UPDATE": {
-        "UPDATE_NOTES": "<ul><li>改善使用結果頁「特別動作」功能時的體驗</li><li>掃碼時顯示條碼類別</li><li>重新設計的界面和體驗</li><li>改善效能及修正已知問題</li></ul>"
+        "UPDATE_NOTES": "<ul><li>支援黑色主題</li><li>支援 QR 碼放大</li><li>震動效果更新</li><li>小幅度的界面更新</li><li>改善效能及修正已知問題</li></ul>"
     }
 }
