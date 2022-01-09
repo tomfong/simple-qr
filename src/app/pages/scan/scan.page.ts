@@ -264,7 +264,7 @@ export class ScanPage implements OnInit {
               this.scanQr();
               return;
             }
-            if (this.env.vibration === 'on') {
+            if (this.env.vibration === 'on' || this.env.vibration === 'on-scanned') {
               await Haptics.vibrate();
             }
             const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
@@ -393,7 +393,7 @@ export class ScanPage implements OnInit {
   }
 
   async tapHaptic() {
-    if (this.env.vibration === 'on') {
+    if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
       await Haptics.impact({ style: ImpactStyle.Medium });
     }
   }

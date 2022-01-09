@@ -5,6 +5,7 @@ import { EnvService } from 'src/app/services/env.service';
 import { Camera, CameraResultType, CameraSource, GalleryImageOptions, GalleryPhotos, ImageOptions, Photo } from '@capacitor/camera';
 import jsQR from 'jsqr';
 import { Router } from '@angular/router';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
 @Component({
   selector: 'app-import-image',
@@ -188,4 +189,9 @@ export class ImportImagePage {
     });
   }
 
+  async tapHaptic() {
+    if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
+      await Haptics.impact({ style: ImpactStyle.Medium });
+    }
+  }
 }

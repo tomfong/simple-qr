@@ -78,6 +78,8 @@
     "SCAN_HISTORY_LOGGING": "掃描記錄",
     "TURN_ON": "開啟",
     "TURN_OFF": "關閉",
+    "TURN_ON_HAPTIC": "僅觸感反饋",
+    "TURN_ON_SCANNED": "僅掃描反饋",
     "SEARCH_ENGINE": "搜尋引擎",
     "GOOGLE": "Google 搜尋",
     "BING": "Microsoft Bing",

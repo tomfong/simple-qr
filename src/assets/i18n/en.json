@@ -78,6 +78,8 @@
     "SCAN_HISTORY_LOGGING": "Scan History Logging",
     "TURN_ON": "On",
     "TURN_OFF": "Off",
+    "TURN_ON_HAPTIC": "Haptic Feedback Only",
+    "TURN_ON_SCANNED": "Scanning Feedback Only",
     "SEARCH_ENGINE": "Search Engine",
     "GOOGLE": "Google Search",
     "BING": "Microsoft Bing",

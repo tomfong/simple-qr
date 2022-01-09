@@ -344,7 +344,7 @@ export class HistoryPage {
   }
 
   async tapHaptic() {
-    if (this.env.vibration === 'on') {
+    if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
       await Haptics.impact({ style: ImpactStyle.Medium });
     }
   }

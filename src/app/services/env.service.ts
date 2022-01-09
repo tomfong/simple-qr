@@ -25,7 +25,7 @@ export class EnvService {
   public selectedColorTheme: 'default' | 'light' | 'dark' | 'black' = 'default';
   public cameraPauseTimeout: 0 | 5 | 10 | 20 | 30 = 10;
   public scanRecordLogging: 'on' | 'off' = 'on';
-  public vibration: 'on' | 'off' = 'on';
+  public vibration: 'on' | 'on-haptic' | 'on-scanned' | 'off' = 'on';
   public notShowHistoryTutorial: boolean = false;
   public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' = 'google';
 

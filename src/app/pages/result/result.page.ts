@@ -82,6 +82,13 @@ export class ResultPage implements OnInit {
   }
 
   async ionViewDidEnter(): Promise<void> {
+    if (this.env.vibration === 'on' || this.env.vibration === 'on-scanned') {
+      setTimeout(
+        async () => {
+          await Haptics.vibrate();
+        }, 200
+      );
+    }
     // if (this.contentType === "url") {
     //   this.webToast = await this.toastController.create({
     //     header: this.translate.instant('WEBSITE'),
@@ -859,7 +866,7 @@ export class ResultPage implements OnInit {
   }
 
   async tapHaptic() {
-    if (this.env.vibration === 'on') {
+    if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
       await Haptics.impact({ style: ImpactStyle.Medium });
     }
   }
