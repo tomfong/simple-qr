@@ -20,7 +20,6 @@ export class ImportImagePage {
     private alertController: AlertController,
     private loadingController: LoadingController,
     private toastController: ToastController,
-    // private camera: Camera,
     private router: Router,
   ) { }
 

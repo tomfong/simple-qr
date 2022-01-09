@@ -45,9 +45,7 @@ export class HistoryPage {
   }
 
   async ionViewDidEnter() {
-    // const loading = await this.presentLoading(this.translate.instant("PLEASE_WAIT"));
     await this.loadItems();
-    // loading.dismiss();
     this.firstLoad = false;
     if (this.env.notShowHistoryTutorial === false) {
       this.env.notShowHistoryTutorial = true;
@@ -208,61 +206,6 @@ export class HistoryPage {
       alert.present();
     }
   }
-
-  // async openMenu(ev: Event) {
-  //   const menuItems = [];
-
-  //   const tutorialMenuItem = new MenuItem();
-  //   tutorialMenuItem.icon = {
-  //     nameOrSrc: 'name',
-  //     ref: 'book',
-  //     color: 'primary'
-  //   };
-  //   tutorialMenuItem.label = 'TUTORIAL';
-  //   tutorialMenuItem.action = 'tutorial';
-  //   menuItems.push(tutorialMenuItem);
-
-  //   const removeAllMenuItem = new MenuItem();
-  //   removeAllMenuItem.icon = {
-  //     nameOrSrc: 'name',
-  //     ref: 'trash',
-  //     color: 'danger'
-  //   };
-  //   removeAllMenuItem.label = 'REMOVE_ALL';
-  //   removeAllMenuItem.action = 'remove';
-  //   menuItems.push(removeAllMenuItem);
-
-  //   const popover = await this.popoverController.create({
-  //     component: MenuComponent,
-  //     mode: "ios",
-  //     animated: true,
-  //     event: ev,
-  //     translucent: false,
-  //     showBackdrop: true,
-  //     componentProps: { menuItems }
-  //   });
-  //   popover.onWillDismiss().then(
-  //     async (result) => {
-  //       if (result.data != null && result.data?.action != null) {
-  //         const action = result.data?.action as 'tutorial' | 'remove';
-  //         switch (action) {
-  //           case 'tutorial':
-  //             const modal = await this.modalController.create({
-  //               component: HistoryTutorialPage,
-  //               cssClass: 'tutorial-modal-page',
-  //               componentProps: {
-  //               }
-  //             });
-  //             modal.present();
-  //             break;
-  //           case 'remove':
-  //             await this.removeAll();
-  //             break;
-  //         }
-  //       }
-  //     });
-  //   await popover.present();
-  // }
 
   async presentAlert(msg: string, head: string, buttonText: string, buttonless: boolean = false): Promise<HTMLIonAlertElement> {
     let alert: any;

@@ -1,19 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CallNumber } from '@ionic-native/call-number/ngx';
-// import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { Clipboard } from '@capacitor/clipboard';
 import { Contacts, ContactType, EmailAddress, NewContact, PhoneNumber } from '@capacitor-community/contacts'
 import { SMS } from '@ionic-native/sms/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { AlertController, LoadingController, ModalController, Platform, PopoverController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
 import { VCardContact } from 'src/app/models/v-card-contact';
 import { EnvService } from 'src/app/services/env.service';
-import { MenuItem } from 'src/app/models/menu-item';
-import { MenuComponent } from 'src/app/components/menu/menu.component';
 import { QrcodeComponent } from 'src/app/components/qrcode/qrcode.component';
 
 @Component({
@@ -49,8 +46,6 @@ export class ResultPage implements OnInit {
   base64EncodedText: string = "";
   base64Decoded: boolean = false;
   base64DecodedText: string = "";
-
-  // webToast: HTMLIonToastElement;
 
   bookmarked: boolean = false;
 
@@ -89,58 +84,11 @@ export class ResultPage implements OnInit {
         }, 200
       );
     }
-    // if (this.contentType === "url") {
-    //   this.webToast = await this.toastController.create({
-    //     header: this.translate.instant('WEBSITE'),
-    //     message: `${this.qrCodeContent}`,
-    //     duration: 3000,
-    //     mode: "ios",
-    //     color: "light",
-    //     position: "top",
-    //     buttons: [
-    //       {
-    //         text: this.translate.instant('OPEN'),
-    //         side: 'end',
-    //         handler: () => {
-    //           this.browseWebsite();
-    //           this.webToast.dismiss();
-    //         }
-    //       }
-    //     ]
-    //   });
-    //   this.webToast.present();
-    // }
-    // if (this.contentType === "wifi") {
-    //   if (this.wifiSSID) {
-    //     this.webToast = await this.toastController.create({
-    //       header: this.translate.instant('WIFI_NETWORK'),
-    //       message: `SSID: ${this.wifiSSID}`,
-    //       duration: 3000,
-    //       mode: "ios",
-    //       color: "light",
-    //       position: "top",
-    //       buttons: [
-    //         {
-    //           text: this.translate.instant('CONNECT'),
-    //           side: 'end',
-    //           handler: async () => {
-    //             await this.connectWifi();
-    //           }
-    //         }
-    //       ]
-    //     });
-    //     this.webToast.present();
-    //   }
-    // }
   }
 
   async ionViewWillLeave(): Promise<void> {
     this.base64Decoded = false;
     this.base64Encoded = false;
-    // if (this.webToast) {
-    //   this.webToast.dismiss();
-    //   this.webToast = undefined;
-    // }
   }
 
   setContentType(): void {
@@ -182,12 +130,10 @@ export class ResultPage implements OnInit {
   }
 
   get qrColorDark(): string {
-    // return this.env.colorTheme === "dark" ? "#ffffff" : "#222428";
     return "#222428";
   }
 
   get qrColorLight(): string {
-    // return this.env.colorTheme === "dark" ? "#121212" : "#ffffff";
     return "#ffffff";
   }
 
@@ -691,111 +637,6 @@ export class ResultPage implements OnInit {
       this.bookmarked = false;
     }
   }
-
-  // async openMenu(ev: Event) {
-  //   const menuItems = [];
-
-  //   const browseWebsiteMenuItem = new MenuItem();
-  //   browseWebsiteMenuItem.icon = {
-  //     nameOrSrc: 'name',
-  //     ref: 'globe',
-  //     color: 'primary'
-  //   };
-  //   browseWebsiteMenuItem.label = 'BROWSE_WEBSITE';
-  //   browseWebsiteMenuItem.action = 'browse';
-
-  //   const addContactMenuItem = new MenuItem();
-  //   addContactMenuItem.icon = {
-  //     nameOrSrc: 'name',
-  //     ref: 'person-add-sharp',
-  //     color: 'primary'
-  //   };
-  //   addContactMenuItem.label = 'ADD_CONTACT';
-  //   addContactMenuItem.action = 'contact';
-
-  //   const callMenuItem = new MenuItem();
-  //   callMenuItem.icon = {
-  //     nameOrSrc: 'name',
-  //     ref: 'call',
-  //     color: 'primary'
-  //   };
-  //   callMenuItem.label = 'CALL';
-  //   callMenuItem.action = 'call';
-
-  //   const sendMessageMenuItem = new MenuItem();
-  //   sendMessageMenuItem.icon = {
-  //     nameOrSrc: 'name',
-  //     ref: 'send',
-  //     color: 'primary'
-  //   };
-  //   sendMessageMenuItem.label = 'SEND_MESSAGE';
-  //   sendMessageMenuItem.action = 'message';
-
-  //   const sendEmailMenuItem = new MenuItem();
-  //   sendEmailMenuItem.icon = {
-  //     nameOrSrc: 'name',
-  //     ref: 'mail',
-  //     color: 'primary'
-  //   };
-  //   sendEmailMenuItem.label = 'SEND_EMAIL';
-  //   sendEmailMenuItem.action = 'email';
-
-  //   switch (this.contentType) {
-  //     case "url":
-  //       menuItems.push(browseWebsiteMenuItem);
-  //       break;
-  //     case "contact":
-  //       menuItems.push(addContactMenuItem);
-  //       break;
-  //     case "phone":
-  //       menuItems.push(callMenuItem);
-  //       menuItems.push(addContactMenuItem);
-  //       break;
-  //     case "sms":
-  //       if (this.smsContent) {
-  //         menuItems.push(sendMessageMenuItem);
-  //       }
-  //       menuItems.push(addContactMenuItem);
-  //       break;
-  //     case "email":
-  //       menuItems.push(sendEmailMenuItem);
-  //       break;
-  //   }
-
-  //   const popover = await this.popoverController.create({
-  //     component: MenuComponent,
-  //     mode: "ios",
-  //     animated: true,
-  //     event: ev,
-  //     translucent: false,
-  //     showBackdrop: true,
-  //     componentProps: { menuItems }
-  //   });
-  //   popover.onWillDismiss().then(
-  //     async (result) => {
-  //       if (result.data != null && result.data?.action != null) {
-  //         const action = result.data?.action as 'browse' | 'contact' | 'call' | 'message' | 'email';
-  //         switch (action) {
-  //           case 'browse':
-  //             this.browseWebsite();
-  //             break;
-  //           case 'contact':
-  //             this.addContact();
-  //             break;
-  //           case 'call':
-  //             this.callPhone();
-  //             break;
-  //           case 'message':
-  //             this.sendSms();
-  //             break;
-  //           case 'email':
-  //             this.sendEmail();
-  //             break;
-  //         }
-  //       }
-  //     });
-  //   await popover.present();
-  // }
 
   async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {
     if (size === "long") {

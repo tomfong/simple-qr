@@ -12,15 +12,12 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage-angular';
-//import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { SMS } from '@ionic-native/sms/ngx';
 import { ThemeDetection } from '@ionic-native/theme-detection/ngx';
-//import { Device } from '@ionic-native/device/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
-//import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -70,7 +67,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AppVersion,
     CallNumber,
-    // Camera,
     DatePipe,
     DeviceMotion,
     File,
