@@ -1,27 +1,27 @@
 <ion-tabs>
   <ion-tab-bar slot="bottom">
 
-    <ion-tab-button tab="generate">
+    <ion-tab-button tab="generate" (click)="tapHaptic()">
       <ion-icon name="create"></ion-icon>
       <ion-label>{{ 'CREATE' | translate }}</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="import-image">
+    <ion-tab-button tab="import-image" (click)="tapHaptic()">
       <ion-icon name="image"></ion-icon>
       <ion-label>{{ 'IMPORT' | translate }}</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="scan">
-      <ion-icon name="scan-sharp"></ion-icon>
+    <ion-tab-button tab="scan" (click)="tapHaptic()">
+      <ion-icon src="assets/icon/qrscan.svg"></ion-icon>
       <ion-label>{{ 'SCAN' | translate }}</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="history">
+    <ion-tab-button tab="history" (click)="tapHaptic()">
       <ion-icon src="assets/icon/history.svg"></ion-icon>
       <ion-label>{{ 'HISTORY' | translate }}</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="setting">
+    <ion-tab-button tab="setting" (click)="tapHaptic()">
       <ion-icon name="settings"></ion-icon>
       <ion-label>{{ 'SETTING' | translate }}</ion-label>
     </ion-tab-button>

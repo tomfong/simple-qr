@@ -21,12 +21,13 @@ export class EnvService {
   public languages: string[] = ['en', 'zh-HK'];
   public language: 'en' | 'zh-HK' = 'en';
   public selectedLanguage: 'default' | 'en' | 'zh-HK' = 'default';
-  public colorTheme: 'light' | 'dark' = 'light';
-  public selectedColorTheme: 'default' | 'light' | 'dark' = 'default';
+  public colorTheme: 'light' | 'dark' | 'black' = 'light';
+  public selectedColorTheme: 'default' | 'light' | 'dark' | 'black' = 'default';
   public cameraPauseTimeout: 0 | 5 | 10 | 20 | 30 = 10;
   public scanRecordLogging: 'on' | 'off' = 'on';
-  public vibration: 'on' | 'off' = 'on';
+  public vibration: 'on' | 'on-haptic' | 'on-scanned' | 'off' = 'on';
   public notShowHistoryTutorial: boolean = false;
+  public notShowUpdateNotes: boolean = false;
   public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' = 'google';
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
@@ -120,6 +121,15 @@ export class EnvService {
         }
       }
     );
+    this.storageGet("not-show-update-notes").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.notShowUpdateNotes = (value === 'yes' ? true : false);
+        } else {
+          this.notShowUpdateNotes = false;
+        }
+      }
+    );
     this.storageGet("search-engine").then(
       value => {
         if (value !== null && value !== undefined) {
@@ -200,6 +210,7 @@ export class EnvService {
     this.scanRecordLogging = 'on';
     this.vibration = 'on';
     this.notShowHistoryTutorial = false;
+    this.notShowUpdateNotes = false;
     this.searchEngine = 'google';
     this._scanRecords = [];
     this._bookmarks = [];
@@ -314,7 +325,9 @@ export class EnvService {
       if (this.platform.is("android") && version <= 9) {  // Android 9 or below
         this.colorTheme = 'light';
         document.body.classList.toggle('dark', false);
+        document.body.classList.toggle('black', false);
         this.overlayContainer.getContainerElement().classList.remove('ng-mat-dark');
+        this.overlayContainer.getContainerElement().classList.remove('ng-mat-black');
         this.overlayContainer.getContainerElement().classList.add('ng-mat-light');
       } else {
         await this.themeDetection.isAvailable().then( // Android 10 or above
@@ -324,19 +337,25 @@ export class EnvService {
                 if (res.value) {
                   this.colorTheme = 'dark';
                   document.body.classList.toggle('dark', true);
+                  document.body.classList.toggle('black', false);
                   this.overlayContainer.getContainerElement().classList.remove('ng-mat-light');
+                  this.overlayContainer.getContainerElement().classList.remove('ng-mat-black');
                   this.overlayContainer.getContainerElement().classList.add('ng-mat-dark');
                 } else {
                   this.colorTheme = 'light';
                   document.body.classList.toggle('dark', false);
+                  document.body.classList.toggle('black', false);
                   this.overlayContainer.getContainerElement().classList.remove('ng-mat-dark');
+                  this.overlayContainer.getContainerElement().classList.remove('ng-mat-black');
                   this.overlayContainer.getContainerElement().classList.add('ng-mat-light');
                 }
               }).catch((error: any) => console.error(error));
             } else {
               this.colorTheme = 'light';
               document.body.classList.toggle('dark', false);
+              document.body.classList.toggle('black', false);
               this.overlayContainer.getContainerElement().classList.remove('ng-mat-dark');
+              this.overlayContainer.getContainerElement().classList.remove('ng-mat-black');
               this.overlayContainer.getContainerElement().classList.add('ng-mat-light');
             }
           }
@@ -345,13 +364,24 @@ export class EnvService {
     } else if (this.selectedColorTheme === 'light') {
       this.colorTheme = 'light';
       document.body.classList.toggle('dark', false);
+      document.body.classList.toggle('black', false);
       this.overlayContainer.getContainerElement().classList.remove('ng-mat-dark');
+      this.overlayContainer.getContainerElement().classList.remove('ng-mat-black');
       this.overlayContainer.getContainerElement().classList.add('ng-mat-light');
     } else if (this.selectedColorTheme === 'dark') {
       this.colorTheme = 'dark';
       document.body.classList.toggle('dark', true);
+      document.body.classList.toggle('black', false);
       this.overlayContainer.getContainerElement().classList.remove('ng-mat-light');
+      this.overlayContainer.getContainerElement().classList.remove('ng-mat-black');
       this.overlayContainer.getContainerElement().classList.add('ng-mat-dark');
+    } else if (this.selectedColorTheme === 'black') {
+      this.colorTheme = 'black';
+      document.body.classList.toggle('black', true);
+      document.body.classList.toggle('dark', false);
+      this.overlayContainer.getContainerElement().classList.remove('ng-mat-light');
+      this.overlayContainer.getContainerElement().classList.remove('ng-mat-dark');
+      this.overlayContainer.getContainerElement().classList.add('ng-mat-black');
     }
   }
 

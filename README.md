@@ -108,7 +108,15 @@ Thanks for your support!
 
 ## Changelogs
 
-### 1.4.0 (Current)
+### 1.5.0 (Current)
+
+- Support Black color theme
+- Support zooming in QR code
+- Vibration effect update
+- Minor UI update
+- Improve performance and fix issues
+
+#### 1.4.0
 
 - Migrated the app to Capacitor
 - Improve experience when using "Special Actions" feature in Result page

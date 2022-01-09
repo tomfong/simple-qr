@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion/ngx';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { SplashScreen } from '@capacitor/splash-screen';
-import { Vibration } from '@ionic-native/vibration/ngx';
-import { ActionSheetController, AlertController, IonRouterOutlet, LoadingController, Platform, ToastController } from '@ionic/angular';
+import { AlertController, IonRouterOutlet, LoadingController, Platform, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { EnvService } from 'src/app/services/env.service';
+import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
 
 enum CameraChoice {
   BACK,
@@ -45,12 +45,10 @@ export class ScanPage implements OnInit {
     public loadingController: LoadingController,
     public routerOutlet: IonRouterOutlet,
     private deviceMotion: DeviceMotion,
-    private vibration: Vibration,
     private router: Router,
     private env: EnvService,
     public translate: TranslateService,
     private toastController: ToastController,
-    private actionSheetController: ActionSheetController,
   ) { }
 
   ngOnInit(): void {
@@ -98,7 +96,6 @@ export class ScanPage implements OnInit {
   }
 
   async ionViewDidLeave(): Promise<void> {
-    this.vibration.vibrate(0);
     if (this.resumeSubscription) {
       this.resumeSubscription.unsubscribe();
       this.resumeSubscription = undefined;
@@ -154,6 +151,11 @@ export class ScanPage implements OnInit {
     await this.qrScanner.prepare().then(
       async (status: QRScannerStatus) => {
         if (status.authorized) {
+          if (this.env.notShowUpdateNotes === false) {
+            this.env.notShowUpdateNotes = true;
+            this.env.storageSet("not-show-update-notes", 'yes');
+            await this.showUpdateNotes();
+          }
           await this.scanQr();
         }
       },
@@ -206,6 +208,7 @@ export class ScanPage implements OnInit {
                         header: this.translate.instant("CAMERA_PAUSED"),
                         message: this.translate.instant("MSG.CAMERA_PAUSED"),
                         backdropDismiss: false,
+                        cssClass: ['alert-bg'],
                         buttons: [
                           {
                             text: this.translate.instant("RESUME"),
@@ -266,8 +269,8 @@ export class ScanPage implements OnInit {
               this.scanQr();
               return;
             }
-            if (this.env.vibration === 'on') {
-              this.vibration.vibrate(200);
+            if (this.env.vibration === 'on' || this.env.vibration === 'on-scanned') {
+              await Haptics.vibrate();
             }
             const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
             if (this.scanSubscription) {
@@ -298,20 +301,6 @@ export class ScanPage implements OnInit {
     );
   }
 
-  async openActionSheet() {
-    const actionSheet = await this.actionSheetController.create({
-      mode: 'ios',
-      buttons: [
-        {
-          text: this.flashActive ? this.translate.instant("TURN_OFF_TORCH") : this.translate.instant("TURN_ON_TORCH"),
-          handler: async () => {
-            await this.toggleFlash();
-          }
-        }]
-    });
-    await actionSheet.present();
-  }
-
   async toggleFlash(): Promise<void> {
     if (!this.flashActive) {
       await this.qrScanner.enableLight().then(
@@ -335,14 +324,16 @@ export class ScanPage implements OnInit {
       alert = await this.alertController.create({
         header: head,
         message: msg,
-        buttons: [buttonText]
+        buttons: [buttonText],
+        cssClass: ['alert-bg']
       });
     } else {
       alert = await this.alertController.create({
         header: head,
         message: msg,
         buttons: [],
-        backdropDismiss: false
+        backdropDismiss: false,
+        cssClass: ['alert-bg']
       });
     }
     await alert.present();
@@ -406,4 +397,20 @@ export class ScanPage implements OnInit {
     }
   }
 
+  async tapHaptic() {
+    if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
+      await Haptics.impact({ style: ImpactStyle.Medium });
+    }
+  }
+
+  async showUpdateNotes() {
+    const alert = await this.alertController.create({
+      header: this.translate.instant("UPDATE_NOTES"),
+      subHeader: this.env.appVersionNumber,
+      message: this.translate.instant("UPDATE.UPDATE_NOTES"),
+      buttons: [this.translate.instant("OK")],
+      cssClass: ['left-align', 'alert-bg']
+    });
+    await alert.present();
+  }
 }

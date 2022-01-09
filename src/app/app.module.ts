@@ -11,21 +11,15 @@ import { DeviceMotion } from '@ionic-native/device-motion/ngx';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Vibration } from '@ionic-native/vibration/ngx';
 import { IonicStorageModule } from '@ionic/storage-angular';
-//import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
 import { SMS } from '@ionic-native/sms/ngx';
 import { ThemeDetection } from '@ionic-native/theme-detection/ngx';
-//import { Device } from '@ionic-native/device/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
-//import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 
-
-import { CreateContactPageModule } from './modals/create-contact/create-contact.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { HistoryTutorialPageModule } from './modals/history-tutorial/history-tutorial.module';
@@ -33,6 +27,9 @@ import { DatePipe } from '@angular/common';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MenuComponent } from './components/menu/menu.component';
+import { QrcodeComponent } from './components/qrcode/qrcode.component';
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -40,7 +37,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MenuComponent,
+    QrcodeComponent
   ],
   entryComponents: [],
   imports: [
@@ -56,19 +55,18 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
       }
     }),
     IonicStorageModule.forRoot(),
-    CreateContactPageModule,
     HistoryTutorialPageModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatSlideToggleModule,
     MatButtonModule,
     NgbModule,
+    NgxQRCodeModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AppVersion,
     CallNumber,
-    // Camera,
     DatePipe,
     DeviceMotion,
     File,
@@ -77,7 +75,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     SMS,
     SocialSharing,
     ThemeDetection,
-    Vibration,
   ],
   bootstrap: [AppComponent],
 })

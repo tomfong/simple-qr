@@ -1,0 +1,10 @@
+<ion-content style="--background: transparent !important;">
+  <ion-row class="d-flex align-items-center justify-content-center" style="height: 100%;">
+    <ion-col class="ion-text-center ion-padding" style="max-width: 100% !important;">
+      <ngx-qrcode [elementType]="qrElementType" [value]="qrCodeContent" [width]="300"
+        [errorCorrectionLevel]="errorCorrectionLevel" [colorDark]="qrColorDark" [colorLight]="qrColorLight"
+        [margin]="qrMargin">
+      </ngx-qrcode>
+    </ion-col>
+  </ion-row>
+</ion-content>

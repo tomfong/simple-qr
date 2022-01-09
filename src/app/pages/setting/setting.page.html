@@ -1,5 +1,5 @@
-<ion-header [translucent]="true" mode="ios">
-  <ion-toolbar color="dark" mode="ios">
+<ion-header mode="ios">
+  <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'" mode="ios">
     <!-- <ion-buttons slot="start">
       <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
       </ion-back-button>
@@ -11,10 +11,10 @@
 <ion-content>
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="navigateAbout()">
     <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="information-circle-sharp"></ion-icon>
+      [color]="'primary'" name="information-circle-sharp"></ion-icon>
     <ion-label>
       <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'ABOUT' | translate }}
         </ion-text>
       </p>
@@ -22,11 +22,11 @@
   </ion-item>
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setLanguage()">
     <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="globe-sharp">
+      [color]="'primary'" name="globe-sharp">
     </ion-icon>
     <ion-label>
       <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'LANGUAGE' | translate }}
         </ion-text>
       </p>
@@ -35,10 +35,10 @@
   </ion-item>
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setColorTheme()">
     <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="color-palette"></ion-icon>
+      [color]="'primary'" name="color-palette"></ion-icon>
     <ion-label>
       <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'COLOR_THEME' | translate }}
         </ion-text>
       </p>
@@ -48,11 +48,11 @@
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
     (click)="setCameraPause()">
     <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" name="camera">
+      [color]="'primary'" name="camera">
     </ion-icon>
     <ion-label>
       <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'CAMERA_PAUSE_TRIGGER' | translate }}
         </ion-text>
       </p>
@@ -62,11 +62,11 @@
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
     (click)="setVibration()">
     <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" src="assets/icon/vibration.svg">
+      [color]="'primary'" src="assets/icon/vibration.svg">
     </ion-icon>
     <ion-label>
       <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'VIBRATION' | translate }}
         </ion-text>
       </p>
@@ -75,10 +75,10 @@
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
     (click)="setScanRecordLogging()">
     <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" src="assets/icon/history.svg"></ion-icon>
+      [color]="'primary'" src="assets/icon/history.svg"></ion-icon>
     <ion-label>
       <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'SCAN_HISTORY_LOGGING' | translate }}
         </ion-text>
       </p>
@@ -88,10 +88,10 @@
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
     (click)="setSearchEngine()">
     <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" src="assets/icon/search-web.svg"></ion-icon>
+      [color]="'primary'" src="assets/icon/search-web.svg"></ion-icon>
     <ion-label>
       <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'SEARCH_ENGINE' | translate }}
         </ion-text>
       </p>
@@ -100,10 +100,10 @@
   </ion-item>
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="resetApp()">
     <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="env.colorTheme === 'dark'? 'primary' : 'secondary'" src="assets/icon/reset.svg"></ion-icon>
+      [color]="'primary'" src="assets/icon/reset.svg"></ion-icon>
     <ion-label>
       <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'RESET_APP' | translate }}
         </ion-text>
       </p>
@@ -114,7 +114,7 @@
     <ion-icon class="ion-margin-start ion-padding-horizontal" color="danger" name="exit"></ion-icon>
     <ion-label>
       <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'dark'? 'light' : 'dark'" style="font-size: large;">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'EXIT_APP' | translate }}
         </ion-text>
       </p>

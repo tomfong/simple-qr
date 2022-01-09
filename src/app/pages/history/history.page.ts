@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ActionSheetController, AlertController, IonItemSliding, LoadingController, ModalController, Platform, ToastController } from '@ionic/angular';
+import { AlertController, IonItemSliding, LoadingController, ModalController, Platform, PopoverController, ToastController } from '@ionic/angular';
 import { EnvService } from 'src/app/services/env.service';
 import * as moment from 'moment';
 import { ScanRecord } from 'src/app/models/scan-record';
 import { TranslateService } from '@ngx-translate/core';
 import { Bookmark } from 'src/app/models/bookmark';
 import { HistoryTutorialPage } from 'src/app/modals/history-tutorial/history-tutorial.page';
+import { MenuComponent } from 'src/app/components/menu/menu.component';
+import { MenuItem } from 'src/app/models/menu-item';
+import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
 
 @Component({
   selector: 'app-history',
@@ -33,7 +36,7 @@ export class HistoryPage {
     public toastController: ToastController,
     public translate: TranslateService,
     public modalController: ModalController,
-    public actionSheetController: ActionSheetController,
+    public popoverController: PopoverController,
   ) { }
 
   async loadItems() {
@@ -42,20 +45,12 @@ export class HistoryPage {
   }
 
   async ionViewDidEnter() {
-    // const loading = await this.presentLoading(this.translate.instant("PLEASE_WAIT"));
     await this.loadItems();
-    // loading.dismiss();
     this.firstLoad = false;
     if (this.env.notShowHistoryTutorial === false) {
       this.env.notShowHistoryTutorial = true;
       this.env.storageSet("not-show-history-tutorial", 'yes');
-      const modal = await this.modalController.create({
-        component: HistoryTutorialPage,
-        cssClass: 'tutorial-modal-page',
-        componentProps: {
-        }
-      });
-      modal.present();
+      await this.showTutorial();
     }
   }
 
@@ -64,6 +59,16 @@ export class HistoryPage {
       this.deleteToast.dismiss();
       this.deleteToast = undefined;
     }
+  }
+
+  async showTutorial() {
+    const modal = await this.modalController.create({
+      component: HistoryTutorialPage,
+      cssClass: 'tutorial-modal-page',
+      componentProps: {
+      }
+    });
+    modal.present();
   }
 
   maskDatetime(date: Date): string {
@@ -163,6 +168,7 @@ export class HistoryPage {
       const alert = await this.alertController.create({
         header: this.translate.instant('REMOVE_ALL'),
         message: this.translate.instant('MSG.REMOVE_ALL_RECORD'),
+        cssClass: ['alert-bg'],
         buttons: [
           {
             text: this.translate.instant('YES'),
@@ -182,6 +188,7 @@ export class HistoryPage {
       const alert = await this.alertController.create({
         header: this.translate.instant('REMOVE_ALL'),
         message: this.translate.instant('MSG.REMOVE_ALL_BOOKMARKS'),
+        cssClass: ['alert-bg'],
         buttons: [
           {
             text: this.translate.instant('YES'),
@@ -200,39 +207,13 @@ export class HistoryPage {
     }
   }
 
-  async openActionSheet() {
-    const actionSheet = await this.actionSheetController.create({
-      mode: 'ios',
-      buttons: [
-        {
-          text: this.translate.instant("TUTORIAL"),
-          handler: async () => {
-            const modal = await this.modalController.create({
-              component: HistoryTutorialPage,
-              cssClass: 'tutorial-modal-page',
-              componentProps: {
-              }
-            });
-            modal.present();
-          }
-        },
-        {
-          text: this.translate.instant("REMOVE_ALL"),
-          role: 'destructive',
-          handler: async () => {
-            await this.removeAll();
-          }
-        }]
-    });
-    await actionSheet.present();
-  }
-
   async presentAlert(msg: string, head: string, buttonText: string, buttonless: boolean = false): Promise<HTMLIonAlertElement> {
     let alert: any;
     if (!buttonless) {
       alert = await this.alertController.create({
         header: head,
         message: msg,
+        cssClass: ['alert-bg'],
         buttons: [buttonText]
       });
     } else {
@@ -240,6 +221,7 @@ export class HistoryPage {
         header: head,
         message: msg,
         buttons: [],
+        cssClass: ['alert-bg'],
         backdropDismiss: false
       });
     }
@@ -301,6 +283,12 @@ export class HistoryPage {
         });
         toast.present();
       }
+    }
+  }
+
+  async tapHaptic() {
+    if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
+      await Haptics.impact({ style: ImpactStyle.Medium });
     }
   }
 }

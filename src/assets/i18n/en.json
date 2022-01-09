@@ -70,6 +70,7 @@
     "COLOR_THEME": "Color Theme",
     "LIGHT": "Light",
     "DARK": "Dark",
+    "BLACK": "Black",
     "CAMERA_PAUSE_TRIGGER": "Camera Pause Trigger",
     "NEVER": "Never",
     "SECONDS": "seconds",
@@ -77,6 +78,8 @@
     "SCAN_HISTORY_LOGGING": "Scan History Logging",
     "TURN_ON": "On",
     "TURN_OFF": "Off",
+    "TURN_ON_HAPTIC": "Haptic Feedback Only",
+    "TURN_ON_SCANNED": "Scanning Feedback Only",
     "SEARCH_ENGINE": "Search Engine",
     "GOOGLE": "Google Search",
     "BING": "Microsoft Bing",
@@ -213,9 +216,10 @@
         "QR_CODE_VALUE_NOT_EMPTY": "QR Code value cannot be empty",
         "NO_QR_CODE": "QR Code cannot be detected from image.",
         "SCAN_QR_FROM_IMAGE": "Tap to Scan QR Code from Image",
-        "BARCODE_TYPE": "Scan<ul><li>QR Code</li><li>1D Barcode</li><li>Aztec Code</li><li>Data Matrix</li><li>PDF417</li></ul>Import Image<ul><li>QR Code</li></ul>Create<ul><li>QR Code</li></ul>"
+        "BARCODE_TYPE": "Scan<ul><li>QR Code</li><li>1D Barcode</li><li>Aztec Code</li><li>Data Matrix</li><li>PDF417</li></ul>Import Image<ul><li>QR Code</li></ul>Create<ul><li>QR Code</li></ul>",
+        "TAP_TO_ZOOM_IN": "Tap to zoom in"
     },
     "UPDATE": {
-        "UPDATE_NOTES": "<ul><li>Improve experience when using \"Special Actions\" feature in Result page</li><li>Show barcode type when scanning</li><li>Redesigned UI and UX</li><li>Improved performace and fixed issues</li></ul>"
+        "UPDATE_NOTES": "<ul><li>Support Black color theme</li><li>Support zooming in QR code</li><li>Vibration effect update</li><li>Minor UI update</li><li>Improve performace and fix known issues</li></ul>"
     }
 }

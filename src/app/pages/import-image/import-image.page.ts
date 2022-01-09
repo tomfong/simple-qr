@@ -5,6 +5,7 @@ import { EnvService } from 'src/app/services/env.service';
 import { Camera, CameraResultType, CameraSource, GalleryImageOptions, GalleryPhotos, ImageOptions, Photo } from '@capacitor/camera';
 import jsQR from 'jsqr';
 import { Router } from '@angular/router';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
 @Component({
   selector: 'app-import-image',
@@ -19,7 +20,6 @@ export class ImportImagePage {
     private alertController: AlertController,
     private loadingController: LoadingController,
     private toastController: ToastController,
-    // private camera: Camera,
     private router: Router,
   ) { }
 
@@ -83,6 +83,7 @@ export class ImportImagePage {
       alert = await this.alertController.create({
         header: head,
         message: msg,
+        cssClass: ['alert-bg'],
         buttons: [buttonText]
       });
     } else {
@@ -90,6 +91,7 @@ export class ImportImagePage {
         header: head,
         message: msg,
         buttons: [],
+        cssClass: ['alert-bg'],
         backdropDismiss: false
       });
     }
@@ -186,4 +188,9 @@ export class ImportImagePage {
     });
   }
 
+  async tapHaptic() {
+    if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
+      await Haptics.impact({ style: ImpactStyle.Medium });
+    }
+  }
 }

@@ -17,9 +17,9 @@ export class HistoryTutorialPage {
     public toastController: ToastController,
     public translate: TranslateService,
     public env: EnvService,
-  ) { 
+  ) {
     setTimeout(
-      () =>{
+      () => {
         this.contentEl.scrollToBottom(500);
       }, 750
     );
@@ -36,5 +36,18 @@ export class HistoryTutorialPage {
   closeModal(): void {
     this.modalController.dismiss();
   }
- 
+
+  get color() {
+    switch (this.env.colorTheme) {
+      case 'dark':
+        return 'dark';
+      case 'light':
+        return 'white';
+      case 'black':
+        return 'black';
+      default:
+        return 'white';
+    }
+  }
+
 }

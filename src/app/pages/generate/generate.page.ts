@@ -1,6 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
@@ -380,14 +381,16 @@ export class GeneratePage {
       alert = await this.alertController.create({
         header: head,
         message: msg,
-        buttons: [buttonText]
+        buttons: [buttonText],
+        cssClass: ['alert-bg']
       });
     } else {
       alert = await this.alertController.create({
         header: head,
         message: msg,
         buttons: [],
-        backdropDismiss: false
+        backdropDismiss: false,
+        cssClass: ['alert-bg']
       });
     }
     await alert.present();
@@ -448,6 +451,25 @@ export class GeneratePage {
         });
         toast.present();
       }
+    }
+  }
+
+  get ngMatThemeClass() {
+    switch (this.env.colorTheme) {
+      case 'dark':
+        return 'ng-mat-dark';
+      case 'light':
+        return 'ng-mat-light';
+      case 'black':
+        return 'ng-mat-black';
+      default:
+        return 'ng-mat-light';
+    }
+  }
+
+  async tapHaptic() {
+    if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
+      await Haptics.impact({ style: ImpactStyle.Medium });
     }
   }
 }

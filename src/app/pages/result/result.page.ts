@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CallNumber } from '@ionic-native/call-number/ngx';
-// import { Clipboard } from '@ionic-native/clipboard/ngx';
 import { Clipboard } from '@capacitor/clipboard';
 import { Contacts, ContactType, EmailAddress, NewContact, PhoneNumber } from '@capacitor-community/contacts'
 import { SMS } from '@ionic-native/sms/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { Vibration } from '@ionic-native/vibration/ngx';
-import { ActionSheetController, AlertController, LoadingController, ModalController, Platform, ToastController } from '@ionic/angular';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { AlertController, LoadingController, ModalController, Platform, PopoverController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
-import { CreateContactPage } from 'src/app/modals/create-contact/create-contact.page';
 import { VCardContact } from 'src/app/models/v-card-contact';
 import { EnvService } from 'src/app/services/env.service';
+import { QrcodeComponent } from 'src/app/components/qrcode/qrcode.component';
 
 @Component({
   selector: 'app-result',
@@ -48,8 +47,6 @@ export class ResultPage implements OnInit {
   base64Decoded: boolean = false;
   base64DecodedText: string = "";
 
-  // webToast: HTMLIonToastElement;
-
   bookmarked: boolean = false;
 
   constructor(
@@ -57,7 +54,6 @@ export class ResultPage implements OnInit {
     public alertController: AlertController,
     public loadingController: LoadingController,
     private route: ActivatedRoute,
-    private vibration: Vibration,
     private router: Router,
     public env: EnvService,
     public toastController: ToastController,
@@ -66,7 +62,7 @@ export class ResultPage implements OnInit {
     public modalController: ModalController,
     private sms: SMS,
     public translate: TranslateService,
-    private actionSheetController: ActionSheetController,
+    private popoverController: PopoverController,
   ) { }
 
   async ngOnInit() {
@@ -81,66 +77,18 @@ export class ResultPage implements OnInit {
   }
 
   async ionViewDidEnter(): Promise<void> {
-    if (this.env.vibration === 'on') {
-      if (this.platform.is("android")) {
-        this.vibration.vibrate([100, 100, 100]);
-      } else {
-        this.vibration.vibrate(100);
-      }
+    if (this.env.vibration === 'on' || this.env.vibration === 'on-scanned') {
+      setTimeout(
+        async () => {
+          await Haptics.vibrate();
+        }, 200
+      );
     }
-    // if (this.contentType === "url") {
-    //   this.webToast = await this.toastController.create({
-    //     header: this.translate.instant('WEBSITE'),
-    //     message: `${this.qrCodeContent}`,
-    //     duration: 3000,
-    //     mode: "ios",
-    //     color: "light",
-    //     position: "top",
-    //     buttons: [
-    //       {
-    //         text: this.translate.instant('OPEN'),
-    //         side: 'end',
-    //         handler: () => {
-    //           this.browseWebsite();
-    //           this.webToast.dismiss();
-    //         }
-    //       }
-    //     ]
-    //   });
-    //   this.webToast.present();
-    // }
-    // if (this.contentType === "wifi") {
-    //   if (this.wifiSSID) {
-    //     this.webToast = await this.toastController.create({
-    //       header: this.translate.instant('WIFI_NETWORK'),
-    //       message: `SSID: ${this.wifiSSID}`,
-    //       duration: 3000,
-    //       mode: "ios",
-    //       color: "light",
-    //       position: "top",
-    //       buttons: [
-    //         {
-    //           text: this.translate.instant('CONNECT'),
-    //           side: 'end',
-    //           handler: async () => {
-    //             await this.connectWifi();
-    //           }
-    //         }
-    //       ]
-    //     });
-    //     this.webToast.present();
-    //   }
-    // }
   }
 
   async ionViewWillLeave(): Promise<void> {
-    this.vibration.vibrate(0);
     this.base64Decoded = false;
     this.base64Encoded = false;
-    // if (this.webToast) {
-    //   this.webToast.dismiss();
-    //   this.webToast = undefined;
-    // }
   }
 
   setContentType(): void {
@@ -182,12 +130,10 @@ export class ResultPage implements OnInit {
   }
 
   get qrColorDark(): string {
-    // return this.env.colorTheme === "dark" ? "#ffffff" : "#222428";
     return "#222428";
   }
 
   get qrColorLight(): string {
-    // return this.env.colorTheme === "dark" ? "#121212" : "#ffffff";
     return "#ffffff";
   }
 
@@ -296,6 +242,15 @@ export class ResultPage implements OnInit {
     window.open(this.qrCodeContent, "_system");
   }
 
+  async enlarge(): Promise<void> {
+    const modal = await this.modalController.create({
+      component: QrcodeComponent,
+      cssClass: 'qrcode-modal',
+      componentProps: { qrCodeContent: this.qrCodeContent }
+    });
+    modal.present();
+  }
+
   async webSearch(): Promise<void> {
     let searchUrl: string = this.env.GOOGLE_SEARCH_URL;
     switch (this.env.searchEngine) {
@@ -321,6 +276,7 @@ export class ResultPage implements OnInit {
         {
           header: this.translate.instant('SEARCH'),
           message: this.translate.instant('MSG.SEARCH'),
+          cssClass: ['alert-bg'],
           buttons: [
             {
               text: this.translate.instant('ORIGINAL'),
@@ -354,6 +310,7 @@ export class ResultPage implements OnInit {
         {
           header: this.translate.instant('COPY'),
           message: this.translate.instant('MSG.COPY_TEXT'),
+          cssClass: ['alert-bg'],
           buttons: [
             {
               text: this.translate.instant('ORIGINAL'),
@@ -397,6 +354,7 @@ export class ResultPage implements OnInit {
         {
           header: this.translate.instant('COPY'),
           message: this.translate.instant('MSG.COPY_TEXT'),
+          cssClass: ['alert-bg'],
           buttons: [
             {
               text: this.translate.instant('ORIGINAL'),
@@ -429,6 +387,7 @@ export class ResultPage implements OnInit {
         {
           header: this.translate.instant('COPY'),
           message: this.translate.instant('MSG.COPY_TEXT'),
+          cssClass: ['alert-bg'],
           buttons: [
             {
               text: this.translate.instant('ORIGINAL'),
@@ -679,70 +638,6 @@ export class ResultPage implements OnInit {
     }
   }
 
-  async openActionSheet() {
-    const buttons = [];
-    switch (this.contentType) {
-      case "url":
-        buttons.push({
-          text: this.translate.instant("BROWSE_WEBSITE"),
-          handler: async () => {
-            this.browseWebsite();
-          }
-        });
-        break;
-      case "contact":
-        buttons.push({
-          text: this.translate.instant("ADD_CONTACT"),
-          handler: async () => {
-            this.addContact();
-          }
-        });
-        break;
-      case "phone":
-        buttons.push({
-          text: this.translate.instant("CALL"),
-          handler: async () => {
-            this.callPhone();
-          }
-        }, {
-          text: this.translate.instant("ADD_CONTACT"),
-          handler: async () => {
-            this.addContact();
-          }
-        });
-        break;
-      case "sms":
-        if (this.smsContent) {
-          buttons.push({
-            text: this.translate.instant("SEND_MESSAGE"),
-            handler: async () => {
-              this.sendSms();
-            }
-          });
-        }
-        buttons.push({
-          text: this.translate.instant("ADD_CONTACT"),
-          handler: async () => {
-            this.addContact();
-          }
-        });
-        break;
-      case "email":
-        buttons.push({
-          text: this.translate.instant("SEND_EMAIL"),
-          handler: async () => {
-            this.sendEmail();
-          }
-        });
-        break;
-    }
-    const actionSheet = await this.actionSheetController.create({
-      mode: 'ios',
-      buttons: buttons
-    });
-    await actionSheet.present();
-  }
-
   async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {
     if (size === "long") {
       if (align === "left") {
@@ -811,4 +706,9 @@ export class ResultPage implements OnInit {
     return loading;
   }
 
+  async tapHaptic() {
+    if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
+      await Haptics.impact({ style: ImpactStyle.Medium });
+    }
+  }
 }

@@ -61,6 +61,7 @@ export class SettingPage {
     const alert = await this.alertController.create({
       header: this.translate.instant('RESET_APP'),
       message: this.translate.instant('MSG.RESET_APP'),
+      cssClass: ['alert-bg'],
       buttons: [
         {
           text: this.translate.instant('YES'),
@@ -90,6 +91,7 @@ export class SettingPage {
     const alert = await this.alertController.create({
       header: this.translate.instant('EXIT_APP'),
       message: this.translate.instant('MSG.EXIT_APP'),
+      cssClass: ['alert-bg'],
       buttons: [
         {
           text: this.translate.instant('YES'),
