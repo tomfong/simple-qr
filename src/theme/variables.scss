@@ -511,18 +511,22 @@ body.dark {
   --ion-card-background: #000000;
 
   ion-alert {
-    --background: #0d0d0d !important;
+    --background: #0f0f0f !important;
   }
 
   ion-loading {
-    --background: #0d0d0d !important;
+    --background: #0f0f0f !important;
   }
 
   app-menu {
     ion-list {
-      --background: #0d0d0d !important;
-      --ion-item-background: #0d0d0d !important;
+      --background: #0f0f0f !important;
+      --ion-item-background: #0f0f0f !important;
     }
+  }
+
+  mat-option {
+    background-color: #0f0f0f !important;
   }
 }
 
@@ -573,18 +577,22 @@ body.dark {
   --ion-card-background: #000000;
 
   ion-alert {
-    --background: #0d0d0d !important;
+    --background: #0f0f0f !important;
   }
 
   ion-loading {
-    --background: #0d0d0d !important;
+    --background: #0f0f0f !important;
   }
 
   app-menu {
     ion-list {
-      --background: #0d0d0d !important;
-      --ion-item-background: #0d0d0d !important;
+      --background: #0f0f0f !important;
+      --ion-item-background: #0f0f0f !important;
     }
+  }
+
+  mat-option {
+    background-color: #0f0f0f !important;
   }
 }
 
