@@ -46,7 +46,7 @@
     "@ionic-native/sms": "^5.31.1",
     "@ionic-native/social-sharing": "^5.31.1",
     "@ionic-native/theme-detection": "^5.32.0",
-    "@ionic/angular": "^5.9.3",
+    "@ionic/angular": "^6.0.4",
     "@ionic/storage": "^3.0.2",
     "@ionic/storage-angular": "^3.0.2",
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
