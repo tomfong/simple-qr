@@ -21,7 +21,7 @@ export class ScanPage implements OnInit {
 
   cameraChoice: CameraChoice = CameraChoice.BACK;
   cameraActive: boolean = false;
-  // flashActive: boolean = false;
+  flashActive: boolean = false;
 
   permissionAlert: HTMLIonAlertElement;
 
@@ -64,7 +64,7 @@ export class ScanPage implements OnInit {
     if (result.granted) {
       if (this.env.notShowUpdateNotes === false) {
         this.env.notShowUpdateNotes = true;
-        this.env.storageSet("not-show-update-notes", 'yes');
+        this.env.storageSet("not-show-update-notes-v20000", 'yes');
         await this.showUpdateNotes();
       }
       await this.scanQr();
@@ -122,22 +122,22 @@ export class ScanPage implements OnInit {
     );
   }
 
-  // async toggleFlash(): Promise<void> {
-  //   if (!this.flashActive) {
-  //     await this.qrScanner.enableLight().then(
-  //       () => {
-  //         this.flashActive = true;
-  //         this.cameraActive = true;
-  //       }
-  //     );
-  //   } else {
-  //     await this.qrScanner.disableLight().then(
-  //       () => {
-  //         this.flashActive = false;
-  //       }
-  //     );
-  //   }
-  // }
+  async toggleFlash(): Promise<void> {
+    // if (!this.flashActive) {
+    //   await this.qrScanner.enableLight().then(
+    //     () => {
+    //       this.flashActive = true;
+    //       this.cameraActive = true;
+    //     }
+    //   );
+    // } else {
+    //   await this.qrScanner.disableLight().then(
+    //     () => {
+    //       this.flashActive = false;
+    //     }
+    //   );
+    // }
+  }
 
   async presentAlert(msg: string, head: string, buttonText: string, buttonless: boolean = false): Promise<HTMLIonAlertElement> {
     let alert: any;

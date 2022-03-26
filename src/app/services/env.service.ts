@@ -111,7 +111,7 @@ export class EnvService {
         }
       }
     );
-    this.storageGet("not-show-update-notes").then(
+    this.storageGet("not-show-update-notes-v20000").then(
       value => {
         if (value !== null && value !== undefined) {
           this.notShowUpdateNotes = (value === 'yes' ? true : false);

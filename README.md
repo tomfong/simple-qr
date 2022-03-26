@@ -88,7 +88,6 @@ Thanks for your support!
 
 - Run ```npm install``` to install all dependencies
 - Run ```npm run build```
-- Replace ```android/app/src/main/java/com/bitpay/cordova/qrscanner/QRScanner.java``` by ```backup/QRScanner.java```
 - In ```android/capacitor-cordova-android-plugins/src/main/AndroidManifest.xml```, add ```android:exported="false"``` inside receiver tag.
 - In ```android/app/src/main/res/values/styles.xml```, change
 
@@ -108,7 +107,14 @@ Thanks for your support!
 
 ## Changelogs
 
-### 1.5.0 (Current)
+### 2.0.0 (Current)
+
+- Revamped the scanning engine
+- Temporarily disabled torch feature due to technical problems
+- Removed camera pause feature due to technical problems
+- Improved performance and fix issues
+
+#### 1.5.0
 
 - Support Black color theme
 - Support zooming in QR code
