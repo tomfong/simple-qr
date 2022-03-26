@@ -15,10 +15,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/setting-color/setting-color.module').then( m => m.SettingColorPageModule)
   },
   {
-    path: 'setting-camera-pause',
-    loadChildren: () => import('./pages/setting-camera-pause/setting-camera-pause.module').then( m => m.SettingCameraPausePageModule)
-  },
-  {
     path: 'setting-record',
     loadChildren: () => import('./pages/setting-record/setting-record.module').then( m => m.SettingRecordPageModule)
   },

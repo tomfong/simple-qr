@@ -14,17 +14,9 @@
     <param name="android-package" value="uk.co.whiteoctober.cordova.AppVersion"/>
   </feature>
 
-  <feature name="Accelerometer">
-    <param name="android-package" value="org.apache.cordova.devicemotion.AccelListener"/>
-  </feature>
-
   <feature name="File">
     <param name="android-package" value="org.apache.cordova.file.FileUtils"/>
     <param name="onload" value="true"/>
-  </feature>
-
-  <feature name="QRScanner">
-    <param name="android-package" value="com.bitpay.cordova.qrscanner.QRScanner"/>
   </feature>
 
   <feature name="StatusBar">

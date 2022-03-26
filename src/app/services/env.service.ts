@@ -23,7 +23,6 @@ export class EnvService {
   public selectedLanguage: 'default' | 'en' | 'zh-HK' = 'default';
   public colorTheme: 'light' | 'dark' | 'black' = 'light';
   public selectedColorTheme: 'default' | 'light' | 'dark' | 'black' = 'default';
-  public cameraPauseTimeout: 0 | 5 | 10 | 20 | 30 = 10;
   public scanRecordLogging: 'on' | 'off' = 'on';
   public vibration: 'on' | 'on-haptic' | 'on-scanned' | 'off' = 'on';
   public notShowHistoryTutorial: boolean = false;
@@ -83,15 +82,6 @@ export class EnvService {
           this.selectedColorTheme = 'default';
         }
         await this.toggleColorTheme();
-      }
-    );
-    this.storageGet("camera-pause-timeout").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.cameraPauseTimeout = value;
-        } else {
-          this.cameraPauseTimeout = 10;
-        }
       }
     );
     this.storageGet("scan-record-logging").then(
@@ -206,7 +196,6 @@ export class EnvService {
     this.toggleLanguageChange();
     this.selectedColorTheme = 'default';
     await this.toggleColorTheme();
-    this.cameraPauseTimeout = 10;
     this.scanRecordLogging = 'on';
     this.vibration = 'on';
     this.notShowHistoryTutorial = false;

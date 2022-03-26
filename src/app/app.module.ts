@@ -6,8 +6,6 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { QRScanner } from '@ionic-native/qr-scanner/ngx';
-import { DeviceMotion } from '@ionic-native/device-motion/ngx';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -67,10 +65,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         AppVersion,
         CallNumber,
         DatePipe,
-        DeviceMotion,
         File,
         OpenNativeSettings,
-        QRScanner,
         SMS,
         SocialSharing,
         ThemeDetection,

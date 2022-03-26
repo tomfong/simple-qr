@@ -46,20 +46,6 @@
     <!--<ion-ripple-effect type="bounded"></ion-ripple-effect> -->
   </ion-item>
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
-    (click)="setCameraPause()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="'primary'" name="camera">
-    </ion-icon>
-    <ion-label>
-      <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-          {{ 'CAMERA_PAUSE_TRIGGER' | translate }}
-        </ion-text>
-      </p>
-    </ion-label>
-    <!--<ion-ripple-effect type="bounded"></ion-ripple-effect> -->
-  </ion-item>
-  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
     (click)="setVibration()">
     <ion-icon class="ion-margin-start ion-padding-horizontal"
       [color]="'primary'" src="assets/icon/vibration.svg">
