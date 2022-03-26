@@ -1,13 +1,11 @@
-import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion/ngx';
-import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
+import { BarcodeScanner, ScanResult } from '@capacitor-community/barcode-scanner';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { AlertController, IonRouterOutlet, LoadingController, Platform, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
 import { EnvService } from 'src/app/services/env.service';
-import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
 enum CameraChoice {
   BACK,
@@ -21,30 +19,16 @@ enum CameraChoice {
 })
 export class ScanPage implements OnInit {
 
-  scanSubscription: Subscription;
-
-  motionSubscription: Subscription;
-  motionX: number;
-  motionY: number;
-  motionZ: number;
-  motionlessCount: number = 0;
-
   cameraChoice: CameraChoice = CameraChoice.BACK;
   cameraActive: boolean = false;
   flashActive: boolean = false;
 
-  pauseAlert: HTMLIonAlertElement;
-
-  resumeSubscription: Subscription;
-  pauseSubscription: Subscription;
+  permissionAlert: HTMLIonAlertElement;
 
   constructor(
-    private platform: Platform,
-    private qrScanner: QRScanner,
     public alertController: AlertController,
     public loadingController: LoadingController,
     public routerOutlet: IonRouterOutlet,
-    private deviceMotion: DeviceMotion,
     private router: Router,
     private env: EnvService,
     public translate: TranslateService,
@@ -52,244 +36,81 @@ export class ScanPage implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.platform.ready().then(
-      async () => {
-        this.pauseSubscription = this.platform.pause.subscribe(
-          async () => {
-            if (this.motionSubscription) {
-              this.motionSubscription.unsubscribe();
-              this.motionSubscription = undefined;
-              this.motionlessCount = 0;
-            }
-            await this.qrScanner.destroy().then(
-              () => {
-                this.cameraActive = false;
-              }
-            );
-          }
-        );
-        this.resumeSubscription = this.platform.resume.subscribe(
-          async () => {
-            await this.prepareScanner();
-          }
-        )
-      }
-    );
+    
   }
 
   async ionViewDidEnter(): Promise<void> {
     await SplashScreen.hide();
-    this.qrScanner.disableLight().then(
-      () => {
-        this.flashActive = false;
-      }
-    );
+    // this.qrScanner.disableLight().then(
+    //   () => {
+    //     this.flashActive = false;
+    //   }
+    // );
     await this.prepareScanner();
   }
 
-  ionViewWillLeave() {
-    if (this.motionSubscription) {
-      this.motionSubscription.unsubscribe();
-      this.motionSubscription = undefined;
-      this.motionlessCount = 0;
-    }
+  async ionViewDidLeave(): Promise<void> {
+    await this.stopScanner();
   }
 
-  async ionViewDidLeave(): Promise<void> {
-    if (this.resumeSubscription) {
-      this.resumeSubscription.unsubscribe();
-      this.resumeSubscription = undefined;
-    }
-    if (this.pauseSubscription) {
-      this.pauseSubscription.unsubscribe();
-      this.pauseSubscription = undefined;
-    }
-    if (this.scanSubscription) {
-      this.scanSubscription.unsubscribe();
-      this.scanSubscription = undefined;
-    }
-    if (this.cameraActive) {
-      await this.qrScanner.destroy().then(
-        () => {
-          this.cameraActive = false;
-        }
-      );
-    }
-    if (this.pauseAlert) {
-      this.pauseAlert.dismiss();
-      this.pauseAlert = undefined;
-    }
+  async stopScanner(): Promise<void> {
+    await BarcodeScanner.showBackground();
+    await BarcodeScanner.stopScan();
+    this.cameraActive = false;
   }
 
   async prepareScanner(): Promise<void> {
-    if (this.motionSubscription) {
-      this.motionSubscription.unsubscribe();
-      this.motionSubscription = undefined;
-      this.motionlessCount = 0;
-    }
-    let denied = false;
-    await this.qrScanner.getStatus().then(
-      async (status: QRScannerStatus) => {
-        if (status.denied) {
-          const alert = await this.presentAlert(
-            this.translate.instant("MSG.CAMERA_PERMISSION_1"),
-            this.translate.instant("PERMISSION_REQUIRED"),
-            this.translate.instant("SETTING")
-          );
-          await alert.onDidDismiss().then(
-            async () => {
-              denied = true;
-            }
-          );
-        }
+    const result = await BarcodeScanner.checkPermission({ force: true });
+    if (result.granted) {
+      if (this.env.notShowUpdateNotes === false) {
+        this.env.notShowUpdateNotes = true;
+        this.env.storageSet("not-show-update-notes-v20000", 'yes');
+        await this.showUpdateNotes();
       }
-    );
-    if (denied) {
-      this.qrScanner.openSettings();
-      return;
+      await this.scanQr();
+    } else {
+      this.permissionAlert?.dismiss();
+      this.permissionAlert = await this.presentAlert(
+        this.translate.instant("MSG.CAMERA_PERMISSION_1"),
+        this.translate.instant("PERMISSION_REQUIRED"),
+        this.translate.instant("SETTING")
+      );
+      await this.permissionAlert.onDidDismiss().then(
+        async () => {
+          BarcodeScanner.openAppSettings();
+        }
+      );
     }
-    await this.qrScanner.prepare().then(
-      async (status: QRScannerStatus) => {
-        if (status.authorized) {
-          if (this.env.notShowUpdateNotes === false) {
-            this.env.notShowUpdateNotes = true;
-            this.env.storageSet("not-show-update-notes", 'yes');
-            await this.showUpdateNotes();
-          }
-          await this.scanQr();
-        }
-      },
-      async err => {
-        if (err.name === "CAMERA_ACCESS_DENIED") {
-          const alert = await this.presentAlert(
-            this.translate.instant("MSG.CAMERA_PERMISSION_2"),
-            this.translate.instant("PERMISSION_REQUIRED"),
-            this.translate.instant("OK")
-          );
-          await alert.onDidDismiss().then(
-            async () => {
-              await this.prepareScanner();
-            }
-          );
-        }
-      }
-    );
   }
 
   async scanQr(): Promise<void> {
-    const loading = await this.presentLoading(this.translate.instant("PREPARING"));
-    if (this.scanSubscription) {
-      this.scanSubscription.unsubscribe();
-    }
-    if (this.motionSubscription) {
-      this.motionSubscription.unsubscribe();
-      this.motionSubscription = undefined;
-      this.motionlessCount = 0;
-    }
-    if (this.pauseAlert) {
-      this.pauseAlert.dismiss();
-      this.pauseAlert = undefined;
-    }
-    await this.qrScanner.show().then(
-      () => {
-        loading.dismiss();
-        this.cameraActive = true;
-        if (this.env.cameraPauseTimeout !== 0) {
-          this.motionSubscription = this.deviceMotion.watchAcceleration({ frequency: 1000 }).subscribe(
-            async (acceleration: DeviceMotionAccelerationData) => {
-              if (this.detectMotionless(acceleration.x, acceleration.y, acceleration.z)) {
-                this.motionlessCount++;
-                console.log("motionless detected =>", this.motionlessCount)
-                if (this.motionlessCount > this.env.cameraPauseTimeout && this.cameraActive) {
-                  await this.qrScanner.destroy().then(
-                    async () => {
-                      this.cameraActive = false;
-                      this.pauseAlert = await this.alertController.create({
-                        header: this.translate.instant("CAMERA_PAUSED"),
-                        message: this.translate.instant("MSG.CAMERA_PAUSED"),
-                        backdropDismiss: false,
-                        cssClass: ['alert-bg'],
-                        buttons: [
-                          {
-                            text: this.translate.instant("RESUME"),
-                            handler: async () => {
-                              if (this.pauseAlert) {
-                                this.pauseAlert.dismiss();
-                                this.pauseAlert = undefined;
-                              }
-                              this.motionX = Math.round(acceleration.x);
-                              this.motionY = Math.round(acceleration.y);
-                              this.motionZ = Math.round(acceleration.z);
-                              this.motionlessCount = 0;
-                              const showing = (await this.qrScanner.getStatus()).showing;
-                              const previewing = (await this.qrScanner.getStatus()).previewing;
-                              if (!showing || !previewing) {
-                                this.motionSubscription.unsubscribe();
-                                await this.prepareScanner();
-                              }
-                            }
-                          }
-                        ]
-                      })
-                      this.pauseAlert.onDidDismiss().then(
-                        () => {
-                          this.pauseAlert = undefined;
-                        }
-                      );
-                      await this.pauseAlert.present();
-                    }
-                  );
-                }
-              } else {
-                console.log("motion detected!")
-                if (this.pauseAlert) {
-                  this.pauseAlert.dismiss();
-                  this.pauseAlert = undefined;
-                }
-                this.motionX = Math.round(acceleration.x);
-                this.motionY = Math.round(acceleration.y);
-                this.motionZ = Math.round(acceleration.z);
-                this.motionlessCount = 0;
-                const showing = (await this.qrScanner.getStatus()).showing;
-                const previewing = (await this.qrScanner.getStatus()).previewing;
-                if (!showing || !previewing) {
-                  this.motionSubscription.unsubscribe();
-                  await this.prepareScanner();
-                }
-              }
-            }
-          );
-        } else {
-          console.log("the motion detect is disabled!")
-        }
-        this.scanSubscription = this.qrScanner.scan().subscribe(
-          async (text: string) => {
-            if (text === undefined || text === null || (text && text.trim().length <= 0) || text === "") {
-              this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), 1000, "middle", "center", "long");
-              this.scanQr();
-              return;
-            }
-            if (this.env.vibration === 'on' || this.env.vibration === 'on-scanned') {
-              await Haptics.vibrate();
-            }
-            const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
-            if (this.scanSubscription) {
-              this.scanSubscription.unsubscribe();
-            }
-            if (this.motionSubscription) {
-              this.motionSubscription.unsubscribe();
-              this.motionSubscription = null;
-              this.motionlessCount = 0;
-            }
-            await this.processQrCode(text, loading);
+    await this.stopScanner();
+    await BarcodeScanner.hideBackground();
+    this.cameraActive = true;
+    await BarcodeScanner.prepare();
+    await BarcodeScanner.startScan().then(
+      async (result: ScanResult) => {
+        if (result.hasContent) {
+          console.log(result.content);
+          const text = result.content;
+          if (text === undefined || text === null || (text && text.trim().length <= 0) || text === "") {
+            this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), 1000, "middle", "center", "long");
+            this.scanQr();
+            return;
           }
-        );
+          if (this.env.vibration === 'on' || this.env.vibration === 'on-scanned') {
+            await Haptics.vibrate();
+          }
+          const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
+          await this.stopScanner();
+          await this.processQrCode(text, loading);
+        } else {
+          this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), 1000, "middle", "center", "long");
+          this.scanQr();
+          return;
+        }
       }
     );
-  }
-
-  private detectMotionless(x: number, y: number, z: number) {
-    return (Math.round(x) - this.motionX === 0) && (Math.round(y) - this.motionY === 0) && (Math.round(z) - this.motionZ === 0) && (Math.round(z) === 10);
   }
 
   async processQrCode(scannedData: string, loading: HTMLIonLoadingElement): Promise<void> {
@@ -302,20 +123,20 @@ export class ScanPage implements OnInit {
   }
 
   async toggleFlash(): Promise<void> {
-    if (!this.flashActive) {
-      await this.qrScanner.enableLight().then(
-        () => {
-          this.flashActive = true;
-          this.cameraActive = true;
-        }
-      );
-    } else {
-      await this.qrScanner.disableLight().then(
-        () => {
-          this.flashActive = false;
-        }
-      );
-    }
+    // if (!this.flashActive) {
+    //   await this.qrScanner.enableLight().then(
+    //     () => {
+    //       this.flashActive = true;
+    //       this.cameraActive = true;
+    //     }
+    //   );
+    // } else {
+    //   await this.qrScanner.disableLight().then(
+    //     () => {
+    //       this.flashActive = false;
+    //     }
+    //   );
+    // }
   }
 
   async presentAlert(msg: string, head: string, buttonText: string, buttonless: boolean = false): Promise<HTMLIonAlertElement> {

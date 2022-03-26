@@ -6,8 +6,6 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { QRScanner } from '@ionic-native/qr-scanner/ngx';
-import { DeviceMotion } from '@ionic-native/device-motion/ngx';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -36,46 +34,43 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MenuComponent,
-    QrcodeComponent
-  ],
-  entryComponents: [],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(),
-    AppRoutingModule,
-    HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }),
-    IonicStorageModule.forRoot(),
-    HistoryTutorialPageModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatSlideToggleModule,
-    MatButtonModule,
-    NgbModule,
-    NgxQRCodeModule,
-  ],
-  providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    AppVersion,
-    CallNumber,
-    DatePipe,
-    DeviceMotion,
-    File,
-    OpenNativeSettings,
-    QRScanner,
-    SMS,
-    SocialSharing,
-    ThemeDetection,
-  ],
-  bootstrap: [AppComponent],
+    declarations: [
+        AppComponent,
+        MenuComponent,
+        QrcodeComponent
+    ],
+    imports: [
+        BrowserModule,
+        IonicModule.forRoot(),
+        AppRoutingModule,
+        HttpClientModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
+        IonicStorageModule.forRoot(),
+        HistoryTutorialPageModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatSlideToggleModule,
+        MatButtonModule,
+        NgbModule,
+        NgxQRCodeModule,
+    ],
+    providers: [
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        AppVersion,
+        CallNumber,
+        DatePipe,
+        File,
+        OpenNativeSettings,
+        SMS,
+        SocialSharing,
+        ThemeDetection,
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

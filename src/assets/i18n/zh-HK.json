@@ -1,5 +1,5 @@
 {
-    "SIMPLE_QR": "簡易 QR",
+    "SIMPLE_QR": "簡易QR",
     "MESSAGE": "信息",
     "UPDATE_NOTES": "版本內容",
     "PERMISSION_REQUIRED": "需要授權",
@@ -220,6 +220,6 @@
         "TAP_TO_ZOOM_IN": "輕觸以放大"
     },
     "UPDATE": {
-        "UPDATE_NOTES": "<ul><li>支援黑色主題</li><li>支援 QR 碼放大</li><li>震動效果更新</li><li>小幅度的界面更新</li><li>改善效能及修正已知問題</li></ul>"
+        "UPDATE_NOTES": "<ul><li>改進了掃描引擎</li><li>基於技術問題，暫時停用電筒功能</li><li>基於技術問題，永久移除暫停掃描功能</li><li>改善效能及修正已知問題</li></ul>"
     }
 }

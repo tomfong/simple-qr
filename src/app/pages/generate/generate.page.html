@@ -41,8 +41,8 @@
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent" [floatLabel]="'always'">
           <mat-label>{{ 'QRCODE_CONTENT' | translate }} </mat-label>
-          <textarea matInput [(ngModel)]="qrCodeContent" [matTextareaAutosize]="true" [matAutosizeMinRows]="5"
-            [matAutosizeMaxRows]="10" [maxLength]="1817" #freeTxtInput></textarea>
+          <textarea matInput [(ngModel)]="qrCodeContent" [cdkTextareaAutosize]="true" [cdkAutosizeMinRows]="5"
+            [cdkAutosizeMaxRows]="10" [maxLength]="1817" #freeTxtInput></textarea>
           <mat-hint align="end">{{ freeTxtInput.value?.length || 0 }}/1817</mat-hint>
           <mat-hint>{{'CREATE_QRCODE_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>
@@ -154,8 +154,8 @@
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent" [floatLabel]="'always'">
           <mat-label>{{ 'EMAIL_BODY' | translate}}</mat-label>
-          <textarea matInput [(ngModel)]="emailBody" [matTextareaAutosize]="true" [matAutosizeMinRows]="5"
-            [matAutosizeMaxRows]="10" [maxLength]="1817" #emailBodyInput></textarea>
+          <textarea matInput [(ngModel)]="emailBody" [cdkTextareaAutosize]="true" [cdkAutosizeMinRows]="5"
+            [cdkAutosizeMaxRows]="10" [maxLength]="1817" #emailBodyInput></textarea>
           <mat-hint align="end">{{ emailBodyInput.value?.length || 0 }}/1817</mat-hint>
           <mat-hint>{{'CREATE_QRCODE_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>
@@ -190,8 +190,8 @@
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent" [floatLabel]="'always'">
           <mat-label>{{ 'SMS' | translate}}</mat-label>
-          <textarea matInput [(ngModel)]="smsMessage" [matTextareaAutosize]="true" [matAutosizeMinRows]="5"
-            [matAutosizeMaxRows]="10" [maxLength]="160" #smsInput></textarea>
+          <textarea matInput [(ngModel)]="smsMessage" [cdkTextareaAutosize]="true" [cdkAutosizeMinRows]="5"
+            [cdkAutosizeMaxRows]="10" [maxLength]="160" #smsInput></textarea>
           <mat-hint align="end">{{ smsInput.value?.length || 0 }}/160</mat-hint>
           <mat-hint>{{'SMS_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>

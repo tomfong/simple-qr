@@ -9,6 +9,7 @@ android {
 
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
+    implementation project(':capacitor-community-barcode-scanner')
     implementation project(':capacitor-community-contacts')
     implementation project(':capacitor-app')
     implementation project(':capacitor-camera')
@@ -20,7 +21,7 @@ dependencies {
     implementation project(':capacitor-status-bar')
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
 }
-apply from: "../../node_modules/cordova-plugin-qrscanner/src/android/qrscanner.gradle"
+
 
 if (hasProperty('postBuildExtras')) {
   postBuildExtras()

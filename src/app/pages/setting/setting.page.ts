@@ -37,10 +37,6 @@ export class SettingPage {
     this.router.navigate(['setting-color']);
   }
 
-  setCameraPause() {
-    this.router.navigate(['setting-camera-pause']);
-  }
-
   setVibration() {
     this.router.navigate(['setting-vibration']);
   }
