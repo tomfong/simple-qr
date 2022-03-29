@@ -24,7 +24,7 @@
     "@angular/platform-browser": "~13.3.0",
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
-    "@capacitor-community/barcode-scanner": "^2.0.1",
+    "@capacitor-community/barcode-scanner": "^2.1.0",
     "@capacitor-community/contacts": "^1.1.3",
     "@capacitor/android": "^3.4.3",
     "@capacitor/app": "^1.0.7",
