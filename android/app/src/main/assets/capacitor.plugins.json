@@ -1,7 +1,7 @@
 [
 	{
 		"pkg": "@capacitor-community/barcode-scanner",
-		"classpath": "com.dutchconcepts.capacitor.barcodescanner.BarcodeScanner"
+		"classpath": "com.getcapacitor.community.barcodescanner.BarcodeScanner"
 	},
 	{
 		"pkg": "@capacitor-community/contacts",

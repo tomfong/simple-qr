@@ -41,15 +41,20 @@ export class ScanPage implements OnInit {
 
   async ionViewDidEnter(): Promise<void> {
     await SplashScreen.hide();
-    // this.qrScanner.disableLight().then(
-    //   () => {
-    //     this.flashActive = false;
-    //   }
-    // );
+    await BarcodeScanner.disableTorch().then(
+      _ => {
+        this.flashActive = false;
+      }
+    );
     await this.prepareScanner();
   }
 
   async ionViewDidLeave(): Promise<void> {
+    await BarcodeScanner.disableTorch().then(
+      _ => {
+        this.flashActive = false;
+      }
+    );
     await this.stopScanner();
   }
 
@@ -64,7 +69,7 @@ export class ScanPage implements OnInit {
     if (result.granted) {
       if (this.env.notShowUpdateNotes === false) {
         this.env.notShowUpdateNotes = true;
-        this.env.storageSet("not-show-update-notes-v20000", 'yes');
+        this.env.storageSet("not-show-update-notes-v20001", 'yes');
         await this.showUpdateNotes();
       }
       await this.scanQr();
@@ -123,20 +128,19 @@ export class ScanPage implements OnInit {
   }
 
   async toggleFlash(): Promise<void> {
-    // if (!this.flashActive) {
-    //   await this.qrScanner.enableLight().then(
-    //     () => {
-    //       this.flashActive = true;
-    //       this.cameraActive = true;
-    //     }
-    //   );
-    // } else {
-    //   await this.qrScanner.disableLight().then(
-    //     () => {
-    //       this.flashActive = false;
-    //     }
-    //   );
-    // }
+    if (!this.flashActive) {
+      await BarcodeScanner.enableTorch().then(
+        _ => {
+          this.flashActive = true;
+        }
+      )
+    } else {
+      await BarcodeScanner.disableTorch().then(
+        _ => {
+          this.flashActive = false;
+        }
+      );
+    }
   }
 
   async presentAlert(msg: string, head: string, buttonText: string, buttonless: boolean = false): Promise<HTMLIonAlertElement> {

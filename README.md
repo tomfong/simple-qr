@@ -107,10 +107,9 @@ Thanks for your support!
 
 ## Changelogs
 
-### 2.0.0 (Current)
+### 2.0.0 - 2.0.1 (Current)
 
 - Revamped the scanning engine
-- Temporarily disabled torch feature due to technical problems
 - Removed camera pause feature due to technical problems
 - Improved performance and fix issues
 
