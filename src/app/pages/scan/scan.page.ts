@@ -69,7 +69,7 @@ export class ScanPage implements OnInit {
     if (result.granted) {
       if (this.env.notShowUpdateNotes === false) {
         this.env.notShowUpdateNotes = true;
-        this.env.storageSet("not-show-update-notes-v20000", 'yes');
+        this.env.storageSet("not-show-update-notes-v20001", 'yes');
         await this.showUpdateNotes();
       }
       await this.scanQr();

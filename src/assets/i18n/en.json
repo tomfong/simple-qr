@@ -220,6 +220,6 @@
         "TAP_TO_ZOOM_IN": "Tap to zoom in"
     },
     "UPDATE": {
-        "UPDATE_NOTES": "<ul><li>Revamped the scanning engine</li><li>Temporarily disabled torch feature due to technical problems</li><li>Removed camera pause feature due to technical problems</li><li>Improved performace and fixed known issues</li></ul>"
+        "UPDATE_NOTES": "<ul><li>Torch is back!</li><li>Revamped the scanning engine</li><li>Removed \"camera pause\" feature due to technical problems</li><li>Improved performace and fixed known issues</li></ul>"
     }
 }
