@@ -37,6 +37,7 @@ export class EnvService {
   public readonly GITHUB_REPO_URL: string = "https://github.com/tomfong/simple-qr";
   public readonly GOOGLE_PLAY_URL: string = "https://play.google.com/store/apps/details?id=com.tomfong.simpleqr";
   public readonly PRIVACY_POLICY: string = "https://www.privacypolicies.com/live/771b1123-99bb-4bfe-815e-1046c0437a0f";
+  public readonly PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20002";
 
   private _storage: Storage | null = null;
   private _scannedData: string = '';
@@ -111,7 +112,7 @@ export class EnvService {
         }
       }
     );
-    this.storageGet("not-show-update-notes-v20001").then(
+    this.storageGet(this.PATCH_NOTE_STORAGE_KEY).then(
       value => {
         if (value !== null && value !== undefined) {
           this.notShowUpdateNotes = (value === 'yes' ? true : false);
