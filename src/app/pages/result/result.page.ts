@@ -4,7 +4,7 @@ import { CallNumber } from '@ionic-native/call-number/ngx';
 import { Clipboard } from '@capacitor/clipboard';
 import { Contacts, ContactType, EmailAddress, NewContact, PhoneNumber } from '@capacitor-community/contacts'
 import { SMS } from '@ionic-native/sms/ngx';
-import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { AlertController, LoadingController, ModalController, Platform, PopoverController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -12,6 +12,7 @@ import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiedi
 import { VCardContact } from 'src/app/models/v-card-contact';
 import { EnvService } from 'src/app/services/env.service';
 import { QrcodeComponent } from 'src/app/components/qrcode/qrcode.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-result',
@@ -48,6 +49,8 @@ export class ResultPage implements OnInit {
   base64DecodedText: string = "";
 
   bookmarked: boolean = false;
+
+  qrImageDataUrl: string;
 
   constructor(
     private platform: Platform,
@@ -89,6 +92,10 @@ export class ResultPage implements OnInit {
   async ionViewWillLeave(): Promise<void> {
     this.base64Decoded = false;
     this.base64Encoded = false;
+  }
+
+  ionViewDidLeave() {
+    delete this.qrImageDataUrl;
   }
 
   setContentType(): void {
@@ -451,10 +458,22 @@ export class ResultPage implements OnInit {
 
   async shareQrCode(): Promise<void> {
     const loading = await this.presentLoading(this.translate.instant('PREPARING'));
-    const canvas = document.querySelector("canvas") as HTMLCanvasElement;
-    const imageDataUrl = canvas.toDataURL("image/png", 1);
+    const canvases = document.querySelectorAll("canvas") as NodeListOf<HTMLCanvasElement>;
+    const canvas = canvases[canvases.length - 1];
+    if (this.qrImageDataUrl) {
+      delete this.qrImageDataUrl;
+    }
+    this.qrImageDataUrl = canvas.toDataURL("image/png", 0.8);
     loading.dismiss();
-    await this.socialSharing.share(this.translate.instant('MSG.SHARE_QR'), this.translate.instant('SIMPLE_QR'), imageDataUrl, null);
+    await this.socialSharing.share(this.translate.instant('MSG.SHARE_QR'), this.translate.instant('SIMPLE_QR'), this.qrImageDataUrl, null).then(
+      _ => {
+        delete this.qrImageDataUrl;
+      }
+    ).catch(
+      err => {
+        delete this.qrImageDataUrl;
+      }
+    );
   }
 
   generateVCardContact(): void {

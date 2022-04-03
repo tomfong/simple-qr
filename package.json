@@ -1,6 +1,6 @@
 {
   "name": "simple-qr",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "author": "Tom Fong",
   "homepage": "https://tomfong-io.web.app",
   "scripts": {
@@ -24,6 +24,8 @@
     "@angular/platform-browser": "~13.3.0",
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
+    "@awesome-cordova-plugins/core": "^5.40.0",
+    "@awesome-cordova-plugins/social-sharing": "^5.40.0",
     "@capacitor-community/barcode-scanner": "^2.1.0",
     "@capacitor-community/contacts": "^1.1.3",
     "@capacitor/android": "^3.4.3",
@@ -43,7 +45,7 @@
     "@ionic-native/ionic-webview": "^5.32.1",
     "@ionic-native/open-native-settings": "^5.32.1",
     "@ionic-native/sms": "^5.31.1",
-    "@ionic-native/social-sharing": "^5.31.1",
+    "@ionic-native/social-sharing": "^5.36.0",
     "@ionic-native/theme-detection": "^5.32.0",
     "@ionic/angular": "^6.0.13",
     "@ionic/storage": "^3.0.2",

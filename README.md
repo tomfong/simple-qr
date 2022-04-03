@@ -88,7 +88,13 @@ Thanks for your support!
 
 - Run ```npm install``` to install all dependencies
 - Run ```npm run build```
-- In ```android/capacitor-cordova-android-plugins/src/main/AndroidManifest.xml```, add ```android:exported="false"``` inside receiver tag.
+- In ```android/capacitor-cordova-android-plugins/src/main/AndroidManifest.xml```, add ```android:exported="true"``` inside receiver tag.
+- In ```android/capacitor-cordova-android-plugins/src/main/java/nl/xservices/plugins/SocialSharing.java```, change line 274 to
+
+  ```java
+  final PendingIntent pendingIntent = PendingIntent.getBroadcast(cordova.getActivity().getApplicationContext(), 0, receiverIntent, PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
+  ```
+
 - In ```android/app/src/main/res/values/styles.xml```, change
 
   ```xml
@@ -107,7 +113,11 @@ Thanks for your support!
 
 ## Changelogs
 
-### 2.0.0 - 2.0.1 (Current)
+### 2.0.2 (Current)
+
+- Fixed QR code sharing crash issue
+
+#### 2.0.0 - 2.0.1
 
 - Revamped the scanning engine
 - Removed camera pause feature due to technical problems
