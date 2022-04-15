@@ -328,6 +328,7 @@ export class GeneratePage {
 
   async processQrCode(loading: HTMLIonLoadingElement): Promise<void> {
     this.env.result = this.qrCodeContent;
+    this.env.resultFormat = "";
     this.qrCodeContent = '';
     this.router.navigate(['tabs/result', { t: new Date().getTime() }], { state: { page: 'generate'}}).then(
       () => {

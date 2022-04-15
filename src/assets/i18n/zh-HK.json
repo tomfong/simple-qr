@@ -47,6 +47,7 @@
     "EMAIL_BODY": "電郵內容",
     "CONTACT_NAME": "聯絡人名稱",
     "BARCODE_CONTENT": "條碼內容",
+    "BARCODE_FORMAT": "條碼格式",
     "BROWSE_WEBSITE": "瀏覽網站",
     "ADD_CONTACT": "新增聯絡人",
     "CALL": "致電",

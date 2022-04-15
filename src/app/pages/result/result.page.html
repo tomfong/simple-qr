@@ -10,6 +10,18 @@
 
 <ion-content>
 
+  <ion-row *ngIf="env.resultFormat && env.resultFormat != ''">
+    <ion-col class="ion-text-center ion-padding-horizontal">
+      <ion-item lines="none">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom"
+          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
+          {{ 'BARCODE_FORMAT' | translate }}
+        </ion-label>
+        <ion-textarea class="box" readonly [value]="env.resultFormat" rows="1"></ion-textarea>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
   <ion-row *ngIf="qrCodeContent && qrCodeContent.trim().length > 0">
     <ion-col class="ion-text-center ion-padding-horizontal">
       <ion-item lines="none">
@@ -244,20 +256,20 @@
 
   <ion-row class="ion-padding-horizontal justify-content-between">
     <!-- General -->
-    <ion-button mode="md" (click)="tapHaptic(); webSearch()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
-      [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+    <ion-button mode="md" (click)="tapHaptic(); webSearch()" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
+      fill="clear" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
       <ion-icon slot="icon-only" src="assets/icon/search-web.svg"></ion-icon>
     </ion-button>
-    <ion-button mode="md" (click)="tapHaptic(); copyText()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
-      [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+    <ion-button mode="md" (click)="tapHaptic(); copyText()" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
+      fill="clear" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
       <ion-icon slot="icon-only" name="copy"></ion-icon>
     </ion-button>
-    <ion-button mode="md" (click)="tapHaptic(); base64()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
-      [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+    <ion-button mode="md" (click)="tapHaptic(); base64()" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
+      fill="clear" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
       <ion-icon slot="icon-only" name="code-working"></ion-icon>
     </ion-button>
-    <ion-button mode="md" (click)="tapHaptic(); enlarge()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
-      [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+    <ion-button mode="md" (click)="tapHaptic(); enlarge()" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
+      fill="clear" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
       <ion-icon slot="icon-only" name="qr-code-sharp"></ion-icon>
     </ion-button>
     <ion-button mode="md" (click)="tapHaptic(); addBookmark()" *ngIf="!bookmarked"

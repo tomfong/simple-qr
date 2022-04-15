@@ -41,6 +41,7 @@ export class EnvService {
 
   private _storage: Storage | null = null;
   private _scannedData: string = '';
+  private _scannedDataFormat: string = '';
   private _scanRecords: ScanRecord[] = [];
   private _bookmarks: Bookmark[] = [];
   private _deviceInfo: DeviceInfo | undefined = undefined;
@@ -212,6 +213,14 @@ export class EnvService {
 
   set result(value: string) {
     this._scannedData = value;
+  }
+
+  get resultFormat(): string {
+    return this._scannedDataFormat;
+  }
+
+  set resultFormat(value: string) {
+    this._scannedDataFormat = value;
   }
 
   get scanRecords(): ScanRecord[] {

@@ -108,7 +108,7 @@ export class ScanPage implements OnInit {
           }
           const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
           await this.stopScanner();
-          await this.processQrCode(text, loading);
+          await this.processQrCode(text, result.format, loading);
         } else {
           this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), 1000, "middle", "center", "long");
           this.scanQr();
@@ -118,8 +118,9 @@ export class ScanPage implements OnInit {
     );
   }
 
-  async processQrCode(scannedData: string, loading: HTMLIonLoadingElement): Promise<void> {
+  async processQrCode(scannedData: string, format: string, loading: HTMLIonLoadingElement): Promise<void> {
     this.env.result = scannedData;
+    this.env.resultFormat = format;
     this.router.navigate(['tabs/result', { t: new Date().getTime() }]).then(
       () => {
         loading.dismiss();
