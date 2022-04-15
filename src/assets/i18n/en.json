@@ -223,6 +223,6 @@
         "ONLY_VCARD_3_0": "Only vCard 3.0 is supported"
     },
     "UPDATE": {
-        "UPDATE_NOTES": "<ul><li>Fixed QR code sharing crash issue for Android 12 devices</li></ul>"
+        "UPDATE_NOTES": "<ul><li>UI updated: Android native toast, new button layout and more!</li><li>Back button is available on all pages</li><li>Barcode type can be shown after scanning</li><li>Improved performace and fixed known issues</li></ul>"
     }
 }
