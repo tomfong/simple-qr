@@ -50,7 +50,7 @@ export class ResultPage implements OnInit {
 
   bookmarked: boolean = false;
 
-  qrImageDataUrl: string;
+  showQrFirst: boolean = false;
 
   constructor(
     private platform: Platform,
@@ -60,13 +60,19 @@ export class ResultPage implements OnInit {
     private router: Router,
     public env: EnvService,
     public toastController: ToastController,
-    private socialSharing: SocialSharing,
     private callNumber: CallNumber,
     public modalController: ModalController,
     private sms: SMS,
     public translate: TranslateService,
     private popoverController: PopoverController,
-  ) { }
+  ) {
+    if (this.router.getCurrentNavigation().extras.state) {
+      const state = this.router.getCurrentNavigation().extras.state;
+      if (state.page == 'generate') {
+        this.showQrFirst = true;
+      }
+    }
+   }
 
   async ngOnInit() {
     this.qrCodeContent = this.env.result;
@@ -87,15 +93,17 @@ export class ResultPage implements OnInit {
         }, 200
       );
     }
+    if (this.showQrFirst) {
+      this.showQrFirst = false;
+      if (this.qrCodeContent && this.qrCodeContent.trim().length > 0){
+        await this.enlarge();
+      }
+    }
   }
 
   async ionViewWillLeave(): Promise<void> {
     this.base64Decoded = false;
     this.base64Encoded = false;
-  }
-
-  ionViewDidLeave() {
-    delete this.qrImageDataUrl;
   }
 
   setContentType(): void {
@@ -454,26 +462,6 @@ export class ResultPage implements OnInit {
     } else if (!failEncoded && failDecoded) {
       await this.presentToast(this.translate.instant('MSG.NOT_BASE64_DE'), 2000, "middle", "center", "long");
     }
-  }
-
-  async shareQrCode(): Promise<void> {
-    const loading = await this.presentLoading(this.translate.instant('PREPARING'));
-    const canvases = document.querySelectorAll("canvas") as NodeListOf<HTMLCanvasElement>;
-    const canvas = canvases[canvases.length - 1];
-    if (this.qrImageDataUrl) {
-      delete this.qrImageDataUrl;
-    }
-    this.qrImageDataUrl = canvas.toDataURL("image/png", 0.8);
-    loading.dismiss();
-    await this.socialSharing.share(this.translate.instant('MSG.SHARE_QR'), this.translate.instant('SIMPLE_QR'), this.qrImageDataUrl, null).then(
-      _ => {
-        delete this.qrImageDataUrl;
-      }
-    ).catch(
-      err => {
-        delete this.qrImageDataUrl;
-      }
-    );
   }
 
   generateVCardContact(): void {
