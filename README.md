@@ -114,7 +114,16 @@ Thanks for your support!
 
 ## Changelogs
 
-### 2.0.2 (Current)
+### 2.1.0 (Current)
+
+- Correctly display Traditional Chinese if system language is Yue
+- Simplified Chinese is supported now
+- UI updated: Android native toast, new button layout and more!
+- Back button is available on all pages
+- Barcode type can be shown after scanning
+- Improved performace and fixed known issues
+
+#### 2.0.2
 
 - Fixed QR code sharing crash issue
 
