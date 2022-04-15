@@ -131,6 +131,7 @@
     "WIFI": "WiFi",
     "CREATE_QRCODE_MAX_LENGTH_EXPLAIN": "The length of generated QR Code content must not exceed 1817 characters",
     "CREATE": "Create",
+    "CLEAR": "Clear",
     "EMAIL_RECIPIENT": "Email Recipient",
     "EMAIL_MAX_LENGTH": "Max. 254 characters",
     "ADD_RECIPIENT": "Add Recipient",

@@ -131,6 +131,7 @@
     "WIFI": "WiFi",
     "CREATE_QRCODE_MAX_LENGTH_EXPLAIN": "建立的 QR 碼內容長度不能多於 1817 個字元",
     "CREATE": "建立",
+    "CLEAR": "清除",
     "EMAIL_RECIPIENT": "收件者",
     "EMAIL_MAX_LENGTH": "最多 254 個字元",
     "ADD_RECIPIENT": "新增收件者",

@@ -465,9 +465,15 @@
       </ion-col>
     </ion-row>
   </ng-container>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" (click)="tapHaptic(); goGenerate()" [disabled]="disableGenerateBtn">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 </ion-content>
+<ion-footer mode="ios"
+  [ngStyle]="env.colorTheme === 'dark'?  {'background-color': '#222428'} : (env.colorTheme === 'black'? {'background-color': '#000000'} : {'background-color': '#F0F0F0'})">
+  <ion-row class="d-flex justify-content-around">
+    <ion-button (click)="tapHaptic(); clear()" [color]="'danger'" fill="clear">
+      {{ 'CLEAR' | translate }}
+    </ion-button>
+    <ion-button (click)="tapHaptic(); goGenerate()" [color]="'primary'" fill="clear" [disabled]="disableGenerateBtn">
+      {{ 'CREATE' | translate }}
+    </ion-button>
+  </ion-row>
+</ion-footer>

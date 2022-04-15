@@ -219,6 +219,44 @@ export class GeneratePage {
     }
   }
 
+  clear() {
+    this.qrCodeContent = "";
+    this.toEmails = [""];
+    this.ccEmails = [];
+    this.bccEmails = [];
+    this.emailSubject = "";
+    this.emailBody = "";
+
+    this.phoneNumber = "";
+
+    this.smsMessage = "";
+
+    this.url = "";
+
+    this.firstName = "";
+    this.lastName = "";
+    this.mobilePhoneNumber = "";
+    this.homePhoneNumber = "";
+    this.workPhoneNumber = "";
+    this.faxNumber = "";
+    this.email = "";
+    this.organization = "";
+    this.jobTitle = "";
+    this.street = "";
+    this.city = "";
+    this.state = "";
+    this.postalCode = "";
+    this.country = "";
+    delete this.birthday;
+    this.gender = "O";
+    this.personalUrl = "";
+
+    this.ssid = "";
+    this.wifiPassword = "";
+    this.wifiEncryption = "WPA";
+    this.wifiHidden = false;
+  }
+
   async goGenerate() {
     switch (this.contentType) {
       case "email":
