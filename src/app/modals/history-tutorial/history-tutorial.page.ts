@@ -14,7 +14,6 @@ export class HistoryTutorialPage {
 
   constructor(
     public modalController: ModalController,
-    public toastController: ToastController,
     public translate: TranslateService,
     public env: EnvService,
   ) {

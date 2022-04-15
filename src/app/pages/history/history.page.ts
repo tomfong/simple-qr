@@ -10,6 +10,7 @@ import { HistoryTutorialPage } from 'src/app/modals/history-tutorial/history-tut
 import { MenuComponent } from 'src/app/components/menu/menu.component';
 import { MenuItem } from 'src/app/models/menu-item';
 import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
+import { Toast } from '@capacitor/toast';
 
 @Component({
   selector: 'app-history',
@@ -99,9 +100,9 @@ export class HistoryPage {
     const flag = await this.env.saveBookmark(record.text);
     await this.loadItems();
     if (flag === true) {
-      this.presentToast(this.translate.instant("MSG.BOOKMARKED"), 1000, "bottom", "center", "short");
+      await this.presentToast(this.translate.instant("MSG.BOOKMARKED"), "short", "bottom");
     } else {
-      this.presentToast(this.translate.instant("MSG.ALREADY_BOOKMARKED"), 1000, "bottom", "center", "short");
+      await this.presentToast(this.translate.instant("MSG.ALREADY_BOOKMARKED"), "short", "bottom");
     }
   }
 
@@ -239,52 +240,12 @@ export class HistoryPage {
     return loading;
   }
 
-  async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {
-    if (size === "long") {
-      if (align === "left") {
-        const toast = await this.toastController.create({
-          message: msg,
-          duration: msTimeout,
-          mode: "ios",
-          color: "light",
-          cssClass: "text-start-toast",
-          position: pos
-        });
-        toast.present();
-      } else {
-        const toast = await this.toastController.create({
-          message: msg,
-          duration: msTimeout,
-          mode: "ios",
-          color: "light",
-          cssClass: "text-center-toast",
-          position: pos
-        });
-        toast.present();
-      }
-    } else {
-      if (align === "left") {
-        const toast = await this.toastController.create({
-          message: msg,
-          duration: msTimeout,
-          mode: "ios",
-          color: "light",
-          cssClass: "text-start-short-toast",
-          position: pos
-        });
-        toast.present();
-      } else {
-        const toast = await this.toastController.create({
-          message: msg,
-          duration: msTimeout,
-          mode: "ios",
-          color: "light",
-          cssClass: "text-center-short-toast",
-          position: pos
-        });
-        toast.present();
-      }
-    }
+  async presentToast(msg: string, duration: "short" | "long", pos: "top" | "center" | "bottom") {
+    await Toast.show({
+      text: msg,
+      duration: duration,
+      position: pos
+    });
   }
 
   async tapHaptic() {

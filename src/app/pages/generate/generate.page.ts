@@ -6,6 +6,7 @@ import { AlertController, LoadingController, ToastController } from '@ionic/angu
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
 import { EnvService } from 'src/app/services/env.service';
+import { Toast } from '@capacitor/toast';
 
 @Component({
   selector: 'app-generate',
@@ -108,7 +109,6 @@ export class GeneratePage {
   contentType: "freeText" | "url" | "contact" | "phone" | "sms" | "email" | "wifi" = "freeText";
 
   constructor(
-    public toastController: ToastController,
     public translate: TranslateService,
     public env: EnvService,
     public alertController: AlertController,
@@ -317,9 +317,9 @@ export class GeneratePage {
         this.qrCodeContent = `WIFI:T:${this.wifiEncryption};S:${this.ssid};P:${this.wifiPassword};H:${this.wifiHidden ? 'true' : ''};`;
     }
     if ((this.qrCodeContent && this.qrCodeContent.trim().length <= 0) || this.qrCodeContent === "") {
-      this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), 1500, "bottom", "center", "long");
+      await this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), "short", "bottom");
     } else if (this.qrCodeContent.length > 1817) {
-      this.presentToast(this.translate.instant('CREATE_QRCODE_MAX_LENGTH'), 1500, "bottom", "center", "long");
+      await this.presentToast(this.translate.instant('CREATE_QRCODE_MAX_LENGTH'), "short", "bottom");
     } else {
       const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
       await this.processQrCode(loading);
@@ -445,52 +445,12 @@ export class GeneratePage {
     return loading;
   }
 
-  async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {
-    if (size === "long") {
-      if (align === "left") {
-        const toast = await this.toastController.create({
-          message: msg,
-          duration: msTimeout,
-          mode: "ios",
-          color: "light",
-          cssClass: "text-start-toast",
-          position: pos
-        });
-        toast.present();
-      } else {
-        const toast = await this.toastController.create({
-          message: msg,
-          duration: msTimeout,
-          mode: "ios",
-          color: "light",
-          cssClass: "text-center-toast",
-          position: pos
-        });
-        toast.present();
-      }
-    } else {
-      if (align === "left") {
-        const toast = await this.toastController.create({
-          message: msg,
-          duration: msTimeout,
-          mode: "ios",
-          color: "light",
-          cssClass: "text-start-short-toast",
-          position: pos
-        });
-        toast.present();
-      } else {
-        const toast = await this.toastController.create({
-          message: msg,
-          duration: msTimeout,
-          mode: "ios",
-          color: "light",
-          cssClass: "text-center-short-toast",
-          position: pos
-        });
-        toast.present();
-      }
-    }
+  async presentToast(msg: string, duration: "short" | "long", pos: "top" | "center" | "bottom") {
+    await Toast.show({
+      text: msg,
+      duration: duration,
+      position: pos
+    });
   }
 
   get ngMatThemeClass() {

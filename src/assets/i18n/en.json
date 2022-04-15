@@ -216,10 +216,11 @@
         "WIFI_NO_INTERNET": "Network has no internet access",
         "ANDROID_WIFI_NATIVE_SETTINGS": "According to Android policies, we suggest you use native Settings to scan the QR code for adding the network.",
         "QR_CODE_VALUE_NOT_EMPTY": "QR Code value cannot be empty",
-        "NO_QR_CODE": "QR Code cannot be detected from image.<br>Please make sure that the background is not transparent.",
+        "NO_QR_CODE": "No QR Code. Make sure that the background is not transparent.",
         "SCAN_QR_FROM_IMAGE": "Tap to Scan QR Code from Image",
         "BARCODE_TYPE": "Scan<ul><li>QR Code</li><li>1D Barcode</li><li>Aztec Code</li><li>Data Matrix</li><li>PDF417</li></ul>Import Image<ul><li>QR Code</li></ul>Create<ul><li>QR Code</li></ul>",
-        "TAP_TO_ZOOM_IN": "Tap to zoom in"
+        "TAP_TO_ZOOM_IN": "Tap to zoom in",
+        "ONLY_VCARD_3_0": "Only vCard 3.0 is supported"
     },
     "UPDATE": {
         "UPDATE_NOTES": "<ul><li>Fixed QR code sharing crash issue for Android 12 devices</li></ul>"
