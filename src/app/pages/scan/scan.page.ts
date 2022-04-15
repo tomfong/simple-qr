@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BarcodeScanner, ScanResult } from '@capacitor-community/barcode-scanner';
 import { SplashScreen } from '@capacitor/splash-screen';
-import { AlertController, IonRouterOutlet, LoadingController, Platform, ToastController } from '@ionic/angular';
+import { AlertController, IonRouterOutlet, LoadingController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
@@ -18,7 +18,7 @@ enum CameraChoice {
   templateUrl: './scan.page.html',
   styleUrls: ['./scan.page.scss'],
 })
-export class ScanPage implements OnInit {
+export class ScanPage {
 
   cameraChoice: CameraChoice = CameraChoice.BACK;
   cameraActive: boolean = false;
@@ -34,10 +34,20 @@ export class ScanPage implements OnInit {
     private env: EnvService,
     public translate: TranslateService,
     private toastController: ToastController,
-  ) { }
-
-  ngOnInit(): void {
-    
+    private platform: Platform,
+  ) { 
+    this.platform.backButton.subscribeWithPriority(-1, async () => {
+      if (!this.routerOutlet.canGoBack()) {
+        const currentPage = this.router.url;
+        if (currentPage == "/result" || currentPage.startsWith("/tabs")) {
+          if (currentPage != "/tabs/scan") {
+            this.router.navigate(['/tabs/scan'], { replaceUrl: true });
+          } else {
+            await this.confirmExitApp();
+          }
+        }
+      }
+    });
   }
 
   async ionViewDidEnter(): Promise<void> {
@@ -200,4 +210,27 @@ export class ScanPage implements OnInit {
     });
     await alert.present();
   }
+
+  async confirmExitApp(): Promise<void> {
+    const alert = await this.alertController.create({
+      header: this.translate.instant('EXIT_APP'),
+      message: this.translate.instant('MSG.EXIT_APP'),
+      cssClass: ['alert-bg'],
+      buttons: [
+        {
+          text: this.translate.instant('YES'),
+          handler: () => {
+            navigator['app'].exitApp();
+          }
+        },
+        {
+          text: this.translate.instant('NO'),
+          role: 'cancel',
+          cssClass: 'btn-inverse'
+        }
+      ]
+    });
+    await alert.present();
+  }
+
 }

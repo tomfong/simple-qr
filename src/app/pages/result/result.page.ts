@@ -617,10 +617,6 @@ export class ResultPage implements OnInit {
     }
   }
 
-  returnScanPage(): void {
-    this.router.navigate(['/scan'], { replaceUrl: true });
-  }
-
   async addBookmark() {
     const flag = await this.env.saveBookmark(this.qrCodeContent);
     if (flag === true) {
