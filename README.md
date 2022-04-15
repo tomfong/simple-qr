@@ -60,6 +60,7 @@ Simple QR (簡易QR) is an open-source app, providing a simple way for you to sc
 
 - English (en)
 - Traditional Chinese 正體中文 (zh-HK)
+- Simplified Chinese 简体中文 (zh-CN)
 
 You are welcomed to help us do translations in more languages! (see <a href="#how-to-help-to-do-translation">section</a>)
 

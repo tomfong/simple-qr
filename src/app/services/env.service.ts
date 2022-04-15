@@ -18,9 +18,9 @@ export class EnvService {
 
   public appVersionNumber: string = '1.0.0';
 
-  public languages: string[] = ['en', 'zh-HK'];
-  public language: 'en' | 'zh-HK' = 'en';
-  public selectedLanguage: 'default' | 'en' | 'zh-HK' = 'default';
+  public languages: string[] = ['en', 'zh-HK', 'zh-CN'];
+  public language: 'en' | 'zh-HK' | 'zh-CN' = 'en';
+  public selectedLanguage: 'default' | 'en' | 'zh-HK' | 'zh-CN' = 'default';
   public colorTheme: 'light' | 'dark' | 'black' = 'light';
   public selectedColorTheme: 'default' | 'light' | 'dark' | 'black' = 'default';
   public scanRecordLogging: 'on' | 'off' = 'on';
@@ -302,15 +302,19 @@ export class EnvService {
     if (this.selectedLanguage === 'default') {
       let language = 'en';
       const browserLang = this.translate.getBrowserCultureLang();
+      console.log("browserLang", browserLang);
       if (browserLang.includes("zh", 0)) {
+        if (browserLang === 'zh-CN' || browserLang === 'zh-SG') language = 'zh-CN';
+        else language = "zh-HK";
+      } else if (browserLang.includes("yue", 0)) {
         language = "zh-HK";
       } else if (this.languages.includes(browserLang)) {
-        language = browserLang as 'en' | 'zh-HK';
+        language = browserLang as 'en' | 'zh-HK' | 'zh-CN';
       } else {
         language = 'en';
       }
       this.translate.use(language);
-      this.language = language as 'en' | 'zh-HK';
+      this.language = language as 'en' | 'zh-HK' | 'zh-CN';
     } else {
       this.translate.use(this.selectedLanguage);
       this.language = this.selectedLanguage;
