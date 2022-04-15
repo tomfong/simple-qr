@@ -121,7 +121,7 @@ Thanks for your support!
 - UI updated: Android native toast, new button layout and more!
 - Back button is available on all pages
 - Barcode type can be shown after scanning
-- Improved performace and fixed known issues
+- Improved performance and fixed known issues
 
 #### 2.0.2
 
