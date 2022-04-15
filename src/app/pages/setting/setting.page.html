@@ -10,8 +10,8 @@
 
 <ion-content>
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="navigateAbout()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="'primary'" name="information-circle-sharp"></ion-icon>
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="information-circle-sharp">
+    </ion-icon>
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
@@ -21,8 +21,7 @@
     </ion-label>
   </ion-item>
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setLanguage()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="'primary'" name="globe-sharp">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="globe-sharp">
     </ion-icon>
     <ion-label>
       <p class="ion-padding">
@@ -34,8 +33,7 @@
     <!--<ion-ripple-effect type="bounded"></ion-ripple-effect> -->
   </ion-item>
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setColorTheme()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="'primary'" name="color-palette"></ion-icon>
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="color-palette"></ion-icon>
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
@@ -45,10 +43,8 @@
     </ion-label>
     <!--<ion-ripple-effect type="bounded"></ion-ripple-effect> -->
   </ion-item>
-  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
-    (click)="setVibration()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="'primary'" src="assets/icon/vibration.svg">
+  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="setVibration()">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/vibration.svg">
     </ion-icon>
     <ion-label>
       <p class="ion-padding">
@@ -60,8 +56,8 @@
   </ion-item>
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
     (click)="setScanRecordLogging()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="'primary'" src="assets/icon/history.svg"></ion-icon>
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/history.svg">
+    </ion-icon>
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
@@ -73,8 +69,16 @@
   </ion-item>
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
     (click)="setSearchEngine()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="'primary'" src="assets/icon/search-web.svg"></ion-icon>
+    <!-- <ion-icon class="ion-margin-start ion-padding-horizontal"
+      [color]="'primary'" src="assets/icon/search-web.svg"></ion-icon> -->
+    <ion-icon *ngIf="env.searchEngine === 'google'" class="ion-margin-start ion-padding-horizontal" [color]="'primary'"
+      name="logo-google"></ion-icon>
+    <ion-icon *ngIf="env.searchEngine === 'bing'" class="ion-margin-start ion-padding-horizontal" [color]="'primary'"
+      src="assets/icon/microsoft-bing.svg"></ion-icon>
+    <ion-icon *ngIf="env.searchEngine === 'yahoo'" class="ion-margin-start ion-padding-horizontal" [color]="'primary'"
+      src="assets/icon/yahoo.svg"></ion-icon>
+    <ion-icon *ngIf="env.searchEngine === 'duckduckgo'" class="ion-margin-start ion-padding-horizontal"
+      [color]="'primary'" src="assets/icon/duck-duck-go.svg"></ion-icon>
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
@@ -85,8 +89,8 @@
     <!--<ion-ripple-effect type="bounded"></ion-ripple-effect> -->
   </ion-item>
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="resetApp()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal"
-      [color]="'primary'" src="assets/icon/reset.svg"></ion-icon>
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/reset.svg">
+    </ion-icon>
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">

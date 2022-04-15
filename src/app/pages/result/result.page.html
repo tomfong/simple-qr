@@ -258,7 +258,10 @@
     <!-- General -->
     <ion-button mode="md" (click)="tapHaptic(); webSearch()" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
       fill="clear" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
-      <ion-icon slot="icon-only" src="assets/icon/search-web.svg"></ion-icon>
+      <ion-icon *ngIf="env.searchEngine === 'google'" slot="icon-only" name="logo-google"></ion-icon>
+      <ion-icon *ngIf="env.searchEngine === 'bing'" slot="icon-only" src="assets/icon/microsoft-bing.svg"></ion-icon>
+      <ion-icon *ngIf="env.searchEngine === 'yahoo'" slot="icon-only" src="assets/icon/yahoo.svg"></ion-icon>
+      <ion-icon *ngIf="env.searchEngine === 'duckduckgo'" slot="icon-only" src="assets/icon/duck-duck-go.svg"></ion-icon>
     </ion-button>
     <ion-button mode="md" (click)="tapHaptic(); copyText()" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
       fill="clear" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
