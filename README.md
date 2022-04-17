@@ -114,7 +114,7 @@ Thanks for your support!
 
 ## Changelogs
 
-### 2.1.0 (Current)
+### 2.1.0 - 2.1.1 (Current)
 
 - Correctly display Traditional Chinese if system language is Yue
 - Simplified Chinese is supported now
