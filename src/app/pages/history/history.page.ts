@@ -86,7 +86,7 @@ export class HistoryPage {
     const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
     this.env.result = scannedData;
     this.env.resultFormat = "";
-    this.router.navigate(['tabs/result', { t: new Date().getTime() }], { state: { page: 'generate'}}).then(
+    this.router.navigate(['tabs/result', { from: 'history', t: new Date().getTime() }], { state: { page: 'generate'}}).then(
       () => {
         loading.dismiss();
       }
@@ -116,10 +116,10 @@ export class HistoryPage {
     await this.loadItems();
     this.deleteToast = await this.toastController.create({
       message: this.translate.instant('MSG.UNDO_DELETE'),
-      duration: 3000,
+      duration: 2000,
       mode: "ios",
       color: "light",
-      position: "bottom",
+      position: "top",
       buttons: [
         {
           text: this.translate.instant('UNDO'),
@@ -145,10 +145,10 @@ export class HistoryPage {
     await this.loadItems();
     this.deleteToast = await this.toastController.create({
       message: this.translate.instant('MSG.UNDO_DELETE'),
-      duration: 3000,
+      duration: 2000,
       mode: "ios",
       color: "light",
-      position: "bottom",
+      position: "top",
       buttons: [
         {
           text: this.translate.instant('UNDO'),
