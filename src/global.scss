@@ -25,7 +25,7 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-@import '~material-design-icons/iconfont/material-icons.css';
+@import "~material-design-icons/iconfont/material-icons.css";
 
 .text-center-toast {
     text-align: center;
@@ -105,6 +105,10 @@
 
 ion-item {
     --background-hover-opacity: 0;
+}
+
+ion-tab-button:not(.tab-selected)::part(native):hover {
+    color: var(--color);
 }
 
 .external-link-icon {
