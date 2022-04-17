@@ -86,7 +86,7 @@ export class HistoryPage {
     const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
     this.env.result = scannedData;
     this.env.resultFormat = "";
-    this.router.navigate(['tabs/result', { t: new Date().getTime() }], { state: { page: 'generate'}}).then(
+    this.router.navigate(['tabs/result', { from: 'history', t: new Date().getTime() }], { state: { page: 'generate'}}).then(
       () => {
         loading.dismiss();
       }

@@ -38,12 +38,23 @@ export class ScanPage {
   ) { 
     this.platform.backButton.subscribeWithPriority(-1, async () => {
       if (!this.routerOutlet.canGoBack()) {
-        const currentPage = this.router.url;
-        if (currentPage == "/result" || currentPage.startsWith("/tabs")) {
-          if (currentPage != "/tabs/scan") {
-            this.router.navigate(['/tabs/scan'], { replaceUrl: true });
-          } else {
-            await this.confirmExitApp();
+        if (this.router.url?.startsWith("/tabs/result")) {
+          const urlSeg = this.router.url?.split(";")
+          if (urlSeg.length > 1) {
+            if (urlSeg[1].startsWith("from=")) {
+              const from = urlSeg[1].substring(5);
+              if (from.length > 0) {
+                this.router.navigate([`/tabs/${from}`], { replaceUrl: true });
+              }
+            }
+          }
+        } else {
+          if (this.router.url?.startsWith("/tabs")) {
+            if (this.router.url != "/tabs/scan") {
+              this.router.navigate(['/tabs/scan'], { replaceUrl: true });
+            } else {
+              await this.confirmExitApp();
+            }
           }
         }
       }
@@ -132,7 +143,7 @@ export class ScanPage {
   async processQrCode(scannedData: string, format: string, loading: HTMLIonLoadingElement): Promise<void> {
     this.env.result = scannedData;
     this.env.resultFormat = format;
-    this.router.navigate(['tabs/result', { t: new Date().getTime() }]).then(
+    this.router.navigate(['tabs/result', { from: 'scan', t: new Date().getTime() }]).then(
       () => {
         loading.dismiss();
       }
