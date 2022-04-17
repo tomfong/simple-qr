@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Toast } from '@capacitor/toast';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { AlertController, LoadingController, Platform, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -17,7 +18,6 @@ export class SettingPage {
     public loadingController: LoadingController,
     private router: Router,
     public env: EnvService,
-    public toastController: ToastController,
     public translate: TranslateService,
     public appVersion: AppVersion,
     private platform: Platform,
@@ -105,52 +105,11 @@ export class SettingPage {
     await alert.present();
   }
 
-  async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {
-    if (size === "long") {
-      if (align === "left") {
-        const toast = await this.toastController.create({
-          message: msg,
-          duration: msTimeout,
-          mode: "ios",
-          color: "light",
-          cssClass: "text-start-toast",
-          position: pos
-        });
-        toast.present();
-      } else {
-        const toast = await this.toastController.create({
-          message: msg,
-          duration: msTimeout,
-          mode: "ios",
-          color: "light",
-          cssClass: "text-center-toast",
-          position: pos
-        });
-        toast.present();
-      }
-    } else {
-      if (align === "left") {
-        const toast = await this.toastController.create({
-          message: msg,
-          duration: msTimeout,
-          mode: "ios",
-          color: "light",
-          cssClass: "text-start-short-toast",
-          position: pos
-        });
-        toast.present();
-      } else {
-        const toast = await this.toastController.create({
-          message: msg,
-          duration: msTimeout,
-          mode: "ios",
-          color: "light",
-          cssClass: "text-center-short-toast",
-          position: pos
-        });
-        toast.present();
-      }
-    }
+  async presentToast(msg: string, duration: "short" | "long", pos: "top" | "center" | "bottom") {
+    await Toast.show({
+      text: msg,
+      duration: duration,
+      position: pos
+    });
   }
-
 }

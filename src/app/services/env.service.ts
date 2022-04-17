@@ -18,9 +18,9 @@ export class EnvService {
 
   public appVersionNumber: string = '1.0.0';
 
-  public languages: string[] = ['en', 'zh-HK'];
-  public language: 'en' | 'zh-HK' = 'en';
-  public selectedLanguage: 'default' | 'en' | 'zh-HK' = 'default';
+  public languages: string[] = ['en', 'zh-HK', 'zh-CN'];
+  public language: 'en' | 'zh-HK' | 'zh-CN' = 'en';
+  public selectedLanguage: 'default' | 'en' | 'zh-HK' | 'zh-CN' = 'default';
   public colorTheme: 'light' | 'dark' | 'black' = 'light';
   public selectedColorTheme: 'default' | 'light' | 'dark' | 'black' = 'default';
   public scanRecordLogging: 'on' | 'off' = 'on';
@@ -37,10 +37,11 @@ export class EnvService {
   public readonly GITHUB_REPO_URL: string = "https://github.com/tomfong/simple-qr";
   public readonly GOOGLE_PLAY_URL: string = "https://play.google.com/store/apps/details?id=com.tomfong.simpleqr";
   public readonly PRIVACY_POLICY: string = "https://www.privacypolicies.com/live/771b1123-99bb-4bfe-815e-1046c0437a0f";
-  public readonly PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20002";
+  public readonly PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20100";
 
   private _storage: Storage | null = null;
   private _scannedData: string = '';
+  private _scannedDataFormat: string = '';
   private _scanRecords: ScanRecord[] = [];
   private _bookmarks: Bookmark[] = [];
   private _deviceInfo: DeviceInfo | undefined = undefined;
@@ -214,6 +215,14 @@ export class EnvService {
     this._scannedData = value;
   }
 
+  get resultFormat(): string {
+    return this._scannedDataFormat;
+  }
+
+  set resultFormat(value: string) {
+    this._scannedDataFormat = value;
+  }
+
   get scanRecords(): ScanRecord[] {
     return this._scanRecords;
   }
@@ -293,15 +302,19 @@ export class EnvService {
     if (this.selectedLanguage === 'default') {
       let language = 'en';
       const browserLang = this.translate.getBrowserCultureLang();
+      console.log("browserLang", browserLang);
       if (browserLang.includes("zh", 0)) {
+        if (browserLang === 'zh-CN' || browserLang === 'zh-SG') language = 'zh-CN';
+        else language = "zh-HK";
+      } else if (browserLang.includes("yue", 0)) {
         language = "zh-HK";
       } else if (this.languages.includes(browserLang)) {
-        language = browserLang as 'en' | 'zh-HK';
+        language = browserLang as 'en' | 'zh-HK' | 'zh-CN';
       } else {
         language = 'en';
       }
       this.translate.use(language);
-      this.language = language as 'en' | 'zh-HK';
+      this.language = language as 'en' | 'zh-HK' | 'zh-CN';
     } else {
       this.translate.use(this.selectedLanguage);
       this.language = this.selectedLanguage;

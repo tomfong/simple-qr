@@ -13,6 +13,7 @@ import { VCardContact } from 'src/app/models/v-card-contact';
 import { EnvService } from 'src/app/services/env.service';
 import { QrcodeComponent } from 'src/app/components/qrcode/qrcode.component';
 import * as moment from 'moment';
+import { Toast } from '@capacitor/toast';
 
 @Component({
   selector: 'app-result',
@@ -50,7 +51,7 @@ export class ResultPage implements OnInit {
 
   bookmarked: boolean = false;
 
-  qrImageDataUrl: string;
+  showQrFirst: boolean = false;
 
   constructor(
     private platform: Platform,
@@ -59,14 +60,19 @@ export class ResultPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public env: EnvService,
-    public toastController: ToastController,
-    private socialSharing: SocialSharing,
     private callNumber: CallNumber,
     public modalController: ModalController,
     private sms: SMS,
     public translate: TranslateService,
     private popoverController: PopoverController,
-  ) { }
+  ) {
+    if (this.router.getCurrentNavigation().extras.state) {
+      const state = this.router.getCurrentNavigation().extras.state;
+      if (state.page == 'generate') {
+        this.showQrFirst = true;
+      }
+    }
+   }
 
   async ngOnInit() {
     this.qrCodeContent = this.env.result;
@@ -87,15 +93,17 @@ export class ResultPage implements OnInit {
         }, 200
       );
     }
+    if (this.showQrFirst) {
+      this.showQrFirst = false;
+      if (this.qrCodeContent && this.qrCodeContent.trim().length > 0){
+        await this.enlarge();
+      }
+    }
   }
 
   async ionViewWillLeave(): Promise<void> {
     this.base64Decoded = false;
     this.base64Encoded = false;
-  }
-
-  ionViewDidLeave() {
-    delete this.qrImageDataUrl;
   }
 
   setContentType(): void {
@@ -218,11 +226,11 @@ export class ResultPage implements OnInit {
           }
         ).then(
           (value) => {
-            this.presentToast(this.translate.instant('MSG.PREPARE_SMS'), 1000, "middle", "center", "long");
+            this.presentToast(this.translate.instant('MSG.PREPARE_SMS'), "short", "center");
           },
           async (err) => {
             console.error("error in send sms", err)
-            this.presentToast(this.translate.instant('MSG.FAIL_PREPARE_SMS'), 3000, "middle", "center", "long");
+            this.presentToast(this.translate.instant('MSG.FAIL_PREPARE_SMS'), "long", "center");
           }
         )
       } else {
@@ -234,11 +242,11 @@ export class ResultPage implements OnInit {
           }
         ).then(
           (value) => {
-            this.presentToast(this.translate.instant('MSG.PREPARE_SMS'), 2000, "middle", "center", "long");
+            this.presentToast(this.translate.instant('MSG.PREPARE_SMS'), "short", "center");
           },
           async (err) => {
             console.error("error in send sms", err)
-            this.presentToast(this.translate.instant('MSG.FAIL_PREPARE_SMS'), 3000, "middle", "center", "long");
+            this.presentToast(this.translate.instant('MSG.FAIL_PREPARE_SMS'), "long", "center");
           }
         )
       }
@@ -325,7 +333,7 @@ export class ResultPage implements OnInit {
                 alert.dismiss();
                 await Clipboard.write({ string: this.qrCodeContent }).then(
                   async () => {
-                    await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
+                    await this.presentToast(this.translate.instant('MSG.COPIED'), "short", "bottom");
                   }
                 )
               }
@@ -336,7 +344,7 @@ export class ResultPage implements OnInit {
                 alert.dismiss();
                 await Clipboard.write({ string: this.base64EncodedText }).then(
                   async () => {
-                    await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
+                    await this.presentToast(this.translate.instant('MSG.COPIED'), "short", "bottom");
                   }
                 )
               }
@@ -347,7 +355,7 @@ export class ResultPage implements OnInit {
                 alert.dismiss();
                 await Clipboard.write({ string: this.base64DecodedText }).then(
                   async () => {
-                    await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
+                    await this.presentToast(this.translate.instant('MSG.COPIED'), "short", "bottom");
                   }
                 )
               }
@@ -369,7 +377,7 @@ export class ResultPage implements OnInit {
                 alert.dismiss();
                 await Clipboard.write({ string: this.qrCodeContent }).then(
                   async () => {
-                    await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
+                    await this.presentToast(this.translate.instant('MSG.COPIED'), "short", "bottom");
                   }
                 )
               }
@@ -380,7 +388,7 @@ export class ResultPage implements OnInit {
                 alert.dismiss();
                 await Clipboard.write({ string: this.base64EncodedText }).then(
                   async () => {
-                    await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
+                    await this.presentToast(this.translate.instant('MSG.COPIED'), "short", "bottom");
                   }
                 )
               }
@@ -402,7 +410,7 @@ export class ResultPage implements OnInit {
                 alert.dismiss();
                 await Clipboard.write({ string: this.qrCodeContent }).then(
                   async () => {
-                    await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
+                    await this.presentToast(this.translate.instant('MSG.COPIED'), "short", "bottom");
                   }
                 )
               }
@@ -413,7 +421,7 @@ export class ResultPage implements OnInit {
                 alert.dismiss();
                 await Clipboard.write({ string: this.base64DecodedText }).then(
                   async () => {
-                    await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
+                    await this.presentToast(this.translate.instant('MSG.COPIED'), "short", "bottom");
                   }
                 )
               }
@@ -425,7 +433,7 @@ export class ResultPage implements OnInit {
     } else {
       await Clipboard.write({ string: this.qrCodeContent }).then(
         async () => {
-          await this.presentToast(this.translate.instant('MSG.COPIED'), 1500, "bottom", "center", "short");
+          await this.presentToast(this.translate.instant('MSG.COPIED'), "short", "bottom");
         }
       )
     }
@@ -448,38 +456,18 @@ export class ResultPage implements OnInit {
       failDecoded = true;
     }
     if (failEncoded && failDecoded) {
-      await this.presentToast(this.translate.instant('MSG.NOT_BASE64_EN_DE'), 2000, "middle", "center", "long");
+      await this.presentToast(this.translate.instant('MSG.NOT_BASE64_EN_DE'), "short", "center");
     } else if (failEncoded && !failDecoded) {
-      await this.presentToast(this.translate.instant('MSG.NOT_BASE64_EN'), 2000, "middle", "center", "long");
+      await this.presentToast(this.translate.instant('MSG.NOT_BASE64_EN'), "short", "center");
     } else if (!failEncoded && failDecoded) {
-      await this.presentToast(this.translate.instant('MSG.NOT_BASE64_DE'), 2000, "middle", "center", "long");
+      await this.presentToast(this.translate.instant('MSG.NOT_BASE64_DE'), "short", "center");
     }
-  }
-
-  async shareQrCode(): Promise<void> {
-    const loading = await this.presentLoading(this.translate.instant('PREPARING'));
-    const canvases = document.querySelectorAll("canvas") as NodeListOf<HTMLCanvasElement>;
-    const canvas = canvases[canvases.length - 1];
-    if (this.qrImageDataUrl) {
-      delete this.qrImageDataUrl;
-    }
-    this.qrImageDataUrl = canvas.toDataURL("image/png", 0.8);
-    loading.dismiss();
-    await this.socialSharing.share(this.translate.instant('MSG.SHARE_QR'), this.translate.instant('SIMPLE_QR'), this.qrImageDataUrl, null).then(
-      _ => {
-        delete this.qrImageDataUrl;
-      }
-    ).catch(
-      err => {
-        delete this.qrImageDataUrl;
-      }
-    );
   }
 
   generateVCardContact(): void {
     const lines = this.qrCodeContent.split("\n");
     if (!(lines[1]) || (lines[1] && lines[1] !== "VERSION:3.0")) {
-      this.presentToast("Only vCard 3.0 is supported", 2000, "middle", "center", "long");
+      this.presentToast(this.translate.instant('MSG.ONLY_VCARD_3_0'), "short", "center");
       return;
     }
     this.vCardContact = new VCardContact();
@@ -629,16 +617,12 @@ export class ResultPage implements OnInit {
     }
   }
 
-  returnScanPage(): void {
-    this.router.navigate(['/scan'], { replaceUrl: true });
-  }
-
   async addBookmark() {
     const flag = await this.env.saveBookmark(this.qrCodeContent);
     if (flag === true) {
-      this.presentToast(this.translate.instant("MSG.BOOKMARKED"), 1000, "bottom", "center", "short");
+      this.presentToast(this.translate.instant('MSG.BOOKMARKED'), "short", "bottom");
     } else {
-      this.presentToast(this.translate.instant("MSG.ALREADY_BOOKMARKED"), 1000, "bottom", "center", "short");
+      this.presentToast(this.translate.instant('MSG.ALREADY_BOOKMARKED'), "short", "bottom");
     }
     if (this.env.bookmarks.find(x => x.text === this.qrCodeContent)) {
       this.bookmarked = true;
@@ -649,7 +633,7 @@ export class ResultPage implements OnInit {
 
   async removeBookmark() {
     await this.env.deleteBookmark(this.qrCodeContent);
-    this.presentToast(this.translate.instant("MSG.UNBOOKMARKED"), 1000, "bottom", "center", "short");
+    this.presentToast(this.translate.instant('MSG.UNBOOKMARKED'), "short", "bottom");
     if (this.env.bookmarks.find(x => x.text === this.qrCodeContent)) {
       this.bookmarked = true;
     } else {
@@ -657,52 +641,12 @@ export class ResultPage implements OnInit {
     }
   }
 
-  async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {
-    if (size === "long") {
-      if (align === "left") {
-        const toast = await this.toastController.create({
-          message: msg,
-          duration: msTimeout,
-          mode: "ios",
-          color: "light",
-          cssClass: "text-start-toast",
-          position: pos
-        });
-        toast.present();
-      } else {
-        const toast = await this.toastController.create({
-          message: msg,
-          duration: msTimeout,
-          mode: "ios",
-          color: "light",
-          cssClass: "text-center-toast",
-          position: pos
-        });
-        toast.present();
-      }
-    } else {
-      if (align === "left") {
-        const toast = await this.toastController.create({
-          message: msg,
-          duration: msTimeout,
-          mode: "ios",
-          color: "light",
-          cssClass: "text-start-short-toast",
-          position: pos
-        });
-        toast.present();
-      } else {
-        const toast = await this.toastController.create({
-          message: msg,
-          duration: msTimeout,
-          mode: "ios",
-          color: "light",
-          cssClass: "text-center-short-toast",
-          position: pos
-        });
-        toast.present();
-      }
-    }
+  async presentToast(msg: string, duration: "short" | "long", pos: "top" | "center" | "bottom") {
+    await Toast.show({
+      text: msg,
+      duration: duration,
+      position: pos
+    });
   }
 
   private base64toBlob(base64Data: string, contentType: string): Blob {

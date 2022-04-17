@@ -46,7 +46,8 @@
     "EMAIL_SUBJECT": "Subject",
     "EMAIL_BODY": "Body",
     "CONTACT_NAME": "Contact Name",
-    "BARCODE_CONTENT": "Code Content",
+    "BARCODE_CONTENT": "Barcode Content",
+    "BARCODE_FORMAT": "Barcode Format",
     "BROWSE_WEBSITE": "Browse Website",
     "ADD_CONTACT": "Add Contact",
     "CALL": "Call",
@@ -131,6 +132,7 @@
     "WIFI": "WiFi",
     "CREATE_QRCODE_MAX_LENGTH_EXPLAIN": "The length of generated QR Code content must not exceed 1817 characters",
     "CREATE": "Create",
+    "CLEAR": "Clear",
     "EMAIL_RECIPIENT": "Email Recipient",
     "EMAIL_MAX_LENGTH": "Max. 254 characters",
     "ADD_RECIPIENT": "Add Recipient",
@@ -214,12 +216,13 @@
         "WIFI_NO_INTERNET": "Network has no internet access",
         "ANDROID_WIFI_NATIVE_SETTINGS": "According to Android policies, we suggest you use native Settings to scan the QR code for adding the network.",
         "QR_CODE_VALUE_NOT_EMPTY": "QR Code value cannot be empty",
-        "NO_QR_CODE": "QR Code cannot be detected from image.",
+        "NO_QR_CODE": "No QR Code. Make sure that the background is not transparent.",
         "SCAN_QR_FROM_IMAGE": "Tap to Scan QR Code from Image",
         "BARCODE_TYPE": "Scan<ul><li>QR Code</li><li>1D Barcode</li><li>Aztec Code</li><li>Data Matrix</li><li>PDF417</li></ul>Import Image<ul><li>QR Code</li></ul>Create<ul><li>QR Code</li></ul>",
-        "TAP_TO_ZOOM_IN": "Tap to zoom in"
+        "TAP_TO_ZOOM_IN": "Tap to zoom in",
+        "ONLY_VCARD_3_0": "Only vCard 3.0 is supported"
     },
     "UPDATE": {
-        "UPDATE_NOTES": "<ul><li>Fixed QR code sharing crash issue for Android 12 devices</li></ul>"
+        "UPDATE_NOTES": "<ul><li>Correctly display Traditional Chinese if system language is Yue</li><li>Simplified Chinese is supported now</li><li>UI updated: Android native toast, new button layout and more!</li><li>Back button is available on all pages</li><li>Barcode type can be shown after scanning</li><li>Improved performace and fixed known issues</li></ul>"
     }
 }

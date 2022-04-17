@@ -60,6 +60,7 @@ Simple QR (簡易QR) is an open-source app, providing a simple way for you to sc
 
 - English (en)
 - Traditional Chinese 正體中文 (zh-HK)
+- Simplified Chinese 简体中文 (zh-CN)
 
 You are welcomed to help us do translations in more languages! (see <a href="#how-to-help-to-do-translation">section</a>)
 
@@ -113,7 +114,16 @@ Thanks for your support!
 
 ## Changelogs
 
-### 2.0.2 (Current)
+### 2.1.0 (Current)
+
+- Correctly display Traditional Chinese if system language is Yue
+- Simplified Chinese is supported now
+- UI updated: Android native toast, new button layout and more!
+- Back button is available on all pages
+- Barcode type can be shown after scanning
+- Improved performance and fixed known issues
+
+#### 2.0.2
 
 - Fixed QR code sharing crash issue
 

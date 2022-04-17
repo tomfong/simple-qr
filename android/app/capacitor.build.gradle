@@ -19,6 +19,7 @@ dependencies {
     implementation project(':capacitor-keyboard')
     implementation project(':capacitor-splash-screen')
     implementation project(':capacitor-status-bar')
+    implementation project(':capacitor-toast')
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
 }
 

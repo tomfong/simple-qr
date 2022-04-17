@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BarcodeScanner, ScanResult } from '@capacitor-community/barcode-scanner';
 import { SplashScreen } from '@capacitor/splash-screen';
-import { AlertController, IonRouterOutlet, LoadingController, Platform, ToastController } from '@ionic/angular';
+import { AlertController, IonRouterOutlet, LoadingController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { Toast } from '@capacitor/toast';
 
 enum CameraChoice {
   BACK,
@@ -17,7 +18,7 @@ enum CameraChoice {
   templateUrl: './scan.page.html',
   styleUrls: ['./scan.page.scss'],
 })
-export class ScanPage implements OnInit {
+export class ScanPage {
 
   cameraChoice: CameraChoice = CameraChoice.BACK;
   cameraActive: boolean = false;
@@ -33,10 +34,20 @@ export class ScanPage implements OnInit {
     private env: EnvService,
     public translate: TranslateService,
     private toastController: ToastController,
-  ) { }
-
-  ngOnInit(): void {
-    
+    private platform: Platform,
+  ) { 
+    this.platform.backButton.subscribeWithPriority(-1, async () => {
+      if (!this.routerOutlet.canGoBack()) {
+        const currentPage = this.router.url;
+        if (currentPage == "/result" || currentPage.startsWith("/tabs")) {
+          if (currentPage != "/tabs/scan") {
+            this.router.navigate(['/tabs/scan'], { replaceUrl: true });
+          } else {
+            await this.confirmExitApp();
+          }
+        }
+      }
+    });
   }
 
   async ionViewDidEnter(): Promise<void> {
@@ -99,7 +110,7 @@ export class ScanPage implements OnInit {
           console.log(result.content);
           const text = result.content;
           if (text === undefined || text === null || (text && text.trim().length <= 0) || text === "") {
-            this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), 1000, "middle", "center", "long");
+            this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), "short", "center");
             this.scanQr();
             return;
           }
@@ -108,9 +119,9 @@ export class ScanPage implements OnInit {
           }
           const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
           await this.stopScanner();
-          await this.processQrCode(text, loading);
+          await this.processQrCode(text, result.format, loading);
         } else {
-          this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), 1000, "middle", "center", "long");
+          this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), "short", "center");
           this.scanQr();
           return;
         }
@@ -118,8 +129,9 @@ export class ScanPage implements OnInit {
     );
   }
 
-  async processQrCode(scannedData: string, loading: HTMLIonLoadingElement): Promise<void> {
+  async processQrCode(scannedData: string, format: string, loading: HTMLIonLoadingElement): Promise<void> {
     this.env.result = scannedData;
+    this.env.resultFormat = format;
     this.router.navigate(['tabs/result', { t: new Date().getTime() }]).then(
       () => {
         loading.dismiss();
@@ -174,52 +186,12 @@ export class ScanPage implements OnInit {
     return loading;
   }
 
-  async presentToast(msg: string, msTimeout: number, pos: "top" | "middle" | "bottom", align: "left" | "center", size: "short" | "long") {
-    if (size === "long") {
-      if (align === "left") {
-        const toast = await this.toastController.create({
-          message: msg,
-          duration: msTimeout,
-          mode: "ios",
-          color: "light",
-          cssClass: "text-start-toast",
-          position: pos
-        });
-        toast.present();
-      } else {
-        const toast = await this.toastController.create({
-          message: msg,
-          duration: msTimeout,
-          mode: "ios",
-          color: "light",
-          cssClass: "text-center-toast",
-          position: pos
-        });
-        toast.present();
-      }
-    } else {
-      if (align === "left") {
-        const toast = await this.toastController.create({
-          message: msg,
-          duration: msTimeout,
-          mode: "ios",
-          color: "light",
-          cssClass: "text-start-short-toast",
-          position: pos
-        });
-        toast.present();
-      } else {
-        const toast = await this.toastController.create({
-          message: msg,
-          duration: msTimeout,
-          mode: "ios",
-          color: "light",
-          cssClass: "text-center-short-toast",
-          position: pos
-        });
-        toast.present();
-      }
-    }
+  async presentToast(msg: string, duration: "short" | "long", pos: "top" | "center" | "bottom") {
+    await Toast.show({
+      text: msg,
+      duration: duration,
+      position: pos
+    });
   }
 
   async tapHaptic() {
@@ -238,4 +210,27 @@ export class ScanPage implements OnInit {
     });
     await alert.present();
   }
+
+  async confirmExitApp(): Promise<void> {
+    const alert = await this.alertController.create({
+      header: this.translate.instant('EXIT_APP'),
+      message: this.translate.instant('MSG.EXIT_APP'),
+      cssClass: ['alert-bg'],
+      buttons: [
+        {
+          text: this.translate.instant('YES'),
+          handler: () => {
+            navigator['app'].exitApp();
+          }
+        },
+        {
+          text: this.translate.instant('NO'),
+          role: 'cancel',
+          cssClass: 'btn-inverse'
+        }
+      ]
+    });
+    await alert.present();
+  }
+
 }

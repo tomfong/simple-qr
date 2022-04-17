@@ -10,13 +10,15 @@
 
 <ion-content>
 
-  <ion-row *ngIf="qrCodeContent && qrCodeContent.trim().length > 0">
-    <ion-col class="ion-text-center ion-padding-horizontal ion-padding-top">
-      <ngx-qrcode [elementType]="qrElementType" [value]="qrCodeContent" [width]="800"
-        [errorCorrectionLevel]="errorCorrectionLevel" [colorDark]="qrColorDark" [colorLight]="qrColorLight"
-        [margin]="qrMargin" (click)="tapHaptic(); enlarge()">
-      </ngx-qrcode>
-      <p>{{ 'MSG.TAP_TO_ZOOM_IN' | translate }}</p>
+  <ion-row *ngIf="env.resultFormat && env.resultFormat != ''">
+    <ion-col class="ion-text-center ion-padding-horizontal">
+      <ion-item lines="none">
+        <ion-label class="content-label ion-padding-start ion-padding-bottom"
+          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
+          {{ 'BARCODE_FORMAT' | translate }}
+        </ion-label>
+        <ion-textarea class="box" readonly [value]="env.resultFormat" rows="1"></ion-textarea>
+      </ion-item>
     </ion-col>
   </ion-row>
 
@@ -205,80 +207,73 @@
     <ion-col></ion-col>
   </ion-row>
 
-  <ion-fab *ngIf="contentType === 'url'" vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" (click)="tapHaptic(); browseWebsite()">
-      <ion-icon name="globe"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-
-  <ion-fab *ngIf="contentType === 'contact'" vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" (click)="tapHaptic(); addContact()">
-      <ion-icon name="person-add-sharp"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-
-  <ion-fab *ngIf="contentType === 'phone'" vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" closeIcon="chevron-down" (click)="tapHaptic(); ">
-      <ion-icon name="menu"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button color="primary" (click)="tapHaptic(); addContact()">
-        <ion-icon name="person-add-sharp"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="primary" (click)="tapHaptic(); callPhone()">
-        <ion-icon name="call"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
-
-  <ion-fab *ngIf="smsContent && contentType === 'sms'" vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" closeIcon="chevron-down" (click)="tapHaptic(); ">
-      <ion-icon name="menu"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button color="primary" (click)="tapHaptic(); addContact()">
-        <ion-icon name="person-add-sharp"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="primary" (click)="tapHaptic(); sendSms()">
-        <ion-icon name="send"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
-
-  <ion-fab *ngIf="!smsContent && contentType === 'sms'" vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" (click)="tapHaptic(); addContact()">
-      <ion-icon name="person-add-sharp"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-
-  <ion-fab *ngIf="contentType === 'email'" vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" (click)="tapHaptic(); sendEmail()">
-      <ion-icon name="mail"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-
 </ion-content>
 
 <ion-footer mode="ios"
   [ngStyle]="env.colorTheme === 'dark'?  {'background-color': '#222428'} : (env.colorTheme === 'black'? {'background-color': '#000000'} : {'background-color': '#F0F0F0'})">
 
+  <ion-row *ngIf="contentType === 'url'" class="d-flex justify-content-center">
+    <ion-button mode="md" (click)="tapHaptic(); browseWebsite()" [color]="'primary'" fill="clear">
+      <ion-icon name="globe"></ion-icon>
+    </ion-button>
+  </ion-row>
+
+  <ion-row *ngIf="contentType === 'contact'" class="d-flex justify-content-center">
+    <ion-button mode="md" (click)="tapHaptic(); addContact()" [color]="'primary'" fill="clear">
+      <ion-icon name="person-add-sharp"></ion-icon>
+    </ion-button>
+  </ion-row>
+
+  <ion-row *ngIf="contentType === 'phone'" class="d-flex justify-content-around">
+    <ion-button mode="md" (click)="tapHaptic(); addContact()" [color]="'primary'" fill="clear">
+      <ion-icon name="person-add-sharp"></ion-icon>
+    </ion-button>
+    <ion-button mode="md" (click)="tapHaptic(); callPhone()" [color]="'primary'" fill="clear">
+      <ion-icon name="call"></ion-icon>
+    </ion-button>
+  </ion-row>
+
+  <ion-row *ngIf="smsContent && contentType === 'sms'" class="d-flex justify-content-around">
+    <ion-button mode="md" (click)="tapHaptic(); addContact()" [color]="'primary'" fill="clear">
+      <ion-icon name="person-add-sharp"></ion-icon>
+    </ion-button>
+    <ion-button mode="md" (click)="tapHaptic(); sendSms()" [color]="'primary'" fill="clear">
+      <ion-icon name="send"></ion-icon>
+    </ion-button>
+  </ion-row>
+
+  <ion-row *ngIf="!smsContent && contentType === 'sms'" class="d-flex justify-content-center">
+    <ion-button mode="md" (click)="tapHaptic(); addContact()" [color]="'primary'" fill="clear">
+      <ion-icon name="person-add-sharp"></ion-icon>
+    </ion-button>
+  </ion-row>
+
+  <ion-row *ngIf="contentType === 'email'" class="d-flex justify-content-center">
+    <ion-button mode="md" (click)="tapHaptic(); sendEmail()" [color]="'primary'" fill="clear">
+      <ion-icon name="mail"></ion-icon>
+    </ion-button>
+  </ion-row>
+
   <ion-row class="ion-padding-horizontal justify-content-between">
     <!-- General -->
-    <ion-button mode="md" (click)="tapHaptic(); webSearch()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
-      [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
-      <ion-icon slot="icon-only" src="assets/icon/search-web.svg"></ion-icon>
+    <ion-button mode="md" (click)="tapHaptic(); webSearch()" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
+      fill="clear" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+      <ion-icon *ngIf="env.searchEngine === 'google'" slot="icon-only" name="logo-google"></ion-icon>
+      <ion-icon *ngIf="env.searchEngine === 'bing'" slot="icon-only" src="assets/icon/microsoft-bing.svg"></ion-icon>
+      <ion-icon *ngIf="env.searchEngine === 'yahoo'" slot="icon-only" src="assets/icon/yahoo.svg"></ion-icon>
+      <ion-icon *ngIf="env.searchEngine === 'duckduckgo'" slot="icon-only" src="assets/icon/duck-duck-go.svg"></ion-icon>
     </ion-button>
-    <ion-button mode="md" (click)="tapHaptic(); copyText()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
-      [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+    <ion-button mode="md" (click)="tapHaptic(); copyText()" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
+      fill="clear" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
       <ion-icon slot="icon-only" name="copy"></ion-icon>
     </ion-button>
-    <ion-button mode="md" (click)="tapHaptic(); base64()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
-      [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+    <ion-button mode="md" (click)="tapHaptic(); base64()" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
+      fill="clear" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
       <ion-icon slot="icon-only" name="code-working"></ion-icon>
     </ion-button>
-    <ion-button mode="md" (click)="tapHaptic(); shareQrCode()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
-      [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
-      <ion-icon slot="icon-only" name="share-social"></ion-icon>
+    <ion-button mode="md" (click)="tapHaptic(); enlarge()" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
+      fill="clear" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+      <ion-icon slot="icon-only" name="qr-code-sharp"></ion-icon>
     </ion-button>
     <ion-button mode="md" (click)="tapHaptic(); addBookmark()" *ngIf="!bookmarked"
       [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
@@ -290,42 +285,4 @@
       <ion-icon slot="icon-only" name="star"></ion-icon>
     </ion-button>
   </ion-row>
-  <!-- <ion-row class="ion-padding-horizontal ion-margin-horizontal">
-    <ion-col size="6">
-      <ion-button expand="full" color="primary" mode="ios" (click)="webSearch()"
-        [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
-        <ion-icon slot="start" src="assets/icon/search-web.svg"></ion-icon>
-        <span>{{ 'WEB_SEARCH' | translate }}</span>
-        <ion-icon class="external-link-icon" src="assets/icon/external-link.svg">
-        </ion-icon>
-        <ion-ripple-effect></ion-ripple-effect>
-      </ion-button>
-    </ion-col>
-    <ion-col size="6">
-      <ion-button expand="full" color="primary" mode="ios" (click)="copyText()"
-        [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
-        <ion-icon slot="start" name="copy"></ion-icon>
-        <span>{{ 'COPY_TEXT' | translate }}</span>
-        <ion-ripple-effect></ion-ripple-effect>
-      </ion-button>
-    </ion-col>
-  </ion-row>
-  <ion-row class="ion-padding-horizontal ion-margin-horizontal ion-padding-bottom">
-    <ion-col size="6">
-      <ion-button expand="full" color="primary" mode="ios" (click)="base64()"
-        [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
-        <ion-icon slot="start" name="code-working"></ion-icon>
-        <span>{{ 'BASE64' | translate }}</span>
-        <ion-ripple-effect></ion-ripple-effect>
-      </ion-button>
-    </ion-col>
-    <ion-col size="6">
-      <ion-button expand="full" color="primary" mode="ios" (click)="shareQrCode()"
-        [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
-        <ion-icon slot="start" name="share-social"></ion-icon>
-        <span>{{ 'SHARE_QRCODE' | translate }}</span>
-        <ion-ripple-effect></ion-ripple-effect>
-      </ion-button>
-    </ion-col>
-  </ion-row> -->
 </ion-footer>

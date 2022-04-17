@@ -21,7 +21,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     CommonModule,
     FormsModule,
     IonicModule,
-    NgxQRCodeModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,

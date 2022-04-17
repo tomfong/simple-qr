@@ -100,42 +100,13 @@
     </ion-list>
   </ng-container>
 
-  <ion-fab *ngIf="segmentModel === 'history' && (!scanRecords || scanRecords.length <= 0)" vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" (click)="tapHaptic(); showTutorial();">
-      <ion-icon name="book"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-  <ion-fab *ngIf="segmentModel === 'history' && scanRecords && scanRecords.length > 0" vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" closeIcon="chevron-down" (click)="tapHaptic()">
-      <ion-icon name="menu"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button color="danger" (click)="tapHaptic(); removeAll()">
-        <ion-icon name="trash-bin"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="primary" (click)="tapHaptic(); showTutorial()">
-        <ion-icon name="book"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
-
-  <ion-fab *ngIf="segmentModel === 'bookmarks' && (!bookmarks || bookmarks.length <= 0)" vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" (click)="tapHaptic(); showTutorial()">
-      <ion-icon name="book"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-  <ion-fab *ngIf="segmentModel === 'bookmarks' && bookmarks && bookmarks.length > 0" vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary" closeIcon="chevron-down" (click)="tapHaptic();">
-      <ion-icon name="menu"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button color="danger" (click)="tapHaptic(); removeAll()">
-        <ion-icon name="trash-bin"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="primary" (click)="tapHaptic(); showTutorial()">
-        <ion-icon name="book"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
-  
 </ion-content>
+
+<ion-footer mode="ios" *ngIf="(segmentModel === 'bookmarks' && bookmarks && bookmarks.length > 0) || (segmentModel === 'history' && scanRecords && scanRecords.length > 0)"
+  [ngStyle]="env.colorTheme === 'dark'?  {'background-color': '#222428'} : (env.colorTheme === 'black'? {'background-color': '#000000'} : {'background-color': '#F0F0F0'})">
+  <ion-row class="d-flex justify-content-around">
+    <ion-button mode="md" (click)="tapHaptic(); removeAll()" [color]="'danger'" fill="clear">
+      {{ 'REMOVE_ALL' | translate }}
+    </ion-button>
+  </ion-row>
+</ion-footer>
