@@ -72,7 +72,7 @@ export class ResultPage implements OnInit {
         this.showQrFirst = true;
       }
     }
-   }
+  }
 
   async ngOnInit() {
     this.qrCodeContent = this.env.result;
@@ -95,8 +95,11 @@ export class ResultPage implements OnInit {
     }
     if (this.showQrFirst) {
       this.showQrFirst = false;
-      if (this.qrCodeContent && this.qrCodeContent.trim().length > 0){
-        await this.enlarge();
+      if (this.qrCodeContent && this.qrCodeContent.trim().length > 0) {
+        setTimeout(
+          async () => await this.enlarge(), 100
+        );
+        ;
       }
     }
   }
@@ -263,7 +266,7 @@ export class ResultPage implements OnInit {
       cssClass: 'qrcode-modal',
       componentProps: { qrCodeContent: this.qrCodeContent }
     });
-    modal.present();
+    await modal.present();
   }
 
   async webSearch(): Promise<void> {
