@@ -196,7 +196,7 @@
         "CAMERA_PERMISSION_2": "使用扫描功能，您必须授权「简易QR」使用相机。 ",
         "READ_IMAGE_PERMISSION": "要扫描图片，您必须授权「简易QR」存取储存空间。 ",
         "CAMERA_PAUSED": "为节省电力已暂停扫描，提起装置或按「恢复」可继续使用。 <br><br>在「设定」可调校此功能。 ",
-        "UNDO_DELETE": "您可在 3 秒内复原记录",
+        "UNDO_DELETE": "您可在数秒内复原记录",
         "RESET_APP": "确定要重设应用程式和删除所有数据? <b>此动作无法被撤回。</b>",
         "REMOVE_ALL_RECORD": "确定要删除全部记录? <b>此动作无法被撤回。</b>",
         "GIVE_NAME_CONTACT": "请填写名字",
