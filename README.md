@@ -156,13 +156,13 @@ Thanks for your support!
 - Remove ads
 - Improve performance and fix issues
 
-#### 1.2.0 / 1.2.1
+#### 1.2.0 - 1.2.1
 
 - Support image scanning to read QR code
 - UI updated
 - Improve performance and fix issues
 
-#### 1.1.5
+#### 1.1.0 - 1.1.5
 
 - Support 1D Barcode, Aztec Code, Data Matrix Code and PDF417 Barcode scanning
 - Support generating QR code with templates (Free Text, Email, Phone, Message, URL, vCard Contact and Wi-Fi)
