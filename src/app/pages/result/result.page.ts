@@ -622,11 +622,6 @@ export class ResultPage implements OnInit {
 
   async addBookmark() {
     const flag = await this.env.saveBookmark(this.qrCodeContent);
-    if (flag === true) {
-      this.presentToast(this.translate.instant('MSG.BOOKMARKED'), "short", "bottom");
-    } else {
-      this.presentToast(this.translate.instant('MSG.ALREADY_BOOKMARKED'), "short", "bottom");
-    }
     if (this.env.bookmarks.find(x => x.text === this.qrCodeContent)) {
       this.bookmarked = true;
     } else {
@@ -636,7 +631,6 @@ export class ResultPage implements OnInit {
 
   async removeBookmark() {
     await this.env.deleteBookmark(this.qrCodeContent);
-    this.presentToast(this.translate.instant('MSG.UNBOOKMARKED'), "short", "bottom");
     if (this.env.bookmarks.find(x => x.text === this.qrCodeContent)) {
       this.bookmarked = true;
     } else {
