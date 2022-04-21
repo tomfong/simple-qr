@@ -241,7 +241,7 @@
         "ONLY_VCARD_3_0": "只支援 vCard 3.0",
         "DEBUG_MODE_ON": "成功开启除错模式",
         "BACKUP_FAILED": "备份失败",
-        "BACKUP_FAILED_2": "备份失败。请确保「简易QR」已允许存取储存空间",
+        "BACKUP_FAILED_2": "备份失败。请确保已允许「简易QR」存取储存空间",
         "BACKUP_SUCCESSFULLY": "<p>成功备份到</p><p>{path}</p><p>请复制并妥善保存以下密码</p><p>{secret}</p>",
         "RESTORE_SECRET": "请输入密码以还原备份",
         "INVALID_BK_FILE": "这不是有效的备份档",
