@@ -53,6 +53,10 @@ export class SettingPage {
     this.router.navigate(['setting-search-engine']);
   }
 
+  setDebugMode() {
+    this.router.navigate(['setting-debug']);
+  }
+
   navigateAbout() {
     this.router.navigate(['about']);
   }

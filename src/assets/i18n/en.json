@@ -183,6 +183,7 @@
     "CLOSE": "Close",
     "SUPPORTED_BARCODE_TYPE": "Supported Barcode Type",
     "SUPPORTED_TYPE": "Supported Type",
+    "DEBUG_MODE": "Debug Mode",
     "MSG": {
         "CALL_PHONE": "Are you sure to call {phoneNumber} now?",
         "FAIL_CALL_PHONE": "Failed to open dialer",
@@ -228,7 +229,9 @@
         "SCAN_QR_FROM_IMAGE": "Tap to Scan QR Code from Image",
         "BARCODE_TYPE": "Scan<ul><li>QR Code</li><li>1D Barcode</li><li>Aztec Code</li><li>Data Matrix</li><li>PDF417</li></ul>Import Image<ul><li>QR Code</li></ul>Create<ul><li>QR Code</li></ul>",
         "TAP_TO_ZOOM_IN": "Tap to zoom in",
-        "ONLY_VCARD_3_0": "Only vCard 3.0 is supported"
+        "ONLY_VCARD_3_0": "Only vCard 3.0 is supported",
+        "DEBUG_MODE_ON": "Successfully turned on Debug Mode",
+        "DEBUG_MODE_ON_ALREADY": "Already turned on Debug Mode"
     },
     "UPDATE": {
         "UPDATE_NOTES": "<ul><li>Correctly display Traditional Chinese if system language is Yue</li><li>Simplified Chinese is supported now</li><li>UI updated: Android native toast, new button layout and more!</li><li>Back button is available on all pages</li><li>Barcode type can be shown after scanning</li><li>Improved performace and fixed known issues</li></ul>"

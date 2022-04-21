@@ -28,6 +28,7 @@ export class EnvService {
   public notShowHistoryTutorial: boolean = false;
   public notShowUpdateNotes: boolean = false;
   public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' = 'google';
+  public debugModeOn: 'on' | 'off' = 'off';
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
   public readonly GOOGLE_SEARCH_URL: string = "https://www.google.com/search?q=";
@@ -173,6 +174,15 @@ export class EnvService {
         }
       }
     )
+    this.storageGet("debug-mode-on").then(
+      value => {
+        if (value != null) {
+          this.debugModeOn = value;
+        } else {
+          this.debugModeOn = 'off';
+        }
+      }
+    );
   }
 
   public async storageSet(key: string, value: any) {
@@ -205,6 +215,7 @@ export class EnvService {
     this.searchEngine = 'google';
     this._scanRecords = [];
     this._bookmarks = [];
+    this.debugModeOn = 'off';
   }
 
   get result(): string {

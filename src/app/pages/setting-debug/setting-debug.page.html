@@ -1,0 +1,40 @@
+<ion-header mode="ios">
+  <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'" mode="ios">
+    <ion-buttons slot="start">
+      <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'DEBUG_MODE' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-radio-group [(ngModel)]="env.debugModeOn" (ionChange)="saveDebugMode()">
+    <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding">
+          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+            {{ 'TURN_ON' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+      <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="'on'"
+        [color]="'primary'">
+      </ion-radio>
+    </ion-item>
+    <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding">
+          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+            {{ 'TURN_OFF' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+      <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="'off'"
+        [color]="'primary'">
+      </ion-radio>
+    </ion-item>
+  </ion-radio-group>
+
+</ion-content>

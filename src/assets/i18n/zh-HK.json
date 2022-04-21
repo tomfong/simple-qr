@@ -183,6 +183,7 @@
     "CLOSE": "關閉",
     "SUPPORTED_BARCODE_TYPE": "支援的條碼類別",
     "SUPPORTED_TYPE": "支援的類別",
+    "DEBUG_MODE": "除錯模式",
     "MSG": {
         "CALL_PHONE": "確定要致電 {phoneNumber} ?",
         "FAIL_CALL_PHONE": "無法開啟電話",
@@ -228,7 +229,9 @@
         "SCAN_QR_FROM_IMAGE": "輕觸以匯入圖片並進行掃描",
         "BARCODE_TYPE": "掃描<ul><li>QR 碼</li><li>一維條碼</li><li>Aztec 碼</li><li>數據矩陣碼</li><li>PDF417 條碼</li></ul>匯入圖片<ul><li>QR 碼</li></ul>建立<ul><li>QR 碼</li></ul>",
         "TAP_TO_ZOOM_IN": "輕觸以放大",
-        "ONLY_VCARD_3_0": "只支援 vCard 3.0"
+        "ONLY_VCARD_3_0": "只支援 vCard 3.0",
+        "DEBUG_MODE_ON": "成功開啟除錯模式",
+        "DEBUG_MODE_ON_ALREADY": "已開啟除錯模式"
     },
     "UPDATE": {
         "UPDATE_NOTES": "<ul><li>使用「粵語」系統語言能正確顯示正體中文</li><li>新增支援簡體中文</li><li>界面更新 : Android 原生浮動顯示、新的按鍵佈局等</li><li>現在所有頁面均支援「返回鍵」</li><li>掃描後會顯示條碼格式</li><li>改善效能及修正已知問題</li></ul>"

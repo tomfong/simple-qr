@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Toast } from '@capacitor/toast';
 import { AlertController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
@@ -9,6 +10,8 @@ import { EnvService } from 'src/app/services/env.service';
   styleUrls: ['./about.page.scss'],
 })
 export class AboutPage {
+
+  tapAppVersionTimes: number = 0;
 
   constructor(
     private translate: TranslateService,
@@ -57,6 +60,21 @@ export class AboutPage {
   async reportBug() {
     const mailContent = await this.env.getBugReportMailContent();
     window.open(mailContent, '_system');
+  }
+
+  async tapAppVersion() {
+    this.tapAppVersionTimes++;
+    if (this.env.debugModeOn != 'on') {
+      if (this.tapAppVersionTimes >= 5) {
+        this.env.debugModeOn = 'on';
+        await this.env.storageSet("debug-mode-on", 'on');
+        await Toast.show({
+          text: this.translate.instant("MSG.DEBUG_MODE_ON"),
+          duration: "short",
+          position: "bottom"
+        });
+      }
+    }
   }
 
 }
