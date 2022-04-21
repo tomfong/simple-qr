@@ -47,9 +47,9 @@ export class SettingRecordPage {
         const now = moment().format("yyyyMMDDHHmmss");
         const filename = `simpleqr-backup-${now}.tfsqbk`;
         await Filesystem.writeFile({
-          path: `SimpleQR/${filename}`,
+          path: `${filename}`,
           data: await value.encrypted,
-          directory: Directory.Documents,
+          directory: Directory.External,
           encoding: Encoding.UTF8,
           recursive: true
         }).then(
@@ -60,7 +60,7 @@ export class SettingRecordPage {
             const alert = await this.alertController.create(
               {
                 header: this.translate.instant('SUCCESS'),
-                message: msg.replace("{path}", result.uri).replace("{secret}", secret),
+                message: msg.replace("{secret}", secret),
                 cssClass: ['alert-bg', 'alert-can-copy'],
                 buttons: [
                   {
@@ -72,17 +72,6 @@ export class SettingRecordPage {
                         }
                       );
                       await this.socialSharing.share(null, filename, result.uri, null);
-                    }
-                  },
-                  {
-                    text: this.translate.instant('COPY_SECRET'),
-                    handler: async () => {
-                      await Clipboard.write({ string: secret }).then(
-                        async () => {
-                          await this.presentToast(this.translate.instant('MSG.COPIED_SECRET'), "short", "bottom");
-                        }
-                      );
-                      return true;
                     }
                   }
                 ]
