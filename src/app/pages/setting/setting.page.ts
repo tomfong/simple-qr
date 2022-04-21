@@ -45,6 +45,10 @@ export class SettingPage {
     this.router.navigate(['setting-record']);
   }
 
+  goBackupRestore() {
+    this.router.navigate(['backup-restore']);
+  }
+
   setSearchEngine() {
     this.router.navigate(['setting-search-engine']);
   }

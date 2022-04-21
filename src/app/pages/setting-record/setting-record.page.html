@@ -4,39 +4,85 @@
       <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
       </ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'SCAN_HISTORY_LOGGING' | translate }}</ion-title>
+    <ion-title>{{ 'LOGGING_BACKUP_RESTORE' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <ion-radio-group [(ngModel)]="env.scanRecordLogging" (ionChange)="saveScanRecord()">
-    <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none">
+  <ion-list class="pt-2">
+    <ion-list-header mode="md" class="px-4 mx-2">{{ 'AUTO_LOGGING' | translate }}</ion-list-header>
+    <ion-item class="ion-no-padding" lines="none">
       <ion-label class="ion-padding-start">
-        <p class="ion-padding">
-          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-            {{ 'TURN_ON' | translate }}
+        <p class="ion-padding-horizontal">
+          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
+            {{ 'AUTO_LOGGING_EXPLAIN' | translate }}
           </ion-text>
         </p>
       </ion-label>
-      <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="'on'"
-        [color]="'primary'">
-      </ion-radio>
-      <!--<ion-ripple-effect type="bounded"></ion-ripple-effect> -->
     </ion-item>
-    <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none">
+    <ion-radio-group [(ngModel)]="env.scanRecordLogging" (ionChange)="saveScanRecord()">
+      <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none">
+        <ion-label class="ion-padding-start">
+          <p class="ion-padding-horizontal">
+            <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+              {{ 'TURN_ON' | translate }}
+            </ion-text>
+          </p>
+        </ion-label>
+        <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="'on'" [color]="'primary'">
+        </ion-radio>
+        <!--<ion-ripple-effect type="bounded"></ion-ripple-effect> -->
+      </ion-item>
+      <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none">
+        <ion-label class="ion-padding-start">
+          <p class="ion-padding-horizontal">
+            <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+              {{ 'TURN_OFF' | translate }}
+            </ion-text>
+          </p>
+        </ion-label>
+        <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="'off'" [color]="'primary'">
+        </ion-radio>
+        <!--<ion-ripple-effect type="bounded"></ion-ripple-effect> -->
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
+  <ion-list class="pt-3">
+    <ion-list-header mode="md" class="px-4 mx-2">{{ 'BACKUP' | translate }}</ion-list-header>
+    <ion-item class="ion-no-padding" lines="none">
       <ion-label class="ion-padding-start">
-        <p class="ion-padding">
-          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-            {{ 'TURN_OFF' | translate }}
+        <p class="ion-padding-horizontal">
+          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
+            {{ 'BACKUP_EXPLAIN' | translate }}
           </ion-text>
         </p>
       </ion-label>
-      <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="'off'"
-        [color]="'primary'">
-      </ion-radio>
-      <!--<ion-ripple-effect type="bounded"></ion-ripple-effect> -->
     </ion-item>
-  </ion-radio-group>
+    <div class="ion-padding-horizontal pt-3 d-flex justify-content-center align-content-start flex-column">
+      <ion-button class="ion-padding-horizontal" color="primary">
+        {{ 'BACKUP' | translate }}
+      </ion-button>
+    </div>
+  </ion-list>
+
+  <ion-list class="pt-3">
+    <ion-list-header mode="md" class="px-4 mx-2">{{ 'RESTORE' | translate }}</ion-list-header>
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding-horizontal">
+          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
+            {{ 'RESTORE_EXPLAIN' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+    </ion-item>
+    <div class="ion-padding-horizontal pt-3 d-flex justify-content-center align-content-start flex-column">
+      <ion-button class="ion-padding-horizontal" color="primary">
+        {{ 'RESTORE' | translate }}
+      </ion-button>
+    </div>
+  </ion-list>
 
 </ion-content>

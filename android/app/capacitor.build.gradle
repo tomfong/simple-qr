@@ -22,7 +22,7 @@ dependencies {
     implementation project(':capacitor-toast')
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
 }
-
+apply from: "../../node_modules/cordova-plugin-aes256-encryption/src/android/plugin.gradle"
 
 if (hasProperty('postBuildExtras')) {
   postBuildExtras()

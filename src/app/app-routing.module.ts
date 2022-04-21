@@ -31,7 +31,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/setting-vibration/setting-vibration.module').then( m => m.SettingVibrationPageModule)
   },
 
-
 ];
 
 @NgModule({

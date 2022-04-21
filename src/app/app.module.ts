@@ -17,6 +17,7 @@ import { ThemeDetection } from '@ionic-native/theme-detection/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { AES256 } from '@awesome-cordova-plugins/aes-256/ngx';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -28,6 +29,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MenuComponent } from './components/menu/menu.component';
 import { QrcodeComponent } from './components/qrcode/qrcode.component';
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
+import { EnvService } from './services/env.service';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -62,6 +64,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     ],
     providers: [
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        EnvService,
         AppVersion,
         CallNumber,
         DatePipe,
@@ -70,6 +73,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         SMS,
         SocialSharing,
         ThemeDetection,
+        AES256,
     ],
     bootstrap: [AppComponent]
 })
