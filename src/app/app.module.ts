@@ -18,6 +18,7 @@ import { AppVersion } from '@ionic-native/app-version/ngx';
 import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { AES256 } from '@awesome-cordova-plugins/aes-256/ngx';
+import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -74,6 +75,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         SocialSharing,
         ThemeDetection,
         AES256,
+        Chooser,
     ],
     bootstrap: [AppComponent]
 })

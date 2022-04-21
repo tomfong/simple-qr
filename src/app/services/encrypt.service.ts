@@ -1,30 +1,30 @@
 import { Injectable } from '@angular/core';
 import { AES256 } from '@awesome-cordova-plugins/aes-256/ngx';
-import { EnvService } from './env.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EncryptService {
 
-  private secureKey: string = '';
-  private secureIV: string = '';
-
   constructor(
-    public env: EnvService,
     private aes256: AES256
   ) { }
 
-  async generateSecureKeyAndIV(secret: string) {
-    this.secureKey = await this.aes256.generateSecureKey(secret); // Returns a 32 bytes string
-    this.secureIV = await this.aes256.generateSecureIV(secret); // Returns a 16 bytes string
+  async encrypt(data: string): Promise<{ encrypted: Promise<string>, secret1: string, secret2: string }> {
+    const secret = this.randomString(32);
+    const secureKey = await this.aes256.generateSecureKey(secret);
+    const secureIV = await this.aes256.generateSecureIV(secret);
+    return { encrypted: this.aes256.encrypt(secureKey, secureIV, data), secret1: secureKey, secret2: secureIV };
   }
 
-  async encrypt(data: string) {
-    return this.aes256.encrypt(this.secureKey, this.secureIV, data);
+  async decrypt(data: string, secret1: string, secret2: string) {
+    return this.aes256.decrypt(secret1, secret2, data);
   }
 
-  async decrypt(data: string) {
-    return this.aes256.decrypt(this.secureKey, this.secureIV, data);
+  private randomString(length: number) {
+    var result = '';
+    var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
   }
 }

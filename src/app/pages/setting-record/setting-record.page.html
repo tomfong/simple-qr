@@ -61,7 +61,7 @@
       </ion-label>
     </ion-item>
     <div class="ion-padding-horizontal pt-3 d-flex justify-content-center align-content-start flex-column">
-      <ion-button class="ion-padding-horizontal" color="primary">
+      <ion-button class="ion-padding-horizontal" color="primary" (click)="onBackup()">
         {{ 'BACKUP' | translate }}
       </ion-button>
     </div>
@@ -79,7 +79,7 @@
       </ion-label>
     </ion-item>
     <div class="ion-padding-horizontal pt-3 d-flex justify-content-center align-content-start flex-column">
-      <ion-button class="ion-padding-horizontal" color="primary">
+      <ion-button class="ion-padding-horizontal" color="primary" (click)="onRestore()">
         {{ 'RESTORE' | translate }}
       </ion-button>
     </div>

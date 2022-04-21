@@ -1,6 +1,16 @@
 import { Component } from '@angular/core';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
+import { Clipboard } from '@capacitor/clipboard';
+import { Toast } from '@capacitor/toast';
+import { EncryptService } from 'src/app/services/encrypt.service';
+import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
+import * as moment from 'moment';
+import { Chooser, ChooserResult } from '@awesome-cordova-plugins/chooser/ngx';
+import { ScanRecord } from 'src/app/models/scan-record';
+import { Bookmark } from 'src/app/models/bookmark';
+import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 
 @Component({
   selector: 'app-setting-record',
@@ -12,10 +22,230 @@ export class SettingRecordPage {
   constructor(
     public translate: TranslateService,
     public env: EnvService,
+    private encryptService: EncryptService,
+    private alertController: AlertController,
+    private loadingController: LoadingController,
+    private chooser: Chooser,
+    private socialSharing: SocialSharing,
   ) { }
 
   async saveScanRecord() {
     await this.env.storageSet("scan-record-logging", this.env.scanRecordLogging);
   }
+
+  async onBackup() {
+    const loading1 = await this.presentLoading(this.translate.instant("ENCRYPTING"));
+    const backup = {
+      application: "Simple QR",
+      scanRecords: this.env.scanRecords,
+      bookmarks: this.env.bookmarks
+    };
+    await this.encryptService.encrypt(JSON.stringify(backup)).then(
+      async (value) => {
+        loading1.dismiss();
+        const loading2 = await this.presentLoading(this.translate.instant("BACKING_UP"));
+        const now = moment().format("yyyyMMDDHHmmss");
+        const filename = `simpleqr-backup-${now}.tfsqbk`;
+        await Filesystem.writeFile({
+          path: `SimpleQR/${filename}`,
+          data: await value.encrypted,
+          directory: Directory.Documents,
+          encoding: Encoding.UTF8,
+          recursive: true
+        }).then(
+          async result => {
+            loading2.dismiss();
+            const msg = this.translate.instant("MSG.BACKUP_SUCCESSFULLY") as string;
+            const secret = `${value.secret1},${value.secret2}`;
+            const alert = await this.alertController.create(
+              {
+                header: this.translate.instant('SUCCESS'),
+                message: msg.replace("{path}", result.uri).replace("{secret}", secret),
+                cssClass: ['alert-bg', 'alert-can-copy'],
+                buttons: [
+                  {
+                    text: this.translate.instant('COPY_SECRET_SHARE'),
+                    handler: async () => {
+                      await Clipboard.write({ string: secret }).then(
+                        async () => {
+                          await this.presentToast(this.translate.instant('MSG.COPIED_SECRET'), "short", "bottom");
+                        }
+                      );
+                      await this.socialSharing.share(null, filename, result.uri, null);
+                    }
+                  },
+                  {
+                    text: this.translate.instant('COPY_SECRET'),
+                    handler: async () => {
+                      await Clipboard.write({ string: secret }).then(
+                        async () => {
+                          await this.presentToast(this.translate.instant('MSG.COPIED_SECRET'), "short", "bottom");
+                        }
+                      );
+                      return true;
+                    }
+                  }
+                ]
+              }
+            )
+            await alert.present();
+          }
+        ).catch(
+          err => {
+            console.error("err in write file", err)
+            loading2.dismiss();
+            this.presentToast(this.env.debugModeOn === 'on' ? this.translate.instant("MSG.BACKUP_FAILED_2") + ' (write file failed)' : this.translate.instant("MSG.BACKUP_FAILED_2"), "short", "bottom");
+          }
+        )
+      }
+    ).catch(
+      err => {
+        loading1.dismiss();
+        this.presentToast(this.env.debugModeOn === 'on' ? this.translate.instant("MSG.BACKUP_FAILED") + ' (encrypt failed)' : this.translate.instant("MSG.BACKUP_FAILED"), "short", "bottom");
+      }
+    )
+  }
+
+  async onRestore() {
+    await this.chooser.getFile().then(
+      async (value: ChooserResult) => {
+        if (value == null) {
+          return;
+        }
+        if (!value.name.toLowerCase().endsWith("tfsqbk")) {
+          this.presentToast(this.translate.instant("MSG.INVALID_BK_FILE"), "short", "bottom");
+          return;
+        }
+        await Filesystem.readFile({
+          path: value.uri,
+          encoding: Encoding.UTF8
+        }).then(
+          async value => {
+            const alert = await this.alertController.create(
+              {
+                header: this.translate.instant('RESTORE'),
+                message: this.translate.instant('MSG.RESTORE_SECRET'),
+                cssClass: ['alert-bg'],
+                inputs: [
+                  {
+                    name: 'secret',
+                    id: 'secret',
+                    type: 'text',
+                    label: `${this.translate.instant("SECRET")} (${this.translate.instant("LENGTH_49")})`,
+                    placeholder: `${this.translate.instant("SECRET")} (${this.translate.instant("LENGTH_49")})`,
+                    max: 49,
+                    min: 49,
+                  }
+                ],
+                buttons: [
+                  {
+                    text: this.translate.instant('RESTORE'),
+                    handler: async data => {
+                      alert.dismiss();
+                      if (data.secret != null && data.secret.trim().length == 49) {
+                        await this.restore(value.data, data.secret.trim());
+                      } else {
+                        this.presentToast(this.translate.instant("MSG.PLEASE_INPUT_VALID_SECRET"), "short", "bottom");
+                      }
+                    }
+                  }
+                ]
+              }
+            )
+            await alert.present();
+          }
+        ).catch(
+          err => {
+            if (this.env.debugModeOn === 'on') {
+              this.presentToast('Failed to read file', "long", "bottom");
+            } else {
+              this.presentToast(this.translate.instant("MSG.RESTORE_FAILED"), "short", "bottom");
+            }
+          }
+        )
+      }
+    ).catch(
+      err => {
+        this.presentToast(this.translate.instant("MSG.RESTORE_FAILED"), "short", "bottom");
+      }
+    )
+  }
+
+  async restore(value: string, secret: string) {
+    const secrets = secret.split(",");
+    if (secrets.length != 2 || secrets[0].length != 32 || secrets[1].length != 16) {
+      this.presentToast(this.translate.instant("MSG.PLEASE_INPUT_VALID_SECRET"), "short", "bottom");
+      return;
+    }
+    await this.encryptService.decrypt(value, secrets[0], secrets[1])
+      .then(
+        async value => {
+          try {
+            const restore = JSON.parse(value);
+            if (restore.application != "Simple QR") {
+              this.presentToast(this.translate.instant("MSG.INVALID_BK_FILE"), "short", "bottom");
+              return;
+            }
+            const tScanRecords = restore.scanRecords as ScanRecord[];
+            const scanRecords = tScanRecords.filter(r1 => {
+              if (this.env.scanRecords.find(r2 => r1.id === r2.id) == null) {
+                return true;
+              }
+              return false;
+            });
+            await this.env.saveRestoredScanRecords(scanRecords);
+            const tBookmarks = restore.bookmarks as Bookmark[];
+            const bookmarks = tBookmarks.filter(b1 => {
+              if (this.env.bookmarks.find(b2 => b1.text === b2.text) == null) {
+                return true;
+              }
+              return false;
+            });
+            await this.env.saveRestoredBookmarks(bookmarks);
+            const alert = await this.alertController.create(
+              {
+                header: this.translate.instant('SUCCESS'),
+                message: this.translate.instant('MSG.RESTORE_SUCCESSFUL'),
+                cssClass: ['alert-bg'],
+                buttons: [
+                  {
+                    text: this.translate.instant('OK'),
+                    handler: async () => {
+                      return true;
+                    }
+                  }
+                ]
+              }
+            )
+            await alert.present();
+          } catch (err) {
+            console.error("error...", err)
+            this.presentToast(this.translate.instant("MSG.RESTORE_FAILED"), "short", "bottom");
+          }
+        }
+      )
+      .catch(err => {
+        this.presentToast(this.translate.instant("MSG.RESTORE_WRONG_SECRET"), "short", "bottom");
+      });
+  }
+
+  async presentToast(msg: string, duration: "short" | "long", pos: "top" | "center" | "bottom") {
+    await Toast.show({
+      text: msg,
+      duration: duration,
+      position: pos
+    });
+  }
+
+  async presentLoading(msg: string): Promise<HTMLIonLoadingElement> {
+    const loading = await this.loadingController.create({
+      message: msg,
+      mode: "ios",
+      backdropDismiss: false
+    });
+    await loading.present();
+    return loading;
+  }
+
 
 }

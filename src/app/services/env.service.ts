@@ -248,6 +248,42 @@ export class EnvService {
     await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
   }
 
+  async saveRestoredScanRecords(records: ScanRecord[]): Promise<void> {
+    records.forEach(
+      r => {
+        this._scanRecords.unshift(r);
+      }
+    );
+    this._scanRecords.forEach(
+      t => {
+        const tCreatedAt = t.createdAt;
+        t.createdAt = new Date(tCreatedAt);
+      }
+    );
+    this._scanRecords.sort((r1, r2) => {
+      return r2.createdAt.getTime() - r1.createdAt.getTime();
+    });
+    await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
+  }
+
+  async saveRestoredBookmarks(bookmarks: Bookmark[]): Promise<void> {
+    bookmarks.forEach(
+      b => {
+        this._bookmarks.unshift(b);
+      }
+    );
+    this._bookmarks.forEach(
+      t => {
+        const tCreatedAt = t.createdAt;
+        t.createdAt = new Date(tCreatedAt);
+      }
+    );
+    this._bookmarks.sort((r1, r2) => {
+      return r2.createdAt.getTime() - r1.createdAt.getTime();
+    });
+    await this.storageSet(environment.storageBookmarkKey, JSON.stringify(this._bookmarks));
+  }
+
   async undoScanRecordDeletion(record: ScanRecord): Promise<void> {
     this._scanRecords.push(record);
     this._scanRecords.sort((r1, r2) => {
@@ -450,6 +486,6 @@ export class EnvService {
   }
 
   get buildEnv(): string {
-    return environment.production? '' : '.Dev';
+    return environment.production ? '' : '.Dev';
   }
 }

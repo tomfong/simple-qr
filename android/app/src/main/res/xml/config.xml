@@ -6,6 +6,10 @@
     <param name="android-package" value="com.ideas2it.aes256.AES256"/>
   </feature>
 
+  <feature name="Chooser">
+    <param name="android-package" value="com.cyph.cordova.Chooser"/>
+  </feature>
+
   <feature name="SocialSharing">
     <param name="android-package" value="nl.xservices.plugins.SocialSharing"/>
   </feature>
