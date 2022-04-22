@@ -24,10 +24,6 @@ export class ImportImagePage {
     private router: Router,
   ) { }
 
-  async ionViewDidEnter() {
-    await this.presentToast(this.translate.instant("MSG.IMAGE_NO_TRANSPARENT"), "short", "bottom");
-  }
-
   async importImage() {
     const getPictureLoading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
     const options = {

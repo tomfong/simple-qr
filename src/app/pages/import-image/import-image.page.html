@@ -6,14 +6,17 @@
 
 <ion-content>
   <div class="ion-padding-horizontal fullscreen-vertical-center" style="height: 100%;">
-    <button mat-flat-button (click)="tapHaptic(); importImage()" style="background-color: transparent !important;">
-      <ion-icon name="image" [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: 3rem">
+    <div class="ion-text-center">
+      <ion-icon class="pb-2" name="image" [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: 5rem">
       </ion-icon>
-      <p class="ion-text-center">
+      <p class="pt-1 px-3 ion-text-justify">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'MSG.SCAN_QR_FROM_IMAGE' | translate }}
         </ion-text>
       </p>
-    </button>
+    </div>
+    <ion-button class="my-3" (click)="tapHaptic(); importImage()">
+      {{ 'IMPORT_IMAGE' | translate }}
+    </ion-button>
   </div>
 </ion-content>
