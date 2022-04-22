@@ -39,10 +39,10 @@ Simple QR (簡易QR) is an open-source app, providing a simple way for you to sc
   - Phone Number (tel: prefix) - in-app contact adding and phone calling
   - Message (smsto: prefix) -  in-app contact adding and message preparing
   - Email (mailto: prefix) - in-app email preparing
-  - Wi-Fi (wifi: prefix) - one click to connect to the Wi-Fi network (for Android 9 or before)
+
 - Flashlight can be enabled during scanning
 - A simple UI is provided to create QR codes by inputting text
-- Previous scanning records and bookmarks can be viewed and managed
+- Previous scanning records and bookmarks can be viewed, managed and backed up
 - Settings can be personalized to fit users' requirements, e.g. language, color theme
 
 ## Screenshots
@@ -114,7 +114,13 @@ Thanks for your support!
 
 ## Changelogs
 
-### 2.1.0 - 2.1.2 (Current)
+### 2.2.0
+
+- New "Backup and Restore" feature
+- Minor UI update
+- Improved performance and fixed known issues
+
+#### 2.1.0 - 2.1.2
 
 - Correctly display Traditional Chinese if system language is Yue
 - Simplified Chinese is supported now
@@ -183,16 +189,16 @@ Thanks for your support!
 ## Framework
 
 ```sh
-    Ionic CLI                       : 6.18.1
-    Ionic Framework                 : @ionic/angular 5.9.3
-    @angular-devkit/build-angular   : 12.2.1
-    @angular-devkit/schematics      : 12.2.1
-    @angular/cli                    : 12.2.1
-    @ionic/angular-toolkit          : 4.0.0
+    Ionic CLI                       : 6.19.0
+    Ionic Framework                 : @ionic/angular 6.1.2
+    @angular-devkit/build-angular   : 13.3.3
+    @angular-devkit/schematics      : 13.3.3
+    @angular/cli                    : 13.3.3
+    @ionic/angular-toolkit          : 6.1.0
 
-    Capacitor CLI                   : 3.3.3
-    @capacitor/android              : 3.3.3
-    @capacitor/core                 : 3.3.3
+    Capacitor CLI                   : 3.4.3
+    @capacitor/android              : 3.4.3
+    @capacitor/core                 : 3.4.3
 
     Cordova CLI                     : 10.0.0
 

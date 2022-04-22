@@ -264,6 +264,6 @@
         "RSS": "GS1 DataBar 条码"
     },
     "UPDATE": {
-        "UPDATE_NOTES": "<ul><li>使用「粤语」系统语言能正确显示正体中文</li><li>新增支援简体中文</li><li>界面更新 : Android 原生浮动显示、新的按键布局等</li><li>现在所有页面均支援「返回键」</li><li>扫描后会显示条码格式</li><li>改善效能及修正已知问题</li></ul>"
+        "UPDATE_NOTES": "<ul><li>新增「备份与还原」功能</li><li>界面更新</li><li>改善效能及修正已知问题</li></ul>"
     }
 }
