@@ -622,11 +622,6 @@ export class ResultPage implements OnInit {
 
   async addBookmark() {
     const flag = await this.env.saveBookmark(this.qrCodeContent);
-    if (flag === true) {
-      this.presentToast(this.translate.instant('MSG.BOOKMARKED'), "short", "bottom");
-    } else {
-      this.presentToast(this.translate.instant('MSG.ALREADY_BOOKMARKED'), "short", "bottom");
-    }
     if (this.env.bookmarks.find(x => x.text === this.qrCodeContent)) {
       this.bookmarked = true;
     } else {
@@ -636,11 +631,55 @@ export class ResultPage implements OnInit {
 
   async removeBookmark() {
     await this.env.deleteBookmark(this.qrCodeContent);
-    this.presentToast(this.translate.instant('MSG.UNBOOKMARKED'), "short", "bottom");
     if (this.env.bookmarks.find(x => x.text === this.qrCodeContent)) {
       this.bookmarked = true;
     } else {
       this.bookmarked = false;
+    }
+  }
+
+  get barcodeFormat(): string {
+    switch (this.env.resultFormat) {
+      case "UPC_A":
+        return this.translate.instant("BARCODE_TYPE.UPC") + ` (${this.env.resultFormat})`;
+      case "UPC_E":
+        return this.translate.instant("BARCODE_TYPE.UPC") + ` (${this.env.resultFormat})`;
+      case "UPC_EAN_EXTENSION":
+        return this.translate.instant("BARCODE_TYPE.UPC") + ` (${this.env.resultFormat})`;
+      case "EAN_8":
+        return this.translate.instant("BARCODE_TYPE.EAN") + ` (${this.env.resultFormat})`;
+      case "EAN_13":
+        return this.translate.instant("BARCODE_TYPE.EAN") + ` (${this.env.resultFormat})`;
+      case "CODE_39":
+        return this.translate.instant("BARCODE_TYPE.1D") + ` (${this.env.resultFormat})`;
+      case "CODE_39_MOD_43":
+        return this.translate.instant("BARCODE_TYPE.1D") + ` (${this.env.resultFormat})`;
+      case "CODE_93":
+        return this.translate.instant("BARCODE_TYPE.1D") + ` (${this.env.resultFormat})`;
+      case "CODE_128":
+        return this.translate.instant("BARCODE_TYPE.1D") + ` (${this.env.resultFormat})`;
+      case "CODABAR":
+        return this.translate.instant("BARCODE_TYPE.1D") + ` (${this.env.resultFormat})`;
+      case "ITF":
+        return this.translate.instant("BARCODE_TYPE.1D") + ` (${this.env.resultFormat})`;
+      case "ITF_14":
+        return this.translate.instant("BARCODE_TYPE.1D") + ` (${this.env.resultFormat})`;
+      case "AZTEC":
+        return this.translate.instant("BARCODE_TYPE.AZTEC") + ` (${this.env.resultFormat})`;
+      case "DATA_MATRIX":
+        return this.translate.instant("BARCODE_TYPE.DATA_MATRIX") + ` (${this.env.resultFormat})`;
+      case "MAXICODE":
+        return this.translate.instant("BARCODE_TYPE.MAXICODE") + ` (${this.env.resultFormat})`;
+      case "PDF_417":
+        return this.translate.instant("BARCODE_TYPE.PDF_417") + ` (${this.env.resultFormat})`;
+      case "QR_CODE":
+        return this.translate.instant("BARCODE_TYPE.QR_CODE") + ` (${this.env.resultFormat})`;
+      case "RSS_14":
+        return this.translate.instant("BARCODE_TYPE.RSS") + ` (${this.env.resultFormat})`;
+      case "RSS_EXPANDED":
+        return this.translate.instant("BARCODE_TYPE.RSS") + ` (${this.env.resultFormat})`;
+      default:
+        return this.env.resultFormat;
     }
   }
 

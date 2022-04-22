@@ -209,6 +209,10 @@ export class HistoryPage {
     }
   }
 
+  goSetting() {
+    this.router.navigate(['setting-record']);
+  }
+
   async presentAlert(msg: string, head: string, buttonText: string, buttonless: boolean = false): Promise<HTMLIonAlertElement> {
     let alert: any;
     if (!buttonless) {

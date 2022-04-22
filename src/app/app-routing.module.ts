@@ -30,8 +30,10 @@ const routes: Routes = [
     path: 'setting-vibration',
     loadChildren: () => import('./pages/setting-vibration/setting-vibration.module').then( m => m.SettingVibrationPageModule)
   },
-
-
+  {
+    path: 'setting-debug',
+    loadChildren: () => import('./pages/setting-debug/setting-debug.module').then( m => m.SettingDebugPageModule)
+  },
 ];
 
 @NgModule({

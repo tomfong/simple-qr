@@ -28,6 +28,7 @@ export class EnvService {
   public notShowHistoryTutorial: boolean = false;
   public notShowUpdateNotes: boolean = false;
   public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' = 'google';
+  public debugModeOn: 'on' | 'off' = 'off';
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
   public readonly GOOGLE_SEARCH_URL: string = "https://www.google.com/search?q=";
@@ -37,7 +38,7 @@ export class EnvService {
   public readonly GITHUB_REPO_URL: string = "https://github.com/tomfong/simple-qr";
   public readonly GOOGLE_PLAY_URL: string = "https://play.google.com/store/apps/details?id=com.tomfong.simpleqr";
   public readonly PRIVACY_POLICY: string = "https://www.privacypolicies.com/live/771b1123-99bb-4bfe-815e-1046c0437a0f";
-  public readonly PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20100";
+  public readonly PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20200";
 
   private _storage: Storage | null = null;
   private _scannedData: string = '';
@@ -173,6 +174,15 @@ export class EnvService {
         }
       }
     )
+    this.storageGet("debug-mode-on").then(
+      value => {
+        if (value != null) {
+          this.debugModeOn = value;
+        } else {
+          this.debugModeOn = 'off';
+        }
+      }
+    );
   }
 
   public async storageSet(key: string, value: any) {
@@ -205,6 +215,7 @@ export class EnvService {
     this.searchEngine = 'google';
     this._scanRecords = [];
     this._bookmarks = [];
+    this.debugModeOn = 'off';
   }
 
   get result(): string {
@@ -235,6 +246,42 @@ export class EnvService {
     record.createdAt = date;
     this._scanRecords.unshift(record);
     await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
+  }
+
+  async saveRestoredScanRecords(records: ScanRecord[]): Promise<void> {
+    records.forEach(
+      r => {
+        this._scanRecords.unshift(r);
+      }
+    );
+    this._scanRecords.forEach(
+      t => {
+        const tCreatedAt = t.createdAt;
+        t.createdAt = new Date(tCreatedAt);
+      }
+    );
+    this._scanRecords.sort((r1, r2) => {
+      return r2.createdAt.getTime() - r1.createdAt.getTime();
+    });
+    await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
+  }
+
+  async saveRestoredBookmarks(bookmarks: Bookmark[]): Promise<void> {
+    bookmarks.forEach(
+      b => {
+        this._bookmarks.unshift(b);
+      }
+    );
+    this._bookmarks.forEach(
+      t => {
+        const tCreatedAt = t.createdAt;
+        t.createdAt = new Date(tCreatedAt);
+      }
+    );
+    this._bookmarks.sort((r1, r2) => {
+      return r2.createdAt.getTime() - r1.createdAt.getTime();
+    });
+    await this.storageSet(environment.storageBookmarkKey, JSON.stringify(this._bookmarks));
   }
 
   async undoScanRecordDeletion(record: ScanRecord): Promise<void> {
@@ -439,6 +486,6 @@ export class EnvService {
   }
 
   get buildEnv(): string {
-    return environment.production? '' : '.Dev';
+    return environment.production ? '' : '.Dev';
   }
 }

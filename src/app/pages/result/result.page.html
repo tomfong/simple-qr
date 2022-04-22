@@ -17,7 +17,7 @@
           [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
           {{ 'BARCODE_FORMAT' | translate }}
         </ion-label>
-        <ion-textarea class="box" readonly [value]="env.resultFormat" rows="1"></ion-textarea>
+        <ion-textarea class="box" readonly [value]="barcodeFormat" rows="1"></ion-textarea>
       </ion-item>
     </ion-col>
   </ion-row>

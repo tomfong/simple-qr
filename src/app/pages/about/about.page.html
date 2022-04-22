@@ -109,6 +109,8 @@
 
 <ion-footer mode="ios">
   <ion-toolbar class="ion-text-center" mode="ios" color="primary">
-    <span>{{ ('APP_VERSION' | translate) + ' ' + env.appVersionNumber }}</span>
+    <div (click)="tapAppVersion()">
+      <span>{{ ('APP_VERSION' | translate) + ' ' + env.appVersionNumber }}</span>
+    </div>
   </ion-toolbar>
 </ion-footer>
