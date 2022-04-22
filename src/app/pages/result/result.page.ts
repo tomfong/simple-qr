@@ -638,6 +638,51 @@ export class ResultPage implements OnInit {
     }
   }
 
+  get barcodeFormat(): string {
+    switch (this.env.resultFormat) {
+      case "UPC_A":
+        return this.translate.instant("BARCODE_TYPE.UPC") + ` (${this.env.resultFormat})`;
+      case "UPC_E":
+        return this.translate.instant("BARCODE_TYPE.UPC") + ` (${this.env.resultFormat})`;
+      case "UPC_EAN_EXTENSION":
+        return this.translate.instant("BARCODE_TYPE.UPC") + ` (${this.env.resultFormat})`;
+      case "EAN_8":
+        return this.translate.instant("BARCODE_TYPE.EAN") + ` (${this.env.resultFormat})`;
+      case "EAN_13":
+        return this.translate.instant("BARCODE_TYPE.EAN") + ` (${this.env.resultFormat})`;
+      case "CODE_39":
+        return this.translate.instant("BARCODE_TYPE.1D") + ` (${this.env.resultFormat})`;
+      case "CODE_39_MOD_43":
+        return this.translate.instant("BARCODE_TYPE.1D") + ` (${this.env.resultFormat})`;
+      case "CODE_93":
+        return this.translate.instant("BARCODE_TYPE.1D") + ` (${this.env.resultFormat})`;
+      case "CODE_128":
+        return this.translate.instant("BARCODE_TYPE.1D") + ` (${this.env.resultFormat})`;
+      case "CODABAR":
+        return this.translate.instant("BARCODE_TYPE.1D") + ` (${this.env.resultFormat})`;
+      case "ITF":
+        return this.translate.instant("BARCODE_TYPE.1D") + ` (${this.env.resultFormat})`;
+      case "ITF_14":
+        return this.translate.instant("BARCODE_TYPE.1D") + ` (${this.env.resultFormat})`;
+      case "AZTEC":
+        return this.translate.instant("BARCODE_TYPE.AZTEC") + ` (${this.env.resultFormat})`;
+      case "DATA_MATRIX":
+        return this.translate.instant("BARCODE_TYPE.DATA_MATRIX") + ` (${this.env.resultFormat})`;
+      case "MAXICODE":
+        return this.translate.instant("BARCODE_TYPE.MAXICODE") + ` (${this.env.resultFormat})`;
+      case "PDF_417":
+        return this.translate.instant("BARCODE_TYPE.PDF_417") + ` (${this.env.resultFormat})`;
+      case "QR_CODE":
+        return this.translate.instant("BARCODE_TYPE.QR_CODE") + ` (${this.env.resultFormat})`;
+      case "RSS_14":
+        return this.translate.instant("BARCODE_TYPE.RSS") + ` (${this.env.resultFormat})`;
+      case "RSS_EXPANDED":
+        return this.translate.instant("BARCODE_TYPE.RSS") + ` (${this.env.resultFormat})`;
+      default:
+        return this.env.resultFormat;
+    }
+  }
+
   async presentToast(msg: string, duration: "short" | "long", pos: "top" | "center" | "bottom") {
     await Toast.show({
       text: msg,

@@ -252,6 +252,17 @@
         "RESTORE_SUCCESSFUL": "還原成功",
         "COPIED_SECRET": "已複製密碼"
     },
+    "BARCODE_TYPE": {
+        "UPC": "通用產品代碼",
+        "EAN": "歐洲商品條碼",
+        "1D": "一維條碼",
+        "AZTEC": "阿茲特克碼",
+        "DATA_MATRIX": "數據矩陣",
+        "MAXICODE": "MaxiCode 二維條碼",
+        "PDF_417": "PDF417 二維條碼",
+        "QR_CODE": "QR 碼",
+        "RSS": "GS1 DataBar 條碼"
+    },
     "UPDATE": {
         "UPDATE_NOTES": "<ul><li>使用「粵語」系統語言能正確顯示正體中文</li><li>新增支援簡體中文</li><li>界面更新 : Android 原生浮動顯示、新的按鍵佈局等</li><li>現在所有頁面均支援「返回鍵」</li><li>掃描後會顯示條碼格式</li><li>改善效能及修正已知問題</li></ul>"
     }
