@@ -50,5 +50,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Simple QR uses camera to scan barcodes</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Simple QR uses photo library to scan QR code and share QR code</string>
 </dict>
 </plist>

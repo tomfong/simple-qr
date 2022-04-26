@@ -380,7 +380,7 @@ export class EnvService {
         this.overlayContainer.getContainerElement().classList.remove('ng-mat-black');
         this.overlayContainer.getContainerElement().classList.add('ng-mat-light');
       } else {
-        await this.themeDetection.isAvailable().then( // Android 10 or above
+        await this.themeDetection.isAvailable().then( // Android 10 or above, iOS
           async (res: ThemeDetectionResponse) => {
             if (res.value) {
               await this.themeDetection.isDarkModeEnabled().then((res: ThemeDetectionResponse) => {

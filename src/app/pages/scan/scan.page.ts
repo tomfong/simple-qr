@@ -36,29 +36,31 @@ export class ScanPage {
     private toastController: ToastController,
     private platform: Platform,
   ) { 
-    this.platform.backButton.subscribeWithPriority(-1, async () => {
-      if (!this.routerOutlet.canGoBack()) {
-        if (this.router.url?.startsWith("/tabs/result")) {
-          const urlSeg = this.router.url?.split(";")
-          if (urlSeg.length > 1) {
-            if (urlSeg[1].startsWith("from=")) {
-              const from = urlSeg[1].substring(5);
-              if (from.length > 0) {
-                this.router.navigate([`/tabs/${from}`], { replaceUrl: true });
+    if (this.platform.is('android')) {
+      this.platform.backButton.subscribeWithPriority(-1, async () => {
+        if (!this.routerOutlet.canGoBack()) {
+          if (this.router.url?.startsWith("/tabs/result")) {
+            const urlSeg = this.router.url?.split(";")
+            if (urlSeg.length > 1) {
+              if (urlSeg[1].startsWith("from=")) {
+                const from = urlSeg[1].substring(5);
+                if (from.length > 0) {
+                  this.router.navigate([`/tabs/${from}`], { replaceUrl: true });
+                }
+              }
+            }
+          } else {
+            if (this.router.url?.startsWith("/tabs")) {
+              if (this.router.url != "/tabs/scan") {
+                this.router.navigate(['/tabs/scan'], { replaceUrl: true });
+              } else {
+                await this.confirmExitApp();
               }
             }
           }
-        } else {
-          if (this.router.url?.startsWith("/tabs")) {
-            if (this.router.url != "/tabs/scan") {
-              this.router.navigate(['/tabs/scan'], { replaceUrl: true });
-            } else {
-              await this.confirmExitApp();
-            }
-          }
         }
-      }
-    });
+      });
+    }
   }
 
   async ionViewDidEnter(): Promise<void> {

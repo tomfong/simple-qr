@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CallNumber } from '@ionic-native/call-number/ngx';
 import { Clipboard } from '@capacitor/clipboard';
 import { Contacts, ContactType, EmailAddress, NewContact, PhoneNumber } from '@capacitor-community/contacts'
 import { SMS } from '@ionic-native/sms/ngx';
-import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { AlertController, LoadingController, ModalController, Platform, PopoverController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -12,7 +10,6 @@ import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiedi
 import { VCardContact } from 'src/app/models/v-card-contact';
 import { EnvService } from 'src/app/services/env.service';
 import { QrcodeComponent } from 'src/app/components/qrcode/qrcode.component';
-import * as moment from 'moment';
 import { Toast } from '@capacitor/toast';
 
 @Component({
@@ -60,7 +57,6 @@ export class ResultPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public env: EnvService,
-    private callNumber: CallNumber,
     public modalController: ModalController,
     private sms: SMS,
     public translate: TranslateService,
@@ -236,7 +232,7 @@ export class ResultPage implements OnInit {
             this.presentToast(this.translate.instant('MSG.FAIL_PREPARE_SMS'), "long", "center");
           }
         )
-      } else {
+      } else if (this.platform.is('ios')) {
         await this.sms.send(
           this.phoneNumber,
           this.smsContent,
