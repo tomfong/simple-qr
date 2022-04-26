@@ -1,12 +1,14 @@
 {
   "name": "simple-qr",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "author": "Tom Fong",
   "homepage": "https://tomfong-io.web.app",
   "scripts": {
     "ng": "ng",
-    "build": "ionic cap build android --prod --no-open",
-    "copy": "ionic cap copy android --prod",
+    "build:an": "ionic cap build android --prod --no-open",
+    "copy:an": "ionic cap copy android --prod",
+    "build:ios": "ionic cap build ios --prod --no-open",
+    "copy:ios": "ionic cap copy ios --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

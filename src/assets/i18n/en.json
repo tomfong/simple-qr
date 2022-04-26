@@ -264,6 +264,6 @@
         "RSS": "GS1 DataBar"
     },
     "UPDATE": {
-        "UPDATE_NOTES": "<ul><li>New \"Backup and Restore\" feature</li><li>Minor UI update</li><li>Improved performace and fixed known issues</li></ul>"
+        "UPDATE_NOTES": "<ul><li>Improved performace and fixed known issues</li></ul>"
     }
 }

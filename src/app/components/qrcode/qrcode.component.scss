@@ -6,6 +6,6 @@
     font-size: medium;
 }
 
-ion-footer {
-    --background: var(--ion-background-color, #fff);
+.footer-ios ion-toolbar:first-of-type {
+    --border-width: 0 !important;
 }

@@ -264,6 +264,6 @@
         "RSS": "GS1 DataBar 條碼"
     },
     "UPDATE": {
-        "UPDATE_NOTES": "<ul><li>新增「備份與還原」功能</li><li>界面更新</li><li>改善效能及修正已知問題</li></ul>"
+        "UPDATE_NOTES": "<ul><li>改善效能及修正已知問題</li></ul>"
     }
 }
