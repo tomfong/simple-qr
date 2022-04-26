@@ -109,7 +109,7 @@
     </ion-label>
     <!--<ion-ripple-effect type="bounded"></ion-ripple-effect> -->
   </ion-item>
-  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="confirmExitApp()">
+  <ion-item *ngIf="isAndroid" mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="confirmExitApp()">
     <ion-icon class="ion-margin-start ion-padding-horizontal" color="danger" name="exit"></ion-icon>
     <ion-label>
       <p class="ion-padding">

@@ -20,8 +20,6 @@ enum CameraChoice {
 })
 export class ScanPage {
 
-  @ViewChild("content", { read: ElementRef }) contentRef: ElementRef;
-
   cameraChoice: CameraChoice = CameraChoice.BACK;
   cameraActive: boolean = false;
   flashActive: boolean = false;
@@ -67,22 +65,12 @@ export class ScanPage {
 
   async ionViewDidEnter(): Promise<void> {
     await SplashScreen.hide();
-    document.body.style.background = "none transparent";
-    this.contentRef.nativeElement.style.background = "none transparent";
-    this.contentRef.nativeElement.style.setProperty("--background", "none transparent");
     await BarcodeScanner.disableTorch().then(
       _ => {
         this.flashActive = false;
       }
     );
     await this.prepareScanner();
-  }
-
-  async ionViewWillLeave() {
-    document.body.style.background = "";
-    this.contentRef.nativeElement.style.background = "";
-    this.contentRef.nativeElement.style.removeProperty("--background");
-    await BarcodeScanner.showBackground();
   }
 
   async ionViewDidLeave(): Promise<void> {
@@ -95,7 +83,6 @@ export class ScanPage {
   }
 
   async stopScanner(): Promise<void> {
-    await BarcodeScanner.showBackground();
     await BarcodeScanner.stopScan();
     this.cameraActive = false;
   }
