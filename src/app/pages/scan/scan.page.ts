@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { BarcodeScanner, ScanResult } from '@capacitor-community/barcode-scanner';
 import { SplashScreen } from '@capacitor/splash-screen';
-import { AlertController, IonRouterOutlet, LoadingController, ModalController, Platform, ToastController } from '@ionic/angular';
+import { AlertController, IonContent, IonRouterOutlet, LoadingController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
@@ -20,6 +20,8 @@ enum CameraChoice {
 })
 export class ScanPage {
 
+  @ViewChild("content", { read: ElementRef }) contentRef: ElementRef;
+
   cameraChoice: CameraChoice = CameraChoice.BACK;
   cameraActive: boolean = false;
   flashActive: boolean = false;
@@ -35,7 +37,7 @@ export class ScanPage {
     public translate: TranslateService,
     private toastController: ToastController,
     private platform: Platform,
-  ) { 
+  ) {
     if (this.platform.is('android')) {
       this.platform.backButton.subscribeWithPriority(-1, async () => {
         if (!this.routerOutlet.canGoBack()) {
@@ -65,7 +67,9 @@ export class ScanPage {
 
   async ionViewDidEnter(): Promise<void> {
     await SplashScreen.hide();
-    document.body.style.background = "transparent";    
+    document.body.style.background = "none transparent";
+    this.contentRef.nativeElement.style.background = "none transparent";
+    this.contentRef.nativeElement.style.setProperty("--background", "none transparent");
     await BarcodeScanner.disableTorch().then(
       _ => {
         this.flashActive = false;
@@ -75,7 +79,9 @@ export class ScanPage {
   }
 
   async ionViewWillLeave() {
-    document.body.style.background = "initial"; 
+    document.body.style.background = "";
+    this.contentRef.nativeElement.style.background = "";
+    this.contentRef.nativeElement.style.removeProperty("--background");
     await BarcodeScanner.showBackground();
   }
 
