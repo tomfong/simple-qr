@@ -5,3 +5,7 @@
     text-overflow: ellipsis !important;
     font-size: medium;
 }
+
+ion-footer {
+    --background: var(--ion-background-color, #fff);
+}

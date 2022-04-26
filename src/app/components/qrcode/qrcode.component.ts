@@ -69,6 +69,19 @@ export class QrcodeComponent {
     return loading;
   }
 
+  get color() {
+    switch (this.env.colorTheme) {
+      case 'dark':
+        return 'dark';
+      case 'light':
+        return 'white';
+      case 'black':
+        return 'black';
+      default:
+        return 'white';
+    }
+  }
+
   async tapHaptic() {
     if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
       await Haptics.impact({ style: ImpactStyle.Medium });

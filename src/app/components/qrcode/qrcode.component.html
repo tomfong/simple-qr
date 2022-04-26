@@ -1,4 +1,4 @@
-<ion-content style="--background: transparent !important;">
+<ion-content [color]="color">
   <div class="d-flex align-items-center justify-content-center flex-column" style="height: 100%;">
     <ion-row>
       <ion-col class="ion-text-center ion-padding" style="max-width: 100% !important;">
@@ -17,13 +17,15 @@
     </ion-row>
   </div>
 </ion-content>
-<ion-footer mode="ios" style="--background: transparent !important;">
-  <ion-row class="d-flex justify-content-between">
-    <ion-button mode="md" size="large" (click)="tapHaptic(); close()" fill="clear" [color]="env.colorTheme === 'light'? 'dark' : 'light'">
-      <ion-icon slot="icon-only" name="close-sharp"></ion-icon>
-    </ion-button>
-    <ion-button mode="md" size="large" (click)="tapHaptic(); shareQrCode()" fill="clear" [color]="env.colorTheme === 'light'? 'dark' : 'light'">
-      <ion-icon slot="icon-only" name="share-social"></ion-icon>
-    </ion-button>
-  </ion-row>
+<ion-footer mode="ios">
+  <ion-toolbar mode="ios" [color]="color" style="border: none;">
+    <ion-row class="d-flex justify-content-between">
+      <ion-button mode="md" size="large" (click)="tapHaptic(); close()" fill="clear" [color]="env.colorTheme === 'light'? 'dark' : 'light'">
+        <ion-icon slot="icon-only" name="close-sharp"></ion-icon>
+      </ion-button>
+      <ion-button mode="md" size="large" (click)="tapHaptic(); shareQrCode()" fill="clear" [color]="env.colorTheme === 'light'? 'dark' : 'light'">
+        <ion-icon slot="icon-only" name="share-social"></ion-icon>
+      </ion-button>
+    </ion-row>
+  </ion-toolbar>
 </ion-footer>
