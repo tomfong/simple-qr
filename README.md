@@ -23,7 +23,9 @@ Simple QR (簡易QR) is an open-source app, providing the simplest way to scan, 
 
 Welcome to download the app from App Store or Google Play.
 
-| Android  | iOS | |:-:|:-:| | [<img src="badges/google-play-badge.png" height="50">](https://play.google.com/store/apps/details?id=com.tomfong.simpleqr) | [<img src="badges/appstore-badge.png" height="50">](https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553) |
+| Android  | iOS |
+|:-:|:-:| 
+| [<img src="badges/google-play-badge.png" height="50">](https://play.google.com/store/apps/details?id=com.tomfong.simpleqr) | [<img src="badges/appstore-badge.png" height="50">](https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553) |
 
 ## Features
 
