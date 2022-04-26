@@ -65,12 +65,18 @@ export class ScanPage {
 
   async ionViewDidEnter(): Promise<void> {
     await SplashScreen.hide();
+    document.body.style.background = "transparent";    
     await BarcodeScanner.disableTorch().then(
       _ => {
         this.flashActive = false;
       }
     );
     await this.prepareScanner();
+  }
+
+  async ionViewWillLeave() {
+    document.body.style.background = "initial"; 
+    await BarcodeScanner.showBackground();
   }
 
   async ionViewDidLeave(): Promise<void> {
