@@ -7,13 +7,11 @@
 <p align="center">
   <a href="#about">About</a>
 • <a href="#features">Features</a>
-• <a href="#screenshots">Screenshots</a>
-• <a href="#download">Download</a>
 • <a href="#support-developer">Support Developer</a>
+•  <a href="#contribute">Contribute</a>
+• <a href="#contributors">Contributors</a>
 </p>
 <p align="center">
-  <a href="#contribute">Contribute</a>
-• <a href="#contributors">Contributors</a>
 • <a href="#changelogs">Changelogs</a>
 • <a href="#framework">Framework</a>
 • <a href="#privacy-policy">Privacy Policy</a>
@@ -24,11 +22,20 @@
 
 Simple QR (簡易QR) is an open-source app, providing the simplest way to scan, create and manage QR codes. No backend service connected. No data collected from you. No ads.
 
+Welcome to download the app from App Store or Google Play.
+
+<div
+  class="store-badge"
+  data-name="Simple QR"
+  data-google-play-url="https://play.google.com/store/apps/details?id=com.tomfong.simpleqr"
+  data-app-store-url="https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553"
+></div>
+<script
+  async
+  src="https://cdn.jsdelivr.net/npm/store-badge@1/build/bundle.js"
+></script>
+
 ## Features
-
-- English, Traditional Chinese and Simplified Chinese are supported now.
-
-- Main features
 
 1. Scan QR Code, 1D Barcode, Aztec Code, Data Matrix Code and PDF417 Barcode using camera.
 
@@ -51,17 +58,6 @@ Simple QR (簡易QR) is an open-source app, providing the simplest way to scan, 
 
 8. Personalize the app and settings, e.g. language and color theme.
 
-## Screenshots
-
-<p align="start">
-<img alt="scan" src="./screenshots/scan.png" width="125px">
-<img alt="result" src="./screenshots/result.png" width="125px">
-<img alt="create" src="./screenshots/create.png" width="125px">
-<img alt="image" src="./screenshots/image.png" width="125px">
-<img alt="history" src="./screenshots/history.png" width="125px">
-<img alt="setting" src="./screenshots/setting.png" width="125px">
- </p>
-
 ## Languages Supported
 
 - English (en)
@@ -69,14 +65,6 @@ Simple QR (簡易QR) is an open-source app, providing the simplest way to scan, 
 - Simplified Chinese 简体中文 (zh-CN)
 
 You are welcomed to help us do translations in more languages! (see <a href="#how-to-help-to-do-translation">section</a>)
-
-## Download
-
-Please download the app from Google Play.
-
-<a href="https://play.google.com/store/apps/details?id=com.tomfong.simpleqr">
-  <img src="https://cdn.rawgit.com/steverichey/google-play-badge-svg/master/img/en_get.svg" width="30%">
-</a>
 
 ## Support Developer
 
@@ -91,10 +79,10 @@ Thanks for your support!
 - Open issue for bug reports
 - Email me for any ideas regarding Simple QR or Project Simple
 
-### Build the project
+### Build the project (Android)
 
 - Run ```npm install``` to install all dependencies
-- Run ```npm run build```
+- Run ```npm run build:an```
 - In ```android/capacitor-cordova-android-plugins/src/main/AndroidManifest.xml```, add ```android:exported="true"``` inside receiver tag.
 - In ```android/capacitor-cordova-android-plugins/src/main/java/nl/xservices/plugins/SocialSharing.java```, change line 274 to
 
@@ -122,7 +110,7 @@ Thanks for your support!
 
 ### 2.3.0
 
-- iOS app was born!
+- iOS version is born!
 - Improved performance and fixed known issues
 
 #### 2.2.0
@@ -207,9 +195,10 @@ Thanks for your support!
     @angular/cli                    : 13.3.3
     @ionic/angular-toolkit          : 6.1.0
 
-    Capacitor CLI                   : 3.4.3
-    @capacitor/android              : 3.4.3
-    @capacitor/core                 : 3.4.3
+    Capacitor CLI      : 3.4.3
+    @capacitor/android : 3.4.3
+    @capacitor/core    : 3.5.0
+    @capacitor/ios     : 3.5.0
 
     Cordova CLI                     : 10.0.0
 
