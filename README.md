@@ -22,28 +22,34 @@
 
 ## About
 
-Simple QR (簡易QR) is an open-source app, providing a simple way for you to scan, create and manage QR codes. No backend service connected. No data collected from you. No ads.
+Simple QR (簡易QR) is an open-source app, providing the simplest way to scan, create and manage QR codes. No backend service connected. No data collected from you. No ads.
 
 ## Features
 
-- Fruitful post actions can be done after scanning a QR code,
-  - Search - use scanned content as keyword to execute Google search
-  - Copy - one click to copy scanned content
-  - Base64 - execute Base64 encode and decode
-  - Share - share the original QR code as an image in many platforms
-  - Bookmark - save the record by bookmarking it
+- English, Traditional Chinese and Simplified Chinese are supported now.
 
-  For some specific types of QR code, more post actions are provided,
-  - URL - one click to open browser and browse the webpage
-  - Contact (vCard) - in-app contact adding
-  - Phone Number (tel: prefix) - in-app contact adding and phone calling
-  - Message (smsto: prefix) -  in-app contact adding and message preparing
-  - Email (mailto: prefix) - in-app email preparing
+- Main features
 
-- Flashlight can be enabled during scanning
-- A simple UI is provided to create QR codes by inputting text
-- Previous scanning records and bookmarks can be viewed, managed and backed up
-- Settings can be personalized to fit users' requirements, e.g. language, color theme
+1. Scan QR Code, 1D Barcode, Aztec Code, Data Matrix Code and PDF417 Barcode using camera.
+
+2. Scan QR Code using image file.
+
+3. Provide you post actions after scanning:
+"Search" - use decoded content as keyword to execute web search
+"Copy" - click to copy decoded content
+"Base64" - execute Base64 encode and decode
+"Share" - share the original QR code image
+"Bookmark" - save the scanning record and bookmark it
+
+4. Provide you special post actions, if the barcode content is URL, vCard Contact, Phone Number, Message or Email.
+
+5. Create QR code from templates, including Free Text, URL, vCard Contact, Phone Number, Message, Email and Wi-Fi.
+
+6. View, manage and back up scanning records and bookmarks that stored in the local offline storage.
+
+7. Enable torch/flashlight during scanning.
+
+8. Personalize the app and settings, e.g. language and color theme.
 
 ## Screenshots
 
@@ -114,7 +120,12 @@ Thanks for your support!
 
 ## Changelogs
 
-### 2.2.0
+### 2.3.0
+
+- iOS app was born!
+- Improved performance and fixed known issues
+
+#### 2.2.0
 
 - New "Backup and Restore" feature
 - Minor UI update
