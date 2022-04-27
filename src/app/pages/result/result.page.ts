@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CallNumber } from '@ionic-native/call-number/ngx';
 import { Clipboard } from '@capacitor/clipboard';
 import { Contacts, ContactType, EmailAddress, NewContact, PhoneNumber } from '@capacitor-community/contacts'
 import { SMS } from '@ionic-native/sms/ngx';
-import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { AlertController, LoadingController, ModalController, Platform, PopoverController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -12,13 +10,31 @@ import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiedi
 import { VCardContact } from 'src/app/models/v-card-contact';
 import { EnvService } from 'src/app/services/env.service';
 import { QrcodeComponent } from 'src/app/components/qrcode/qrcode.component';
-import * as moment from 'moment';
 import { Toast } from '@capacitor/toast';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { MatFormField } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-result',
   templateUrl: './result.page.html',
   styleUrls: ['./result.page.scss'],
+  animations: [
+    trigger(
+      'inOutAnimation',
+      [
+        transition(
+          ':enter',
+          [
+            style({ opacity: 0 }),
+            animate(
+              '1s ease',
+              style({ opacity: 1 })
+            )
+          ]
+        )
+      ]
+    )
+  ]
 })
 export class ResultPage implements OnInit {
 
@@ -53,6 +69,8 @@ export class ResultPage implements OnInit {
 
   showQrFirst: boolean = false;
 
+  @ViewChildren(MatFormField) formFields: QueryList<MatFormField>;
+
   constructor(
     private platform: Platform,
     public alertController: AlertController,
@@ -60,7 +78,6 @@ export class ResultPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public env: EnvService,
-    private callNumber: CallNumber,
     public modalController: ModalController,
     private sms: SMS,
     public translate: TranslateService,
@@ -236,7 +253,7 @@ export class ResultPage implements OnInit {
             this.presentToast(this.translate.instant('MSG.FAIL_PREPARE_SMS'), "long", "center");
           }
         )
-      } else {
+      } else if (this.platform.is('ios')) {
         await this.sms.send(
           this.phoneNumber,
           this.smsContent,
@@ -465,6 +482,7 @@ export class ResultPage implements OnInit {
     } else if (!failEncoded && failDecoded) {
       await this.presentToast(this.translate.instant('MSG.NOT_BASE64_DE'), "short", "center");
     }
+    setTimeout(() => this.formFields?.forEach(ff => ff.updateOutlineGap()), 100);
   }
 
   generateVCardContact(): void {
@@ -641,46 +659,82 @@ export class ResultPage implements OnInit {
   get barcodeFormat(): string {
     switch (this.env.resultFormat) {
       case "UPC_A":
-        return this.translate.instant("BARCODE_TYPE.UPC") + ` (${this.env.resultFormat})`;
+        return this.translate.instant("BARCODE_TYPE.UPC");
       case "UPC_E":
-        return this.translate.instant("BARCODE_TYPE.UPC") + ` (${this.env.resultFormat})`;
+        return this.translate.instant("BARCODE_TYPE.UPC");
       case "UPC_EAN_EXTENSION":
-        return this.translate.instant("BARCODE_TYPE.UPC") + ` (${this.env.resultFormat})`;
+        return this.translate.instant("BARCODE_TYPE.UPC");
       case "EAN_8":
-        return this.translate.instant("BARCODE_TYPE.EAN") + ` (${this.env.resultFormat})`;
+        return this.translate.instant("BARCODE_TYPE.EAN");
       case "EAN_13":
-        return this.translate.instant("BARCODE_TYPE.EAN") + ` (${this.env.resultFormat})`;
+        return this.translate.instant("BARCODE_TYPE.EAN");
       case "CODE_39":
-        return this.translate.instant("BARCODE_TYPE.1D") + ` (${this.env.resultFormat})`;
+        return this.translate.instant("BARCODE_TYPE.1D");
       case "CODE_39_MOD_43":
-        return this.translate.instant("BARCODE_TYPE.1D") + ` (${this.env.resultFormat})`;
+        return this.translate.instant("BARCODE_TYPE.1D");
       case "CODE_93":
-        return this.translate.instant("BARCODE_TYPE.1D") + ` (${this.env.resultFormat})`;
+        return this.translate.instant("BARCODE_TYPE.1D");
       case "CODE_128":
-        return this.translate.instant("BARCODE_TYPE.1D") + ` (${this.env.resultFormat})`;
+        return this.translate.instant("BARCODE_TYPE.1D");
       case "CODABAR":
-        return this.translate.instant("BARCODE_TYPE.1D") + ` (${this.env.resultFormat})`;
+        return this.translate.instant("BARCODE_TYPE.1D");
       case "ITF":
-        return this.translate.instant("BARCODE_TYPE.1D") + ` (${this.env.resultFormat})`;
+        return this.translate.instant("BARCODE_TYPE.1D");
       case "ITF_14":
-        return this.translate.instant("BARCODE_TYPE.1D") + ` (${this.env.resultFormat})`;
+        return this.translate.instant("BARCODE_TYPE.1D");
       case "AZTEC":
-        return this.translate.instant("BARCODE_TYPE.AZTEC") + ` (${this.env.resultFormat})`;
+        return this.translate.instant("BARCODE_TYPE.AZTEC");
       case "DATA_MATRIX":
-        return this.translate.instant("BARCODE_TYPE.DATA_MATRIX") + ` (${this.env.resultFormat})`;
+        return this.translate.instant("BARCODE_TYPE.DATA_MATRIX");
       case "MAXICODE":
-        return this.translate.instant("BARCODE_TYPE.MAXICODE") + ` (${this.env.resultFormat})`;
+        return this.translate.instant("BARCODE_TYPE.MAXICODE");
       case "PDF_417":
-        return this.translate.instant("BARCODE_TYPE.PDF_417") + ` (${this.env.resultFormat})`;
+        return this.translate.instant("BARCODE_TYPE.PDF_417");
       case "QR_CODE":
-        return this.translate.instant("BARCODE_TYPE.QR_CODE") + ` (${this.env.resultFormat})`;
+        return this.translate.instant("BARCODE_TYPE.QR_CODE");
       case "RSS_14":
-        return this.translate.instant("BARCODE_TYPE.RSS") + ` (${this.env.resultFormat})`;
+        return this.translate.instant("BARCODE_TYPE.RSS");
       case "RSS_EXPANDED":
-        return this.translate.instant("BARCODE_TYPE.RSS") + ` (${this.env.resultFormat})`;
+        return this.translate.instant("BARCODE_TYPE.RSS");
       default:
         return this.env.resultFormat;
     }
+  }
+
+  get finalContactName(): string {
+    if (!this.vCardContact) {
+      return '';
+    }
+    if (this.vCardContact.fullName) {
+      return this.vCardContact.fullName;
+    }
+    if (this.vCardContact.givenName && this.vCardContact.familyName) {
+      return this.vCardContact.givenName + ' ' + this.vCardContact.familyName;
+    }
+    if (this.vCardContact.givenName) {
+      return this.vCardContact.givenName;
+    }
+    if (this.vCardContact.familyName) {
+      return this.vCardContact.familyName;
+    }
+    return this.translate.instant("NOT_PROVIDED");
+  }
+
+  get ngMatThemeClass() {
+    switch (this.env.colorTheme) {
+      case 'dark':
+        return 'ng-mat-dark';
+      case 'light':
+        return 'ng-mat-light';
+      case 'black':
+        return 'ng-mat-black';
+      default:
+        return 'ng-mat-light';
+    }
+  }
+
+  get isIOS() {
+    return this.platform.is('ios');
   }
 
   async presentToast(msg: string, duration: "short" | "long", pos: "top" | "center" | "bottom") {

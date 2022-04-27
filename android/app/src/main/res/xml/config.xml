@@ -14,17 +14,8 @@
     <param name="android-package" value="nl.xservices.plugins.SocialSharing"/>
   </feature>
 
-  <feature name="NativeSettings">
-    <param name="android-package" value="com.phonegap.plugins.nativesettings.NativeSettings"/>
-  </feature>
-
   <feature name="AppVersion">
     <param name="android-package" value="uk.co.whiteoctober.cordova.AppVersion"/>
-  </feature>
-
-  <feature name="File">
-    <param name="android-package" value="org.apache.cordova.file.FileUtils"/>
-    <param name="onload" value="true"/>
   </feature>
 
   <feature name="StatusBar">

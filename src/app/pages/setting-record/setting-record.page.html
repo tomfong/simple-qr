@@ -10,7 +10,7 @@
 
 <ion-content>
 
-  <ion-list class="pt-2">
+  <div class="pt-2">
     <ion-list-header mode="md" class="px-4 mx-2">{{ 'AUTO_LOGGING' | translate }}</ion-list-header>
     <ion-item class="ion-no-padding" lines="none">
       <ion-label class="ion-padding-start">
@@ -47,9 +47,9 @@
         <!--<ion-ripple-effect type="bounded"></ion-ripple-effect> -->
       </ion-item>
     </ion-radio-group>
-  </ion-list>
+  </div>
 
-  <ion-list class="pt-3">
+  <div class="pt-3">
     <ion-list-header mode="md" class="px-4 mx-2">{{ 'BACKUP' | translate }}</ion-list-header>
     <ion-item class="ion-no-padding" lines="none">
       <ion-label class="ion-padding-start">
@@ -65,15 +65,15 @@
         {{ 'BACKUP' | translate }}
       </ion-button>
     </div>
-  </ion-list>
+  </div>
 
-  <ion-list class="pt-3">
+  <div class="pt-3 pb-3">
     <ion-list-header mode="md" class="px-4 mx-2">{{ 'RESTORE' | translate }}</ion-list-header>
     <ion-item class="ion-no-padding" lines="none">
       <ion-label class="ion-padding-start">
         <p class="ion-padding-horizontal">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
-            {{ 'RESTORE_EXPLAIN' | translate }}
+            {{ (isIOS? 'RESTORE_EXPLAIN_IOS' : 'RESTORE_EXPLAIN') | translate }}
           </ion-text>
         </p>
       </ion-label>
@@ -83,6 +83,6 @@
         {{ 'RESTORE' | translate }}
       </ion-button>
     </div>
-  </ion-list>
+  </div>
 
 </ion-content>

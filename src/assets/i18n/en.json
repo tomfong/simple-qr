@@ -7,6 +7,7 @@
     "CREATE_QRCODE": "Create QR Code",
     "CREATE_QRCODE_MAX_LENGTH": "Max. 1817 characters",
     "QRCODE_CONTENT": "QR code content",
+    "CONTENT": "Content",
     "EXIT_APP": "Exit App",
     "WEBSITE": "Website",
     "PHONE_CALL": "Phone Call",
@@ -84,8 +85,9 @@
     "BACKUP_AND_RESTORE": "Backup & Restore",
     "BACKUP": "Backup",
     "RESTORE": "Restore",
-    "BACKUP_EXPLAIN": "You can back up all history and bookmarks locally. You will be given a set of secret after backing up. Please keep the secret securely, otherwise you cannot restore the backup. You must grant the storage permission.",
-    "RESTORE_EXPLAIN": "You can restore a previous backup of history and bookmarks. The items from the backup will be merged to the existing records.",
+    "BACKUP_EXPLAIN": "You can back up all history and bookmarks locally. You will be given a set of secret after backing up. Please keep the secret securely, otherwise you cannot restore the backup. Please also be reminded that Simple QR does not support cross-platform backup and restore. You must grant the storage permission.",
+    "RESTORE_EXPLAIN": "You can restore a previous backup of history and bookmarks. The items from the backup will be merged to the existing records. The backup file type should be TFSQBK.",
+    "RESTORE_EXPLAIN_IOS": "You can restore a previous backup of history and bookmarks. The items from the backup will be merged to the existing records. The backup file type should be ISQBK.",
     "COPY_AND_BACKUP": "Copy & Back Up",
     "ENCRYPTING": "Encrypting...",
     "BACKING_UP": "Backing Up...",
@@ -253,17 +255,18 @@
         "COPIED_SECRET": "Copied secret"
     },
     "BARCODE_TYPE": {
-        "UPC": "Universal Product Code",
-        "EAN": "European Article Number",
-        "1D": "1D Barcode",
-        "AZTEC": "Aztec Code",
-        "DATA_MATRIX": "Data Matrix",
-        "MAXICODE": "MaxiCode",
-        "PDF_417": "PDF417",
-        "QR_CODE": "QR Code",
-        "RSS": "GS1 DataBar"
+        "UPC": "Universal Product Code ",
+        "EAN": "European Article Number ",
+        "1D": "1D Barcode ",
+        "AZTEC": "Aztec Code ",
+        "DATA_MATRIX": "Data Matrix ",
+        "MAXICODE": "MaxiCode ",
+        "PDF_417": "PDF417 ",
+        "QR_CODE": "QR Code ",
+        "RSS": "GS1 DataBar "
     },
     "UPDATE": {
-        "UPDATE_NOTES": "<ul><li>New \"Backup and Restore\" feature</li><li>Minor UI update</li><li>Improved performace and fixed known issues</li></ul>"
+        "UPDATE_NOTES_ANDROID": "<ul><li>UI updated</li><li>Improved performace and fixed known issues</li></ul>",
+        "UPDATE_NOTES_IOS": "<ul><li>This is the first release of iOS version. Please feel free to rate the app and leave your comments.</li></ul>"
     }
 }

@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { BarcodeScanner, ScanResult } from '@capacitor-community/barcode-scanner';
 import { SplashScreen } from '@capacitor/splash-screen';
-import { AlertController, IonRouterOutlet, LoadingController, ModalController, Platform, ToastController } from '@ionic/angular';
+import { AlertController, IonContent, IonRouterOutlet, LoadingController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
@@ -35,30 +35,32 @@ export class ScanPage {
     public translate: TranslateService,
     private toastController: ToastController,
     private platform: Platform,
-  ) { 
-    this.platform.backButton.subscribeWithPriority(-1, async () => {
-      if (!this.routerOutlet.canGoBack()) {
-        if (this.router.url?.startsWith("/tabs/result")) {
-          const urlSeg = this.router.url?.split(";")
-          if (urlSeg.length > 1) {
-            if (urlSeg[1].startsWith("from=")) {
-              const from = urlSeg[1].substring(5);
-              if (from.length > 0) {
-                this.router.navigate([`/tabs/${from}`], { replaceUrl: true });
+  ) {
+    if (this.platform.is('android')) {
+      this.platform.backButton.subscribeWithPriority(-1, async () => {
+        if (!this.routerOutlet.canGoBack()) {
+          if (this.router.url?.startsWith("/tabs/result")) {
+            const urlSeg = this.router.url?.split(";")
+            if (urlSeg.length > 1) {
+              if (urlSeg[1].startsWith("from=")) {
+                const from = urlSeg[1].substring(5);
+                if (from.length > 0) {
+                  this.router.navigate([`/tabs/${from}`], { replaceUrl: true });
+                }
+              }
+            }
+          } else {
+            if (this.router.url?.startsWith("/tabs")) {
+              if (this.router.url != "/tabs/scan") {
+                this.router.navigate(['/tabs/scan'], { replaceUrl: true });
+              } else {
+                await this.confirmExitApp();
               }
             }
           }
-        } else {
-          if (this.router.url?.startsWith("/tabs")) {
-            if (this.router.url != "/tabs/scan") {
-              this.router.navigate(['/tabs/scan'], { replaceUrl: true });
-            } else {
-              await this.confirmExitApp();
-            }
-          }
         }
-      }
-    });
+      });
+    }
   }
 
   async ionViewDidEnter(): Promise<void> {
@@ -81,7 +83,6 @@ export class ScanPage {
   }
 
   async stopScanner(): Promise<void> {
-    await BarcodeScanner.showBackground();
     await BarcodeScanner.stopScan();
     this.cameraActive = false;
   }
@@ -97,16 +98,27 @@ export class ScanPage {
       await this.scanQr();
     } else {
       this.permissionAlert?.dismiss();
-      this.permissionAlert = await this.presentAlert(
-        this.translate.instant("MSG.CAMERA_PERMISSION_1"),
-        this.translate.instant("PERMISSION_REQUIRED"),
-        this.translate.instant("SETTING")
-      );
-      await this.permissionAlert.onDidDismiss().then(
-        async () => {
-          BarcodeScanner.openAppSettings();
-        }
-      );
+      this.permissionAlert = await this.alertController.create({
+        header: this.translate.instant("PERMISSION_REQUIRED"),
+        message: this.translate.instant("MSG.CAMERA_PERMISSION_1"),
+        buttons: [
+          {
+            text: this.translate.instant("SETTING"),
+            handler: () => {
+              BarcodeScanner.openAppSettings();
+              return true;
+            }
+          },
+          {
+            text: this.translate.instant("OK"),
+            handler: () => {
+              return true;
+            }
+          }
+        ],
+        cssClass: ['alert-bg']
+      });
+      await this.permissionAlert.present();
     }
   }
 
@@ -215,7 +227,7 @@ export class ScanPage {
     const alert = await this.alertController.create({
       header: this.translate.instant("UPDATE_NOTES"),
       subHeader: this.env.appVersionNumber,
-      message: this.translate.instant("UPDATE.UPDATE_NOTES"),
+      message: this.platform.is('ios')? this.translate.instant("UPDATE.UPDATE_NOTES_IOS") : this.translate.instant("UPDATE.UPDATE_NOTES_ANDROID"),
       buttons: [this.translate.instant("OK")],
       cssClass: ['left-align', 'alert-bg']
     });

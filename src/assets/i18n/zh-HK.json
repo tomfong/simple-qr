@@ -7,6 +7,7 @@
     "CREATE_QRCODE": "建立 QR 碼",
     "CREATE_QRCODE_MAX_LENGTH": "最多 1817 個字元",
     "QRCODE_CONTENT": "QR 碼內容",
+    "CONTENT": "内容",
     "EXIT_APP": "離開應用程式",
     "WEBSITE": "網站",
     "PHONE_CALL": "通話",
@@ -84,8 +85,9 @@
     "BACKUP_AND_RESTORE": "備份與還原",
     "BACKUP": "備份",
     "RESTORE": "還原",
-    "BACKUP_EXPLAIN": "您可以為現有的掃描記錄及書籤進行本地備份。備份後，您會收到一組密碼。請妥善保存密碼，否則您無法還原此備份。備份時請允許「簡易QR」存取儲存空間。",
-    "RESTORE_EXPLAIN": "您可以還原先前的掃描記錄及書籤備份，還原後備份項目會與現有記錄合併。",
+    "BACKUP_EXPLAIN": "您可以為現有的掃描記錄及書籤進行本地備份。備份後，您會收到一組密碼。請妥善保存密碼，否則您無法還原此備份。請注意，簡易QR並不支援跨平台備份與還原。備份時，請允許簡易QR存取儲存空間。",
+    "RESTORE_EXPLAIN": "您可以還原先前的掃描記錄及書籤備份，還原後備份項目會與現有記錄合併。備份檔案該以TFSQBK作為檔名結尾。",
+    "RESTORE_EXPLAIN_IOS": "您可以還原先前的掃描記錄及書籤備份，還原後備份項目會與現有記錄合併。備份檔案該以ISQBK作為檔名結尾。",
     "COPY_AND_BACKUP": "複製並開始備份",
     "ENCRYPTING": "加密中...",
     "BACKING_UP": "備份中...",
@@ -258,12 +260,13 @@
         "1D": "一維條碼",
         "AZTEC": "阿茲特克碼",
         "DATA_MATRIX": "數據矩陣",
-        "MAXICODE": "MaxiCode 二維條碼",
-        "PDF_417": "PDF417 二維條碼",
+        "MAXICODE": "MaxiCode 條碼",
+        "PDF_417": "PDF417 條碼",
         "QR_CODE": "QR 碼",
         "RSS": "GS1 DataBar 條碼"
     },
     "UPDATE": {
-        "UPDATE_NOTES": "<ul><li>新增「備份與還原」功能</li><li>界面更新</li><li>改善效能及修正已知問題</li></ul>"
+        "UPDATE_NOTES_ANDROID": "<ul><li>界面更新</li><li>改善效能及修正已知問題</li></ul>",
+        "UPDATE_NOTES_IOS": "<ul><li>此版本為iOS首個發佈版本，歡迎在App Store評分及留下意見。</li></ul>"
     }
 }

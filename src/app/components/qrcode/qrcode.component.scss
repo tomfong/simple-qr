@@ -5,3 +5,7 @@
     text-overflow: ellipsis !important;
     font-size: medium;
 }
+
+.footer-ios ion-toolbar:first-of-type {
+    --border-width: 0 !important;
+}

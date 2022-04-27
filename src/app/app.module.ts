@@ -11,12 +11,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
-import { CallNumber } from '@ionic-native/call-number/ngx';
 import { SMS } from '@ionic-native/sms/ngx';
 import { ThemeDetection } from '@ionic-native/theme-detection/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
-import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
-import { File } from '@ionic-native/file/ngx';
 import { AES256 } from '@awesome-cordova-plugins/aes-256/ngx';
 import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
 
@@ -67,10 +64,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         EnvService,
         AppVersion,
-        CallNumber,
         DatePipe,
-        File,
-        OpenNativeSettings,
         SMS,
         SocialSharing,
         ThemeDetection,

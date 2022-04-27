@@ -1,211 +1,83 @@
 <ion-header mode="ios">
   <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'" mode="ios">
-    <!-- <ion-buttons slot="start">
-      <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
-      </ion-back-button>
-    </ion-buttons> -->
     <ion-title>{{ 'RESULT' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <ion-row *ngIf="env.resultFormat && env.resultFormat != ''">
-    <ion-col class="ion-text-center ion-padding-horizontal">
-      <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
-          {{ 'BARCODE_FORMAT' | translate }}
-        </ion-label>
-        <ion-textarea class="box" readonly [value]="barcodeFormat" rows="1"></ion-textarea>
-      </ion-item>
-    </ion-col>
-  </ion-row>
+  <div class="ion-padding-horizontal ion-margin-horizontal ion-padding-top">
+  </div>
 
-  <ion-row *ngIf="qrCodeContent && qrCodeContent.trim().length > 0">
-    <ion-col class="ion-text-center ion-padding-horizontal">
-      <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
-          {{ 'BARCODE_CONTENT' | translate }}
-        </ion-label>
-        <ion-textarea class="box" readonly [value]="qrCodeContent" autoGrow="true" rows="1"></ion-textarea>
-      </ion-item>
-    </ion-col>
-  </ion-row>
+  <ng-container *ngIf="qrCodeContent && qrCodeContent.trim().length > 0" [ngTemplateOutlet]="contentBlock"
+    [ngTemplateOutletContext]="{ label: barcodeFormat + ('CONTENT' | translate), content: qrCodeContent, hint: env.resultFormat }">
+  </ng-container>
 
-  <ion-row *ngIf="base64Encoded && qrCodeContent && qrCodeContent.trim().length > 0">
-    <ion-col class="ion-text-center ion-padding-horizontal">
-      <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
-          {{ 'BASE64_ENCODED' | translate }}
-        </ion-label>
-        <ion-textarea class="box" readonly [value]="base64EncodedText" autoGrow="true" rows="1"></ion-textarea>
-      </ion-item>
-    </ion-col>
-  </ion-row>
+  <ng-container *ngIf="base64Encoded && qrCodeContent && qrCodeContent.trim().length > 0"
+    [ngTemplateOutlet]="contentBlock"
+    [ngTemplateOutletContext]="{ label: 'BASE64_ENCODED' | translate, content: base64EncodedText }">
+  </ng-container>
 
-  <ion-row *ngIf="base64Decoded && qrCodeContent && qrCodeContent.trim().length > 0">
-    <ion-col class="ion-text-center ion-padding-horizontal">
-      <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
-          {{ 'BASE64_DECODED' | translate }}
-        </ion-label>
-        <ion-textarea class="box" readonly [value]="base64DecodedText" autoGrow="true" rows="1"></ion-textarea>
-      </ion-item>
-    </ion-col>
-  </ion-row>
+  <ng-container *ngIf="base64Decoded && qrCodeContent && qrCodeContent.trim().length > 0"
+    [ngTemplateOutlet]="contentBlock"
+    [ngTemplateOutletContext]="{ label: 'BASE64_DECODED' | translate, content: base64DecodedText }">
+  </ng-container>
 
-  <ion-row
-    *ngIf="(contentType === 'phone' || contentType === 'sms') && qrCodeContent && qrCodeContent.trim().length > 0 && phoneNumber && phoneNumber.length > 0">
-    <ion-col class="ion-text-center ion-padding-horizontal">
-      <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
-          {{ 'PHONE_NUMBER' | translate }}
-        </ion-label>
-        <ion-textarea class="box" readonly [value]="phoneNumber" rows="1"></ion-textarea>
-      </ion-item>
-    </ion-col>
-  </ion-row>
+  <ng-container
+    *ngIf="(contentType === 'phone' || contentType === 'sms') && qrCodeContent && qrCodeContent.trim().length > 0 && phoneNumber && phoneNumber.length > 0"
+    [ngTemplateOutlet]="contentBlock"
+    [ngTemplateOutletContext]="{ label: 'PHONE_NUMBER' | translate, content: phoneNumber }">
+  </ng-container>
 
-  <ion-row *ngIf="contentType === 'sms' && smsContent && qrCodeContent && qrCodeContent.trim().length > 0">
-    <ion-col class="ion-text-center ion-padding-horizontal">
-      <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
-          {{ 'MESSAGE_CONTENT' | translate }}
-        </ion-label>
-        <ion-textarea class="box" readonly [value]="smsContent?.length > 0? smsContent : ' '" autoGrow="true" rows="1">
-        </ion-textarea>
-      </ion-item>
-    </ion-col>
-  </ion-row>
+  <ng-container *ngIf="contentType === 'sms' && smsContent && qrCodeContent && qrCodeContent.trim().length > 0"
+    [ngTemplateOutlet]="contentBlock"
+    [ngTemplateOutletContext]="{ label: 'MESSAGE_CONTENT' | translate, content: smsContent?.length > 0? smsContent : ' ' }">
+  </ng-container>
 
-  <ion-row *ngIf="contentType === 'email' && toEmails && qrCodeContent && qrCodeContent.trim().length > 0">
-    <ion-col class="ion-text-center ion-padding-horizontal">
-      <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
-          {{ 'EMAIL_TO' | translate }}
-        </ion-label>
-        <ion-textarea class="box" readonly [value]="toEmails" autoGrow="true" rows="1"></ion-textarea>
-      </ion-item>
-    </ion-col>
-  </ion-row>
+  <ng-container *ngIf="contentType === 'email' && toEmails && qrCodeContent && qrCodeContent.trim().length > 0"
+    [ngTemplateOutlet]="contentBlock" [ngTemplateOutletContext]="{ label: 'EMAIL_TO' | translate, content: toEmails }">
+  </ng-container>
 
-  <ion-row *ngIf="contentType === 'email' && ccEmails && qrCodeContent && qrCodeContent.trim().length > 0">
-    <ion-col class="ion-text-center ion-padding-horizontal">
-      <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
-          {{ 'CC' | translate }}
-        </ion-label>
-        <ion-textarea class="box" readonly [value]="ccEmails" autoGrow="true" rows="1"></ion-textarea>
-      </ion-item>
-    </ion-col>
-  </ion-row>
+  <ng-container *ngIf="contentType === 'email' && ccEmails && qrCodeContent && qrCodeContent.trim().length > 0"
+    [ngTemplateOutlet]="contentBlock" [ngTemplateOutletContext]="{ label: 'CC' | translate, content: ccEmails }">
+  </ng-container>
 
-  <ion-row *ngIf="contentType === 'email' && bccEmails && qrCodeContent && qrCodeContent.trim().length > 0">
-    <ion-col class="ion-text-center ion-padding-horizontal">
-      <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
-          {{ 'BCC' | translate }}
-        </ion-label>
-        <ion-textarea class="box" readonly [value]="bccEmails" autoGrow="true" rows="1"></ion-textarea>
-      </ion-item>
-    </ion-col>
-  </ion-row>
+  <ng-container *ngIf="contentType === 'email' && bccEmails && qrCodeContent && qrCodeContent.trim().length > 0"
+    [ngTemplateOutlet]="contentBlock" [ngTemplateOutletContext]="{ label: 'BCC' | translate, content: bccEmails }">
+  </ng-container>
 
-  <ion-row *ngIf="contentType === 'email' && emailSubject && qrCodeContent && qrCodeContent.trim().length > 0">
-    <ion-col class="ion-text-center ion-padding-horizontal">
-      <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
-          {{ 'EMAIL_SUBJECT' | translate }}
-        </ion-label>
-        <ion-textarea class="box" readonly [value]="emailSubject" autoGrow="true" rows="1"></ion-textarea>
-      </ion-item>
-    </ion-col>
-  </ion-row>
+  <ng-container *ngIf="contentType === 'email' && emailSubject && qrCodeContent && qrCodeContent.trim().length > 0"
+    [ngTemplateOutlet]="contentBlock"
+    [ngTemplateOutletContext]="{ label: 'EMAIL_SUBJECT' | translate, content: emailSubject }">
+  </ng-container>
 
-  <ion-row *ngIf="contentType === 'email' && emailBody && qrCodeContent && qrCodeContent.trim().length > 0">
-    <ion-col class="ion-text-center ion-padding-horizontal">
-      <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
-          {{ 'EMAIL_BODY' | translate }}
-        </ion-label>
-        <ion-textarea class="box" readonly [value]="emailBody" autoGrow="true" rows="1"></ion-textarea>
-      </ion-item>
-    </ion-col>
-  </ion-row>
+  <ng-container *ngIf="contentType === 'email' && emailBody && qrCodeContent && qrCodeContent.trim().length > 0"
+    [ngTemplateOutlet]="contentBlock"
+    [ngTemplateOutletContext]="{ label: 'EMAIL_BODY' | translate, content: emailBody }">
+  </ng-container>
 
-  <ion-row *ngIf="contentType === 'contact' && qrCodeContent && qrCodeContent.trim().length > 0 && vCardContact">
-    <ion-col class="ion-text-center ion-padding-horizontal">
-      <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
-          {{ 'CONTACT_NAME' | translate }}
-        </ion-label>
-        <ion-textarea class="box" readonly [value]="vCardContact.fullName? 
-                    vCardContact.fullName : 
-                    ( vCardContact.givenName &&  vCardContact.familyName ? 
-                      (vCardContact.givenName + ' ' + vCardContact.familyName) : 
-                        ( vCardContact.givenName ? vCardContact.givenName :
-                          ( vCardContact.familyName ? vCardContact.familyName :
-                            ('NOT_PROVIDED' | translate))))" rows="1">
-        </ion-textarea>
-      </ion-item>
-    </ion-col>
-  </ion-row>
+  <ng-container *ngIf="contentType === 'contact' && qrCodeContent && qrCodeContent.trim().length > 0 && vCardContact"
+    [ngTemplateOutlet]="contentBlock"
+    [ngTemplateOutletContext]="{ label: 'CONTACT_NAME' | translate, content: finalContactName }">
+  </ng-container>
 
-  <ion-row *ngIf="contentType === 'wifi' && qrCodeContent && qrCodeContent.trim().length > 0">
-    <ion-col class="ion-text-center ion-padding-horizontal">
-      <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
-          {{ 'WIFI_SSID' | translate }}
-        </ion-label>
-        <ion-textarea class="box" readonly [value]="wifiSSID? wifiSSID : ( 'NOT_PROVIDED' | translate )" autoGrow="true"
-          rows="1"></ion-textarea>
-      </ion-item>
-    </ion-col>
-  </ion-row>
+  <ng-container *ngIf="contentType === 'wifi' && qrCodeContent && qrCodeContent.trim().length > 0"
+    [ngTemplateOutlet]="contentBlock"
+    [ngTemplateOutletContext]="{ label: 'WIFI_SSID' | translate, content: wifiSSID? wifiSSID : ( 'NOT_PROVIDED' | translate ) }">
+  </ng-container>
 
-  <ion-row *ngIf="contentType === 'wifi' && wifiEncryption && qrCodeContent && qrCodeContent.trim().length > 0">
-    <ion-col class="ion-text-center ion-padding-horizontal">
-      <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
-          {{ 'WIFI_ENCRYPTION' | translate }}
-        </ion-label>
-        <ion-textarea class="box" readonly
-          [value]="wifiEncryption === 'NONE'? ('NOT_AVAILABLE' | translate) : (wifiEncryption === 'WPA'? 'WPA/WPA2' : wifiEncryption)"
-          autoGrow="true" rows="1"></ion-textarea>
-      </ion-item>
-    </ion-col>
-  </ion-row>
+  <ng-container *ngIf="contentType === 'wifi' && wifiEncryption && qrCodeContent && qrCodeContent.trim().length > 0"
+    [ngTemplateOutlet]="contentBlock"
+    [ngTemplateOutletContext]="{ label: 'WIFI_ENCRYPTION' | translate, content: wifiEncryption === 'NONE'? ('NOT_AVAILABLE' | translate) : (wifiEncryption === 'WPA'? 'WPA/WPA2' : wifiEncryption) }">
+  </ng-container>
 
-  <ion-row *ngIf="contentType === 'wifi' && qrCodeContent && qrCodeContent.trim().length > 0">
-    <ion-col class="ion-text-center ion-padding-horizontal">
-      <ion-item lines="none">
-        <ion-label class="content-label ion-padding-start ion-padding-bottom"
-          [color]="env.colorTheme === 'light'? 'dark' : 'light'" position="floating">
-          {{ 'WIFI_HIDDEN' | translate }}
-        </ion-label>
-        <ion-textarea class="box" readonly [value]="wifiHidden === true? ('YES' | translate) : ('NO' | translate)"
-          autoGrow="true" rows="1"></ion-textarea>
-      </ion-item>
-    </ion-col>
-  </ion-row>
+  <ng-container *ngIf="contentType === 'wifi' && qrCodeContent && qrCodeContent.trim().length > 0"
+    [ngTemplateOutlet]="contentBlock"
+    [ngTemplateOutletContext]="{ label: 'WIFI_HIDDEN' | translate, content: wifiHidden === true? ('YES' | translate) : ('NO' | translate) }">
+  </ng-container>
 
-  <ion-row class="ion-padding-horizontal ion-margin-horizontal ion-padding-bottom">
-    <ion-col></ion-col>
-  </ion-row>
+  <div class="ion-padding-horizontal ion-margin-horizontal ion-padding-bottom">
+  </div>
 
 </ion-content>
 
@@ -261,7 +133,8 @@
       <ion-icon *ngIf="env.searchEngine === 'google'" slot="icon-only" name="logo-google"></ion-icon>
       <ion-icon *ngIf="env.searchEngine === 'bing'" slot="icon-only" src="assets/icon/microsoft-bing.svg"></ion-icon>
       <ion-icon *ngIf="env.searchEngine === 'yahoo'" slot="icon-only" src="assets/icon/yahoo.svg"></ion-icon>
-      <ion-icon *ngIf="env.searchEngine === 'duckduckgo'" slot="icon-only" src="assets/icon/duck-duck-go.svg"></ion-icon>
+      <ion-icon *ngIf="env.searchEngine === 'duckduckgo'" slot="icon-only" src="assets/icon/duck-duck-go.svg">
+      </ion-icon>
     </ion-button>
     <ion-button mode="md" (click)="tapHaptic(); copyText()" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
       fill="clear" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
@@ -286,3 +159,18 @@
     </ion-button>
   </ion-row>
 </ion-footer>
+
+<ng-template #contentBlock let-label="label" let-content="content" let-hint="hint">
+  <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-col>
+      <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent" [floatLabel]="'always'"
+        style="width: 100%;">
+        <mat-label>{{ label }}</mat-label>
+        <textarea matInput [value]="content" [cdkTextareaAutosize]="true" [cdkAutosizeMinRows]="1"
+          [cdkAutosizeMaxRows]="10" readonly>
+      </textarea>
+        <mat-hint *ngIf="hint && hint != ''" style="opacity: 0.5;">{{ hint }}</mat-hint>
+      </mat-form-field>
+    </ion-col>
+  </ion-row>
+</ng-template>
