@@ -168,7 +168,7 @@
   <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
     <ion-col>
       <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent" [floatLabel]="'always'"
-        style="width: 100%;">
+        style="width: 100%;" #formField ng-init="formField.">
         <mat-label>{{ label }}</mat-label>
         <textarea matInput [value]="content" [cdkTextareaAutosize]="true" [cdkAutosizeMinRows]="1"
           [cdkAutosizeMaxRows]="10" readonly>

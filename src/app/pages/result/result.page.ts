@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Clipboard } from '@capacitor/clipboard';
 import { Contacts, ContactType, EmailAddress, NewContact, PhoneNumber } from '@capacitor-community/contacts'
@@ -12,6 +12,7 @@ import { EnvService } from 'src/app/services/env.service';
 import { QrcodeComponent } from 'src/app/components/qrcode/qrcode.component';
 import { Toast } from '@capacitor/toast';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { MatFormField } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-result',
@@ -67,6 +68,8 @@ export class ResultPage implements OnInit {
   bookmarked: boolean = false;
 
   showQrFirst: boolean = false;
+
+  @ViewChildren(MatFormField) formFields: QueryList<MatFormField>;
 
   constructor(
     private platform: Platform,
@@ -479,6 +482,7 @@ export class ResultPage implements OnInit {
     } else if (!failEncoded && failDecoded) {
       await this.presentToast(this.translate.instant('MSG.NOT_BASE64_DE'), "short", "center");
     }
+    setTimeout(() => this.formFields?.forEach(ff => ff.updateOutlineGap()), 100);
   }
 
   generateVCardContact(): void {
