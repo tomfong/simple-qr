@@ -216,7 +216,7 @@ export class ScanPage {
     const alert = await this.alertController.create({
       header: this.translate.instant("UPDATE_NOTES"),
       subHeader: this.env.appVersionNumber,
-      message: this.translate.instant("UPDATE.UPDATE_NOTES"),
+      message: this.platform.is('ios')? this.translate.instant("UPDATE.UPDATE_NOTES_IOS") : this.translate.instant("UPDATE.UPDATE_NOTES_ANDROID"),
       buttons: [this.translate.instant("OK")],
       cssClass: ['left-align', 'alert-bg']
     });

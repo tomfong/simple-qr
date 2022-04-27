@@ -266,6 +266,7 @@
         "RSS": "GS1 DataBar 條碼"
     },
     "UPDATE": {
-        "UPDATE_NOTES": "<ul><li>改善效能及修正已知問題</li></ul>"
+        "UPDATE_NOTES_ANDROID": "<ul><li>界面更新</li><li>改善效能及修正已知問題</li></ul>",
+        "UPDATE_NOTES_IOS": "<ul><li>此版本為iOS首個發佈版本，歡迎在App Store評分及留下意見。</li></ul>"
     }
 }
