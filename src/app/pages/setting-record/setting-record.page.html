@@ -73,7 +73,7 @@
       <ion-label class="ion-padding-start">
         <p class="ion-padding-horizontal">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
-            {{ isIOS? 'RESTORE_EXPLAIN_IOS' | translate : 'RESTORE_EXPLAIN' | translate }}
+            {{ (isIOS? 'RESTORE_EXPLAIN_IOS' : 'RESTORE_EXPLAIN') | translate }}
           </ion-text>
         </p>
       </ion-label>
