@@ -102,7 +102,8 @@ Thanks for your support!
 
 ### 2.3.0
 
-- iOS version is born!
+- Release iOS version
+- UI updated
 - Improved performance and fixed known issues
 
 #### 2.2.0
