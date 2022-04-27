@@ -7,6 +7,7 @@
     "CREATE_QRCODE": "建立 QR 碼",
     "CREATE_QRCODE_MAX_LENGTH": "最多 1817 個字元",
     "QRCODE_CONTENT": "QR 碼內容",
+    "CONTENT": "内容",
     "EXIT_APP": "離開應用程式",
     "WEBSITE": "網站",
     "PHONE_CALL": "通話",
@@ -258,8 +259,8 @@
         "1D": "一維條碼",
         "AZTEC": "阿茲特克碼",
         "DATA_MATRIX": "數據矩陣",
-        "MAXICODE": "MaxiCode 二維條碼",
-        "PDF_417": "PDF417 二維條碼",
+        "MAXICODE": "MaxiCode 條碼",
+        "PDF_417": "PDF417 條碼",
         "QR_CODE": "QR 碼",
         "RSS": "GS1 DataBar 條碼"
     },

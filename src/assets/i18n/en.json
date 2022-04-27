@@ -7,6 +7,7 @@
     "CREATE_QRCODE": "Create QR Code",
     "CREATE_QRCODE_MAX_LENGTH": "Max. 1817 characters",
     "QRCODE_CONTENT": "QR code content",
+    "CONTENT": "Content",
     "EXIT_APP": "Exit App",
     "WEBSITE": "Website",
     "PHONE_CALL": "Phone Call",
@@ -253,15 +254,15 @@
         "COPIED_SECRET": "Copied secret"
     },
     "BARCODE_TYPE": {
-        "UPC": "Universal Product Code",
-        "EAN": "European Article Number",
-        "1D": "1D Barcode",
-        "AZTEC": "Aztec Code",
-        "DATA_MATRIX": "Data Matrix",
-        "MAXICODE": "MaxiCode",
-        "PDF_417": "PDF417",
-        "QR_CODE": "QR Code",
-        "RSS": "GS1 DataBar"
+        "UPC": "Universal Product Code ",
+        "EAN": "European Article Number ",
+        "1D": "1D Barcode ",
+        "AZTEC": "Aztec Code ",
+        "DATA_MATRIX": "Data Matrix ",
+        "MAXICODE": "MaxiCode ",
+        "PDF_417": "PDF417 ",
+        "QR_CODE": "QR Code ",
+        "RSS": "GS1 DataBar "
     },
     "UPDATE": {
         "UPDATE_NOTES": "<ul><li>Improved performace and fixed known issues</li></ul>"

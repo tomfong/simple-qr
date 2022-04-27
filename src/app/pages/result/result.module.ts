@@ -11,6 +11,8 @@ import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -21,6 +23,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     CommonModule,
     FormsModule,
     IonicModule,
+    MatFormFieldModule,
+    MatInputModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
