@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 import { Clipboard } from '@capacitor/clipboard';
@@ -27,6 +27,7 @@ export class SettingRecordPage {
     private loadingController: LoadingController,
     private chooser: Chooser,
     private socialSharing: SocialSharing,
+    private platform: Platform
   ) { }
 
   async saveScanRecord() {
@@ -45,7 +46,7 @@ export class SettingRecordPage {
         loading1.dismiss();
         const loading2 = await this.presentLoading(this.translate.instant("BACKING_UP"));
         const now = moment().format("yyyyMMDDHHmmss");
-        const filename = `simpleqr-backup-${now}.tfsqbk`;
+        const filename = this.platform.is('ios') ? `i-simpleqr-backup-${now}.isqbk` : `simpleqr-backup-${now}.tfsqbk`;
         await Filesystem.writeFile({
           path: `${filename}`,
           data: await value.encrypted,
@@ -101,9 +102,16 @@ export class SettingRecordPage {
         if (value == null) {
           return;
         }
-        if (!value.name.toLowerCase().endsWith("tfsqbk")) {
-          this.presentToast(this.translate.instant("MSG.INVALID_BK_FILE"), "short", "bottom");
-          return;
+        if (this.platform.is('ios')) {
+          if (!value.name.toLowerCase().endsWith(".isqbk")) {
+            this.presentToast(this.translate.instant("MSG.INVALID_BK_FILE"), "short", "bottom");
+            return;
+          }
+        } else {
+          if (!value.name.toLowerCase().endsWith(".tfsqbk")) {
+            this.presentToast(this.translate.instant("MSG.INVALID_BK_FILE"), "short", "bottom");
+            return;
+          }
         }
         await Filesystem.readFile({
           path: value.uri,
@@ -214,6 +222,7 @@ export class SettingRecordPage {
         }
       )
       .catch(err => {
+        console.error("error when decrypt", err)
         this.presentToast(this.translate.instant("MSG.RESTORE_WRONG_SECRET"), "short", "bottom");
       });
   }
@@ -236,5 +245,7 @@ export class SettingRecordPage {
     return loading;
   }
 
-
+  get isIOS() {
+    return this.platform.is('ios');
+  }
 }
