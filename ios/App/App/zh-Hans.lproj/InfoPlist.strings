@@ -1,2 +1,6 @@
 "CFBundleDisplayName" = "简易QR";
 "CFBundleName" = "简易QR";
+"NSCameraUsageDescription" = "授权简易QR使用相机以扫描QR码或其他条码";
+"NSContactsUsageDescription" = "授权简易QR存取通讯录以新增联络人";
+"NSPhotoLibraryAddUsageDescription" = "授权简易QR存取相簿以汇入图片及扫描QR码";
+"NSPhotoLibraryUsageDescription" = "授权简易QR存取相簿以汇入图片及扫描QR码";

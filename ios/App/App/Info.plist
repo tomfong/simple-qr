@@ -32,9 +32,9 @@
 	<key>NSContactsUsageDescription</key>
 	<string>Simple QR uses Contacts to add contact</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Simple QR uses Photo Library to scan QR code</string>
+	<string>Simple QR uses Photo Library to import image and scan QR code</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Simple QR uses Photo Library to scan QR code and share QR code</string>
+	<string>Simple QR uses Photo Library to import image and scan QR code</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

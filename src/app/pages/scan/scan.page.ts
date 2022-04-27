@@ -98,16 +98,27 @@ export class ScanPage {
       await this.scanQr();
     } else {
       this.permissionAlert?.dismiss();
-      this.permissionAlert = await this.presentAlert(
-        this.translate.instant("MSG.CAMERA_PERMISSION_1"),
-        this.translate.instant("PERMISSION_REQUIRED"),
-        this.translate.instant("SETTING")
-      );
-      await this.permissionAlert.onDidDismiss().then(
-        async () => {
-          BarcodeScanner.openAppSettings();
-        }
-      );
+      this.permissionAlert = await this.alertController.create({
+        header: this.translate.instant("PERMISSION_REQUIRED"),
+        message: this.translate.instant("MSG.CAMERA_PERMISSION_1"),
+        buttons: [
+          {
+            text: this.translate.instant("SETTING"),
+            handler: () => {
+              BarcodeScanner.openAppSettings();
+              return true;
+            }
+          },
+          {
+            text: this.translate.instant("OK"),
+            handler: () => {
+              return true;
+            }
+          }
+        ],
+        cssClass: ['alert-bg']
+      });
+      await this.permissionAlert.present();
     }
   }
 

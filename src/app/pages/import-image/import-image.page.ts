@@ -7,6 +7,7 @@ import jsQR from 'jsqr';
 import { Router } from '@angular/router';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Toast } from '@capacitor/toast';
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 
 @Component({
   selector: 'app-import-image',
@@ -46,24 +47,40 @@ export class ImportImagePage {
               },
               async err => {
                 decodingLoading.dismiss();
-                await this.presentToast(this.translate.instant("MSG.NO_QR_CODE"), "long", "center");
+                await this.presentToast(this.translate.instant("MSG.NO_QR_CODE"), "short", "bottom");
               }
             )
           },
           async err => {
             decodingLoading.dismiss();
-            await this.presentToast(this.translate.instant("MSG.NO_QR_CODE"), "long", "center");
+            await this.presentToast(this.translate.instant("MSG.NO_QR_CODE"), "short", "bottom");
           }
         );
       },
       async err => {
         getPictureLoading.dismiss();
         if (err?.message != null && err?.message == 'User denied access to photos') {
-          await this.presentAlert(
-            this.translate.instant("MSG.READ_IMAGE_PERMISSION"),
-            this.translate.instant("PERMISSION_REQUIRED"),
-            this.translate.instant("OK")
-          );
+          const alert = await this.alertController.create({
+            header: this.translate.instant("PERMISSION_REQUIRED"),
+            message: this.translate.instant("MSG.READ_IMAGE_PERMISSION"),
+            buttons: [
+              {
+                text: this.translate.instant("SETTING"),
+                handler: () => {
+                  BarcodeScanner.openAppSettings();
+                  return true;
+                }
+              },
+              {
+                text: this.translate.instant("OK"),
+                handler: () => {
+                  return true;
+                }
+              }
+            ],
+            cssClass: ['alert-bg']
+          });
+          await alert.present();
         }
       }
     );
