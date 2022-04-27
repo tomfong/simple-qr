@@ -1,9 +1,5 @@
 <ion-header mode="ios">
   <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'" mode="ios">
-    <ion-buttons *ngIf="isIOS" slot="start">
-      <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
-      </ion-back-button>
-    </ion-buttons>
     <ion-title>{{ 'RESULT' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
