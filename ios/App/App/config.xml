@@ -6,21 +6,21 @@
     <param name="ios-package" value="AES256"/>
   </feature>
 
+  <feature name="AppVersion">
+    <param name="ios-package" value="AppVersion"/>
+  </feature>
+
   <feature name="Chooser">
     <param name="ios-package" value="Chooser"/>
+  </feature>
+
+  <feature name="ThemeDetection">
+    <param name="ios-package" value="ThemeDetection"/>
   </feature>
 
   <feature name="SocialSharing">
     <param name="ios-package" value="SocialSharing"/>
     <param name="onload" value="true"/>
-  </feature>
-
-  <feature name="AppVersion">
-    <param name="ios-package" value="AppVersion"/>
-  </feature>
-
-  <feature name="ThemeDetection">
-    <param name="ios-package" value="ThemeDetection"/>
   </feature>
 
   <feature name="Sms">

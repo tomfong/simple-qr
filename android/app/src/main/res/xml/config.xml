@@ -6,16 +6,24 @@
     <param name="android-package" value="com.ideas2it.aes256.AES256"/>
   </feature>
 
+  <feature name="AppVersion">
+    <param name="android-package" value="uk.co.whiteoctober.cordova.AppVersion"/>
+  </feature>
+
   <feature name="Chooser">
     <param name="android-package" value="com.cyph.cordova.Chooser"/>
+  </feature>
+
+  <feature name="ThemeDetection">
+    <param name="android-package" value="de.mariusbackes.cordova.plugin.ThemeDetection"/>
   </feature>
 
   <feature name="SocialSharing">
     <param name="android-package" value="nl.xservices.plugins.SocialSharing"/>
   </feature>
 
-  <feature name="AppVersion">
-    <param name="android-package" value="uk.co.whiteoctober.cordova.AppVersion"/>
+  <feature name="Sms">
+    <param name="android-package" value="com.cordova.plugins.sms.Sms"/>
   </feature>
 
   <feature name="StatusBar">
@@ -23,17 +31,9 @@
     <param name="onload" value="true"/>
   </feature>
 
-  <feature name="ThemeDetection">
-    <param name="android-package" value="de.mariusbackes.cordova.plugin.ThemeDetection"/>
-  </feature>
-
   <feature name="Whitelist">
     <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin"/>
     <param name="onload" value="true"/>
-  </feature>
-
-  <feature name="Sms">
-    <param name="android-package" value="com.cordova.plugins.sms.Sms"/>
   </feature>
 
   <feature name="SQLitePlugin">
