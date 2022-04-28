@@ -127,7 +127,7 @@ Thanks for your support!
 
 #### 2.0.0 - 2.0.1
 
-- Revamped the scanning engine
+- Changed to new scanning engine (capacitor-community/barcode-scanner) to solve issue occurred in Android 12
 - Removed camera pause feature due to technical problems
 - Improved performance and fix issues
 
