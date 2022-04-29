@@ -60,7 +60,7 @@ You are welcomed to help us do translations in more languages! (see <a href="#ho
 
 ## Support Developer
 
-To support this project, you can buy me a milk tea by making a donation :) (<a href="https://github.com/tomfong">Click me</a>)
+To support this project, you can buy me a milk tea by making a donation. (<a href="https://github.com/tomfong"><b>Click me</b></a> 😊)
 
 Thanks for your support!
 
