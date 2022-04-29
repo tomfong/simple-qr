@@ -210,7 +210,6 @@
         "NOT_BASE64_DE": "内容不能被 Base64 解码",
         "SHARE_QR": "扫一扫!\n\n从「简易 QR」分享",
         "SAVED": "已储存",
-        "FAIL_SAVE_CONTACT": "无法储存联络人",
         "EXIT_APP": "确定要离开?",
         "CAMERA_PERMISSION_1": "按「设定」以授权「简易QR」使用相机。 ",
         "CAMERA_PERMISSION_2": "使用扫描功能，您必须授权「简易QR」使用相机。 ",
@@ -252,7 +251,10 @@
         "PLEASE_INPUT_VALID_SECRET": "请输入有效密码",
         "RESTORE_WRONG_SECRET": "密码错误",
         "RESTORE_SUCCESSFUL": "还原成功",
-        "COPIED_SECRET": "已复制密码"
+        "COPIED_SECRET": "已复制密码",
+        "SAVED_CONTACT": "已新增联络人",
+        "FAILED_SAVING_CONTACT": "无法新增联络人",
+        "CONTACT_PERMISSION": "要新增联络人，您必须授权「简易QR」存取通讯录。 "
     },
     "BARCODE_TYPE": {
         "UPC": "通用产品代码",
