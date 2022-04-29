@@ -8,10 +8,10 @@
   <a href="#about">About</a>
 • <a href="#features">Features</a>
 • <a href="#support-developer">Support Developer</a>
-• <a href="#contribute">Contribute</a>
+
 </p>
 <p align="center">
-  <a href="#changelogs">Changelogs</a>
+  <a href="#contribute">Contribute</a>
 • <a href="#framework">Framework</a>
 • <a href="#privacy-policy">Privacy Policy</a>
 • <a href="#license">License</a>
@@ -60,9 +60,8 @@ You are welcomed to help us do translations in more languages! (see <a href="#ho
 
 ## Support Developer
 
-To support this project, you can buy me a milk tea by making a donation. (<a href="https://github.com/tomfong"><b>Click me</b></a> 😊)
+If you want to support me or my projects, please <a href="https://github.com/tomfong"><b>click me</b></a>😊
 
-Thanks for your support!
 
 ## Contribute
 
@@ -97,86 +96,6 @@ Thanks for your support!
 2. Copy the JSON, rename it to <i>locale</i>.json, e.g. ja.json for Japanese, de.json for German
 3. Change the values of each key. Try to stick to the meaning of the original wordings. <b>DO NOT</b> change key names.
 4. Commit it (please place the JSON in the same directory, i.e. src/assets/i18n), or [email]('mailto:tomfong.dev@gmail.com') me the JSON.
-
-## Changelogs
-
-### 2.3.0
-
-- Release iOS version
-- UI updated
-- Improved performance and fixed known issues
-
-#### 2.2.0
-
-- New "Backup and Restore" feature
-- Minor UI update
-- Improved performance and fixed known issues
-
-#### 2.1.0 - 2.1.2
-
-- Correctly display Traditional Chinese if system language is Yue
-- Simplified Chinese is supported now
-- UI updated: Android native toast, new button layout and more!
-- Back button is available on all pages
-- Barcode type can be shown after scanning
-- Improved performance and fixed known issues
-
-#### 2.0.2
-
-- Fixed QR code sharing crash issue
-
-#### 2.0.0 - 2.0.1
-
-- Changed to new scanning engine (capacitor-community/barcode-scanner) to solve issue occurred in Android 12
-- Removed camera pause feature due to technical problems
-- Improved performance and fix issues
-
-#### 1.5.0
-
-- Support Black color theme
-- Support zooming in QR code
-- Vibration effect update
-- Minor UI update
-- Improve performance and fix issues
-
-#### 1.4.0
-
-- Migrated the app to Capacitor
-- Improve experience when using "Special Actions" feature in Result page
-- Show barcode type when scanning
-- Improve performance and fix issues
-
-#### 1.3.0 - 1.3.3
-
-- Redesign UI/UX
-- Add vibration on/off setting
-- Remove WiFi connection feature
-- Remove ads
-- Improve performance and fix issues
-
-#### 1.2.0 - 1.2.1
-
-- Support image scanning to read QR code
-- UI updated
-- Improve performance and fix issues
-
-#### 1.1.0 - 1.1.5
-
-- Support 1D Barcode, Aztec Code, Data Matrix Code and PDF417 Barcode scanning
-- Support generating QR code with templates (Free Text, Email, Phone, Message, URL, vCard Contact and Wi-Fi)
-- Improve performance of loading records on History page
-
-#### 1.0.2
-
-- Removed in-app purchase
-
-#### 1.0.1
-
-- Support Android 6.0 or above devices
-
-#### 1.0.0
-
-- The first release version. Thanks for your support! Please feel free to rate the app and leave comments.
 
 ## Framework
 
