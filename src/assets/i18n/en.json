@@ -270,6 +270,6 @@
     },
     "UPDATE": {
         "UPDATE_NOTES_ANDROID": "<ul><li>UI updated</li><li>Improved performace and fixed known issues</li></ul>",
-        "UPDATE_NOTES_IOS": "<ul><li>This is the first release of iOS version. Please feel free to rate the app and leave your comments.</li></ul>"
+        "UPDATE_NOTES_IOS": "<ul><li>Fixed issue of showing patch notes again and again</li><li>Fixed issue of saving contact</li></ul>"
     }
 }
