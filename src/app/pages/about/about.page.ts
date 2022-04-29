@@ -24,6 +24,10 @@ export class AboutPage {
     return this.platform.is('android');
   }
 
+  get isIos(): boolean {
+    return this.platform.is('ios');
+  }
+
   openRepoUrl(): void {
     window.open(this.env.GITHUB_REPO_URL, '_system');
   }
@@ -31,6 +35,11 @@ export class AboutPage {
   openGooglePlay(): void {
     window.open(this.env.GOOGLE_PLAY_URL, '_system');
   }
+
+  openAppStore(): void {
+    window.open(this.env.APP_STORE_URL, '_system');
+  }
+
 
   async showBarcodeType() {
     const alert = await this.alertController.create({
