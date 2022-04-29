@@ -62,7 +62,6 @@ You are welcomed to help us do translations in more languages! (see <a href="#ho
 
 If you want to support me or my projects, please <a href="https://github.com/tomfong"><b>click me</b></a>😊
 
-
 ## Contribute
 
 - Star the project
