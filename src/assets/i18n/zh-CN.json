@@ -106,7 +106,8 @@
     "DUCK_DUCK_GO": "DuckDuckGo",
     "SEARCG_ENGINE_EXPLAIN": "设定搜索引擎，以便在结果页面进行搜索。",
     "ABOUT_SIMPLE_QR": "关于简易QR",
-    "CHECK_GOOGLE_PLAY": "在 Google Play 的详细资料",
+    "CHECK_GOOGLE_PLAY": "查看 Google Play",
+    "CHECK_APP_STORE": "查看 App Store",
     "PRIVACY_POLICY": "私隐政策",
     "SUPPORT_DEVELOPER": "支持开发人员",
     "WATCH_ADS": "观看广告",
@@ -210,7 +211,6 @@
         "NOT_BASE64_DE": "内容不能被 Base64 解码",
         "SHARE_QR": "扫一扫!\n\n从「简易 QR」分享",
         "SAVED": "已储存",
-        "FAIL_SAVE_CONTACT": "无法储存联络人",
         "EXIT_APP": "确定要离开?",
         "CAMERA_PERMISSION_1": "按「设定」以授权「简易QR」使用相机。 ",
         "CAMERA_PERMISSION_2": "使用扫描功能，您必须授权「简易QR」使用相机。 ",
@@ -252,7 +252,10 @@
         "PLEASE_INPUT_VALID_SECRET": "请输入有效密码",
         "RESTORE_WRONG_SECRET": "密码错误",
         "RESTORE_SUCCESSFUL": "还原成功",
-        "COPIED_SECRET": "已复制密码"
+        "COPIED_SECRET": "已复制密码",
+        "SAVED_CONTACT": "已新增联络人",
+        "FAILED_SAVING_CONTACT": "无法新增联络人",
+        "CONTACT_PERMISSION": "要新增联络人，您必须授权「简易QR」存取通讯录。 "
     },
     "BARCODE_TYPE": {
         "UPC": "通用产品代码",
@@ -267,6 +270,6 @@
     },
     "UPDATE": {
         "UPDATE_NOTES_ANDROID": "<ul><li>界面更新</li><li>改善效能及修正已知问题</li></ul>",
-        "UPDATE_NOTES_IOS": "<ul><li>此版本为iOS首个发布版本，欢迎在App Store评分及留下意见。</li></ul>"
+        "UPDATE_NOTES_IOS": "<ul><li>解决不时弹出「版本内容」的问题</li><li>解决新增联络人的权限问题</li></ul>"
     }
 }

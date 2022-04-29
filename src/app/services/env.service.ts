@@ -1,8 +1,8 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Injectable } from '@angular/core';
-import { AppVersion } from '@ionic-native/app-version/ngx';
+import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 import { Device, DeviceInfo } from '@capacitor/device';
-import { ThemeDetection, ThemeDetectionResponse } from '@ionic-native/theme-detection/ngx';
+import { ThemeDetection, ThemeDetectionResponse } from '@awesome-cordova-plugins/theme-detection/ngx';
 import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -37,8 +37,10 @@ export class EnvService {
   public readonly DUCK_DUCK_GO_SEARCH_URL: string = "https://duckduckgo.com/?q=";
   public readonly GITHUB_REPO_URL: string = "https://github.com/tomfong/simple-qr";
   public readonly GOOGLE_PLAY_URL: string = "https://play.google.com/store/apps/details?id=com.tomfong.simpleqr";
+  public readonly APP_STORE_URL: string = "https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553";
   public readonly PRIVACY_POLICY: string = "https://www.privacypolicies.com/live/771b1123-99bb-4bfe-815e-1046c0437a0f";
-  public readonly PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20300";
+  public readonly PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20300";
+  public readonly PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20301";
 
   private _storage: Storage | null = null;
   private _scannedData: string = '';
@@ -67,6 +69,7 @@ export class EnvService {
     this.appVersionNumber = await this.appVersion.getVersionNumber();
     const storage = await this.storage.create();
     this._storage = storage;
+    this._storage.remove(this.PREV_PATCH_NOTE_STORAGE_KEY).catch(err => {});
     this.storageGet("language").then(
       async value => {
         if (value !== null && value !== undefined) {
@@ -111,15 +114,6 @@ export class EnvService {
           this.notShowHistoryTutorial = (value === 'yes' ? true : false);
         } else {
           this.notShowHistoryTutorial = false;
-        }
-      }
-    );
-    this.storageGet(this.PATCH_NOTE_STORAGE_KEY).then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.notShowUpdateNotes = (value === 'yes' ? true : false);
-        } else {
-          this.notShowUpdateNotes = false;
         }
       }
     );

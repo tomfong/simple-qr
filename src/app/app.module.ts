@@ -11,9 +11,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
-import { SMS } from '@ionic-native/sms/ngx';
-import { ThemeDetection } from '@ionic-native/theme-detection/ngx';
-import { AppVersion } from '@ionic-native/app-version/ngx';
+import { SMS } from '@awesome-cordova-plugins/sms/ngx';
+import { ThemeDetection } from '@awesome-cordova-plugins/theme-detection/ngx';
+import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 import { AES256 } from '@awesome-cordova-plugins/aes-256/ngx';
 import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
 

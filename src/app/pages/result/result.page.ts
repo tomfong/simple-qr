@@ -2,7 +2,7 @@ import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Clipboard } from '@capacitor/clipboard';
 import { Contacts, ContactType, EmailAddress, NewContact, PhoneNumber } from '@capacitor-community/contacts'
-import { SMS } from '@ionic-native/sms/ngx';
+import { SMS } from '@awesome-cordova-plugins/sms/ngx';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { AlertController, LoadingController, ModalController, Platform, PopoverController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,6 +13,7 @@ import { QrcodeComponent } from 'src/app/components/qrcode/qrcode.component';
 import { Toast } from '@capacitor/toast';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { MatFormField } from '@angular/material/form-field';
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 
 @Component({
   selector: 'app-result',
@@ -177,6 +178,7 @@ export class ResultPage implements OnInit {
   }
 
   async addContact(): Promise<void> {
+    let newContact = null
     if (this.contentType === "contact") {
       const phoneNumbers = [];
       if (this.vCardContact?.defaultPhoneNumber != null) {
@@ -208,23 +210,61 @@ export class ResultPage implements OnInit {
         const address = { address: this.vCardContact?.workEmail } as EmailAddress;
         emails.push(address);
       }
-      const newContact = {
+      newContact = {
         contactType: ContactType.Person,
         givenName: this.vCardContact?.givenName ?? this.vCardContact?.fullName ?? '',
         familyName: this.vCardContact?.familyName,
         phoneNumbers: phoneNumbers,
         emailAddresses: emails
       } as NewContact;
-      await Contacts.saveContact(newContact);
     } else if (this.contentType === "sms" || this.contentType === "phone") {
       const phoneNumbers = [];
       const phoneNumber = { number: this.phoneNumber } as PhoneNumber;
       phoneNumbers.push(phoneNumber);
-      const newContact = {
+      newContact = {
         contactType: ContactType.Person,
         phoneNumbers: phoneNumbers
       } as NewContact;
-      await Contacts.saveContact(newContact);
+    }
+    if (newContact != null) {
+      await Contacts.getPermissions().then(
+        async permission => {
+          if (permission.granted) {
+            await Contacts.saveContact(newContact).then(
+              _ => {
+                this.presentToast(this.translate.instant('MSG.SAVED_CONTACT'), "short", "bottom");
+              }
+            )
+            .catch(
+              err => {
+                this.presentToast(this.translate.instant('MSG.FAILED_SAVING_CONTACT'), "short", "bottom");
+              }
+            )
+          } else {
+            const alert = await this.alertController.create({
+              header: this.translate.instant("PERMISSION_REQUIRED"),
+              message: this.translate.instant("MSG.CONTACT_PERMISSION"),
+              buttons: [
+                {
+                  text: this.translate.instant("SETTING"),
+                  handler: () => {
+                    BarcodeScanner.openAppSettings();
+                    return true;
+                  }
+                },
+                {
+                  text: this.translate.instant("OK"),
+                  handler: () => {
+                    return true;
+                  }
+                }
+              ],
+              cssClass: ['alert-bg']
+            });
+            await alert.present();
+          }
+        }
+      );      
     }
   }
 

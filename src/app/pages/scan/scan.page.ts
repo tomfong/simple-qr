@@ -82,6 +82,23 @@ export class ScanPage {
     await this.stopScanner();
   }
 
+  async loadPatchNote() {
+    await this.env.storageGet(this.env.PATCH_NOTE_STORAGE_KEY).then(
+      async value => {
+        if (value != null) {
+          this.env.notShowUpdateNotes = (value === 'yes' ? true : false);
+        } else {
+          this.env.notShowUpdateNotes = false;
+        }
+        await this.env.storageSet(this.env.PATCH_NOTE_STORAGE_KEY, 'yes');
+        if (this.env.notShowUpdateNotes === false) {
+          this.env.notShowUpdateNotes = true;
+          await this.showUpdateNotes();
+        }
+      }
+    );   
+  }
+
   async stopScanner(): Promise<void> {
     await BarcodeScanner.stopScan();
     this.cameraActive = false;
@@ -90,11 +107,7 @@ export class ScanPage {
   async prepareScanner(): Promise<void> {
     const result = await BarcodeScanner.checkPermission({ force: true });
     if (result.granted) {
-      if (this.env.notShowUpdateNotes === false) {
-        this.env.notShowUpdateNotes = true;
-        this.env.storageSet(this.env.PATCH_NOTE_STORAGE_KEY, 'yes');
-        await this.showUpdateNotes();
-      }
+      await this.loadPatchNote();
       await this.scanQr();
     } else {
       this.permissionAlert?.dismiss();

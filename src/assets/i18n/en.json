@@ -106,7 +106,8 @@
     "DUCK_DUCK_GO": "DuckDuckGo",
     "SEARCG_ENGINE_EXPLAIN": "Set the search engine for doing web search in the Result page.",
     "ABOUT_SIMPLE_QR": "About Simple QR",
-    "CHECK_GOOGLE_PLAY": "App Details on Google Play",
+    "CHECK_GOOGLE_PLAY": "View Google Play",
+    "CHECK_APP_STORE": "View App Store",
     "PRIVACY_POLICY": "Privacy Policy",
     "SUPPORT_DEVELOPER": "Support Developer",
     "WATCH_ADS": "Watch an Ad",
@@ -210,11 +211,10 @@
         "NOT_BASE64_DE": "Data cannot be Base64 decoded",
         "SHARE_QR": "Just scan it!\n\nShared by Simple QR",
         "SAVED": "Saved",
-        "FAIL_SAVE_CONTACT": "Failed to save contact",
         "EXIT_APP": "Do you want to leave now?",
-        "CAMERA_PERMISSION_1": "Press Setting to grant camera permission.",
-        "CAMERA_PERMISSION_2": "You must grant the camera permission for scanning.",
-        "READ_IMAGE_PERMISSION": "You must grant the storage read permission for scanning image.",
+        "CAMERA_PERMISSION_1": "Press Setting to grant Camera permission.",
+        "CAMERA_PERMISSION_2": "You must grant Camera permission for scanning.",
+        "READ_IMAGE_PERMISSION": "You must grant Storage permission for scanning image.",
         "CAMERA_PAUSED": "The camera is paused to save battery. To resume, hold the device or press Resume.<br><br>The function can be configured in Setting.",
         "UNDO_DELETE": "You can undo the deletion",
         "REMOVE_ALL_RECORD": "Are you sure to remove all records? <b>This action cannot be undone.</b>",
@@ -252,7 +252,10 @@
         "PLEASE_INPUT_VALID_SECRET": "Please input valid code",
         "RESTORE_WRONG_SECRET": "Incorrect code",
         "RESTORE_SUCCESSFUL": "Restored successfully",
-        "COPIED_SECRET": "Copied secret"
+        "COPIED_SECRET": "Copied secret",
+        "SAVED_CONTACT": "Saved contact",
+        "FAILED_SAVING_CONTACT": "Failed to save contact",
+        "CONTACT_PERMISSION": "You must grant Contact permission for saving contact."
     },
     "BARCODE_TYPE": {
         "UPC": "Universal Product Code ",
@@ -267,6 +270,6 @@
     },
     "UPDATE": {
         "UPDATE_NOTES_ANDROID": "<ul><li>UI updated</li><li>Improved performace and fixed known issues</li></ul>",
-        "UPDATE_NOTES_IOS": "<ul><li>This is the first release of iOS version. Please feel free to rate the app and leave your comments.</li></ul>"
+        "UPDATE_NOTES_IOS": "<ul><li>Fixed issue of showing patch notes again and again</li><li>Fixed issue of saving contact</li></ul>"
     }
 }
