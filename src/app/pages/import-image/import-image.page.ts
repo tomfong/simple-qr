@@ -45,13 +45,13 @@ export class ImportImagePage {
                 const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
                 await this.processQrCode(qrValue, loading);
               },
-              async err => {
+              async _ => {
                 decodingLoading.dismiss();
                 await this.presentToast(this.translate.instant("MSG.NO_QR_CODE"), "short", "bottom");
               }
             )
           },
-          async err => {
+          async _ => {
             decodingLoading.dismiss();
             await this.presentToast(this.translate.instant("MSG.NO_QR_CODE"), "short", "bottom");
           }
@@ -59,7 +59,10 @@ export class ImportImagePage {
       },
       async err => {
         getPictureLoading.dismiss();
-        if (err?.message != null && err?.message == 'User denied access to photos') {
+        if (this.env.isDebugging) {
+          this.presentToast("Error when call Camera.getPhoto: " + JSON.stringify(err), "long", "top");
+        }
+        if (err?.message != null && err?.message?.toLowerCase() == 'user denied access to photos') {
           const alert = await this.alertController.create({
             header: this.translate.instant("PERMISSION_REQUIRED"),
             message: this.translate.instant("MSG.READ_IMAGE_PERMISSION"),

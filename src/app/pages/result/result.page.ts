@@ -178,7 +178,7 @@ export class ResultPage implements OnInit {
   }
 
   async addContact(): Promise<void> {
-    let newContact = null
+    let newContact = null;
     if (this.contentType === "contact") {
       const phoneNumbers = [];
       if (this.vCardContact?.defaultPhoneNumber != null) {
@@ -237,7 +237,11 @@ export class ResultPage implements OnInit {
             )
             .catch(
               err => {
-                this.presentToast(this.translate.instant('MSG.FAILED_SAVING_CONTACT'), "short", "bottom");
+                if (this.env.isDebugging) {
+                  this.presentToast("Error when call Contacts.saveContact: " + JSON.stringify(err), "long", "top");
+                } else {
+                  this.presentToast(this.translate.instant('MSG.FAILED_SAVING_CONTACT'), "short", "bottom");
+                }
               }
             )
           } else {

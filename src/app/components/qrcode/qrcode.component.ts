@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { Toast } from '@capacitor/toast';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
@@ -43,6 +44,9 @@ export class QrcodeComponent {
       }
     ).catch(
       err => {
+        if (this.env.isDebugging) {
+          this.presentToast("Error when call SocialSharing.share: " + JSON.stringify(err), "long", "top");
+        }
         delete this.qrImageDataUrl;
       }
     );
@@ -80,6 +84,14 @@ export class QrcodeComponent {
       default:
         return 'white';
     }
+  }
+
+  async presentToast(msg: string, duration: "short" | "long", pos: "top" | "center" | "bottom") {
+    await Toast.show({
+      text: msg,
+      duration: duration,
+      position: pos
+    });
   }
 
   async tapHaptic() {

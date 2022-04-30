@@ -10,6 +10,7 @@ import * as moment from 'moment';
 import { environment } from 'src/environments/environment';
 import { Bookmark } from '../models/bookmark';
 import { ScanRecord } from '../models/scan-record';
+import { Toast } from '@capacitor/toast';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,7 @@ export class EnvService {
   public notShowHistoryTutorial: boolean = false;
   public notShowUpdateNotes: boolean = false;
   public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' = 'google';
-  public debugModeOn: 'on' | 'off' = 'off';
+  public debugMode: 'on' | 'off' = 'off';
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
   public readonly GOOGLE_SEARCH_URL: string = "https://www.google.com/search?q=";
@@ -171,9 +172,9 @@ export class EnvService {
     this.storageGet("debug-mode-on").then(
       value => {
         if (value != null) {
-          this.debugModeOn = value;
+          this.debugMode = value;
         } else {
-          this.debugModeOn = 'off';
+          this.debugMode = 'off';
         }
       }
     );
@@ -189,7 +190,9 @@ export class EnvService {
         return value;
       },
       err => {
-        console.error("error when get from storage", err);
+        if (this.isDebugging) {
+          this.presentToast("Error when get item from storage: " + JSON.stringify(err), "long", "top");
+        }
         return null;
       }
     );
@@ -209,7 +212,7 @@ export class EnvService {
     this.searchEngine = 'google';
     this._scanRecords = [];
     this._bookmarks = [];
-    this.debugModeOn = 'off';
+    this.debugMode = 'off';
   }
 
   get result(): string {
@@ -477,6 +480,18 @@ export class EnvService {
         ` // must be in a line
     }
     return mailContent;
+  }
+
+  async presentToast(msg: string, duration: "short" | "long", pos: "top" | "center" | "bottom") {
+    await Toast.show({
+      text: msg,
+      duration: duration,
+      position: pos
+    });
+  }
+
+  get isDebugging(): boolean {
+    return this.debugMode === 'on';
   }
 
   get buildEnv(): string {

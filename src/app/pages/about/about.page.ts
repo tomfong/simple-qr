@@ -88,9 +88,9 @@ export class AboutPage {
 
   async tapAppVersion() {
     this.tapAppVersionTimes++;
-    if (this.env.debugModeOn != 'on') {
+    if (this.env.debugMode != 'on') {
       if (this.tapAppVersionTimes >= 5) {
-        this.env.debugModeOn = 'on';
+        this.env.debugMode = 'on';
         await this.env.storageSet("debug-mode-on", 'on');
         await Toast.show({
           text: this.translate.instant("MSG.DEBUG_MODE_ON"),
