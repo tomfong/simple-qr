@@ -26,7 +26,8 @@
           </p>
         </ion-label>
       </ion-item>
-      <ion-radio-group [(ngModel)]="env.errorCorrectionLevel" (ionChange)="onErrorCorrectionLevelChange()" style="width: 100%;">
+      <ion-radio-group [(ngModel)]="env.errorCorrectionLevel" (ionChange)="onErrorCorrectionLevelChange()"
+        style="width: 100%;">
         <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" [color]="color">
           <ion-label class="ion-padding-start">
             <p class="ion-padding-horizontal">
@@ -72,7 +73,8 @@
           </ion-radio>
         </ion-item>
       </ion-radio-group>
-      <ion-button class="pt-2 ion-margin-horizontal ion-margin-bottom" mode="md" fill="clear" (click)="goErrorCorrectionLevelSetting()" color="primary">
+      <ion-button class="pt-2 ion-margin-horizontal ion-margin-bottom" mode="md" fill="clear"
+        (click)="goErrorCorrectionLevelSetting()" color="primary">
         {{ 'LEARN_MORE' | translate }}
       </ion-button>
     </ion-row>
@@ -81,13 +83,11 @@
 <ion-footer mode="ios">
   <ion-toolbar mode="ios" [color]="color" style="border: none;">
     <ion-row class="d-flex justify-content-between">
-      <ion-button mode="md" size="large" (click)="tapHaptic(); close()" fill="clear"
-        [color]="env.colorTheme === 'light'? 'dark' : 'light'">
-        <ion-icon slot="icon-only" name="close-sharp"></ion-icon>
+      <ion-button mode="md" (click)="tapHaptic(); close()" fill="clear" [color]="'primary'">
+        {{ 'CLOSE' | translate }}
       </ion-button>
-      <ion-button mode="md" size="large" (click)="tapHaptic(); shareQrCode()" fill="clear"
-        [color]="env.colorTheme === 'light'? 'dark' : 'light'">
-        <ion-icon slot="icon-only" name="share-social"></ion-icon>
+      <ion-button mode="md" (click)="tapHaptic(); shareQrCode()" fill="clear" [color]="'primary'">
+        {{ 'SHARE' | translate }}
       </ion-button>
     </ion-row>
   </ion-toolbar>
