@@ -105,7 +105,7 @@
     "BING": "Microsoft Bing",
     "YAHOO": "Yahoo! Search",
     "DUCK_DUCK_GO": "DuckDuckGo",
-    "SEARCG_ENGINE_EXPLAIN": "Set the search engine for doing web search in the Result page.",
+    "SEARCH_ENGINE_EXPLAIN": "Choose the search engine for doing web search after getting result.",
     "ABOUT_SIMPLE_QR": "About Simple QR",
     "CHECK_GOOGLE_PLAY": "View Google Play",
     "CHECK_APP_STORE": "View App Store",
