@@ -9,6 +9,19 @@
   <div class="ion-padding-horizontal ion-margin-horizontal ion-padding-top">
   </div>
 
+  <ion-row class="ion-padding-horizontal pb-3" [@inOutAnimation]>
+    <ion-col>
+      <ion-badge class="p-2" color="primary" mode="ios">
+        <div class="d-flex align-items-center">
+          <mat-icon *ngIf="contentTypeIcon != ''" style="margin-right: 16px;">
+            {{ contentTypeIcon }}
+          </mat-icon>
+          <span>{{ contentTypeText }}</span>
+        </div>
+      </ion-badge>
+    </ion-col>
+  </ion-row>
+
   <ng-container *ngIf="qrCodeContent && qrCodeContent.trim().length > 0" [ngTemplateOutlet]="contentBlock"
     [ngTemplateOutletContext]="{ label: barcodeFormat + ('CONTENT' | translate), content: qrCodeContent, hint: env.resultFormat }">
   </ng-container>
@@ -168,7 +181,7 @@
         <mat-label>{{ label }}</mat-label>
         <textarea matInput [value]="content" [cdkTextareaAutosize]="true" [cdkAutosizeMinRows]="1"
           [cdkAutosizeMaxRows]="10" readonly>
-      </textarea>
+        </textarea>
         <mat-hint *ngIf="hint && hint != ''" style="opacity: 0.5;">{{ hint }}</mat-hint>
       </mat-form-field>
     </ion-col>

@@ -13,6 +13,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -25,6 +26,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     IonicModule,
     MatFormFieldModule,
     MatInputModule,
+    MatIconModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,

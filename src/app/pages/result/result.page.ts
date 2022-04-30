@@ -239,15 +239,15 @@ export class ResultPage implements OnInit {
                 }
               }
             )
-            .catch(
-              err => {
-                if (this.env.isDebugging) {
-                  this.presentToast("Error when call Contacts.saveContact: " + JSON.stringify(err), "long", "top");
-                } else {
-                  this.presentToast(this.translate.instant('MSG.FAILED_SAVING_CONTACT'), "short", "bottom");
+              .catch(
+                err => {
+                  if (this.env.isDebugging) {
+                    this.presentToast("Error when call Contacts.saveContact: " + JSON.stringify(err), "long", "top");
+                  } else {
+                    this.presentToast(this.translate.instant('MSG.FAILED_SAVING_CONTACT'), "short", "bottom");
+                  }
                 }
-              }
-            )
+              )
           } else {
             const alert = await this.alertController.create({
               header: this.translate.instant("PERMISSION_REQUIRED"),
@@ -272,7 +272,7 @@ export class ResultPage implements OnInit {
             await alert.present();
           }
         }
-      );      
+      );
     }
   }
 
@@ -701,6 +701,48 @@ export class ResultPage implements OnInit {
       this.bookmarked = true;
     } else {
       this.bookmarked = false;
+    }
+  }
+
+  get contentTypeText(): string {
+    switch (this.contentType) {
+      case 'freeText':
+        return this.translate.instant("FREE_TEXT");
+      case 'contact':
+        return this.translate.instant("VCARD_CONTACT");
+      case 'email':
+        return this.translate.instant("EMAIL");
+      case 'phone':
+        return this.translate.instant("PHONE");
+      case 'sms':
+        return this.translate.instant("SMS");
+      case 'url':
+        return this.translate.instant("URL");
+      case 'wifi':
+        return this.translate.instant("WIFI");
+      default:
+        return this.translate.instant("UNKNOWN");
+    }
+  }
+
+  get contentTypeIcon() {
+    switch (this.contentType) {
+      case "freeText":
+        return "format_align_left";
+      case "url":
+        return "link";
+      case "contact":
+        return "contact_phone";
+      case "phone":
+        return "call";
+      case "sms":
+        return "sms";
+      case "email":
+        return "email";
+      case "wifi":
+        return "wifi";
+      default:
+        return "";
     }
   }
 
