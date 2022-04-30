@@ -255,6 +255,7 @@
         "RESTORE_SUCCESSFUL": "還原成功",
         "COPIED_SECRET": "已複製密碼",
         "SAVED_CONTACT": "已新增聯絡人",
+        "SAVING_CONTACT": "正在新增聯絡人",
         "FAILED_SAVING_CONTACT": "無法新增聯絡人",
         "CONTACT_PERMISSION": "要新增聯絡人，您必須授權「簡易QR」存取通訊錄。"
     },

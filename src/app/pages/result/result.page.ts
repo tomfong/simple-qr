@@ -232,7 +232,11 @@ export class ResultPage implements OnInit {
           if (permission.granted) {
             await Contacts.saveContact(newContact).then(
               _ => {
-                this.presentToast(this.translate.instant('MSG.SAVED_CONTACT'), "short", "bottom");
+                if (this.isIOS) {
+                  this.presentToast(this.translate.instant('MSG.SAVED_CONTACT'), "short", "bottom");
+                } else {
+                  this.presentToast(this.translate.instant('MSG.SAVING_CONTACT'), "short", "bottom");
+                }
               }
             )
             .catch(

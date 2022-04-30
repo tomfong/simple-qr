@@ -255,6 +255,7 @@
         "RESTORE_SUCCESSFUL": "Restored successfully",
         "COPIED_SECRET": "Copied secret",
         "SAVED_CONTACT": "Saved contact",
+        "SAVING_CONTACT": "Saving contact",
         "FAILED_SAVING_CONTACT": "Failed to save contact",
         "CONTACT_PERMISSION": "You must grant Contact permission for saving contact."
     },

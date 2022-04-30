@@ -255,8 +255,9 @@
         "RESTORE_SUCCESSFUL": "还原成功",
         "COPIED_SECRET": "已复制密码",
         "SAVED_CONTACT": "已新增联络人",
+        "SAVING_CONTACT": "正在新增联络人",
         "FAILED_SAVING_CONTACT": "无法新增联络人",
-        "CONTACT_PERMISSION": "要新增联络人，您必须授权「简易QR」存取通讯录。 "
+        "CONTACT_PERMISSION": "要新增联络人，您必须授权「简易QR」存取通讯录。"
     },
     "BARCODE_TYPE": {
         "UPC": "通用产品代码",
