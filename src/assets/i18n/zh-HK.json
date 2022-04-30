@@ -227,7 +227,7 @@
         "NOT_BASE64_DE": "內容不能被 Base64 解碼",
         "SHARE_QR": "掃一掃!\n\n從「簡易 QR」分享",
         "SAVED": "已儲存",
-        "EXIT_APP": "<p>確定要離開？</p><p>若你喜歡簡易QR，歡迎前往商店評分。</p>",
+        "EXIT_APP": "<p>確定要離開？</p><p>若您喜歡簡易QR，歡迎前往商店評分。</p>",
         "CAMERA_PERMISSION": "要使用掃描功能，您必須授權「簡易QR」使用相機。",
         "READ_IMAGE_PERMISSION": "要掃描圖片，您必須授權「簡易QR」存取儲存空間。",
         "CAMERA_PAUSED": "為節省電力已暫停掃描，提起裝置或按「恢復」可繼續使用。<br><br>在「設定」可調校此功能。",
@@ -285,7 +285,7 @@
         "RSS": "GS1 DataBar 條碼"
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "<ul><li>界面更新</li><li>改善效能及修正已知問題</li></ul>",
-        "UPDATE_NOTES_IOS": "<ul><li>解決不時彈出「版本內容」的問題</li><li>解決新增聯絡人的權限問題</li></ul>"
+        "UPDATE_NOTES_ANDROID": "<p>若您喜歡簡易QR，歡迎前往商店評分。</p><p>此版本更新了界面及為您帶來新功能，包括</p><ul><li>QR 碼容錯等級設定</li><li>螢幕方向鎖定</li><li>支援新類別：NTT Docomo 電郵</li></ul>",
+        "UPDATE_NOTES_IOS": "<p>若您喜歡簡易QR，歡迎前往商店評分。</p><p>此版本更新了界面及為您帶來新功能，包括</p><ul><li>QR 碼容錯等級設定</li><li>螢幕方向鎖定</li><li>支援新類別：NTT Docomo 電郵</li></ul>"
     }
 }

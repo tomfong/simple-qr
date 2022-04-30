@@ -83,14 +83,15 @@ export class ScanPage {
   }
 
   async loadPatchNote() {
-    await this.env.storageGet(this.env.PATCH_NOTE_STORAGE_KEY).then(
+    const storageKey = this.platform.is('ios')? this.env.IOS_PATCH_NOTE_STORAGE_KEY : this.env.AN_PATCH_NOTE_STORAGE_KEY;
+    await this.env.storageGet(storageKey).then(
       async value => {
         if (value != null) {
           this.env.notShowUpdateNotes = (value === 'yes' ? true : false);
         } else {
           this.env.notShowUpdateNotes = false;
         }
-        await this.env.storageSet(this.env.PATCH_NOTE_STORAGE_KEY, 'yes');
+        await this.env.storageSet(storageKey, 'yes');
         if (this.env.notShowUpdateNotes === false) {
           this.env.notShowUpdateNotes = true;
           await this.showUpdateNotes();

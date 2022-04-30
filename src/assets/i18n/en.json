@@ -285,7 +285,7 @@
         "RSS": "GS1 DataBar "
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "<ul><li>UI updated</li><li>Improved performace and fixed known issues</li></ul>",
-        "UPDATE_NOTES_IOS": "<ul><li>Fixed issue of showing patch notes again and again</li><li>Fixed issue of saving contact</li></ul>"
+        "UPDATE_NOTES_ANDROID": "<p>If you like Simple QR, please rate it on the store.</p><p>This version updates UI and brings you new features, including</p><ul><li>QR Code error correction level setting</li><li>Screen orientation lock</li><li>Support new type: NTT Docomo email</li></ul>",
+        "UPDATE_NOTES_IOS": "<p>If you like Simple QR, please rate it on the store.</p><p>This version updates UI and brings you new features, including</p><ul><li>QR Code error correction level setting</li><li>Screen orientation lock</li><li>Support new type: NTT Docomo email</li></ul>"
     }
 }
