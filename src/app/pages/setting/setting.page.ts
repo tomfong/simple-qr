@@ -98,19 +98,24 @@ export class SettingPage {
       cssClass: ['alert-bg'],
       buttons: [
         {
-          text: this.translate.instant('YES'),
+          text: this.translate.instant('EXIT'),
           handler: () => {
             navigator['app'].exitApp();
           }
         },
         {
-          text: this.translate.instant('NO'),
-          role: 'cancel',
-          cssClass: 'btn-inverse'
+          text: this.translate.instant('GO_STORE_RATE'),
+          handler: () => {
+            this.openGooglePlay();
+          }
         }
       ]
     });
     await alert.present();
+  }
+
+  openGooglePlay(): void {
+    window.open(this.env.GOOGLE_PLAY_URL, '_system');
   }
 
   async presentToast(msg: string, duration: "short" | "long", pos: "top" | "center" | "bottom") {

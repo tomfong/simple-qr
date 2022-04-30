@@ -113,7 +113,7 @@ export class ScanPage {
       this.permissionAlert?.dismiss();
       this.permissionAlert = await this.alertController.create({
         header: this.translate.instant("PERMISSION_REQUIRED"),
-        message: this.translate.instant("MSG.CAMERA_PERMISSION_1"),
+        message: this.translate.instant("MSG.CAMERA_PERMISSION"),
         buttons: [
           {
             text: this.translate.instant("SETTING"),
@@ -241,10 +241,33 @@ export class ScanPage {
       header: this.translate.instant("UPDATE_NOTES"),
       subHeader: this.env.appVersionNumber,
       message: this.platform.is('ios')? this.translate.instant("UPDATE.UPDATE_NOTES_IOS") : this.translate.instant("UPDATE.UPDATE_NOTES_ANDROID"),
-      buttons: [this.translate.instant("OK")],
+      buttons: [
+        {
+          text:  this.translate.instant("OK"),
+          handler: () => true,
+        },
+        {
+          text:  this.translate.instant("GO_STORE_RATE"),
+          handler: () => {
+            if (this.platform.is('android')) {
+              this.openGooglePlay();
+            } else if (this.platform.is('ios')) {
+              this.openAppStore();
+            }
+          }
+        }
+       ],
       cssClass: ['left-align', 'alert-bg']
     });
     await alert.present();
+  }
+
+  openGooglePlay(): void {
+    window.open(this.env.GOOGLE_PLAY_URL, '_system');
+  }
+
+  openAppStore(): void {
+    window.open(this.env.APP_STORE_URL, '_system');
   }
 
   async confirmExitApp(): Promise<void> {
@@ -254,15 +277,16 @@ export class ScanPage {
       cssClass: ['alert-bg'],
       buttons: [
         {
-          text: this.translate.instant('YES'),
+          text: this.translate.instant('EXIT'),
           handler: () => {
             navigator['app'].exitApp();
           }
         },
         {
-          text: this.translate.instant('NO'),
-          role: 'cancel',
-          cssClass: 'btn-inverse'
+          text: this.translate.instant('GO_STORE_RATE'),
+          handler: () => {
+            this.openGooglePlay();
+          }
         }
       ]
     });

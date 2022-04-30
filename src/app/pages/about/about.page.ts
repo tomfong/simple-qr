@@ -56,7 +56,22 @@ export class AboutPage {
       header: this.translate.instant("UPDATE_NOTES"),
       subHeader: this.env.appVersionNumber,
       message: this.platform.is('ios')? this.translate.instant("UPDATE.UPDATE_NOTES_IOS") : this.translate.instant("UPDATE.UPDATE_NOTES_ANDROID"),
-      buttons: [this.translate.instant("OK")],
+      buttons: [
+        {
+          text:  this.translate.instant("OK"),
+          handler: () => true,
+        },
+        {
+          text:  this.translate.instant("GO_STORE_RATE"),
+          handler: () => {
+            if (this.platform.is('android')) {
+              this.openGooglePlay();
+            } else if (this.platform.is('ios')) {
+              this.openAppStore();
+            }
+          }
+        }
+       ],
       cssClass: ['left-align', 'alert-bg']
     });
     await alert.present();

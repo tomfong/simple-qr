@@ -5,7 +5,7 @@
   "homepage": "https://tomfong-io.web.app",
   "scripts": {
     "ng": "ng",
-    "sync": "ionic cap sync",
+    "sync": "ionic cap sync --prod --no-build",
     "copy:an": "ionic cap copy android --prod",
     "copy:ios": "ionic cap copy ios --prod",
     "test": "ng test",
