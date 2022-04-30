@@ -12,3 +12,7 @@ ion-footer {
         background-image: none;
     }
 }
+
+.footer-ios ion-toolbar:first-of-type {
+    --border-width: 0 !important;
+}
