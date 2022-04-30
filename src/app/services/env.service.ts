@@ -26,6 +26,7 @@ export class EnvService {
   public colorTheme: 'light' | 'dark' | 'black' = 'light';
   public selectedColorTheme: 'default' | 'light' | 'dark' | 'black' = 'default';
   public scanRecordLogging: 'on' | 'off' = 'on';
+  public errorCorrectionLevel: 'L' | 'M' | 'Q' | 'H' = 'M';
   public vibration: 'on' | 'on-haptic' | 'on-scanned' | 'off' = 'on';
   public orientation: 'default' | 'portrait' | 'landscape' = 'default';
   public notShowHistoryTutorial: boolean = false;
@@ -122,6 +123,15 @@ export class EnvService {
         }
       }
     );
+    this.storageGet("error-correction-level").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.errorCorrectionLevel = value;
+        } else {
+          this.errorCorrectionLevel = 'M';
+        }
+      }
+    );    
     this.storageGet("not-show-history-tutorial").then(
       value => {
         if (value !== null && value !== undefined) {
@@ -219,6 +229,7 @@ export class EnvService {
     this.selectedColorTheme = 'default';
     await this.toggleColorTheme();
     this.scanRecordLogging = 'on';
+    this.errorCorrectionLevel = 'M';
     this.vibration = 'on';
     this.orientation = 'default';
     await this.toggleOrientationChange();

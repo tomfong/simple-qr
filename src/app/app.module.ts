@@ -26,9 +26,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MenuComponent } from './components/menu/menu.component';
-import { QrcodeComponent } from './components/qrcode/qrcode.component';
+import { QrCodeComponent } from './components/qr-code/qr-code.component';
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { EnvService } from './services/env.service';
+import { FormsModule } from '@angular/forms';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -38,13 +39,14 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     declarations: [
         AppComponent,
         MenuComponent,
-        QrcodeComponent
+        QrCodeComponent
     ],
     imports: [
         BrowserModule,
         IonicModule.forRoot(),
         AppRoutingModule,
         HttpClientModule,
+        FormsModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

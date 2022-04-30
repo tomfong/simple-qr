@@ -37,6 +37,10 @@ const routes: Routes = [
     path: 'setting-orientation',
     loadChildren: () => import('./pages/setting-orientation/setting-orientation.module').then( m => m.SettingOrientationPageModule)
   },
+  {
+    path: 'setting-qr-ecl',
+    loadChildren: () => import('./pages/setting-qr-ecl/setting-qr-ecl.module').then( m => m.SettingQrEclPageModule)
+  },
 
 ];
 

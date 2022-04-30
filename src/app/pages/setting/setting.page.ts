@@ -53,6 +53,10 @@ export class SettingPage {
     this.router.navigate(['backup-restore']);
   }
 
+  setErrorCorrectionLevel() {
+    this.router.navigate(['setting-qr-ecl']);
+  }
+
   setSearchEngine() {
     this.router.navigate(['setting-search-engine']);
   }

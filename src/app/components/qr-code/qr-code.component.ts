@@ -1,22 +1,25 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Toast } from '@capacitor/toast';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
+import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels, QrcodeComponent } from '@techiediaries/ngx-qrcode';
 import { EnvService } from 'src/app/services/env.service';
 
 @Component({
-  selector: 'app-qrcode',
-  templateUrl: './qrcode.component.html',
-  styleUrls: ['./qrcode.component.scss'],
+  selector: 'app-qr-code',
+  templateUrl: './qr-code.component.html',
+  styleUrls: ['./qr-code.component.scss'],
 })
-export class QrcodeComponent {
+export class QrCodeComponent {
+
+  @ViewChild('qrcode') qrcodeElement: QrcodeComponent;
 
   @Input() qrCodeContent: string;
   qrElementType: NgxQrcodeElementTypes = NgxQrcodeElementTypes.CANVAS;
-  errorCorrectionLevel: NgxQrcodeErrorCorrectionLevels = NgxQrcodeErrorCorrectionLevels.LOW;
+  errorCorrectionLevel: NgxQrcodeErrorCorrectionLevels;
   qrMargin: number = 3;
 
   qrImageDataUrl: string;
@@ -27,7 +30,61 @@ export class QrcodeComponent {
     private loadingController: LoadingController,
     private modalController: ModalController,
     private socialSharing: SocialSharing,
-  ) { }
+    private router: Router,
+  ) {
+    this.setErrorCorrectionLevel();
+  }
+
+  setErrorCorrectionLevel() {
+    switch (this.env.errorCorrectionLevel) {
+      case 'L':
+        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.LOW;
+        break;
+      case 'M':
+        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.MEDIUM;
+        break;
+      case 'Q':
+        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.QUARTILE;
+        break;
+      case 'H':
+        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
+        break;
+      default:
+        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.MEDIUM;
+    }
+  }
+
+  async onErrorCorrectionLevelChange() {
+    switch (this.env.errorCorrectionLevel) {
+      case 'L':
+        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.LOW;
+        break;
+      case 'M':
+        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.MEDIUM;
+        break;
+      case 'Q':
+        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.QUARTILE;
+        break;
+      case 'H':
+        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
+        break;
+      default:
+        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.MEDIUM;
+    }
+    await this.env.storageSet("error-correction-level", this.env.errorCorrectionLevel);
+    if (this.qrcodeElement != null) {
+      this.qrcodeElement.errorCorrectionLevel = this.errorCorrectionLevel;
+    } else {
+      if (this.env.isDebugging) {
+        this.presentToast("Cannot ref qrcodeElement!", "long", "top");
+      }
+    }
+  }  
+
+  goErrorCorrectionLevelSetting() {
+    this.modalController.dismiss();
+    this.router.navigate(['setting-qr-ecl']);
+  }
 
   async shareQrCode(): Promise<void> {
     const loading = await this.presentLoading(this.translate.instant('PREPARING'));
@@ -51,7 +108,7 @@ export class QrcodeComponent {
       }
     );
   }
-  
+
   async close() {
     this.modalController.dismiss();
   }

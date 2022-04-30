@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
 import { VCardContact } from 'src/app/models/v-card-contact';
 import { EnvService } from 'src/app/services/env.service';
-import { QrcodeComponent } from 'src/app/components/qrcode/qrcode.component';
+import { QrCodeComponent } from 'src/app/components/qr-code/qr-code.component';
 import { Toast } from '@capacitor/toast';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { MatFormField } from '@angular/material/form-field';
@@ -327,7 +327,7 @@ export class ResultPage implements OnInit {
 
   async enlarge(): Promise<void> {
     const modal = await this.modalController.create({
-      component: QrcodeComponent,
+      component: QrCodeComponent,
       cssClass: 'qrcode-modal',
       componentProps: { qrCodeContent: this.qrCodeContent }
     });

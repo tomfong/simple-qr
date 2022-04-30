@@ -43,6 +43,16 @@
     </ion-label>
     <!--<ion-ripple-effect type="bounded"></ion-ripple-effect> -->
   </ion-item>
+  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setErrorCorrectionLevel()">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/qrcode.svg"></ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+          {{ 'ERROR_CORRECTION_LEVEL' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+  </ion-item>
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button
     (click)="setSearchEngine()">
     <ion-icon *ngIf="env.searchEngine === 'google'" class="ion-margin-start ion-padding-horizontal" [color]="'primary'"
