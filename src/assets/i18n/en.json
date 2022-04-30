@@ -150,6 +150,8 @@
     "PHONE": "Phone No.",
     "SMS": "Message",
     "EMAIL": "Email",
+    "EMAIL_W3C": "Email (W3C Standard)",
+    "EMAIL_DOCOMO": "Email (NTT Docomo)",
     "WIFI": "WiFi",
     "CREATE_QRCODE_MAX_LENGTH_EXPLAIN": "The length of generated QR Code content must not exceed 1817 characters",
     "CREATE": "Create",

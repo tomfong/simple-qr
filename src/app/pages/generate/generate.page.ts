@@ -39,7 +39,8 @@ export class GeneratePage {
   contactText: string = "vCard Contact";
   phoneText: string = "Phone";
   smsText: string = "Message";
-  emailText: string = "Email";
+  emailW3CText: string = "Email (W3C Standard)";
+  emailDocomoText: string = "Email (NTT Docomo)";
   wifiText: string = "WiFi";
 
   qrCodeContent: string = "";
@@ -97,16 +98,17 @@ export class GeneratePage {
     { text: this.wpaText, value: "WPA" },
   ]
 
-  contentTypes: { text: string, value: "freeText" | "url" | "contact" | "phone" | "sms" | "email" | "wifi" }[] = [
+  contentTypes: { text: string, value: "freeText" | "url" | "contact" | "phone" | "sms" | "emailW3C" | "emailDocomo" | "wifi" }[] = [
     { text: this.freeTxtText, value: 'freeText' },
-    { text: this.emailText, value: 'email' },
+    { text: this.emailW3CText, value: 'emailW3C' },
+    { text: this.emailDocomoText, value: 'emailDocomo' },
     { text: this.phoneText, value: 'phone' },
     { text: this.smsText, value: 'sms' },
     { text: this.urlText, value: 'url' },
     { text: this.contactText, value: 'contact' },
     { text: this.wifiText, value: 'wifi' },
   ];
-  contentType: "freeText" | "url" | "contact" | "phone" | "sms" | "email" | "wifi" = "freeText";
+  contentType: "freeText" | "url" | "contact" | "phone" | "sms" | "emailW3C" | "emailDocomo" | "wifi" = "freeText";
 
   constructor(
     public translate: TranslateService,
@@ -115,36 +117,37 @@ export class GeneratePage {
     public loadingController: LoadingController,
     private router: Router,
   ) {
-    this.freeTxtText = this.translate.instant("FREE_TEXT");
-    this.urlText = this.translate.instant("URL");
-    this.contactText = this.translate.instant("VCARD_CONTACT");
-    this.phoneText = this.translate.instant("PHONE");
-    this.smsText = this.translate.instant("SMS");
-    this.emailText = this.translate.instant("EMAIL");
-    this.wifiText = this.translate.instant("WIFI");
-    this.contentTypes = [
-      { text: this.freeTxtText, value: 'freeText' },
-      { text: this.emailText, value: 'email' },
-      { text: this.phoneText, value: 'phone' },
-      { text: this.smsText, value: 'sms' },
-      { text: this.urlText, value: 'url' },
-      { text: this.contactText, value: 'contact' },
-      { text: this.wifiText, value: 'wifi' },
-    ];
-    this.noneGenderText = this.translate.instant("NOT_TO_DISCLOSE");
-    this.maleText = this.translate.instant("MALE");
-    this.femaleText = this.translate.instant("FEMALE");
-    this.genders = [
-      { text: this.noneGenderText, value: "O" },
-      { text: this.maleText, value: "M" },
-      { text: this.femaleText, value: "F" },
-    ]
-    this.noneWifiEncText = this.translate.instant("NONE");
-    this.wifiEncryptions = [
-      { text: this.noneWifiEncText, value: "nopass" },
-      { text: this.wepText, value: "WEP" },
-      { text: this.wpaText, value: "WPA" },
-    ];
+    // this.freeTxtText = this.translate.instant("FREE_TEXT");
+    // this.urlText = this.translate.instant("URL");
+    // this.contactText = this.translate.instant("VCARD_CONTACT");
+    // this.phoneText = this.translate.instant("PHONE");
+    // this.smsText = this.translate.instant("SMS");
+    // this.emailW3CText = this.translate.instant("EMAIL_W3C");
+
+    // this.wifiText = this.translate.instant("WIFI");
+    // this.contentTypes = [
+    //   { text: this.freeTxtText, value: 'freeText' },
+    //   { text: this.emailW3CText, value: 'emailW3C' },
+    //   { text: this.phoneText, value: 'phone' },
+    //   { text: this.smsText, value: 'sms' },
+    //   { text: this.urlText, value: 'url' },
+    //   { text: this.contactText, value: 'contact' },
+    //   { text: this.wifiText, value: 'wifi' },
+    // ];
+    // this.noneGenderText = this.translate.instant("NOT_TO_DISCLOSE");
+    // this.maleText = this.translate.instant("MALE");
+    // this.femaleText = this.translate.instant("FEMALE");
+    // this.genders = [
+    //   { text: this.noneGenderText, value: "O" },
+    //   { text: this.maleText, value: "M" },
+    //   { text: this.femaleText, value: "F" },
+    // ]
+    // this.noneWifiEncText = this.translate.instant("NONE");
+    // this.wifiEncryptions = [
+    //   { text: this.noneWifiEncText, value: "nopass" },
+    //   { text: this.wepText, value: "WEP" },
+    //   { text: this.wpaText, value: "WPA" },
+    // ];
   }
 
   ionViewDidEnter() {
@@ -153,11 +156,13 @@ export class GeneratePage {
     this.contactText = this.translate.instant("VCARD_CONTACT");
     this.phoneText = this.translate.instant("PHONE");
     this.smsText = this.translate.instant("SMS");
-    this.emailText = this.translate.instant("EMAIL");
+    this.emailW3CText = this.translate.instant("EMAIL_W3C");
+    this.emailDocomoText = this.translate.instant("EMAIL_DOCOMO");
     this.wifiText = this.translate.instant("WIFI");
     this.contentTypes = [
       { text: this.freeTxtText, value: 'freeText' },
-      { text: this.emailText, value: 'email' },
+      { text: this.emailW3CText, value: 'emailW3C' },
+      { text: this.emailDocomoText, value: 'emailDocomo' },
       { text: this.phoneText, value: 'phone' },
       { text: this.smsText, value: 'sms' },
       { text: this.urlText, value: 'url' },
@@ -259,7 +264,7 @@ export class GeneratePage {
 
   async goGenerate() {
     switch (this.contentType) {
-      case "email":
+      case "emailW3C":
         this.qrCodeContent = "mailto:";
         this.toEmails.forEach((email, i, emails) => {
           emails[i] = email.trim();
@@ -289,6 +294,10 @@ export class GeneratePage {
         }
         this.qrCodeContent += "body=";
         this.qrCodeContent += this.emailBody;
+        this.qrCodeContent = encodeURI(this.qrCodeContent);
+        break;
+      case "emailDocomo":
+        this.qrCodeContent = `MATMSG:TO:${this.toEmails[0]};SUB:${this.emailSubject};BODY:${this.emailBody};;`;
         this.qrCodeContent = encodeURI(this.qrCodeContent);
         break;
       case "phone":
@@ -330,7 +339,7 @@ export class GeneratePage {
     this.env.result = this.qrCodeContent;
     this.env.resultFormat = "";
     this.qrCodeContent = '';
-    this.router.navigate(['tabs/result', { from: 'generate', t: new Date().getTime() }], { state: { page: 'generate'}}).then(
+    this.router.navigate(['tabs/result', { from: 'generate', t: new Date().getTime() }], { state: { page: 'generate' } }).then(
       () => {
         loading.dismiss();
       }
@@ -372,7 +381,7 @@ export class GeneratePage {
     return moment().format("YYYY-MM-DD");
   }
 
-  getIcon(type: "freeText" | "url" | "contact" | "phone" | "sms" | "email" | "wifi"): string {
+  getIcon(type: "freeText" | "url" | "contact" | "phone" | "sms" | "emailW3C" | "emailDocomo" | "wifi"): string {
     switch (type) {
       case "freeText":
         return "format_align_left";
@@ -384,7 +393,9 @@ export class GeneratePage {
         return "call";
       case "sms":
         return "sms";
-      case "email":
+      case "emailW3C":
+        return "email";
+      case "emailDocomo":
         return "email";
       case "wifi":
         return "wifi";
@@ -393,7 +404,7 @@ export class GeneratePage {
     }
   }
 
-  getText(type: "freeText" | "url" | "contact" | "phone" | "sms" | "email" | "wifi"): string {
+  getText(type: "freeText" | "url" | "contact" | "phone" | "sms" | "emailW3C" | "emailDocomo" | "wifi"): string {
     switch (type) {
       case "freeText":
         return this.freeTxtText;
@@ -405,8 +416,10 @@ export class GeneratePage {
         return this.phoneText;
       case "sms":
         return this.smsText;
-      case "email":
-        return this.emailText;
+      case "emailW3C":
+        return this.emailW3CText;
+      case "emailDocomo":
+        return this.emailDocomoText;
       case "wifi":
         return this.wifiText;
       default:

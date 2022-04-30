@@ -47,24 +47,24 @@
     [ngTemplateOutletContext]="{ label: 'MESSAGE_CONTENT' | translate, content: smsContent?.length > 0? smsContent : ' ' }">
   </ng-container>
 
-  <ng-container *ngIf="contentType === 'email' && toEmails && qrCodeContent && qrCodeContent.trim().length > 0"
+  <ng-container *ngIf="(contentType === 'emailW3C' || contentType === 'emailDocomo') && toEmails && qrCodeContent && qrCodeContent.trim().length > 0"
     [ngTemplateOutlet]="contentBlock" [ngTemplateOutletContext]="{ label: 'EMAIL_TO' | translate, content: toEmails }">
   </ng-container>
 
-  <ng-container *ngIf="contentType === 'email' && ccEmails && qrCodeContent && qrCodeContent.trim().length > 0"
+  <ng-container *ngIf="contentType === 'emailW3C' && ccEmails && qrCodeContent && qrCodeContent.trim().length > 0"
     [ngTemplateOutlet]="contentBlock" [ngTemplateOutletContext]="{ label: 'CC' | translate, content: ccEmails }">
   </ng-container>
 
-  <ng-container *ngIf="contentType === 'email' && bccEmails && qrCodeContent && qrCodeContent.trim().length > 0"
+  <ng-container *ngIf="contentType === 'emailW3C' && bccEmails && qrCodeContent && qrCodeContent.trim().length > 0"
     [ngTemplateOutlet]="contentBlock" [ngTemplateOutletContext]="{ label: 'BCC' | translate, content: bccEmails }">
   </ng-container>
 
-  <ng-container *ngIf="contentType === 'email' && emailSubject && qrCodeContent && qrCodeContent.trim().length > 0"
+  <ng-container *ngIf="(contentType === 'emailW3C' || contentType === 'emailDocomo') && emailSubject && qrCodeContent && qrCodeContent.trim().length > 0"
     [ngTemplateOutlet]="contentBlock"
     [ngTemplateOutletContext]="{ label: 'EMAIL_SUBJECT' | translate, content: emailSubject }">
   </ng-container>
 
-  <ng-container *ngIf="contentType === 'email' && emailBody && qrCodeContent && qrCodeContent.trim().length > 0"
+  <ng-container *ngIf="(contentType === 'emailW3C' || contentType === 'emailDocomo') && emailBody && qrCodeContent && qrCodeContent.trim().length > 0"
     [ngTemplateOutlet]="contentBlock"
     [ngTemplateOutletContext]="{ label: 'EMAIL_BODY' | translate, content: emailBody }">
   </ng-container>
@@ -133,7 +133,7 @@
     </ion-button>
   </ion-row>
 
-  <ion-row *ngIf="contentType === 'email'" class="d-flex justify-content-center">
+  <ion-row *ngIf="contentType === 'emailW3C' || contentType === 'emailDocomo'" class="d-flex justify-content-center">
     <ion-button mode="md" (click)="tapHaptic(); sendEmail()" [color]="'primary'" fill="clear">
       <ion-icon name="mail"></ion-icon>
     </ion-button>

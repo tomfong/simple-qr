@@ -150,6 +150,8 @@
     "PHONE": "电话号码",
     "SMS": "信息",
     "EMAIL": "电邮",
+    "EMAIL_W3C": "电邮 (W3C 标准)",
+    "EMAIL_DOCOMO": "电邮 (NTT Docomo)",
     "WIFI": "WiFi",
     "CREATE_QRCODE_MAX_LENGTH_EXPLAIN": "建立的 QR 码内容长度不能多于 1817 个字元",
     "CREATE": "建立",

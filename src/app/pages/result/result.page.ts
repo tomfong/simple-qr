@@ -39,7 +39,7 @@ import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 })
 export class ResultPage implements OnInit {
 
-  contentType: "freeText" | "url" | "contact" | "phone" | "sms" | "email" | "wifi" = "freeText";
+  contentType: "freeText" | "url" | "contact" | "phone" | "sms" | "emailW3C" | "emailDocomo" | "wifi" = "freeText";
 
   qrCodeContent: string;
   qrElementType: NgxQrcodeElementTypes = NgxQrcodeElementTypes.CANVAS;
@@ -133,7 +133,8 @@ export class ResultPage implements OnInit {
     const contactPrefix = "BEGIN:VCARD";
     const phonePrefix = "TEL:";
     const smsPrefix = "SMSTO:";
-    const emailPrefix = "MAILTO:";
+    const emailW3CPrefix = "MAILTO:";
+    const emailDoconoPrefix = "MATMSG:";
     const wifiPrefix = "WIFI:";
     const content0 = this.qrCodeContent.trim();
     const tContent = this.qrCodeContent.trim().toUpperCase();
@@ -154,9 +155,12 @@ export class ResultPage implements OnInit {
       } else {
         this.phoneNumber = tContent2.substr(0);
       }
-    } else if (tContent.substr(0, emailPrefix.length) === emailPrefix) {
-      this.contentType = "email";
-      this.prepareEmail();
+    } else if (tContent.substr(0, emailW3CPrefix.length) === emailW3CPrefix) {
+      this.contentType = "emailW3C";
+      this.prepareMailToEmail();
+    } else if (tContent.substr(0, emailDoconoPrefix.length) === emailDoconoPrefix) {
+      this.contentType = "emailDocomo";
+      this.prepareMATMSGEmail();
     } else if (tContent.substr(0, wifiPrefix.length) === wifiPrefix) {
       this.contentType = "wifi";
       this.prepareWifi();
@@ -322,7 +326,12 @@ export class ResultPage implements OnInit {
   }
 
   async sendEmail(): Promise<void> {
-    window.open(this.qrCodeContent, "_system");
+    if (this.contentType === 'emailW3C') {
+      window.open(this.qrCodeContent, "_system");
+    } else if (this.contentType === 'emailDocomo') {
+      const content = `mailto:${this.toEmails}?subject=${encodeURIComponent(this.emailSubject)}&body=${encodeURIComponent(this.emailBody)}`;
+      window.open(content, "_system");
+    }
   }
 
   async enlarge(): Promise<void> {
@@ -627,7 +636,7 @@ export class ResultPage implements OnInit {
     )
   }
 
-  prepareEmail(): void {
+  prepareMailToEmail(): void {
     const emailPrefix = "MAILTO:";
     const emailString = this.qrCodeContent.substr(emailPrefix.length);
     const emailParts = emailString.split('?', 2);
@@ -650,6 +659,30 @@ export class ResultPage implements OnInit {
             this.emailSubject = decodeURIComponent(part.substr(subjectPrefix.length));
           }
           if (part.toLowerCase().substr(0, bodyPrefix.length) === bodyPrefix) {
+            this.emailBody = decodeURIComponent(part.substr(bodyPrefix.length));
+          }
+        }
+      );
+    }
+  }
+
+  prepareMATMSGEmail() {
+    const emailPrefix = "MATMSG:";
+    const emailString = this.qrCodeContent.substr(emailPrefix.length);
+    const emailParts = emailString.split(";");
+    if (emailParts.length > 0) {
+      const toPrefix = "TO:";
+      const subjectPrefix = "SUB:";
+      const bodyPrefix = "BODY:";
+      emailParts.forEach(
+        (part) => {
+          if (part.toUpperCase().substr(0, toPrefix.length) === toPrefix) {
+            this.toEmails = part.substr(toPrefix.length);
+          }
+          if (part.toUpperCase().substr(0, subjectPrefix.length) === subjectPrefix) {
+            this.emailSubject = decodeURIComponent(part.substr(subjectPrefix.length));
+          }
+          if (part.toUpperCase().substr(0, bodyPrefix.length) === bodyPrefix) {
             this.emailBody = decodeURIComponent(part.substr(bodyPrefix.length));
           }
         }
@@ -710,8 +743,10 @@ export class ResultPage implements OnInit {
         return this.translate.instant("FREE_TEXT");
       case 'contact':
         return this.translate.instant("VCARD_CONTACT");
-      case 'email':
-        return this.translate.instant("EMAIL");
+      case 'emailW3C':
+        return this.translate.instant("EMAIL_W3C");
+      case 'emailDocomo':
+        return this.translate.instant("EMAIL_DOCOMO");
       case 'phone':
         return this.translate.instant("PHONE");
       case 'sms':
@@ -737,7 +772,9 @@ export class ResultPage implements OnInit {
         return "call";
       case "sms":
         return "sms";
-      case "email":
+      case "emailW3C":
+        return "email";
+      case "emailDocomo":
         return "email";
       case "wifi":
         return "wifi";
