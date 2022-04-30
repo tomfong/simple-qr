@@ -4,7 +4,7 @@
       <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
       </ion-back-button>
     </ion-buttons> -->
-    <ion-title *ngIf="segmentModel === 'history'">{{ 'HISTORY' | translate }}</ion-title>
+    <ion-title *ngIf="segmentModel === 'history'">{{ 'LOG' | translate }}</ion-title>
     <ion-title *ngIf="segmentModel === 'bookmarks'">{{ 'BOOKMARKS' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -28,9 +28,9 @@
     <div class="ion-padding-horizontal fullscreen-vertical-center" style="height: 85%">
       <ion-icon src="assets/icon/history.svg" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
         style="font-size: 3rem"></ion-icon>
-      <p class="ion-text-center">
+      <p class="ion-text-center pt-3">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-          {{ 'SCANNING_HISTORY_SHOWN' | translate }}
+          {{ 'SCANNING_RECORD_SHOWN' | translate }}
         </ion-text>
       </p>
     </div>
@@ -74,7 +74,7 @@
   <ng-container *ngIf="segmentModel === 'bookmarks' && (!bookmarks || (bookmarks.length <= 0))">
     <div class="ion-padding-horizontal fullscreen-vertical-center" style="height: 85%">
       <ion-icon name="star" [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: 3rem"></ion-icon>
-      <p class="ion-text-center">
+      <p class="ion-text-center pt-3">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'FAVOURITE_TEXT_SHOWN' | translate }}
         </ion-text>
