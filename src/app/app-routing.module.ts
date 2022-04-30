@@ -33,7 +33,15 @@ const routes: Routes = [
   {
     path: 'setting-debug',
     loadChildren: () => import('./pages/setting-debug/setting-debug.module').then( m => m.SettingDebugPageModule)
+  },  {
+    path: 'setting-orientation',
+    loadChildren: () => import('./pages/setting-orientation/setting-orientation.module').then( m => m.SettingOrientationPageModule)
   },
+  {
+    path: 'setting-qr-ecl',
+    loadChildren: () => import('./pages/setting-qr-ecl/setting-qr-ecl.module').then( m => m.SettingQrEclPageModule)
+  },
+
 ];
 
 @NgModule({

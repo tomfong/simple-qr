@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
 import { VCardContact } from 'src/app/models/v-card-contact';
 import { EnvService } from 'src/app/services/env.service';
-import { QrcodeComponent } from 'src/app/components/qrcode/qrcode.component';
+import { QrCodeComponent } from 'src/app/components/qr-code/qr-code.component';
 import { Toast } from '@capacitor/toast';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { MatFormField } from '@angular/material/form-field';
@@ -39,7 +39,7 @@ import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 })
 export class ResultPage implements OnInit {
 
-  contentType: "freeText" | "url" | "contact" | "phone" | "sms" | "email" | "wifi" = "freeText";
+  contentType: "freeText" | "url" | "contact" | "phone" | "sms" | "emailW3C" | "emailDocomo" | "wifi" = "freeText";
 
   qrCodeContent: string;
   qrElementType: NgxQrcodeElementTypes = NgxQrcodeElementTypes.CANVAS;
@@ -133,7 +133,8 @@ export class ResultPage implements OnInit {
     const contactPrefix = "BEGIN:VCARD";
     const phonePrefix = "TEL:";
     const smsPrefix = "SMSTO:";
-    const emailPrefix = "MAILTO:";
+    const emailW3CPrefix = "MAILTO:";
+    const emailDoconoPrefix = "MATMSG:";
     const wifiPrefix = "WIFI:";
     const content0 = this.qrCodeContent.trim();
     const tContent = this.qrCodeContent.trim().toUpperCase();
@@ -154,9 +155,12 @@ export class ResultPage implements OnInit {
       } else {
         this.phoneNumber = tContent2.substr(0);
       }
-    } else if (tContent.substr(0, emailPrefix.length) === emailPrefix) {
-      this.contentType = "email";
-      this.prepareEmail();
+    } else if (tContent.substr(0, emailW3CPrefix.length) === emailW3CPrefix) {
+      this.contentType = "emailW3C";
+      this.prepareMailToEmail();
+    } else if (tContent.substr(0, emailDoconoPrefix.length) === emailDoconoPrefix) {
+      this.contentType = "emailDocomo";
+      this.prepareMATMSGEmail();
     } else if (tContent.substr(0, wifiPrefix.length) === wifiPrefix) {
       this.contentType = "wifi";
       this.prepareWifi();
@@ -178,7 +182,7 @@ export class ResultPage implements OnInit {
   }
 
   async addContact(): Promise<void> {
-    let newContact = null
+    let newContact = null;
     if (this.contentType === "contact") {
       const phoneNumbers = [];
       if (this.vCardContact?.defaultPhoneNumber != null) {
@@ -232,14 +236,22 @@ export class ResultPage implements OnInit {
           if (permission.granted) {
             await Contacts.saveContact(newContact).then(
               _ => {
-                this.presentToast(this.translate.instant('MSG.SAVED_CONTACT'), "short", "bottom");
+                if (this.isIOS) {
+                  this.presentToast(this.translate.instant('MSG.SAVED_CONTACT'), "short", "bottom");
+                } else {
+                  this.presentToast(this.translate.instant('MSG.SAVING_CONTACT'), "short", "bottom");
+                }
               }
             )
-            .catch(
-              err => {
-                this.presentToast(this.translate.instant('MSG.FAILED_SAVING_CONTACT'), "short", "bottom");
-              }
-            )
+              .catch(
+                err => {
+                  if (this.env.isDebugging) {
+                    this.presentToast("Error when call Contacts.saveContact: " + JSON.stringify(err), "long", "top");
+                  } else {
+                    this.presentToast(this.translate.instant('MSG.FAILED_SAVING_CONTACT'), "short", "bottom");
+                  }
+                }
+              )
           } else {
             const alert = await this.alertController.create({
               header: this.translate.instant("PERMISSION_REQUIRED"),
@@ -264,7 +276,7 @@ export class ResultPage implements OnInit {
             await alert.present();
           }
         }
-      );      
+      );
     }
   }
 
@@ -314,12 +326,17 @@ export class ResultPage implements OnInit {
   }
 
   async sendEmail(): Promise<void> {
-    window.open(this.qrCodeContent, "_system");
+    if (this.contentType === 'emailW3C') {
+      window.open(this.qrCodeContent, "_system");
+    } else if (this.contentType === 'emailDocomo') {
+      const content = `mailto:${this.toEmails}?subject=${encodeURIComponent(this.emailSubject)}&body=${encodeURIComponent(this.emailBody)}`;
+      window.open(content, "_system");
+    }
   }
 
   async enlarge(): Promise<void> {
     const modal = await this.modalController.create({
-      component: QrcodeComponent,
+      component: QrCodeComponent,
       cssClass: 'qrcode-modal',
       componentProps: { qrCodeContent: this.qrCodeContent }
     });
@@ -619,7 +636,7 @@ export class ResultPage implements OnInit {
     )
   }
 
-  prepareEmail(): void {
+  prepareMailToEmail(): void {
     const emailPrefix = "MAILTO:";
     const emailString = this.qrCodeContent.substr(emailPrefix.length);
     const emailParts = emailString.split('?', 2);
@@ -642,6 +659,30 @@ export class ResultPage implements OnInit {
             this.emailSubject = decodeURIComponent(part.substr(subjectPrefix.length));
           }
           if (part.toLowerCase().substr(0, bodyPrefix.length) === bodyPrefix) {
+            this.emailBody = decodeURIComponent(part.substr(bodyPrefix.length));
+          }
+        }
+      );
+    }
+  }
+
+  prepareMATMSGEmail() {
+    const emailPrefix = "MATMSG:";
+    const emailString = this.qrCodeContent.substr(emailPrefix.length);
+    const emailParts = emailString.split(";");
+    if (emailParts.length > 0) {
+      const toPrefix = "TO:";
+      const subjectPrefix = "SUB:";
+      const bodyPrefix = "BODY:";
+      emailParts.forEach(
+        (part) => {
+          if (part.toUpperCase().substr(0, toPrefix.length) === toPrefix) {
+            this.toEmails = part.substr(toPrefix.length);
+          }
+          if (part.toUpperCase().substr(0, subjectPrefix.length) === subjectPrefix) {
+            this.emailSubject = decodeURIComponent(part.substr(subjectPrefix.length));
+          }
+          if (part.toUpperCase().substr(0, bodyPrefix.length) === bodyPrefix) {
             this.emailBody = decodeURIComponent(part.substr(bodyPrefix.length));
           }
         }
@@ -693,6 +734,52 @@ export class ResultPage implements OnInit {
       this.bookmarked = true;
     } else {
       this.bookmarked = false;
+    }
+  }
+
+  get contentTypeText(): string {
+    switch (this.contentType) {
+      case 'freeText':
+        return this.translate.instant("FREE_TEXT");
+      case 'contact':
+        return this.translate.instant("VCARD_CONTACT");
+      case 'emailW3C':
+        return this.translate.instant("EMAIL_W3C");
+      case 'emailDocomo':
+        return this.translate.instant("EMAIL_DOCOMO");
+      case 'phone':
+        return this.translate.instant("PHONE");
+      case 'sms':
+        return this.translate.instant("SMS");
+      case 'url':
+        return this.translate.instant("URL");
+      case 'wifi':
+        return this.translate.instant("WIFI");
+      default:
+        return this.translate.instant("UNKNOWN");
+    }
+  }
+
+  get contentTypeIcon() {
+    switch (this.contentType) {
+      case "freeText":
+        return "format_align_left";
+      case "url":
+        return "link";
+      case "contact":
+        return "contact_phone";
+      case "phone":
+        return "call";
+      case "sms":
+        return "sms";
+      case "emailW3C":
+        return "email";
+      case "emailDocomo":
+        return "email";
+      case "wifi":
+        return "wifi";
+      default:
+        return "";
     }
   }
 

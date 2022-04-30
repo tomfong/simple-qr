@@ -15,7 +15,7 @@ export class SettingDebugPage {
   ) { }
 
   async saveDebugMode() {
-    await this.env.storageSet("debug-mode-on", this.env.debugModeOn);
+    await this.env.storageSet("debug-mode-on", this.env.debugMode);
   }
 
 }

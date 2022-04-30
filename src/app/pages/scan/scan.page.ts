@@ -83,14 +83,15 @@ export class ScanPage {
   }
 
   async loadPatchNote() {
-    await this.env.storageGet(this.env.PATCH_NOTE_STORAGE_KEY).then(
+    const storageKey = this.platform.is('ios')? this.env.IOS_PATCH_NOTE_STORAGE_KEY : this.env.AN_PATCH_NOTE_STORAGE_KEY;
+    await this.env.storageGet(storageKey).then(
       async value => {
         if (value != null) {
           this.env.notShowUpdateNotes = (value === 'yes' ? true : false);
         } else {
           this.env.notShowUpdateNotes = false;
         }
-        await this.env.storageSet(this.env.PATCH_NOTE_STORAGE_KEY, 'yes');
+        await this.env.storageSet(storageKey, 'yes');
         if (this.env.notShowUpdateNotes === false) {
           this.env.notShowUpdateNotes = true;
           await this.showUpdateNotes();
@@ -113,7 +114,7 @@ export class ScanPage {
       this.permissionAlert?.dismiss();
       this.permissionAlert = await this.alertController.create({
         header: this.translate.instant("PERMISSION_REQUIRED"),
-        message: this.translate.instant("MSG.CAMERA_PERMISSION_1"),
+        message: this.translate.instant("MSG.CAMERA_PERMISSION"),
         buttons: [
           {
             text: this.translate.instant("SETTING"),
@@ -241,10 +242,33 @@ export class ScanPage {
       header: this.translate.instant("UPDATE_NOTES"),
       subHeader: this.env.appVersionNumber,
       message: this.platform.is('ios')? this.translate.instant("UPDATE.UPDATE_NOTES_IOS") : this.translate.instant("UPDATE.UPDATE_NOTES_ANDROID"),
-      buttons: [this.translate.instant("OK")],
+      buttons: [
+        {
+          text:  this.translate.instant("OK"),
+          handler: () => true,
+        },
+        {
+          text:  this.translate.instant("GO_STORE_RATE"),
+          handler: () => {
+            if (this.platform.is('android')) {
+              this.openGooglePlay();
+            } else if (this.platform.is('ios')) {
+              this.openAppStore();
+            }
+          }
+        }
+       ],
       cssClass: ['left-align', 'alert-bg']
     });
     await alert.present();
+  }
+
+  openGooglePlay(): void {
+    window.open(this.env.GOOGLE_PLAY_URL, '_system');
+  }
+
+  openAppStore(): void {
+    window.open(this.env.APP_STORE_URL, '_system');
   }
 
   async confirmExitApp(): Promise<void> {
@@ -254,15 +278,16 @@ export class ScanPage {
       cssClass: ['alert-bg'],
       buttons: [
         {
-          text: this.translate.instant('YES'),
+          text: this.translate.instant('EXIT'),
           handler: () => {
             navigator['app'].exitApp();
           }
         },
         {
-          text: this.translate.instant('NO'),
-          role: 'cancel',
-          cssClass: 'btn-inverse'
+          text: this.translate.instant('GO_STORE_RATE'),
+          handler: () => {
+            this.openGooglePlay();
+          }
         }
       ]
     });

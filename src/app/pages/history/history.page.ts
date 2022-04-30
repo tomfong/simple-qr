@@ -46,8 +46,13 @@ export class HistoryPage {
   }
 
   async ionViewDidEnter() {
-    await this.loadItems();
-    this.firstLoad = false;
+    this.firstLoad = true;
+    setTimeout(
+      async () => {
+        await this.loadItems();
+        this.firstLoad = false;
+      }, 200
+    );   
     if (this.env.notShowHistoryTutorial === false) {
       this.env.notShowHistoryTutorial = true;
       this.env.storageSet("not-show-history-tutorial", 'yes');

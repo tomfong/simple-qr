@@ -82,16 +82,23 @@ export class SettingRecordPage {
           }
         ).catch(
           err => {
-            console.error("err in write file", err)
             loading2.dismiss();
-            this.presentToast(this.env.debugModeOn === 'on' ? this.translate.instant("MSG.BACKUP_FAILED_2") + ' (write file failed)' : this.translate.instant("MSG.BACKUP_FAILED_2"), "short", "bottom");
+            if (this.env.isDebugging) {
+              this.presentToast("Error when call Filesystem.writeFile: " + JSON.stringify(err), "long", "top");
+            } else {
+              this.presentToast(this.translate.instant("MSG.BACKUP_FAILED_2"), "short", "bottom");
+            }
           }
         )
       }
     ).catch(
       err => {
         loading1.dismiss();
-        this.presentToast(this.env.debugModeOn === 'on' ? this.translate.instant("MSG.BACKUP_FAILED") + ' (encrypt failed)' : this.translate.instant("MSG.BACKUP_FAILED"), "short", "bottom");
+        if (this.env.isDebugging) {
+          this.presentToast("Error when encrypt: " + JSON.stringify(err), "long", "top");
+        } else {
+          this.presentToast(this.translate.instant("MSG.BACKUP_FAILED"), "short", "bottom");
+        }
       }
     )
   }
@@ -153,7 +160,7 @@ export class SettingRecordPage {
           }
         ).catch(
           err => {
-            if (this.env.debugModeOn === 'on') {
+            if (this.env.debugMode === 'on') {
               this.presentToast('Failed to read file', "long", "bottom");
             } else {
               this.presentToast(this.translate.instant("MSG.RESTORE_FAILED"), "short", "bottom");
@@ -163,7 +170,11 @@ export class SettingRecordPage {
       }
     ).catch(
       err => {
-        this.presentToast(this.translate.instant("MSG.RESTORE_FAILED"), "short", "bottom");
+        if (this.env.isDebugging) {
+          this.presentToast("Error when call Chooser.getFile: " + JSON.stringify(err), "long", "top");
+        } else {
+          this.presentToast(this.translate.instant("MSG.RESTORE_FAILED"), "short", "bottom");
+        }
       }
     )
   }
@@ -216,14 +227,20 @@ export class SettingRecordPage {
             )
             await alert.present();
           } catch (err) {
-            console.error("error...", err)
-            this.presentToast(this.translate.instant("MSG.RESTORE_FAILED"), "short", "bottom");
+            if (this.env.isDebugging) {
+              this.presentToast("Error when encrypt: " + JSON.stringify(err), "long", "top");
+            } else {
+              this.presentToast(this.translate.instant("MSG.RESTORE_FAILED"), "short", "bottom");
+            }
           }
         }
       )
       .catch(err => {
-        console.error("error when decrypt", err)
-        this.presentToast(this.translate.instant("MSG.RESTORE_WRONG_SECRET"), "short", "bottom");
+        if (this.env.isDebugging) {
+          this.presentToast("Error when parsing: " + JSON.stringify(err), "long", "top");
+        } else {
+          this.presentToast(this.translate.instant("MSG.RESTORE_WRONG_SECRET"), "short", "bottom");
+        }
       });
   }
 

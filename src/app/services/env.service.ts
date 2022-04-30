@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 import { Device, DeviceInfo } from '@capacitor/device';
 import { ThemeDetection, ThemeDetectionResponse } from '@awesome-cordova-plugins/theme-detection/ngx';
+import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,6 +11,7 @@ import * as moment from 'moment';
 import { environment } from 'src/environments/environment';
 import { Bookmark } from '../models/bookmark';
 import { ScanRecord } from '../models/scan-record';
+import { Toast } from '@capacitor/toast';
 
 @Injectable({
   providedIn: 'root'
@@ -24,11 +26,13 @@ export class EnvService {
   public colorTheme: 'light' | 'dark' | 'black' = 'light';
   public selectedColorTheme: 'default' | 'light' | 'dark' | 'black' = 'default';
   public scanRecordLogging: 'on' | 'off' = 'on';
+  public errorCorrectionLevel: 'L' | 'M' | 'Q' | 'H' = 'M';
   public vibration: 'on' | 'on-haptic' | 'on-scanned' | 'off' = 'on';
+  public orientation: 'default' | 'portrait' | 'landscape' = 'default';
   public notShowHistoryTutorial: boolean = false;
   public notShowUpdateNotes: boolean = false;
   public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' = 'google';
-  public debugModeOn: 'on' | 'off' = 'off';
+  public debugMode: 'on' | 'off' = 'off';
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
   public readonly GOOGLE_SEARCH_URL: string = "https://www.google.com/search?q=";
@@ -39,8 +43,10 @@ export class EnvService {
   public readonly GOOGLE_PLAY_URL: string = "https://play.google.com/store/apps/details?id=com.tomfong.simpleqr";
   public readonly APP_STORE_URL: string = "https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553";
   public readonly PRIVACY_POLICY: string = "https://www.privacypolicies.com/live/771b1123-99bb-4bfe-815e-1046c0437a0f";
-  public readonly PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20300";
-  public readonly PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20301";
+  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20300";
+  public readonly IOS_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20301";
+  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20400";
+  public readonly IOS_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20400";
 
   private _storage: Storage | null = null;
   private _scannedData: string = '';
@@ -56,6 +62,7 @@ export class EnvService {
     private overlayContainer: OverlayContainer,
     private themeDetection: ThemeDetection,
     private appVersion: AppVersion,
+    private screenOrientation: ScreenOrientation
   ) {
     this.platform.ready().then(
       async () => {
@@ -69,7 +76,8 @@ export class EnvService {
     this.appVersionNumber = await this.appVersion.getVersionNumber();
     const storage = await this.storage.create();
     this._storage = storage;
-    this._storage.remove(this.PREV_PATCH_NOTE_STORAGE_KEY).catch(err => {});
+    if (this.platform.is('android')) this._storage.remove(this.AN_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
+    if (this.platform.is('ios')) this._storage.remove(this.IOS_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
     this.storageGet("language").then(
       async value => {
         if (value !== null && value !== undefined) {
@@ -90,6 +98,16 @@ export class EnvService {
         await this.toggleColorTheme();
       }
     );
+    this.storageGet("orientation").then(
+      async value => {
+        if (value !== null && value !== undefined) {
+          this.orientation = value;
+        } else {
+          this.orientation = 'default';
+        }
+        await this.toggleOrientationChange();
+      }
+    );
     this.storageGet("scan-record-logging").then(
       value => {
         if (value !== null && value !== undefined) {
@@ -108,6 +126,15 @@ export class EnvService {
         }
       }
     );
+    this.storageGet("error-correction-level").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.errorCorrectionLevel = value;
+        } else {
+          this.errorCorrectionLevel = 'M';
+        }
+      }
+    );    
     this.storageGet("not-show-history-tutorial").then(
       value => {
         if (value !== null && value !== undefined) {
@@ -171,9 +198,9 @@ export class EnvService {
     this.storageGet("debug-mode-on").then(
       value => {
         if (value != null) {
-          this.debugModeOn = value;
+          this.debugMode = value;
         } else {
-          this.debugModeOn = 'off';
+          this.debugMode = 'off';
         }
       }
     );
@@ -189,7 +216,9 @@ export class EnvService {
         return value;
       },
       err => {
-        console.error("error when get from storage", err);
+        if (this.isDebugging) {
+          this.presentToast("Error when get item from storage: " + JSON.stringify(err), "long", "top");
+        }
         return null;
       }
     );
@@ -203,13 +232,16 @@ export class EnvService {
     this.selectedColorTheme = 'default';
     await this.toggleColorTheme();
     this.scanRecordLogging = 'on';
+    this.errorCorrectionLevel = 'M';
     this.vibration = 'on';
+    this.orientation = 'default';
+    await this.toggleOrientationChange();
     this.notShowHistoryTutorial = false;
     this.notShowUpdateNotes = false;
     this.searchEngine = 'google';
     this._scanRecords = [];
     this._bookmarks = [];
-    this.debugModeOn = 'off';
+    this.debugMode = 'off';
   }
 
   get result(): string {
@@ -429,6 +461,34 @@ export class EnvService {
     }
   }
 
+  async toggleOrientationChange(): Promise<void> {
+    switch (this.orientation) {
+      case 'default':
+        this.screenOrientation.unlock();
+        return;
+      case 'portrait':
+        this.screenOrientation.unlock();
+        await this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT)
+          .catch(err => {
+            if (this.isDebugging) {
+              this.presentToast("Error when ScreenOrientation.lock(p): " + JSON.stringify(err), "long", "top");
+            }
+          });
+        return;
+      case 'landscape':
+        this.screenOrientation.unlock();
+        await this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE)
+          .catch(err => {
+            if (this.isDebugging) {
+              this.presentToast("Error when ScreenOrientation.lock(l): " + JSON.stringify(err), "long", "top");
+            }
+          });
+        return;
+      default:
+        this.screenOrientation.unlock();
+    }
+  }
+
   /** 
       Developer,
 
@@ -477,6 +537,18 @@ export class EnvService {
         ` // must be in a line
     }
     return mailContent;
+  }
+
+  async presentToast(msg: string, duration: "short" | "long", pos: "top" | "center" | "bottom") {
+    await Toast.show({
+      text: msg,
+      duration: duration,
+      position: pos
+    });
+  }
+
+  get isDebugging(): boolean {
+    return this.debugMode === 'on';
   }
 
   get buildEnv(): string {

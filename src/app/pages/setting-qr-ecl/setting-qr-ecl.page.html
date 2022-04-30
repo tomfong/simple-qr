@@ -4,7 +4,7 @@
       <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
       </ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'SEARCH_ENGINE' | translate }}</ion-title>
+    <ion-title>{{ 'ERROR_CORRECTION_LEVEL' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,63 +14,59 @@
     <ion-label class="ion-padding-start">
       <p class="ion-padding-top ion-padding-horizontal">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
-          <div class="text-justify" [innerHTML]="'SEARCH_ENGINE_EXPLAIN' | translate">
+          <div class="text-justify" [innerHTML]="'ECL_EXPLAIN' | translate">
           </div>
         </ion-text>
       </p>
     </ion-label>
   </ion-item>
 
-  <ion-radio-group [(ngModel)]="env.searchEngine" (ionChange)="saveSearchEngine()">
+  <ion-radio-group [(ngModel)]="env.errorCorrectionLevel" (ionChange)="saveErrorCorrectionLevel()">
     <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none">
-      <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="logo-google"></ion-icon>
-      <ion-label>
+      <ion-label class="ion-padding-start">
         <p class="ion-padding">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-            {{ 'GOOGLE' | translate }}
+            {{ 'LEVEL_L' | translate }}
           </ion-text>
         </p>
       </ion-label>
-      <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="'google'"
+      <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="'L'"
         [color]="'primary'">
       </ion-radio>
     </ion-item>
     <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none">
-      <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/microsoft-bing.svg"></ion-icon>
-      <ion-label>
+      <ion-label class="ion-padding-start">
         <p class="ion-padding">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-            {{ 'BING' | translate }}
+            {{ 'LEVEL_M' | translate }}
           </ion-text>
         </p>
       </ion-label>
-      <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="'bing'"
+      <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="'M'"
         [color]="'primary'">
       </ion-radio>
     </ion-item>
     <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none">
-      <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/yahoo.svg"></ion-icon>
-      <ion-label>
+      <ion-label class="ion-padding-start">
         <p class="ion-padding">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-            {{ 'YAHOO' | translate }}
+            {{ 'LEVEL_Q' | translate }}
           </ion-text>
         </p>
       </ion-label>
-      <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="'yahoo'"
+      <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="'Q'"
         [color]="'primary'">
       </ion-radio>
     </ion-item>
     <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none">
-      <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/duck-duck-go.svg"></ion-icon>
-      <ion-label>
+      <ion-label class="ion-padding-start">
         <p class="ion-padding">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-            {{ 'DUCK_DUCK_GO' | translate }}
+            {{ 'LEVEL_H' | translate }}
           </ion-text>
         </p>
       </ion-label>
-      <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="'duckduckgo'"
+      <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="'H'"
         [color]="'primary'">
       </ion-radio>
     </ion-item>

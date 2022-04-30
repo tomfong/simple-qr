@@ -3,11 +3,6 @@
     <ion-title>
       <span style="padding-left: 10px;">{{ 'TUTORIAL' | translate }}</span>
     </ion-title>
-    <ion-buttons slot="end">
-      <ion-button class="toolbar-end-btn" (click)="closeModal()">
-        <ion-icon slot="icon-only" name="close"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -20,7 +15,7 @@
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
-          {{ 'TUTORIAL_TOUCH_HISTORY' | translate }}
+          {{ 'TUTORIAL_TOUCH_LOG' | translate }}
         </ion-text>
       </p>
     </ion-label>
@@ -77,5 +72,13 @@
       </p>
     </ion-label>
   </ion-item>
+
+  <ion-toolbar mode="ios" [color]="color" style="border: none;">
+    <ion-row class="d-flex align-items-center justify-content-end">
+      <ion-button class="ion-margin-horizontal ion-margin-bottom" mode="md" fill="clear" (click)="tapHaptic(); closeModal()" color="primary">
+        {{ 'OK' | translate }}
+      </ion-button>
+    </ion-row>
+  </ion-toolbar>
 
 </ion-footer>

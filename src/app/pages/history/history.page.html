@@ -4,7 +4,7 @@
       <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
       </ion-back-button>
     </ion-buttons> -->
-    <ion-title *ngIf="segmentModel === 'history'">{{ 'HISTORY' | translate }}</ion-title>
+    <ion-title *ngIf="segmentModel === 'history'">{{ 'LOG' | translate }}</ion-title>
     <ion-title *ngIf="segmentModel === 'bookmarks'">{{ 'BOOKMARKS' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -19,18 +19,37 @@
     </ion-segment-button>
   </ion-segment>
   <ng-container *ngIf="segmentModel === 'history' && firstLoad">
-    <div class="ion-padding-horizontal fullscreen-vertical-center" style="height: 85%">
-      <ion-spinner name="crescent" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
-        style="width: 3rem; height: 3rem"></ion-spinner>
-    </div>
+    <ion-list mode="ios">
+      <ng-container *ngFor="let _ of ['', '', '', '', '', '', '']; index as i">
+        <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" [lines]="'full'">
+          <ion-label class="ion-padding-start">
+            <p class="ion-padding-top ion-padding-horizontal">
+              <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+              </ion-text>
+            </p>
+            <p *ngIf="env.debugMode === 'on'" class="ion-padding-horizontal">
+              <ion-text color="medium">
+                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+              </ion-text>
+            </p>
+            <p class="ion-padding-bottom ion-padding-horizontal">
+              <ion-text color="medium">
+                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+              </ion-text>
+            </p>
+          </ion-label>
+        </ion-item>
+      </ng-container>
+    </ion-list>
   </ng-container>
   <ng-container *ngIf="segmentModel === 'history' && (!scanRecords || (scanRecords.length <= 0)) && !firstLoad">
     <div class="ion-padding-horizontal fullscreen-vertical-center" style="height: 85%">
       <ion-icon src="assets/icon/history.svg" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
         style="font-size: 3rem"></ion-icon>
-      <p class="ion-text-center">
+      <p class="ion-text-center pt-3">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-          {{ 'SCANNING_HISTORY_SHOWN' | translate }}
+          {{ 'SCANNING_RECORD_SHOWN' | translate }}
         </ion-text>
       </p>
     </div>
@@ -46,7 +65,7 @@
                 {{ record.text }}
               </ion-text>
             </p>
-            <p *ngIf="env.debugModeOn === 'on'" class="ion-padding-horizontal">
+            <p *ngIf="env.debugMode === 'on'" class="ion-padding-horizontal">
               <ion-text color="medium">
                 {{ record.id }}
               </ion-text>
@@ -74,7 +93,7 @@
   <ng-container *ngIf="segmentModel === 'bookmarks' && (!bookmarks || (bookmarks.length <= 0))">
     <div class="ion-padding-horizontal fullscreen-vertical-center" style="height: 85%">
       <ion-icon name="star" [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: 3rem"></ion-icon>
-      <p class="ion-text-center">
+      <p class="ion-text-center pt-3">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'FAVOURITE_TEXT_SHOWN' | translate }}
         </ion-text>

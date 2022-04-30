@@ -50,7 +50,7 @@
     </ion-row>
   </ng-container>
 
-  <ng-container *ngIf="contentType === 'email'">
+  <ng-container *ngIf="contentType === 'emailW3C'">
 
     <!-- Recipients -->
     <ng-container *ngFor="let email of toEmails; index as i; trackBy: trackByIndex;">
@@ -136,6 +136,46 @@
           <ion-icon slot="start" name="remove" size="small"></ion-icon>
           {{ 'REMOVE_BCC' | translate }}
         </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+      <ion-col>
+        <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
+          <mat-label>{{ 'EMAIL_SUBJECT' | translate}}</mat-label>
+          <input matInput [(ngModel)]="emailSubject" maxlength="78" #emailSubjectInput>
+          <mat-hint align="end">{{ emailSubjectInput.value?.length || 0 }}/78</mat-hint>
+          <mat-hint>{{'EMAIL_SUBJECT_MAX_LENGTH' | translate}}</mat-hint>
+        </mat-form-field>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+      <ion-col>
+        <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent" [floatLabel]="'always'">
+          <mat-label>{{ 'EMAIL_BODY' | translate}}</mat-label>
+          <textarea matInput [(ngModel)]="emailBody" [cdkTextareaAutosize]="true" [cdkAutosizeMinRows]="5"
+            [cdkAutosizeMaxRows]="10" [maxLength]="1817" #emailBodyInput></textarea>
+          <mat-hint align="end">{{ emailBodyInput.value?.length || 0 }}/1817</mat-hint>
+          <mat-hint>{{'CREATE_QRCODE_MAX_LENGTH' | translate}}</mat-hint>
+        </mat-form-field>
+      </ion-col>
+    </ion-row>
+
+  </ng-container>
+
+  <ng-container *ngIf="contentType === 'emailDocomo'">
+
+    <!-- Recipient -->
+    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+      <ion-col>
+        <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
+          <mat-label>{{ 'EMAIL_RECIPIENT' | translate}}</mat-label>
+          <input matInput [(ngModel)]="toEmails[0]" type="email" maxlength="254" #emailToInput>
+          <mat-hint align="end">{{ emailToInput.value?.length || 0 }}/254</mat-hint>
+          <mat-icon matSuffix color="accent">alternate_email</mat-icon>
+          <mat-hint>{{'EMAIL_MAX_LENGTH' | translate}}</mat-hint>
+        </mat-form-field>
       </ion-col>
     </ion-row>
 
@@ -472,7 +512,8 @@
     <ion-button mode="md" (click)="tapHaptic(); clear()" [color]="'danger'" fill="clear">
       {{ 'CLEAR' | translate }}
     </ion-button>
-    <ion-button mode="md" (click)="tapHaptic(); goGenerate()" [color]="'primary'" fill="clear" [disabled]="disableGenerateBtn">
+    <ion-button mode="md" (click)="tapHaptic(); goGenerate()" [color]="'primary'" fill="clear"
+      [disabled]="disableGenerateBtn">
       {{ 'CREATE' | translate }}
     </ion-button>
   </ion-row>

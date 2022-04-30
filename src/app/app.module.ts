@@ -16,6 +16,7 @@ import { ThemeDetection } from '@awesome-cordova-plugins/theme-detection/ngx';
 import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 import { AES256 } from '@awesome-cordova-plugins/aes-256/ngx';
 import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
+import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -25,9 +26,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MenuComponent } from './components/menu/menu.component';
-import { QrcodeComponent } from './components/qrcode/qrcode.component';
+import { QrCodeComponent } from './components/qr-code/qr-code.component';
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { EnvService } from './services/env.service';
+import { FormsModule } from '@angular/forms';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -37,13 +39,14 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     declarations: [
         AppComponent,
         MenuComponent,
-        QrcodeComponent
+        QrCodeComponent
     ],
     imports: [
         BrowserModule,
         IonicModule.forRoot(),
         AppRoutingModule,
         HttpClientModule,
+        FormsModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -70,6 +73,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         ThemeDetection,
         AES256,
         Chooser,
+        ScreenOrientation
     ],
     bootstrap: [AppComponent]
 })
