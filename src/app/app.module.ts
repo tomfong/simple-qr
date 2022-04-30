@@ -16,6 +16,7 @@ import { ThemeDetection } from '@awesome-cordova-plugins/theme-detection/ngx';
 import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 import { AES256 } from '@awesome-cordova-plugins/aes-256/ngx';
 import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
+import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -70,6 +71,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         ThemeDetection,
         AES256,
         Chooser,
+        ScreenOrientation
     ],
     bootstrap: [AppComponent]
 })

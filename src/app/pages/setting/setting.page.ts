@@ -37,6 +37,10 @@ export class SettingPage {
     this.router.navigate(['setting-color']);
   }
 
+  setOrientation() {
+    this.router.navigate(['setting-orientation']);
+  }
+
   setVibration() {
     this.router.navigate(['setting-vibration']);
   }

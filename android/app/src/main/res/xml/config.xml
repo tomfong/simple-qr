@@ -14,6 +14,10 @@
     <param name="android-package" value="com.cyph.cordova.Chooser"/>
   </feature>
 
+  <feature name="CDVOrientation">
+    <param name="android-package" value="cordova.plugins.screenorientation.CDVOrientation"/>
+  </feature>
+
   <feature name="ThemeDetection">
     <param name="android-package" value="de.mariusbackes.cordova.plugin.ThemeDetection"/>
   </feature>

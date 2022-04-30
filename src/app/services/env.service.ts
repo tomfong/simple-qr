@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 import { Device, DeviceInfo } from '@capacitor/device';
 import { ThemeDetection, ThemeDetectionResponse } from '@awesome-cordova-plugins/theme-detection/ngx';
+import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -26,6 +27,7 @@ export class EnvService {
   public selectedColorTheme: 'default' | 'light' | 'dark' | 'black' = 'default';
   public scanRecordLogging: 'on' | 'off' = 'on';
   public vibration: 'on' | 'on-haptic' | 'on-scanned' | 'off' = 'on';
+  public orientation: 'default' | 'portrait' | 'landscape' = 'default';
   public notShowHistoryTutorial: boolean = false;
   public notShowUpdateNotes: boolean = false;
   public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' = 'google';
@@ -57,6 +59,7 @@ export class EnvService {
     private overlayContainer: OverlayContainer,
     private themeDetection: ThemeDetection,
     private appVersion: AppVersion,
+    private screenOrientation: ScreenOrientation
   ) {
     this.platform.ready().then(
       async () => {
@@ -70,7 +73,7 @@ export class EnvService {
     this.appVersionNumber = await this.appVersion.getVersionNumber();
     const storage = await this.storage.create();
     this._storage = storage;
-    this._storage.remove(this.PREV_PATCH_NOTE_STORAGE_KEY).catch(err => {});
+    this._storage.remove(this.PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
     this.storageGet("language").then(
       async value => {
         if (value !== null && value !== undefined) {
@@ -89,6 +92,16 @@ export class EnvService {
           this.selectedColorTheme = 'default';
         }
         await this.toggleColorTheme();
+      }
+    );
+    this.storageGet("orientation").then(
+      async value => {
+        if (value !== null && value !== undefined) {
+          this.orientation = value;
+        } else {
+          this.orientation = 'default';
+        }
+        await this.toggleOrientationChange();
       }
     );
     this.storageGet("scan-record-logging").then(
@@ -207,6 +220,8 @@ export class EnvService {
     await this.toggleColorTheme();
     this.scanRecordLogging = 'on';
     this.vibration = 'on';
+    this.orientation = 'default';
+    await this.toggleOrientationChange();
     this.notShowHistoryTutorial = false;
     this.notShowUpdateNotes = false;
     this.searchEngine = 'google';
@@ -429,6 +444,34 @@ export class EnvService {
       this.overlayContainer.getContainerElement().classList.remove('ng-mat-light');
       this.overlayContainer.getContainerElement().classList.remove('ng-mat-dark');
       this.overlayContainer.getContainerElement().classList.add('ng-mat-black');
+    }
+  }
+
+  async toggleOrientationChange(): Promise<void> {
+    switch (this.orientation) {
+      case 'default':
+        this.screenOrientation.unlock();
+        return;
+      case 'portrait':
+        this.screenOrientation.unlock();
+        await this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT)
+          .catch(err => {
+            if (this.isDebugging) {
+              this.presentToast("Error when ScreenOrientation.lock(p): " + JSON.stringify(err), "long", "top");
+            }
+          });
+        return;
+      case 'landscape':
+        this.screenOrientation.unlock();
+        await this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE)
+          .catch(err => {
+            if (this.isDebugging) {
+              this.presentToast("Error when ScreenOrientation.lock(l): " + JSON.stringify(err), "long", "top");
+            }
+          });
+        return;
+      default:
+        this.screenOrientation.unlock();
     }
   }
 

@@ -61,6 +61,17 @@
       </p>
     </ion-label>
   </ion-item>
+  <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="setOrientation()">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/screen-rotation.svg">
+    </ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+          {{ 'SCREEN_ORIENTATION' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+  </ion-item>
   <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="setVibration()">
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/vibration.svg">
     </ion-icon>
