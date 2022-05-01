@@ -131,3 +131,8 @@ ion-tab-button:not(.tab-selected)::part(native):hover {
 .alert-can-copy {
     user-select: text !important;
 }
+
+.alert-button.sc-ion-alert-ios {
+    border-left: 0 !important;
+    border-right: 0 !important;
+}
