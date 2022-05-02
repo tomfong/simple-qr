@@ -67,7 +67,7 @@
         <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false"
           [lines]="i === scanRecords.length - 1? 'none' : 'full'" (click)="processQrCode(record.text)">
           <ion-label class="ion-padding-start">
-            <div class="ion-padding">
+            <div class="ion-padding" style="overflow-x: clip; text-overflow: ellipsis;">
               <p>
                 <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
                   {{ record.text }}
@@ -120,10 +120,10 @@
         <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false"
           [lines]="i === bookmarks.length - 1? 'none' : 'full'" (click)="processQrCode(bookmark.text)">
           <ion-label class="ion-padding-start">
-            <div class="ion-padding">
+            <div class="ion-padding" style="overflow-x: clip; text-overflow: ellipsis;">
               <p>
                 <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-                  {{ bookmark.tag? bookmark.tag : '(' + ('UNTAGGED' | translate) + ')' }}
+                  {{ bookmark.tag? bookmark.tag : '-' }}
                 </ion-text>
               </p>
               <p>
