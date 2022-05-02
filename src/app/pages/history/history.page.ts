@@ -258,7 +258,6 @@ export class HistoryPage {
     this.deleteToast = await this.toastController.create({
       message: this.translate.instant('MSG.UNDO_DELETE'),
       duration: 2000,
-      mode: "ios",
       color: "light",
       position: "top",
       buttons: [
@@ -329,7 +328,6 @@ export class HistoryPage {
     this.deleteToast = await this.toastController.create({
       message: this.translate.instant('MSG.UNDO_DELETE'),
       duration: 2000,
-      mode: "ios",
       color: "light",
       position: "top",
       buttons: [

@@ -1,5 +1,5 @@
-<ion-header mode="ios">
-  <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'" mode="ios">
+<ion-header>
+  <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'">
     <ion-title>{{ 'CREATE_QRCODE' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -498,21 +498,21 @@
     </ion-row>
     <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
       <ion-col>
-        <ion-item class="ion-no-padding" lines="none" mode="ios" detail="false">
+        <ion-item class="ion-no-padding" lines="none" detail="false">
           <ion-label>{{ 'WIFI_HIDDEN' | translate }}</ion-label>
-          <ion-checkbox mode="md" [(ngModel)]="wifiHidden" [color]="'primary'"></ion-checkbox>
+          <ion-checkbox [(ngModel)]="wifiHidden" [color]="'primary'"></ion-checkbox>
         </ion-item>
       </ion-col>
     </ion-row>
   </ng-container>
 </ion-content>
-<ion-footer mode="ios"
+<ion-footer
   [ngStyle]="env.colorTheme === 'dark'?  {'background-color': '#222428'} : (env.colorTheme === 'black'? {'background-color': '#000000'} : {'background-color': '#F0F0F0'})">
   <ion-row class="d-flex justify-content-around">
-    <ion-button mode="md" (click)="tapHaptic(); clear()" [color]="'danger'" fill="clear">
+    <ion-button (click)="tapHaptic(); clear()" [color]="'danger'" fill="clear">
       {{ 'CLEAR' | translate }}
     </ion-button>
-    <ion-button mode="md" (click)="tapHaptic(); goGenerate()" [color]="'primary'" fill="clear"
+    <ion-button (click)="tapHaptic(); goGenerate()" [color]="'primary'" fill="clear"
       [disabled]="disableGenerateBtn">
       {{ 'CREATE' | translate }}
     </ion-button>

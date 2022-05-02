@@ -1,5 +1,5 @@
-<ion-header mode="ios">
-  <ion-toolbar [color]="color" mode="md" style="--border-width: 0px;">
+<ion-header>
+  <ion-toolbar [color]="color" style="--border-width: 0px;">
     <ion-title>
       <span style="padding-left: 10px;">{{ 'TUTORIAL' | translate }}</span>
     </ion-title>
@@ -35,7 +35,7 @@
 
 </ion-content>
 
-<ion-footer mode="md">
+<ion-footer>
 
   <ion-item lines="none" [color]="color" style="--ripple-color: transparent;">
     <ion-checkbox class="ion-margin-horizontal" [(ngModel)]="env.notShowBookmarkTutorial"
@@ -49,9 +49,9 @@
     </ion-label>
   </ion-item>
 
-  <ion-toolbar mode="ios" [color]="color" style="border: none;">
+  <ion-toolbar [color]="color" style="border: none;">
     <ion-row class="d-flex align-items-center justify-content-end">
-      <ion-button class="ion-margin-horizontal ion-margin-bottom" mode="md" fill="clear" (click)="tapHaptic(); closeModal()" color="primary">
+      <ion-button class="ion-margin-horizontal ion-margin-bottom" fill="clear" (click)="tapHaptic(); closeModal()" color="primary">
         {{ 'OK' | translate }}
       </ion-button>
     </ion-row>

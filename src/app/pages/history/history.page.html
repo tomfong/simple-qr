@@ -1,7 +1,7 @@
-<ion-header mode="ios">
-  <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'" mode="ios">
+<ion-header>
+  <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'">
     <!-- <ion-buttons slot="start">
-      <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
+      <ion-back-button defaultHref="scan" [icon]="'arrow-back'">
       </ion-back-button>
     </ion-buttons> -->
     <ion-title *ngIf="segmentModel === 'history'">{{ 'LOG' | translate }}</ion-title>
@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-segment mode="md" [(ngModel)]="segmentModel" (ionChange)="segmentChanged($event)" [color]="'primary'">
+  <ion-segment [(ngModel)]="segmentModel" (ionChange)="segmentChanged($event)" [color]="'primary'">
     <ion-segment-button [value]="'history'">
       <ion-icon src="assets/icon/history.svg"></ion-icon>
     </ion-segment-button>
@@ -19,9 +19,9 @@
     </ion-segment-button>
   </ion-segment>
   <ng-container *ngIf="segmentModel === 'history' && firstLoad">
-    <ion-list mode="ios">
+    <ion-list>
       <ng-container *ngFor="let _ of ['', '', '', '', '', '', '']; index as i">
-        <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" [lines]="'full'">
+        <ion-item class="ion-no-padding ripple-parent" detail="false" [lines]="'full'">
           <ion-label class="ion-padding-start">
             <div class="ion-padding">
               <p>
@@ -62,9 +62,9 @@
     </div>
   </ng-container>
   <ng-container *ngIf="segmentModel === 'history' && scanRecords && scanRecords.length > 0 && !firstLoad">
-    <ion-list mode="ios">
+    <ion-list>
       <ion-item-sliding *ngFor="let record of scanRecords; index as i" #slidingItem>
-        <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false"
+        <ion-item class="ion-no-padding ripple-parent" detail="false"
           [lines]="i === scanRecords.length - 1? 'none' : 'full'" (click)="processQrCode(record.text)">
           <ion-label class="ion-padding-start">
             <div class="ion-padding" style="overflow-x: clip; text-overflow: ellipsis;">
@@ -83,7 +83,7 @@
                   {{ maskDatetimeAndSource(record.createdAt, record.source) }}
                 </ion-text>
               </p>
-              <ion-badge *ngIf="record.barcodeType" class="my-1" color="primary" mode="ios">
+              <ion-badge *ngIf="record.barcodeType" class="my-1" color="primary">
                 <div class="d-flex align-items-center">
                   <span>{{ getBarcodeFormat(record.barcodeType) }}</span>
                 </div>
@@ -115,9 +115,9 @@
     </div>
   </ng-container>
   <ng-container *ngIf="segmentModel === 'bookmarks' && bookmarks && bookmarks.length > 0">
-    <ion-list mode="ios">
+    <ion-list>
       <ion-item-sliding *ngFor="let bookmark of bookmarks; index as i" #slidingItem>
-        <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false"
+        <ion-item class="ion-no-padding ripple-parent" detail="false"
           [lines]="i === bookmarks.length - 1? 'none' : 'full'" (click)="processQrCode(bookmark.text)">
           <ion-label class="ion-padding-start">
             <div class="ion-padding">
@@ -150,14 +150,14 @@
 
 </ion-content>
 
-<ion-footer mode="ios"
+<ion-footer
   [ngStyle]="env.colorTheme === 'dark'?  {'background-color': '#222428'} : (env.colorTheme === 'black'? {'background-color': '#000000'} : {'background-color': '#F0F0F0'})">
   <ion-row class="d-flex justify-content-around">
-    <ion-button mode="md" (click)="tapHaptic(); removeAll()" [color]="'danger'" fill="clear"
+    <ion-button (click)="tapHaptic(); removeAll()" [color]="'danger'" fill="clear"
       *ngIf="(segmentModel === 'bookmarks' && bookmarks && bookmarks.length > 0) || (segmentModel === 'history' && scanRecords && scanRecords.length > 0)">
       {{ 'REMOVE_ALL' | translate }}
     </ion-button>
-    <ion-button mode="md" (click)="tapHaptic(); goSetting()" [color]="'primary'" fill="clear">
+    <ion-button (click)="tapHaptic(); goSetting()" [color]="'primary'" fill="clear">
       {{ 'SETTING' | translate }}
     </ion-button>
   </ion-row>
