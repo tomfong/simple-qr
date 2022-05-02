@@ -275,9 +275,7 @@ export class SettingRecordPage {
 
   async presentLoading(msg: string): Promise<HTMLIonLoadingElement> {
     const loading = await this.loadingController.create({
-      message: msg,
-      mode: "ios",
-      backdropDismiss: false
+      message: msg
     });
     await loading.present();
     return loading;

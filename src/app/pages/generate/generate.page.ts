@@ -451,8 +451,7 @@ export class GeneratePage {
 
   async presentLoading(msg: string): Promise<HTMLIonLoadingElement> {
     const loading = await this.loadingController.create({
-      message: msg,
-      mode: "ios"
+      message: msg
     });
     await loading.present();
     return loading;
