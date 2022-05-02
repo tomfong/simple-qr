@@ -109,10 +109,6 @@ export class QrCodeComponent {
     );
   }
 
-  async close() {
-    this.modalController.dismiss();
-  }
-
   get qrColorDark(): string {
     return "#222428";
   }

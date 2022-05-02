@@ -341,8 +341,8 @@ export class ResultPage implements OnInit {
   async manualEnlarge(): Promise<void> {
     const modal = await this.modalController.create({
       component: QrCodeComponent,
-      breakpoints: [0, 0.8, 1],
-      initialBreakpoint: 0.8,
+      breakpoints: [0, 0.65, 0.8, 1],
+      initialBreakpoint: 0.65,
       componentProps: { qrCodeContent: this.qrCodeContent }
     });
     await modal.present();
@@ -351,8 +351,8 @@ export class ResultPage implements OnInit {
   async autoEnlarge(): Promise<void> {
     const modal = await this.modalController.create({
       component: QrCodeComponent,
-      breakpoints: [0, 0.8, 1],
-      initialBreakpoint: 0.8,
+      breakpoints: [0, 0.65, 0.8, 1],
+      initialBreakpoint: 0.65,
       componentProps: { qrCodeContent: this.qrCodeContent }
     });
     await modal.present();
