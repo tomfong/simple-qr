@@ -76,8 +76,9 @@ export class SettingPage {
       cssClass: ['alert-bg'],
       buttons: [
         {
-          text: this.translate.instant('YES'),
+          text: this.translate.instant('FULL_RESET'),
           handler: async () => {
+            const loading = await this.presentLoading(this.translate.instant("PLEASE_WAIT"));
             await window.caches.keys().then(
               keys => {
                 keys.forEach(
@@ -88,10 +89,30 @@ export class SettingPage {
               }
             );
             await this.env.resetAll();
+            loading.dismiss();
+            this.presentToast(this.translate.instant("DONE"), "short", "bottom");
           }
         },
         {
-          text: this.translate.instant('NO'),
+          text: this.translate.instant('ONLY_RESET_DATA'),
+          handler: async () => {
+            const loading = await this.presentLoading(this.translate.instant("PLEASE_WAIT"));
+            await this.env.resetData();
+            loading.dismiss();
+            this.presentToast(this.translate.instant("DONE"), "short", "bottom");
+          }
+        },
+        {
+          text: this.translate.instant('ONLY_RESET_SETTING'),
+          handler: async () => {
+            const loading = await this.presentLoading(this.translate.instant("PLEASE_WAIT"));
+            await this.env.resetSetting();
+            loading.dismiss();
+            this.presentToast(this.translate.instant("DONE"), "short", "bottom");
+          }
+        },
+        {
+          text: this.translate.instant('CANCEL'),
           role: 'cancel'
         },
       ]
@@ -132,5 +153,13 @@ export class SettingPage {
       duration: duration,
       position: pos
     });
+  }
+
+  async presentLoading(msg: string): Promise<HTMLIonLoadingElement> {
+    const loading = await this.loadingController.create({
+      message: msg
+    });
+    await loading.present();
+    return loading;
   }
 }

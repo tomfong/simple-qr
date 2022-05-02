@@ -256,6 +256,53 @@ export class EnvService {
     this.debugMode = 'off';
   }
 
+  public async resetData() {
+    await this.deleteAllScanRecords();
+    await this.deleteAllBookmarks();
+  }
+
+  public async resetSetting() {
+    this.selectedLanguage = 'default';
+    this.toggleLanguageChange();
+    await this.storageSet("language", this.selectedLanguage);
+
+    this.selectedColorTheme = 'default';
+    await this.toggleColorTheme();
+    await this.storageSet("color", this.selectedColorTheme);
+
+    this.scanRecordLogging = 'on';
+    await this.storageSet("scan-record-logging", this.scanRecordLogging);
+
+    this.errorCorrectionLevel = 'M';
+    await this.storageSet("error-correction-level", this.errorCorrectionLevel);
+
+    this.vibration = 'on';
+    await this.storageSet("vibration", this.vibration);
+
+    this.orientation = 'default';
+    await this.toggleOrientationChange();
+    await this.storageSet("orientation", this.orientation);
+
+    this.notShowHistoryTutorial = false;
+    await this.storageSet("not-show-history-tutorial", 'no');
+
+    this.notShowBookmarkTutorial = false;
+    await this.storageSet("not-show-bookmark-tutorial", 'no');
+
+    this.notShowUpdateNotes = false;
+    if (this.platform.is('ios')) {
+      await this.storageSet(this.IOS_PATCH_NOTE_STORAGE_KEY, 'no');
+    } else if (this.platform.is('android')) {
+      await this.storageSet(this.AN_PATCH_NOTE_STORAGE_KEY, 'no');
+    }
+
+    this.searchEngine = 'google';
+    await this.storageSet("search-engine", this.searchEngine);
+
+    this.debugMode = 'off';
+    await this.storageSet("debug-mode-on", this.debugMode);
+  }
+
   get result(): string {
     return this._scannedData;
   }
