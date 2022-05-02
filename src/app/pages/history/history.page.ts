@@ -79,7 +79,6 @@ export class HistoryPage {
   async showHistoryTutorial() {
     const modal = await this.modalController.create({
       component: HistoryTutorialPage,
-      cssClass: 'tutorial-modal-page',
       componentProps: {
       }
     });
@@ -89,7 +88,6 @@ export class HistoryPage {
   async showBookmarkTutorial() {
     const modal = await this.modalController.create({
       component: BookmarkTutorialPage,
-      cssClass: 'tutorial-modal-page',
       componentProps: {
       }
     });

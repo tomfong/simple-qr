@@ -119,7 +119,7 @@ export class ResultPage implements OnInit {
       this.showQrFirst = false;
       if (this.qrCodeContent && this.qrCodeContent.trim().length > 0) {
         setTimeout(
-          async () => await this.enlarge(), 100
+          async () => await this.autoEnlarge(), 100
         );
         ;
       }
@@ -338,10 +338,21 @@ export class ResultPage implements OnInit {
     }
   }
 
-  async enlarge(): Promise<void> {
+  async manualEnlarge(): Promise<void> {
     const modal = await this.modalController.create({
       component: QrCodeComponent,
-      cssClass: 'qrcode-modal',
+      breakpoints: [0, 0.8, 1],
+      initialBreakpoint: 0.8,
+      componentProps: { qrCodeContent: this.qrCodeContent }
+    });
+    await modal.present();
+  }
+
+  async autoEnlarge(): Promise<void> {
+    const modal = await this.modalController.create({
+      component: QrCodeComponent,
+      breakpoints: [0, 0.8, 1],
+      initialBreakpoint: 0.8,
       componentProps: { qrCodeContent: this.qrCodeContent }
     });
     await modal.present();
