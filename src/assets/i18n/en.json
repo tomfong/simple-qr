@@ -97,6 +97,7 @@
     "COPY_AND_BACKUP": "Copy & Back Up",
     "ENCRYPTING": "Encrypting...",
     "BACKING_UP": "Backing Up...",
+    "DECRYPTING": "Decrypting...",
     "SECRET": "Secret",
     "LENGTH_49": "49-digit",
     "LENGTH_32": "32-digit",

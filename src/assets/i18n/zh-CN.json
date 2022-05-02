@@ -97,6 +97,7 @@
     "COPY_AND_BACKUP": "复制并开始备份",
     "ENCRYPTING": "加密中...",
     "BACKING_UP": "备份中...",
+    "DECRYPTING": "解密中...",
     "SECRET": "密码",
     "LENGTH_49": "49 位",
     "LENGTH_32": "32 位",

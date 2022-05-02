@@ -72,7 +72,19 @@ export class SettingRecordPage {
                           await this.presentToast(this.translate.instant('MSG.COPIED_SECRET'), "short", "bottom");
                         }
                       );
-                      await this.socialSharing.share(null, filename, result.uri, null);
+                      const loading3 = await this.presentLoading(this.translate.instant("PLEASE_WAIT"));
+                      await this.socialSharing.share(null, filename, result.uri, null).then(
+                        _ => {
+                          loading3.dismiss();
+                        }
+                      ).catch(
+                        err => {
+                          loading3.dismiss();
+                          if (this.env.isDebugging) {
+                            this.presentToast("Error when SocialSharing.share: " + JSON.stringify(err), "long", "top");
+                          }
+                        }
+                      )
                     }
                   }
                 ]
@@ -104,8 +116,10 @@ export class SettingRecordPage {
   }
 
   async onRestore() {
+    const loading1 = await this.presentLoading(this.translate.instant("PLEASE_WAIT"));
     await this.chooser.getFile().then(
       async (value: ChooserResult) => {
+        loading1.dismiss();
         if (value == null) {
           return;
         }
@@ -120,11 +134,13 @@ export class SettingRecordPage {
             return;
           }
         }
+        const loading2 = await this.presentLoading(this.translate.instant("PLEASE_WAIT"));
         await Filesystem.readFile({
           path: value.uri,
           encoding: Encoding.UTF8
         }).then(
           async value => {
+            loading2.dismiss();
             const alert = await this.alertController.create(
               {
                 header: this.translate.instant('RESTORE'),
@@ -160,6 +176,7 @@ export class SettingRecordPage {
           }
         ).catch(
           err => {
+            loading2.dismiss();
             if (this.env.debugMode === 'on') {
               this.presentToast('Failed to read file', "long", "bottom");
             } else {
@@ -170,6 +187,7 @@ export class SettingRecordPage {
       }
     ).catch(
       err => {
+        loading1.dismiss();
         if (this.env.isDebugging) {
           this.presentToast("Error when call Chooser.getFile: " + JSON.stringify(err), "long", "top");
         } else {
@@ -185,9 +203,11 @@ export class SettingRecordPage {
       this.presentToast(this.translate.instant("MSG.PLEASE_INPUT_VALID_SECRET"), "short", "bottom");
       return;
     }
+    const loading = await this.presentLoading(this.translate.instant("DECRYPTING"));
     await this.encryptService.decrypt(value, secrets[0], secrets[1])
       .then(
         async value => {
+          loading.dismiss();
           try {
             const restore = JSON.parse(value);
             if (restore.application != "Simple QR") {
@@ -236,6 +256,7 @@ export class SettingRecordPage {
         }
       )
       .catch(err => {
+        loading.dismiss();
         if (this.env.isDebugging) {
           this.presentToast("Error when parsing: " + JSON.stringify(err), "long", "top");
         } else {
