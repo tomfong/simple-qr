@@ -169,7 +169,7 @@ export class ScanPage {
   async processQrCode(scannedData: string, format: string, loading: HTMLIonLoadingElement): Promise<void> {
     this.env.result = scannedData;
     this.env.resultFormat = format;
-    this.router.navigate(['tabs/result', { from: 'scan', t: new Date().getTime() }]).then(
+    this.router.navigate(['tabs/result', { from: 'scan', t: new Date().getTime() }], { state: { source: 'scan' }}).then(
       () => {
         loading.dismiss();
       }

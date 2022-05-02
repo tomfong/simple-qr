@@ -10,30 +10,6 @@
 <ion-content [color]="color" #content>
 
   <ion-item class="content-item ion-no-padding" lines="none" [color]="color">
-    <ion-icon class="ion-padding-horizontal" src="assets/icon/history.svg"
-      [color]="'primary'"></ion-icon>
-    <ion-label>
-      <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
-          {{ 'TUTORIAL_TOUCH_LOG' | translate }}
-        </ion-text>
-      </p>
-    </ion-label>
-  </ion-item>
-
-  <ion-item class="content-item ion-no-padding" lines="none" [color]="color">
-    <ion-icon class="ion-padding-horizontal" name="star" [color]="'primary'">
-    </ion-icon>
-    <ion-label>
-      <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
-          {{ 'TUTORIAL_TOUCH_BOOKMARK' | translate }}
-        </ion-text>
-      </p>
-    </ion-label>
-  </ion-item>
-
-  <ion-item class="content-item ion-no-padding" lines="none" [color]="color">
     <ion-icon class="ion-padding-horizontal" src="assets/icon/swipe-left.svg"
       [color]="'primary'"></ion-icon>
     <ion-label>
@@ -51,7 +27,7 @@
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
-          {{ 'TUTORIAL_SWIPE_RIGHT' | translate }}
+          {{ 'BOOKMARK_TUTORIAL_SWIPE_RIGHT' | translate }}
         </ion-text>
       </p>
     </ion-label>
@@ -62,8 +38,8 @@
 <ion-footer mode="md">
 
   <ion-item lines="none" [color]="color" style="--ripple-color: transparent;">
-    <ion-checkbox class="ion-margin-horizontal" [(ngModel)]="env.notShowHistoryTutorial"
-      [color]="'primary'" (ionChange)="saveHistoryTutorialShowing()"></ion-checkbox>
+    <ion-checkbox class="ion-margin-horizontal" [(ngModel)]="env.notShowBookmarkTutorial"
+      [color]="'primary'" (ionChange)="saveBookmarkTutorialShowing()"></ion-checkbox>
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">

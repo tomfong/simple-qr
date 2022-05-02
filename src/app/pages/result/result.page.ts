@@ -69,6 +69,7 @@ export class ResultPage implements OnInit {
   bookmarked: boolean = false;
 
   showQrFirst: boolean = false;
+  source: 'create' | 'view' | 'scan';
 
   @ViewChildren(MatFormField) formFields: QueryList<MatFormField>;
 
@@ -86,8 +87,11 @@ export class ResultPage implements OnInit {
   ) {
     if (this.router.getCurrentNavigation().extras.state) {
       const state = this.router.getCurrentNavigation().extras.state;
-      if (state.page == 'generate') {
-        this.showQrFirst = true;
+      if (state.source && (state.source == 'create' || state.source == 'view' || state.source == 'scan')) {
+        if (state.source == 'create' || state.source == 'view') {
+          this.showQrFirst = true;
+        }
+        this.source = state.source;
       }
     }
   }
@@ -96,7 +100,7 @@ export class ResultPage implements OnInit {
     this.qrCodeContent = this.env.result;
     this.setContentType();
     if (this.env.scanRecordLogging === 'on') {
-      await this.env.saveScanRecord(this.qrCodeContent);
+      await this.env.saveScanRecord(this.qrCodeContent, this.source);
     }
     if (this.env.bookmarks.find(x => x.text === this.qrCodeContent)) {
       this.bookmarked = true;
@@ -720,12 +724,46 @@ export class ResultPage implements OnInit {
   }
 
   async addBookmark() {
-    const flag = await this.env.saveBookmark(this.qrCodeContent);
-    if (this.env.bookmarks.find(x => x.text === this.qrCodeContent)) {
-      this.bookmarked = true;
-    } else {
-      this.bookmarked = false;
-    }
+    await this.showBookmarkAlert(this.qrCodeContent);
+  }
+
+  async showBookmarkAlert(content: string) {
+    const alert = await this.alertController.create(
+      {
+        header: this.translate.instant('BOOKMARK'),
+        message: this.translate.instant('MSG.INPUT_TAG'),
+        cssClass: ['alert-bg'],
+        inputs: [
+          {
+            name: 'tag',
+            id: 'tag',
+            type: 'text',
+            label: `${this.translate.instant("TAG_MAX_LENGTH")}`,
+            placeholder: `${this.translate.instant("TAG_MAX_LENGTH")}`,
+            max: 30
+          }
+        ],
+        buttons: [
+          {
+            text: this.translate.instant('CREATE'),
+            handler: async data => {
+              alert.dismiss();
+              if (data.tag != null && data.tag.trim().length > 30) {
+                this.presentToast(this.translate.instant("MSG.TAG_MAX_LENGTH_EXPLAIN"), "short", "bottom");
+                return true;
+              }
+              await this.env.saveBookmark(content, data.tag);
+              if (this.env.bookmarks.find(x => x.text === this.qrCodeContent)) {
+                this.bookmarked = true;
+              } else {
+                this.bookmarked = false;
+              }
+            }
+          }
+        ]
+      }
+    )
+    await alert.present();
   }
 
   async removeBookmark() {

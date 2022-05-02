@@ -30,6 +30,7 @@ export class EnvService {
   public vibration: 'on' | 'on-haptic' | 'on-scanned' | 'off' = 'on';
   public orientation: 'default' | 'portrait' | 'landscape' = 'default';
   public notShowHistoryTutorial: boolean = false;
+  public notShowBookmarkTutorial: boolean = false;
   public notShowUpdateNotes: boolean = false;
   public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' = 'google';
   public debugMode: 'on' | 'off' = 'off';
@@ -144,6 +145,15 @@ export class EnvService {
         }
       }
     );
+    this.storageGet("not-show-bookmark-tutorial").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.notShowBookmarkTutorial = (value === 'yes' ? true : false);
+        } else {
+          this.notShowBookmarkTutorial = false;
+        }
+      }
+    );
     this.storageGet("search-engine").then(
       value => {
         if (value !== null && value !== undefined) {
@@ -185,8 +195,8 @@ export class EnvService {
                 t.createdAt = new Date(tCreatedAt);
               }
             );
-            this._bookmarks.sort((t1, t2) => {
-              return t2.createdAt.getTime() - t1.createdAt.getTime();
+            this._bookmarks.sort((a, b) => {
+              return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
             });
           } catch (err) {
             console.error(err);
@@ -237,6 +247,7 @@ export class EnvService {
     this.orientation = 'default';
     await this.toggleOrientationChange();
     this.notShowHistoryTutorial = false;
+    this.notShowBookmarkTutorial = false;
     this.notShowUpdateNotes = false;
     this.searchEngine = 'google';
     this._scanRecords = [];
@@ -264,12 +275,16 @@ export class EnvService {
     return this._scanRecords;
   }
 
-  async saveScanRecord(value: string): Promise<void> {
+  async saveScanRecord(value: string, source: 'create' | 'view' |'scan'): Promise<void> {
     const record = new ScanRecord();
     const date = new Date();
     record.id = String(date.getTime());
     record.text = value;
     record.createdAt = date;
+    record.source = source;
+    if (source === 'scan') {
+      record.barcodeType = this._scannedDataFormat;
+    }
     this._scanRecords.unshift(record);
     await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
   }
@@ -304,8 +319,8 @@ export class EnvService {
         t.createdAt = new Date(tCreatedAt);
       }
     );
-    this._bookmarks.sort((r1, r2) => {
-      return r2.createdAt.getTime() - r1.createdAt.getTime();
+    this._bookmarks.sort((a, b) => {
+      return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
     });
     await this.storageSet(environment.storageBookmarkKey, JSON.stringify(this._bookmarks));
   }
@@ -335,14 +350,18 @@ export class EnvService {
     return this._bookmarks;
   }
 
-  async saveBookmark(value: string): Promise<boolean> {
+  async saveBookmark(value: string, tag: string): Promise<boolean> {
     const index = this._bookmarks.findIndex(x => x.text === value);
     if (index === -1) {
       const bookmark = new Bookmark();
       const date = new Date();
       bookmark.text = value;
       bookmark.createdAt = date;
+      bookmark.tag = tag;
       this._bookmarks.unshift(bookmark);
+      this._bookmarks.sort((a, b) => {
+        return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
+      });
       await this.storageSet(environment.storageBookmarkKey, JSON.stringify(this._bookmarks));
       return true;
     } else {
@@ -352,8 +371,8 @@ export class EnvService {
 
   async undoBookmarkDeletion(bookmark: Bookmark): Promise<void> {
     this._bookmarks.push(bookmark);
-    this._bookmarks.sort((t1, t2) => {
-      return t2.createdAt.getTime() - t1.createdAt.getTime();
+    this._bookmarks.sort((a, b) => {
+      return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
     });
     await this.storageSet(environment.storageBookmarkKey, JSON.stringify(this._bookmarks));
   }

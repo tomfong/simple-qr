@@ -339,7 +339,7 @@ export class GeneratePage {
     this.env.result = this.qrCodeContent;
     this.env.resultFormat = "";
     this.qrCodeContent = '';
-    this.router.navigate(['tabs/result', { from: 'generate', t: new Date().getTime() }], { state: { page: 'generate' } }).then(
+    this.router.navigate(['tabs/result', { from: 'generate', t: new Date().getTime() }], { state: { source: 'create' } }).then(
       () => {
         loading.dismiss();
       }

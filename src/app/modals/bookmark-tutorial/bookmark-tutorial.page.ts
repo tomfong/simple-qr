@@ -1,15 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 
 @Component({
-  selector: 'app-history-tutorial',
-  templateUrl: './history-tutorial.page.html',
-  styleUrls: ['./history-tutorial.page.scss'],
+  selector: 'app-bookmark-tutorial',
+  templateUrl: './bookmark-tutorial.page.html',
+  styleUrls: ['./bookmark-tutorial.page.scss'],
 })
-export class HistoryTutorialPage {
+export class BookmarkTutorialPage {
 
   @ViewChild('content') contentEl: HTMLIonContentElement;
 
@@ -24,15 +24,15 @@ export class HistoryTutorialPage {
       }, 750
     );
   }
-
-  async saveHistoryTutorialShowing() {
-    if (this.env.notShowHistoryTutorial === true) {
-      await this.env.storageSet("not-show-history-tutorial", 'yes');
+  
+  async saveBookmarkTutorialShowing() {
+    if (this.env.notShowBookmarkTutorial === true) {
+      await this.env.storageSet("not-show-bookmark-tutorial", 'yes');
     } else {
-      await this.env.storageSet("not-show-history-tutorial", 'no');
+      await this.env.storageSet("not-show-bookmark-tutorial", 'no');
     }
   }
-
+  
   async tapHaptic() {
     if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
       await Haptics.impact({ style: ImpactStyle.Medium });
