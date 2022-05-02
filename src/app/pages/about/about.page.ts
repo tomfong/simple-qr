@@ -82,7 +82,7 @@ export class AboutPage {
   }
 
   async reportBug() {
-    const mailContent = await this.env.getBugReportMailContent();
+    const mailContent = this.env.getBugReportMailContent();
     window.open(mailContent, '_system');
   }
 
