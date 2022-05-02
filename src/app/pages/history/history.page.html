@@ -120,8 +120,8 @@
         <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false"
           [lines]="i === bookmarks.length - 1? 'none' : 'full'" (click)="processQrCode(bookmark.text)">
           <ion-label class="ion-padding-start">
-            <div class="ion-padding" style="overflow-x: clip; text-overflow: ellipsis;">
-              <p>
+            <div class="ion-padding">
+              <p style="overflow-x: clip; text-overflow: ellipsis;">
                 <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
                   {{ bookmark.tag? bookmark.tag : '-' }}
                 </ion-text>
