@@ -28,12 +28,11 @@
       <ion-accordion-group class="ion-margin-horizontal" style="width: 100%;">
         <ion-accordion>
           <ion-item class="ion-no-padding" lines="none" [color]="color" slot="header">
-            <ion-label class="ion-padding-start">
+            <ion-label>
               <p class="ion-padding-horizontal">
                 <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'"
                   style="white-space: normal; font-size: large;">
-                  <div class="text-justify"
-                    [innerHTML]="('ERROR_CORRECTION_LEVEL' | translate) + '：' + env.errorCorrectionLevel">
+                  <div [innerHTML]="('ERROR_CORRECTION_LEVEL' | translate) + '：' + env.errorCorrectionLevel">
                   </div>
                 </ion-text>
               </p>
@@ -43,7 +42,7 @@
             <ion-radio-group [(ngModel)]="env.errorCorrectionLevel" (ionChange)="onErrorCorrectionLevelChange()"
               style="width: 100%;">
               <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" [color]="color">
-                <ion-label class="ion-padding-start">
+                <ion-label>
                   <p class="ion-padding-horizontal">
                     <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
                       {{ 'LEVEL_L' | translate }}
@@ -54,7 +53,7 @@
                 </ion-radio>
               </ion-item>
               <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" [color]="color">
-                <ion-label class="ion-padding-start">
+                <ion-label>
                   <p class="ion-padding-horizontal">
                     <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
                       {{ 'LEVEL_M' | translate }}
@@ -65,7 +64,7 @@
                 </ion-radio>
               </ion-item>
               <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" [color]="color">
-                <ion-label class="ion-padding-start">
+                <ion-label>
                   <p class="ion-padding-horizontal">
                     <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
                       {{ 'LEVEL_Q' | translate }}
@@ -76,7 +75,7 @@
                 </ion-radio>
               </ion-item>
               <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" [color]="color">
-                <ion-label class="ion-padding-start">
+                <ion-label>
                   <p class="ion-padding-horizontal">
                     <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
                       {{ 'LEVEL_H' | translate }}
@@ -87,8 +86,8 @@
                 </ion-radio>
               </ion-item>
             </ion-radio-group>
-            <ion-button class="pt-2 ion-margin-horizontal ion-margin-bottom" fill="clear"
-              (click)="goErrorCorrectionLevelSetting()" color="primary">
+            <ion-button class="pt-2 ion-margin-bottom" fill="clear" (click)="goErrorCorrectionLevelSetting()"
+              color="primary">
               {{ 'LEARN_MORE' | translate }}
             </ion-button>
           </div>

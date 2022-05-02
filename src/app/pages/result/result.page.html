@@ -188,7 +188,7 @@
         style="width: 100%;">
         <mat-label>{{ label }}</mat-label>
         <textarea matInput [value]="content" [cdkTextareaAutosize]="true" [cdkAutosizeMinRows]="1"
-          [cdkAutosizeMaxRows]="10" readonly>
+          [cdkAutosizeMaxRows]="20" readonly>
         </textarea>
         <mat-hint *ngIf="hint && hint != ''" style="opacity: 0.5;">{{ hint }}</mat-hint>
       </mat-form-field>

@@ -41,8 +41,8 @@
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent" [floatLabel]="'always'">
           <mat-label>{{ 'QRCODE_CONTENT' | translate }} </mat-label>
-          <textarea matInput [(ngModel)]="qrCodeContent" [cdkTextareaAutosize]="true" [cdkAutosizeMinRows]="5"
-            [cdkAutosizeMaxRows]="10" [maxLength]="1817" #freeTxtInput></textarea>
+          <textarea matInput [(ngModel)]="qrCodeContent" [cdkTextareaAutosize]="true" [cdkAutosizeMinRows]="7"
+            [cdkAutosizeMaxRows]="20" [maxLength]="1817" #freeTxtInput></textarea>
           <mat-hint align="end">{{ freeTxtInput.value?.length || 0 }}/1817</mat-hint>
           <mat-hint>{{'CREATE_QRCODE_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>

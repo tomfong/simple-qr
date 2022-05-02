@@ -267,7 +267,7 @@
         "QR_CODE_VALUE_NOT_EMPTY": "QR Code value cannot be empty",
         "NO_QR_CODE": "No QR Code. Make sure that the image background is not transparent.",
         "IMAGE_NO_TRANSPARENT": "Please make sure that the image background is not transparent.",
-        "SCAN_QR_FROM_IMAGE": "Simple QR uses \"cozmo/jsQR\" module to scan QR code from image. Please make sure that the background of the imported image is not transparent, and please also authorize Simple QR to access storage.",
+        "SCAN_QR_FROM_IMAGE": "Simple QR uses \"cozmo/jsQR\" module to scan QR code from image. Please make sure that the background of the imported image is not transparent, and please also authorize Simple QR to access Storage or Photo Library.",
         "BARCODE_TYPE": "Scan<ul><li>QR Code</li><li>1D Barcode</li><li>Aztec Code</li><li>Data Matrix</li><li>PDF417</li></ul>Import Image<ul><li>QR Code</li></ul>Create<ul><li>QR Code</li></ul>",
         "TAP_TO_ZOOM_IN": "Tap to zoom in",
         "ONLY_VCARD_3_0": "Only vCard 3.0 is supported",
