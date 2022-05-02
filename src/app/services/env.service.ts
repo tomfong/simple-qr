@@ -32,7 +32,7 @@ export class EnvService {
   public notShowHistoryTutorial: boolean = false;
   public notShowBookmarkTutorial: boolean = false;
   public notShowUpdateNotes: boolean = false;
-  public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' = 'google';
+  public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' | 'yandex' = 'google';
   public debugMode: 'on' | 'off' = 'off';
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
@@ -40,6 +40,7 @@ export class EnvService {
   public readonly BING_SEARCH_URL: string = "https://www.bing.com/search?q=";
   public readonly YAHOO_SEARCH_URL: string = "https://search.yahoo.com/search?p=";
   public readonly DUCK_DUCK_GO_SEARCH_URL: string = "https://duckduckgo.com/?q=";
+  public readonly YANDEX_SEARCH_URL: string = "https://yandex.com/search/?text=";
   public readonly GITHUB_REPO_URL: string = "https://github.com/tomfong/simple-qr";
   public readonly GOOGLE_PLAY_URL: string = "https://play.google.com/store/apps/details?id=com.tomfong.simpleqr";
   public readonly APP_STORE_URL: string = "https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553";

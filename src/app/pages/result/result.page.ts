@@ -362,6 +362,9 @@ export class ResultPage implements OnInit {
       case 'duckduckgo':
         searchUrl = this.env.DUCK_DUCK_GO_SEARCH_URL;
         break;
+      case 'yandex':
+        searchUrl = this.env.YANDEX_SEARCH_URL;
+        break;
       default:
         searchUrl = this.env.GOOGLE_SEARCH_URL;
         break;
