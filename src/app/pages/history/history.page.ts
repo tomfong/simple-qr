@@ -7,8 +7,6 @@ import { ScanRecord } from 'src/app/models/scan-record';
 import { TranslateService } from '@ngx-translate/core';
 import { Bookmark } from 'src/app/models/bookmark';
 import { HistoryTutorialPage } from 'src/app/modals/history-tutorial/history-tutorial.page';
-import { MenuComponent } from 'src/app/components/menu/menu.component';
-import { MenuItem } from 'src/app/models/menu-item';
 import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
 import { Toast } from '@capacitor/toast';
 import { BookmarkTutorialPage } from 'src/app/modals/bookmark-tutorial/bookmark-tutorial.page';
@@ -27,10 +25,9 @@ export class HistoryPage {
   scanRecords: ScanRecord[] = [];
   bookmarks: Bookmark[] = [];
 
-  firstLoad: boolean = true;
+  isLoadingText: boolean = true;
 
   constructor(
-    private platform: Platform,
     public alertController: AlertController,
     public loadingController: LoadingController,
     private router: Router,
@@ -41,17 +38,52 @@ export class HistoryPage {
     public popoverController: PopoverController,
   ) { }
 
-  async loadItems() {
-    this.scanRecords = this.env.scanRecords;
-    this.bookmarks = this.env.bookmarks;
+  firstLoadItems() {
+    this.isLoadingText = true;
+    this.scanRecords.length = 0;
+    this.bookmarks.length = 0;
+    const scanRecords = [...this.env.scanRecords];
+    this.scanRecords = scanRecords.slice(0, 15);
+    const bookmarks = [...this.env.bookmarks];
+    this.bookmarks = bookmarks.slice(0, 15); 
+    this.isLoadingText = false;
+  }
+
+  loadMoreScanRecords() {
+    const scanRecords = [...this.env.scanRecords]
+    this.scanRecords.push(...scanRecords.slice(this.scanRecords.length, this.scanRecords.length + 15));
+  }
+
+  loadMoreBookmarks() {
+    const bookmarks = [...this.env.bookmarks]
+    this.bookmarks.push(...bookmarks.slice(this.bookmarks.length, this.bookmarks.length + 15));
+  }
+
+  onLoadScanRecords(ev: any) {
+    setTimeout(() => {
+      ev.target.complete();
+      this.loadMoreScanRecords();
+      if (this.scanRecords.length === this.env.scanRecords.length) {
+        ev.target.disabled = true;
+      }
+    }, 500);
+  }
+
+  onLoadBookmarks(ev: any) {
+    setTimeout(() => {
+      ev.target.complete();
+      this.loadMoreBookmarks();
+      if (this.bookmarks.length === this.env.bookmarks.length) {
+        ev.target.disabled = true;
+      }
+    }, 500);
   }
 
   async ionViewDidEnter() {
-    this.firstLoad = true;
+    this.isLoadingText = true;
     setTimeout(
       async () => {
-        await this.loadItems();
-        this.firstLoad = false;
+        this.firstLoadItems();
       }, 200
     );
     if (this.segmentModel == 'history') {
@@ -69,11 +101,16 @@ export class HistoryPage {
     }
   }
 
-  async ionViewWillLeave() {
+  ionViewWillLeave() {
     if (this.deleteToast) {
       this.deleteToast.dismiss();
       this.deleteToast = undefined;
     }
+  }
+
+  ionViewDidLeave() {
+    this.scanRecords.length = 0;
+    this.bookmarks.length = 0;
   }
 
   async showHistoryTutorial() {
@@ -169,9 +206,12 @@ export class HistoryPage {
     }
   }
 
-  async processQrCode(scannedData: string): Promise<void> {
+  async viewRecord(data: string): Promise<void> {
+    this.isLoadingText = true;
+    this.scanRecords.length = 0;
+    this.bookmarks.length = 0;
     const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
-    this.env.result = scannedData;
+    this.env.result = data;
     this.env.resultFormat = "";
     this.router.navigate(['tabs/result', { from: 'history', t: new Date().getTime() }], { state: { source: 'view' } }).then(
       () => {
@@ -194,6 +234,7 @@ export class HistoryPage {
         await this.showBookmarkTutorial();
       }
     }
+    this.firstLoadItems();
   }
 
   async addBookmark(record: ScanRecord, slidingItem: IonItemSliding) {
@@ -230,9 +271,12 @@ export class HistoryPage {
                 this.presentToast(this.translate.instant("MSG.TAG_MAX_LENGTH_EXPLAIN"), "short", "bottom");
                 return true;
               }
-              const flag = await this.env.saveBookmark(record.text, data.tag);
-              await this.loadItems();
-              if (flag) {
+              const bookmark = await this.env.saveBookmark(record.text, data.tag);
+              this.bookmarks.unshift(bookmark);
+              this.bookmarks.sort((a, b) => {
+                return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
+              });
+              if (bookmark != null) {
                 await this.presentToast(this.translate.instant("MSG.BOOKMARKED"), "short", "bottom");
               } else {
                 await this.presentToast(this.translate.instant("MSG.ALREADY_BOOKMARKED"), "short", "bottom");
@@ -252,7 +296,10 @@ export class HistoryPage {
       this.deleteToast = null;
     }
     await this.env.deleteBookmark(bookmark.text);
-    await this.loadItems();
+    const index = this.bookmarks.findIndex(x => x.text === bookmark.text);
+    if (index != -1) {
+      this.bookmarks.splice(index, 1);
+    }
     this.deleteToast = await this.toastController.create({
       message: this.translate.instant('MSG.UNDO_DELETE'),
       duration: 2000,
@@ -264,7 +311,7 @@ export class HistoryPage {
           side: 'end',
           handler: async () => {
             await this.env.undoBookmarkDeletion(bookmark);
-            await this.loadItems();
+            this.bookmarks.splice(index, 0, bookmark);
             this.deleteToast.dismiss();
           }
         }
@@ -304,9 +351,18 @@ export class HistoryPage {
                 this.presentToast(this.translate.instant("MSG.TAG_MAX_LENGTH_EXPLAIN"), "short", "bottom");
                 return true;
               }
+              this.isLoadingText = true;
               await this.env.deleteBookmark(bookmark.text);
-              await this.env.saveBookmark(bookmark.text, data.tag);
-              await this.loadItems();
+              const index = this.bookmarks.findIndex(x => x.text === bookmark.text);
+              if (index != -1) {
+                this.bookmarks.splice(index, 1);
+              }
+              const newBookmark = await this.env.saveBookmark(bookmark.text, data.tag);
+              this.bookmarks.unshift(newBookmark);
+              this.bookmarks.sort((a, b) => {
+                return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
+              });
+              this.isLoadingText = false;
             }
           }
         ]
@@ -322,7 +378,10 @@ export class HistoryPage {
       this.deleteToast = null;
     }
     await this.env.deleteScanRecord(record.id);
-    await this.loadItems();
+    const index = this.scanRecords.findIndex(x => x.id === record.id);
+    if (index != -1) {
+      this.scanRecords.splice(index, 1);
+    }
     this.deleteToast = await this.toastController.create({
       message: this.translate.instant('MSG.UNDO_DELETE'),
       duration: 2000,
@@ -334,7 +393,7 @@ export class HistoryPage {
           side: 'end',
           handler: async () => {
             await this.env.undoScanRecordDeletion(record);
-            await this.loadItems();
+            this.scanRecords.splice(index, 0, record);
             this.deleteToast.dismiss();
           }
         }
@@ -355,7 +414,7 @@ export class HistoryPage {
             text: this.translate.instant('YES'),
             handler: async () => {
               await this.env.deleteAllScanRecords();
-              await this.loadItems();
+              this.scanRecords.length = 0;
             }
           },
           {
@@ -375,7 +434,7 @@ export class HistoryPage {
             text: this.translate.instant('YES'),
             handler: async () => {
               await this.env.deleteAllBookmarks();
-              await this.loadItems();
+              this.bookmarks.length = 0;
             }
           },
           {

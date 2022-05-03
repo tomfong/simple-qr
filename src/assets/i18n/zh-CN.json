@@ -229,6 +229,7 @@
     "SCANNED": "扫描",
     "AUTO_MAX_BRIGHTNESS": "自动最大亮度",
     "AUTO_MAX_BRIGHTNESS_EXPLAIN": "当显示 QR 码时，自动调校萤幕亮度到最大。",
+    "LOADING_DATA": "载入中",
     "MSG": {
         "CALL_PHONE": "确定要致电 {phoneNumber} ?",
         "FAIL_CALL_PHONE": "无法开启电话",

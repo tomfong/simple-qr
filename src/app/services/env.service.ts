@@ -412,7 +412,7 @@ export class EnvService {
     return this._bookmarks;
   }
 
-  async saveBookmark(value: string, tag: string): Promise<boolean> {
+  async saveBookmark(value: string, tag: string): Promise<Bookmark> {
     const index = this._bookmarks.findIndex(x => x.text === value);
     if (index === -1) {
       const bookmark = new Bookmark();
@@ -425,9 +425,9 @@ export class EnvService {
         return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
       });
       await this.storageSet(environment.storageBookmarkKey, JSON.stringify(this._bookmarks));
-      return true;
+      return bookmark;
     } else {
-      return false;
+      return null;
     }
   }
 

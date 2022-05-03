@@ -1,20 +1,19 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Clipboard } from '@capacitor/clipboard';
 import { Contacts, ContactType, EmailAddress, NewContact, PhoneNumber } from '@capacitor-community/contacts'
 import { SMS } from '@awesome-cordova-plugins/sms/ngx';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
-import { AlertController, LoadingController, ModalController, Platform, PopoverController, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
 import { VCardContact } from 'src/app/models/v-card-contact';
 import { EnvService } from 'src/app/services/env.service';
-import { QrCodeComponent } from 'src/app/components/qr-code/qr-code.component';
 import { Toast } from '@capacitor/toast';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { MatFormField } from '@angular/material/form-field';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
-import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
+import { QrCodePage } from 'src/app/modals/qr-code/qr-code.page';
 
 @Component({
   selector: 'app-result',
@@ -78,13 +77,11 @@ export class ResultPage implements OnInit {
     private platform: Platform,
     public alertController: AlertController,
     public loadingController: LoadingController,
-    private route: ActivatedRoute,
     private router: Router,
     public env: EnvService,
     public modalController: ModalController,
     private sms: SMS,
     public translate: TranslateService,
-    private popoverController: PopoverController,
   ) {
     if (this.router.getCurrentNavigation().extras.state) {
       const state = this.router.getCurrentNavigation().extras.state;
@@ -110,19 +107,12 @@ export class ResultPage implements OnInit {
 
   async ionViewDidEnter(): Promise<void> {
     if (this.env.vibration === 'on' || this.env.vibration === 'on-scanned') {
-      setTimeout(
-        async () => {
-          await Haptics.vibrate();
-        }, 200
-      );
+      Haptics.vibrate();
     }
     if (this.showQrFirst) {
       this.showQrFirst = false;
       if (this.qrCodeContent && this.qrCodeContent.trim().length > 0) {
-        setTimeout(
-          async () => await this.enlarge(), 100
-        );
-        ;
+        await this.enlarge();
       }
     }
   }
@@ -341,7 +331,7 @@ export class ResultPage implements OnInit {
 
   async enlarge(): Promise<void> {
     const modal = await this.modalController.create({
-      component: QrCodeComponent,
+      component: QrCodePage,
       breakpoints: [0, 0.5, 1],
       initialBreakpoint: 0.5,
       componentProps: { qrCodeContent: this.qrCodeContent }

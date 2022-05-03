@@ -12,10 +12,10 @@ import { ScreenBrightness } from '@capacitor-community/screen-brightness';
 
 @Component({
   selector: 'app-qr-code',
-  templateUrl: './qr-code.component.html',
-  styleUrls: ['./qr-code.component.scss'],
+  templateUrl: './qr-code.page.html',
+  styleUrls: ['./qr-code.page.scss'],
 })
-export class QrCodeComponent {
+export class QrCodePage {
 
   modal: HTMLIonModalElement;
 
@@ -25,8 +25,7 @@ export class QrCodeComponent {
   qrElementType: NgxQrcodeElementTypes = NgxQrcodeElementTypes.CANVAS;
   errorCorrectionLevel: NgxQrcodeErrorCorrectionLevels;
   scale: number = 0.8;
-  defaultWidth: number = window.innerHeight * this.scale * 0.4;
-  maxWidth: number = window.innerWidth * this.scale;
+  defaultWidth: number = window.innerHeight * 0.32;
   qrMargin: number = 3;
 
   qrImageDataUrl: string;
@@ -41,59 +40,59 @@ export class QrCodeComponent {
     private platform: Platform,
     private screenOrientation: ScreenOrientation,
   ) {
-    this.platform.ready().then(() => {
-      if (this.screenOrientation.type.startsWith(this.screenOrientation.ORIENTATIONS.LANDSCAPE)) {
-        this.presentToast(this.translate.instant("MSG.PORTRAIT_ONLY"), "short", "bottom");
-      }
-      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
-    });
     this.setErrorCorrectionLevel();
   }
 
   async ionViewDidEnter(): Promise<void> {
-    if (this.qrcodeElement != null) {
-      this.qrcodeElement.width = window.innerHeight * this.scale * 0.4;
-      this.qrcodeElement.createQRCode();
-    }
-    await this.modalController.getTop().then(
-      async (modal: HTMLIonModalElement) => {
-        this.modal = modal;
-        this.modal.addEventListener("ionBreakpointDidChange", (ev: any) => {
-          if (this.qrcodeElement != null) {
-            switch (ev.detail.breakpoint) {
-              case 1:
-                this.qrcodeElement.width = window.innerWidth * this.scale;
-                break;
-              case 0.5:
-                this.qrcodeElement.width = window.innerHeight * this.scale * 0.4;
-                break
-            }
-            this.qrcodeElement.createQRCode();
-          }
-        })
-        this.modal.onDidDismiss().then(
-          async _ => {
-            await ScreenBrightness.setBrightness({ brightness: -1 }).catch(
-              err => {
-                if (this.env.isDebugging) {
-                  this.presentToast("Err when ScreenBrightness.setBrightness -1: " + JSON.stringify(err), "long", "top");
-                }
-              }
-            )
-            await this.env.toggleOrientationChange();
-          }
-        );
+    this.platform.ready().then(async () => {
+      if (this.screenOrientation.type.startsWith(this.screenOrientation.ORIENTATIONS.LANDSCAPE)) {
+        this.presentToast(this.translate.instant("MSG.PORTRAIT_ONLY"), "short", "bottom");
       }
-    )
-    if (this.env.autoMaxBrightness === 'on') {
-      await ScreenBrightness.setBrightness({ brightness: 1.0 }).catch(
-        err => {
-          if (this.env.isDebugging) {
-            this.presentToast("Err when ScreenBrightness.setBrightness 1.0: " + JSON.stringify(err), "long", "top");
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+      if (this.qrcodeElement != null) {
+        this.qrcodeElement.width = this.platform.height() * this.scale * 0.4;
+        this.qrcodeElement.createQRCode();
+      }
+      if (this.env.autoMaxBrightness === 'on') {
+        await ScreenBrightness.setBrightness({ brightness: 1.0 }).catch(
+          err => {
+            if (this.env.isDebugging) {
+              this.presentToast("Err when ScreenBrightness.setBrightness 1.0: " + JSON.stringify(err), "long", "top");
+            }
           }
+        )
+      }
+      await this.modalController.getTop().then(
+        async (modal: HTMLIonModalElement) => {
+          this.modal = modal;
+          this.modal.addEventListener("ionBreakpointDidChange", (ev: any) => {
+            if (this.qrcodeElement != null) {
+              switch (ev.detail.breakpoint) {
+                case 1:
+                  this.qrcodeElement.width = this.platform.width() * this.scale;
+                  break;
+                case 0.5:
+                  this.qrcodeElement.width = this.platform.height() * this.scale * 0.4;
+                  break
+              }
+              this.qrcodeElement.createQRCode();
+            }
+          })
+          this.modal.onDidDismiss().then(
+            async _ => {
+              await ScreenBrightness.setBrightness({ brightness: -1 }).catch(
+                err => {
+                  if (this.env.isDebugging) {
+                    this.presentToast("Err when ScreenBrightness.setBrightness -1: " + JSON.stringify(err), "long", "top");
+                  }
+                }
+              )
+              await this.env.toggleOrientationChange();
+            }
+          );
         }
       )
-    }
+    });
   }
 
   setErrorCorrectionLevel() {

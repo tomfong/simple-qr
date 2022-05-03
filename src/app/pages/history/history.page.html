@@ -18,7 +18,7 @@
       <ion-icon name="star"></ion-icon>
     </ion-segment-button>
   </ion-segment>
-  <ng-container *ngIf="segmentModel === 'history' && firstLoad">
+  <ng-container *ngIf="isLoadingText">
     <ion-list>
       <ng-container *ngFor="let _ of ['', '', '', '', '', '', '']; index as i">
         <ion-item class="ion-no-padding ripple-parent" detail="false" [lines]="'full'">
@@ -31,17 +31,17 @@
               </p>
               <p *ngIf="env.debugMode === 'on'">
                 <ion-text color="medium">
-                  <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
                 </ion-text>
               </p>
               <p>
                 <ion-text color="medium">
-                  <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
                 </ion-text>
               </p>
               <p>
                 <ion-text color="medium">
-                  <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                  <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
                 </ion-text>
               </p>
             </div>
@@ -50,7 +50,7 @@
       </ng-container>
     </ion-list>
   </ng-container>
-  <ng-container *ngIf="segmentModel === 'history' && (!scanRecords || (scanRecords.length <= 0)) && !firstLoad">
+  <ng-container *ngIf="segmentModel === 'history' && (!scanRecords || (scanRecords.length <= 0)) && !isLoadingText">
     <div class="ion-padding-horizontal fullscreen-vertical-center" style="height: 85%">
       <ion-icon src="assets/icon/history.svg" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
         style="font-size: 3rem"></ion-icon>
@@ -61,13 +61,18 @@
       </p>
     </div>
   </ng-container>
-  <ng-container *ngIf="segmentModel === 'history' && scanRecords && scanRecords.length > 0 && !firstLoad">
+  <ng-container *ngIf="segmentModel === 'history' && scanRecords && scanRecords.length > 0 && !isLoadingText">
     <ion-list>
       <ion-item-sliding *ngFor="let record of scanRecords; index as i" #slidingItem>
         <ion-item class="ion-no-padding ripple-parent" detail="false"
-          [lines]="i === scanRecords.length - 1? 'none' : 'full'" (click)="processQrCode(record.text)">
+          [lines]="i === scanRecords.length - 1? 'none' : 'full'" (click)="viewRecord(record.text)">
           <ion-label class="ion-padding-start">
             <div class="ion-padding" style="overflow-x: clip; text-overflow: ellipsis;">
+              <p *ngIf="env.debugMode === 'on'">
+                <ion-text color="medium">
+                  Index {{ i }}
+                </ion-text>
+              </p>
               <p>
                 <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
                   {{ record.text }}
@@ -103,8 +108,12 @@
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="onLoadScanRecords($event)">
+      <ion-infinite-scroll-content [loadingText]="'LOADING_DATA' | translate">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </ng-container>
-  <ng-container *ngIf="segmentModel === 'bookmarks' && (!bookmarks || (bookmarks.length <= 0))">
+  <ng-container *ngIf="segmentModel === 'bookmarks' && (!bookmarks || (bookmarks.length <= 0)) && !isLoadingText">
     <div class="ion-padding-horizontal fullscreen-vertical-center" style="height: 85%">
       <ion-icon name="star" [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: 3rem"></ion-icon>
       <p class="ion-text-center pt-3">
@@ -114,13 +123,18 @@
       </p>
     </div>
   </ng-container>
-  <ng-container *ngIf="segmentModel === 'bookmarks' && bookmarks && bookmarks.length > 0">
+  <ng-container *ngIf="segmentModel === 'bookmarks' && bookmarks && bookmarks.length > 0 && !isLoadingText">
     <ion-list>
       <ion-item-sliding *ngFor="let bookmark of bookmarks; index as i" #slidingItem>
         <ion-item class="ion-no-padding ripple-parent" detail="false"
-          [lines]="i === bookmarks.length - 1? 'none' : 'full'" (click)="processQrCode(bookmark.text)">
+          [lines]="i === bookmarks.length - 1? 'none' : 'full'" (click)="viewRecord(bookmark.text)">
           <ion-label class="ion-padding-start">
             <div class="ion-padding">
+              <p *ngIf="env.debugMode === 'on'">
+                <ion-text color="medium">
+                  Index {{ i }}
+                </ion-text>
+              </p>
               <p style="overflow-x: clip; text-overflow: ellipsis;">
                 <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
                   {{ bookmark.tag? bookmark.tag : '-' }}
@@ -146,6 +160,10 @@
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="onLoadBookmarks($event)">
+      <ion-infinite-scroll-content [loadingText]="'LOADING_DATA' | translate">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </ng-container>
 
 </ion-content>
