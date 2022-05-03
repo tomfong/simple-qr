@@ -41,6 +41,10 @@ const routes: Routes = [
     path: 'setting-qr-ecl',
     loadChildren: () => import('./pages/setting-qr-ecl/setting-qr-ecl.module').then( m => m.SettingQrEclPageModule)
   },
+  {
+    path: 'setting-auto-brightness',
+    loadChildren: () => import('./pages/setting-auto-brightness/setting-auto-brightness.module').then( m => m.SettingAutoBrightnessPageModule)
+  },
 
 ];
 

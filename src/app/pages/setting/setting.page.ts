@@ -57,6 +57,10 @@ export class SettingPage {
     this.router.navigate(['setting-qr-ecl']);
   }
 
+  setAutoMaxBrightness() {
+    this.router.navigate(['setting-auto-brightness']);
+  }
+
   setSearchEngine() {
     this.router.navigate(['setting-search-engine']);
   }

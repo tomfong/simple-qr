@@ -8,6 +8,7 @@ import { LoadingController, ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels, QrcodeComponent } from '@techiediaries/ngx-qrcode';
 import { EnvService } from 'src/app/services/env.service';
+import { ScreenBrightness } from '@capacitor-community/screen-brightness';
 
 @Component({
   selector: 'app-qr-code',
@@ -70,13 +71,29 @@ export class QrCodeComponent {
             this.qrcodeElement.createQRCode();
           }
         })
-        this.modal.onWillDismiss().then(
+        this.modal.onDidDismiss().then(
           async _ => {
+            await ScreenBrightness.setBrightness({ brightness: -1 }).catch(
+              err => {
+                if (this.env.isDebugging) {
+                  this.presentToast("Err when ScreenBrightness.setBrightness -1: " + JSON.stringify(err), "long", "top");
+                }
+              }
+            )
             await this.env.toggleOrientationChange();
           }
         );
       }
     )
+    if (this.env.autoMaxBrightness === 'on') {
+      await ScreenBrightness.setBrightness({ brightness: 1.0 }).catch(
+        err => {
+          if (this.env.isDebugging) {
+            this.presentToast("Err when ScreenBrightness.setBrightness 1.0: " + JSON.stringify(err), "long", "top");
+          }
+        }
+      )
+    }
   }
 
   setErrorCorrectionLevel() {

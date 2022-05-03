@@ -26,6 +26,7 @@ export class EnvService {
   public colorTheme: 'light' | 'dark' | 'black' = 'light';
   public selectedColorTheme: 'default' | 'light' | 'dark' | 'black' = 'default';
   public scanRecordLogging: 'on' | 'off' = 'on';
+  public autoMaxBrightness: 'on' | 'off' = 'on';
   public errorCorrectionLevel: 'L' | 'M' | 'Q' | 'H' = 'M';
   public vibration: 'on' | 'on-haptic' | 'on-scanned' | 'off' = 'on';
   public orientation: 'default' | 'portrait' | 'landscape' = 'default';
@@ -137,6 +138,15 @@ export class EnvService {
         }
       }
     );
+    this.storageGet("auto-max-brightness").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.autoMaxBrightness = value;
+        } else {
+          this.autoMaxBrightness = 'on';
+        }
+      }
+    );
     this.storageGet("not-show-history-tutorial").then(
       value => {
         if (value !== null && value !== undefined) {
@@ -243,6 +253,7 @@ export class EnvService {
     this.selectedColorTheme = 'default';
     await this.toggleColorTheme();
     this.scanRecordLogging = 'on';
+    this.autoMaxBrightness = 'on';
     this.errorCorrectionLevel = 'M';
     this.vibration = 'on';
     this.orientation = 'default';
@@ -272,6 +283,9 @@ export class EnvService {
 
     this.scanRecordLogging = 'on';
     await this.storageSet("scan-record-logging", this.scanRecordLogging);
+
+    this.autoMaxBrightness = 'on';
+    await this.storageSet("auto-max-brightness", this.autoMaxBrightness);
 
     this.errorCorrectionLevel = 'M';
     await this.storageSet("error-correction-level", this.errorCorrectionLevel);

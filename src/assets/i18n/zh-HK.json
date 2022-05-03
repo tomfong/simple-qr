@@ -227,6 +227,8 @@
     "CREATED": "建立",
     "VIEWED": "查看",
     "SCANNED": "掃描",
+    "AUTO_MAX_BRIGHTNESS": "自動最大亮度",
+    "AUTO_MAX_BRIGHTNESS_EXPLAIN": "當顯示 QR 碼時，自動調校螢幕亮度到最大。",
     "MSG": {
         "CALL_PHONE": "確定要致電 {phoneNumber} ?",
         "FAIL_CALL_PHONE": "無法開啟電話",

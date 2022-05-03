@@ -227,6 +227,8 @@
     "CREATED": "Created",
     "VIEWED": "Viewed",
     "SCANNED": "Scanned",
+    "AUTO_MAX_BRIGHTNESS": "Auto Max Brightness",
+    "AUTO_MAX_BRIGHTNESS_EXPLAIN": "The screen brightness is automatically adjusted to the maximum when displaying QR code.",
     "MSG": {
         "CALL_PHONE": "Are you sure to call {phoneNumber} now?",
         "FAIL_CALL_PHONE": "Failed to open dialer",
