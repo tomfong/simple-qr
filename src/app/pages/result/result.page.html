@@ -165,7 +165,7 @@
       fill="clear" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
       <ion-icon slot="icon-only" name="code-working"></ion-icon>
     </ion-button>
-    <ion-button (click)="tapHaptic(); manualEnlarge()" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
+    <ion-button (click)="tapHaptic(); enlarge()" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
       fill="clear" [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
       <ion-icon slot="icon-only" name="qr-code-sharp"></ion-icon>
     </ion-button>

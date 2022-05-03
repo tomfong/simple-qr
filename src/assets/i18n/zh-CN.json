@@ -287,7 +287,8 @@
         "FAILED_SAVING_CONTACT": "无法新增联络人",
         "CONTACT_PERMISSION": "要新增联络人，您必须授权「简易QR」存取通讯录。",
         "INPUT_TAG": "请为此书签输入一个标签",
-        "TAG_MAX_LENGTH_EXPLAIN": "标签长度不能多于 30 个字元"
+        "TAG_MAX_LENGTH_EXPLAIN": "标签长度不能多于 30 个字元",
+        "PORTRAIT_ONLY": "已锁定纵向"
     },
     "BARCODE_TYPE": {
         "UPC": "通用产品代码",

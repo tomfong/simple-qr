@@ -1,9 +1,10 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Toast } from '@capacitor/toast';
-import { LoadingController, ModalController } from '@ionic/angular';
+import { LoadingController, ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels, QrcodeComponent } from '@techiediaries/ngx-qrcode';
 import { EnvService } from 'src/app/services/env.service';
@@ -15,11 +16,16 @@ import { EnvService } from 'src/app/services/env.service';
 })
 export class QrCodeComponent {
 
+  modal: HTMLIonModalElement;
+
   @ViewChild('qrcode') qrcodeElement: QrcodeComponent;
 
   @Input() qrCodeContent: string;
   qrElementType: NgxQrcodeElementTypes = NgxQrcodeElementTypes.CANVAS;
   errorCorrectionLevel: NgxQrcodeErrorCorrectionLevels;
+  scale: number = 0.8;
+  defaultWidth: number = window.innerHeight * this.scale * 0.4;
+  maxWidth: number = window.innerWidth * this.scale;
   qrMargin: number = 3;
 
   qrImageDataUrl: string;
@@ -31,8 +37,46 @@ export class QrCodeComponent {
     private modalController: ModalController,
     private socialSharing: SocialSharing,
     private router: Router,
+    private platform: Platform,
+    private screenOrientation: ScreenOrientation,
   ) {
+    this.platform.ready().then(() => {
+      if (this.screenOrientation.type.startsWith(this.screenOrientation.ORIENTATIONS.LANDSCAPE)) {
+        this.presentToast(this.translate.instant("MSG.PORTRAIT_ONLY"), "short", "bottom");
+      }
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+    });
     this.setErrorCorrectionLevel();
+  }
+
+  async ionViewDidEnter(): Promise<void> {
+    if (this.qrcodeElement != null) {
+      this.qrcodeElement.width = window.innerHeight * this.scale * 0.4;
+      this.qrcodeElement.createQRCode();
+    }
+    await this.modalController.getTop().then(
+      async (modal: HTMLIonModalElement) => {
+        this.modal = modal;
+        this.modal.addEventListener("ionBreakpointDidChange", (ev: any) => {
+          if (this.qrcodeElement != null) {
+            switch (ev.detail.breakpoint) {
+              case 1:
+                this.qrcodeElement.width = window.innerWidth * this.scale;
+                break;
+              case 0.5:
+                this.qrcodeElement.width = window.innerHeight * this.scale * 0.4;
+                break
+            }
+            this.qrcodeElement.createQRCode();
+          }
+        })
+        this.modal.onWillDismiss().then(
+          async _ => {
+            await this.env.toggleOrientationChange();
+          }
+        );
+      }
+    )
   }
 
   setErrorCorrectionLevel() {
@@ -79,7 +123,7 @@ export class QrCodeComponent {
         this.presentToast("Cannot ref qrcodeElement!", "long", "top");
       }
     }
-  }  
+  }
 
   goErrorCorrectionLevelSetting() {
     this.modalController.dismiss();

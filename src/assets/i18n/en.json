@@ -287,7 +287,8 @@
         "FAILED_SAVING_CONTACT": "Failed to save contact",
         "CONTACT_PERMISSION": "You must grant Contact permission for saving contact.",
         "INPUT_TAG": "Please give a tag to the bookmark",
-        "TAG_MAX_LENGTH_EXPLAIN": "The length of the tag must not exceed 30 characters"
+        "TAG_MAX_LENGTH_EXPLAIN": "The length of the tag must not exceed 30 characters",
+        "PORTRAIT_ONLY": "Locked portrait"
     },
     "BARCODE_TYPE": {
         "UPC": "Universal Product Code ",

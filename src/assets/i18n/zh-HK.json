@@ -287,7 +287,8 @@
         "FAILED_SAVING_CONTACT": "無法新增聯絡人",
         "CONTACT_PERMISSION": "要新增聯絡人，您必須授權「簡易QR」存取通訊錄。",
         "INPUT_TAG": "請為此書籤輸入一個標籤",
-        "TAG_MAX_LENGTH_EXPLAIN": "標籤長度不能多於 30 個字元"
+        "TAG_MAX_LENGTH_EXPLAIN": "標籤長度不能多於 30 個字元",
+        "PORTRAIT_ONLY": "已鎖定縱向"
     },
     "BARCODE_TYPE": {
         "UPC": "通用產品代碼",

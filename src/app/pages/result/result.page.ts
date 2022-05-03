@@ -14,6 +14,7 @@ import { Toast } from '@capacitor/toast';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { MatFormField } from '@angular/material/form-field';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 
 @Component({
   selector: 'app-result',
@@ -119,7 +120,7 @@ export class ResultPage implements OnInit {
       this.showQrFirst = false;
       if (this.qrCodeContent && this.qrCodeContent.trim().length > 0) {
         setTimeout(
-          async () => await this.autoEnlarge(), 100
+          async () => await this.enlarge(), 100
         );
         ;
       }
@@ -338,21 +339,11 @@ export class ResultPage implements OnInit {
     }
   }
 
-  async manualEnlarge(): Promise<void> {
+  async enlarge(): Promise<void> {
     const modal = await this.modalController.create({
       component: QrCodeComponent,
-      breakpoints: [0, 0.65, 0.8, 1],
-      initialBreakpoint: 0.65,
-      componentProps: { qrCodeContent: this.qrCodeContent }
-    });
-    await modal.present();
-  }
-
-  async autoEnlarge(): Promise<void> {
-    const modal = await this.modalController.create({
-      component: QrCodeComponent,
-      breakpoints: [0, 0.65, 0.8, 1],
-      initialBreakpoint: 0.65,
+      breakpoints: [0, 0.5, 1],
+      initialBreakpoint: 0.5,
       componentProps: { qrCodeContent: this.qrCodeContent }
     });
     await modal.present();
