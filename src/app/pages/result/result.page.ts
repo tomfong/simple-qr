@@ -76,14 +76,14 @@ export class ResultPage {
   }
 
   async ionViewDidEnter(): Promise<void> {
-    if (this.env.vibration == 'on' || this.env.vibration == 'on-scanned') {
-      Haptics.vibrate();
-    }
     if (this.showQrFirst) {
       this.showQrFirst = false;
       if (this.qrCodeContent && this.qrCodeContent.trim().length > 0) {
         await this.enlarge();
       }
+    }
+    if (this.env.vibration == 'on' || this.env.vibration == 'on-scanned') {
+      Haptics.vibrate({ duration: 100 });
     }
     if (this.env.scanRecordLogging == 'on') {
       await this.env.saveScanRecord(this.qrCodeContent);

@@ -146,7 +146,7 @@ export class ScanPage {
             return;
           }
           if (this.env.vibration === 'on' || this.env.vibration === 'on-scanned') {
-            await Haptics.vibrate();
+            await Haptics.vibrate({ duration: 100 });
           }
           const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
           await this.stopScanner();
