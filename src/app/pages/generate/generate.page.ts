@@ -7,28 +7,13 @@ import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
 import { EnvService } from 'src/app/services/env.service';
 import { Toast } from '@capacitor/toast';
+import { fadeIn } from 'src/app/utils/animations';
 
 @Component({
   selector: 'app-generate',
   templateUrl: './generate.page.html',
   styleUrls: ['./generate.page.scss'],
-  animations: [
-    trigger(
-      'inOutAnimation',
-      [
-        transition(
-          ':enter',
-          [
-            style({ opacity: 0 }),
-            animate(
-              '1s ease',
-              style({ opacity: 1 })
-            )
-          ]
-        )
-      ]
-    )
-  ]
+  animations: [fadeIn]
 })
 export class GeneratePage {
 

@@ -9,7 +9,7 @@
   <div class="ion-padding-horizontal ion-margin-horizontal ion-padding-top">
   </div>
 
-  <ion-row class="ion-padding-horizontal pb-3" [@inOutAnimation]>
+  <ion-row class="ion-padding-horizontal pb-3" [@inAnimation]>
     <ion-col>
       <ion-badge class="p-2" color="primary">
         <div class="d-flex align-items-center">
@@ -182,7 +182,7 @@
 </ion-footer>
 
 <ng-template #contentBlock let-label="label" let-content="content" let-hint="hint">
-  <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+  <ion-row class="ion-padding-horizontal" [@inAnimation]>
     <ion-col>
       <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent" [floatLabel]="'always'"
         style="width: 100%;">

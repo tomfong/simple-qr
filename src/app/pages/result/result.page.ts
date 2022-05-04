@@ -14,28 +14,13 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { MatFormField } from '@angular/material/form-field';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { QrCodePage } from 'src/app/modals/qr-code/qr-code.page';
+import { fadeIn } from 'src/app/utils/animations';
 
 @Component({
   selector: 'app-result',
   templateUrl: './result.page.html',
   styleUrls: ['./result.page.scss'],
-  animations: [
-    trigger(
-      'inOutAnimation',
-      [
-        transition(
-          ':enter',
-          [
-            style({ opacity: 0 }),
-            animate(
-              '1s ease',
-              style({ opacity: 1 })
-            )
-          ]
-        )
-      ]
-    )
-  ]
+  animations: [fadeIn]
 })
 export class ResultPage implements OnInit {
 

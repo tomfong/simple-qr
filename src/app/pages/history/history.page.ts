@@ -10,11 +10,13 @@ import { HistoryTutorialPage } from 'src/app/modals/history-tutorial/history-tut
 import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
 import { Toast } from '@capacitor/toast';
 import { BookmarkTutorialPage } from 'src/app/modals/bookmark-tutorial/bookmark-tutorial.page';
+import { fastFadeIn, flyOut } from 'src/app/utils/animations';
 
 @Component({
   selector: 'app-history',
   templateUrl: './history.page.html',
   styleUrls: ['./history.page.scss'],
+  animations: [fastFadeIn, flyOut]
 })
 export class HistoryPage {
 
@@ -80,6 +82,7 @@ export class HistoryPage {
   }
 
   async ionViewDidEnter() {
+    console.log('ionViewDidEnter history')
     this.isLoadingText = true;
     setTimeout(
       async () => {
@@ -238,7 +241,7 @@ export class HistoryPage {
   }
 
   async addBookmark(record: ScanRecord, slidingItem: IonItemSliding) {
-    slidingItem.close();
+    await slidingItem.close();
     if (this.env.bookmarks.find(x => x.text === record.text)) {
       await this.presentToast(this.translate.instant("MSG.ALREADY_BOOKMARKED"), "short", "bottom");
       return;
@@ -290,7 +293,7 @@ export class HistoryPage {
   }
 
   async removeBookmark(bookmark: Bookmark, slidingItem: IonItemSliding) {
-    slidingItem.close();
+    await slidingItem.close();
     if (this.deleteToast) {
       await this.deleteToast.dismiss();
       this.deleteToast = null;
@@ -321,7 +324,7 @@ export class HistoryPage {
   }
 
   async editBookmark(bookmark: Bookmark, slidingItem: IonItemSliding) {
-    slidingItem.close();
+    await slidingItem.close();
     await this.showEditBookmarkAlert(bookmark);
   }
 
@@ -372,7 +375,7 @@ export class HistoryPage {
   }
 
   async removeRecord(record: ScanRecord, slidingItem: IonItemSliding) {
-    slidingItem.close();
+    await slidingItem.close();
     if (this.deleteToast) {
       await this.deleteToast.dismiss();
       this.deleteToast = null;

@@ -63,7 +63,7 @@
   </ng-container>
   <ng-container *ngIf="segmentModel === 'history' && scanRecords && scanRecords.length > 0 && !isLoadingText">
     <ion-list>
-      <ion-item-sliding *ngFor="let record of scanRecords; index as i" #slidingItem>
+      <ion-item-sliding *ngFor="let record of scanRecords; index as i" #slidingItem [@fastInAnimation] [@flyOut]>
         <ion-item class="ion-no-padding ripple-parent" detail="false"
           [lines]="i === scanRecords.length - 1? 'none' : 'full'" (click)="viewRecord(record.text)">
           <ion-label class="ion-padding-start">
@@ -125,7 +125,7 @@
   </ng-container>
   <ng-container *ngIf="segmentModel === 'bookmarks' && bookmarks && bookmarks.length > 0 && !isLoadingText">
     <ion-list>
-      <ion-item-sliding *ngFor="let bookmark of bookmarks; index as i" #slidingItem>
+      <ion-item-sliding *ngFor="let bookmark of bookmarks; index as i" #slidingItem [@fastInAnimation] [@flyOut]>
         <ion-item class="ion-no-padding ripple-parent" detail="false"
           [lines]="i === bookmarks.length - 1? 'none' : 'full'" (click)="viewRecord(bookmark.text)">
           <ion-label class="ion-padding-start">
