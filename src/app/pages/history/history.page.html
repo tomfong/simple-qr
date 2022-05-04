@@ -18,7 +18,7 @@
       <ion-icon name="star"></ion-icon>
     </ion-segment-button>
   </ion-segment>
-  <ng-container *ngIf="isLoadingText">
+  <ng-container *ngIf="isLoading">
     <ion-list>
       <ng-container *ngFor="let _ of ['', '', '', '', '', '', '']; index as i">
         <ion-item class="ion-no-padding ripple-parent" detail="false" [lines]="'full'">
@@ -50,7 +50,8 @@
       </ng-container>
     </ion-list>
   </ng-container>
-  <ng-container *ngIf="segmentModel === 'history' && (!scanRecords || (scanRecords.length <= 0)) && !isLoadingText">
+  <ng-container
+    *ngIf="segmentModel === 'history' && (!env.viewingScanRecords || (env.viewingScanRecords.length <= 0)) && !isLoading">
     <div class="ion-padding-horizontal fullscreen-vertical-center" style="height: 85%">
       <ion-icon src="assets/icon/history.svg" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
         style="font-size: 3rem"></ion-icon>
@@ -61,11 +62,13 @@
       </p>
     </div>
   </ng-container>
-  <ng-container *ngIf="segmentModel === 'history' && scanRecords && scanRecords.length > 0 && !isLoadingText">
+  <ng-container
+    *ngIf="segmentModel === 'history' && env.viewingScanRecords && env.viewingScanRecords.length > 0 && !isLoading">
     <ion-list>
-      <ion-item-sliding *ngFor="let record of scanRecords; index as i" #slidingItem [@fastInAnimation] [@flyOut]>
+      <ion-item-sliding *ngFor="let record of env.viewingScanRecords; index as i" #slidingItem [@fastInAnimation]
+        [@flyOut]="isLoading ? {value:'', params:{duration : 0}} : {value:'', params:{duration : 500}}">
         <ion-item class="ion-no-padding ripple-parent" detail="false"
-          [lines]="i === scanRecords.length - 1? 'none' : 'full'" (click)="viewRecord(record.text)">
+          [lines]="i === env.viewingScanRecords.length - 1? 'none' : 'full'" (click)="viewRecord(record.text)">
           <ion-label class="ion-padding-start">
             <div class="ion-padding" style="overflow-x: clip; text-overflow: ellipsis;">
               <p *ngIf="env.debugMode === 'on'">
@@ -113,7 +116,8 @@
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </ng-container>
-  <ng-container *ngIf="segmentModel === 'bookmarks' && (!bookmarks || (bookmarks.length <= 0)) && !isLoadingText">
+  <ng-container
+    *ngIf="segmentModel === 'bookmarks' && (!env.viewingBookmarks || (env.viewingBookmarks.length <= 0)) && !isLoading">
     <div class="ion-padding-horizontal fullscreen-vertical-center" style="height: 85%">
       <ion-icon name="star" [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: 3rem"></ion-icon>
       <p class="ion-text-center pt-3">
@@ -123,11 +127,13 @@
       </p>
     </div>
   </ng-container>
-  <ng-container *ngIf="segmentModel === 'bookmarks' && bookmarks && bookmarks.length > 0 && !isLoadingText">
+  <ng-container
+    *ngIf="segmentModel === 'bookmarks' && env.viewingBookmarks && env.viewingBookmarks.length > 0 && !isLoading">
     <ion-list>
-      <ion-item-sliding *ngFor="let bookmark of bookmarks; index as i" #slidingItem [@fastInAnimation] [@flyOut]>
+      <ion-item-sliding *ngFor="let bookmark of env.viewingBookmarks; index as i" #slidingItem [@fastInAnimation]
+        [@flyOut]="isLoading ? {value:'', params:{duration : 0}} : {value:'', params:{duration : 500}}">
         <ion-item class="ion-no-padding ripple-parent" detail="false"
-          [lines]="i === bookmarks.length - 1? 'none' : 'full'" (click)="viewRecord(bookmark.text)">
+          [lines]="i === env.viewingBookmarks.length - 1? 'none' : 'full'" (click)="viewRecord(bookmark.text)">
           <ion-label class="ion-padding-start">
             <div class="ion-padding">
               <p *ngIf="env.debugMode === 'on'">
@@ -172,7 +178,7 @@
   [ngStyle]="env.colorTheme === 'dark'?  {'background-color': '#222428'} : (env.colorTheme === 'black'? {'background-color': '#000000'} : {'background-color': '#F0F0F0'})">
   <ion-row class="d-flex justify-content-around">
     <ion-button (click)="tapHaptic(); removeAll()" [color]="'danger'" fill="clear"
-      *ngIf="(segmentModel === 'bookmarks' && bookmarks && bookmarks.length > 0) || (segmentModel === 'history' && scanRecords && scanRecords.length > 0)">
+      *ngIf="(segmentModel === 'bookmarks' && env.viewingBookmarks && env.viewingBookmarks.length > 0) || (segmentModel === 'history' && env.viewingScanRecords && env.viewingScanRecords.length > 0)">
       {{ 'REMOVE_ALL' | translate }}
     </ion-button>
     <ion-button (click)="tapHaptic(); goSetting()" [color]="'primary'" fill="clear">

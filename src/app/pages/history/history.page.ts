@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, IonItemSliding, LoadingController, ModalController, Platform, PopoverController, ToastController } from '@ionic/angular';
 import { EnvService } from 'src/app/services/env.service';
 import * as moment from 'moment';
@@ -24,10 +24,10 @@ export class HistoryPage {
 
   deleteToast: HTMLIonToastElement;
 
-  scanRecords: ScanRecord[] = [];
-  bookmarks: Bookmark[] = [];
+  // scanRecords: ScanRecord[] = [];
+  // bookmarks: Bookmark[] = [];
 
-  isLoadingText: boolean = true;
+  isLoading: boolean = false;
 
   constructor(
     public alertController: AlertController,
@@ -38,57 +38,59 @@ export class HistoryPage {
     public translate: TranslateService,
     public modalController: ModalController,
     public popoverController: PopoverController,
-  ) { }
+    private route: ActivatedRoute
+  ) {
+    this.route.params.subscribe(val => {
+      setTimeout(() => this.firstLoadItems(), 200);
+    });
+  }
 
   firstLoadItems() {
-    this.isLoadingText = true;
-    this.scanRecords.length = 0;
-    this.bookmarks.length = 0;
+    this.isLoading = true;
+    this.env.viewingScanRecords = [];
+    this.env.viewingBookmarks = [];
     const scanRecords = [...this.env.scanRecords];
-    this.scanRecords = scanRecords.slice(0, 15);
+    this.env.viewingScanRecords = scanRecords.slice(0, 15);
     const bookmarks = [...this.env.bookmarks];
-    this.bookmarks = bookmarks.slice(0, 15); 
-    this.isLoadingText = false;
+    this.env.viewingBookmarks = bookmarks.slice(0, 15);
+    this.isLoading = false;
   }
 
   loadMoreScanRecords() {
     const scanRecords = [...this.env.scanRecords]
-    this.scanRecords.push(...scanRecords.slice(this.scanRecords.length, this.scanRecords.length + 15));
+    this.env.viewingScanRecords.push(...scanRecords.slice(this.env.viewingScanRecords.length, this.env.viewingScanRecords.length + 15));
   }
 
   loadMoreBookmarks() {
     const bookmarks = [...this.env.bookmarks]
-    this.bookmarks.push(...bookmarks.slice(this.bookmarks.length, this.bookmarks.length + 15));
+    this.env.viewingBookmarks.push(...bookmarks.slice(this.env.viewingBookmarks.length, this.env.viewingBookmarks.length + 15));
   }
 
   onLoadScanRecords(ev: any) {
     setTimeout(() => {
       ev.target.complete();
       this.loadMoreScanRecords();
-      if (this.scanRecords.length === this.env.scanRecords.length) {
+      if (this.env.viewingScanRecords.length === this.env.scanRecords.length) {
         ev.target.disabled = true;
       }
-    }, 500);
+    }, 300);
   }
 
   onLoadBookmarks(ev: any) {
     setTimeout(() => {
       ev.target.complete();
       this.loadMoreBookmarks();
-      if (this.bookmarks.length === this.env.bookmarks.length) {
+      if (this.env.viewingBookmarks.length === this.env.bookmarks.length) {
         ev.target.disabled = true;
       }
-    }, 500);
+    }, 300);
+  }
+
+  ionViewWillEnter() {
+    this.isLoading = true;
   }
 
   async ionViewDidEnter() {
-    console.log('ionViewDidEnter history')
-    this.isLoadingText = true;
-    setTimeout(
-      async () => {
-        this.firstLoadItems();
-      }, 200
-    );
     if (this.segmentModel == 'history') {
       if (this.env.notShowHistoryTutorial === false) {
         this.env.notShowHistoryTutorial = true;
@@ -112,8 +114,8 @@ export class HistoryPage {
   }
 
   ionViewDidLeave() {
-    this.scanRecords.length = 0;
-    this.bookmarks.length = 0;
+    this.env.viewingScanRecords = [];
+    this.env.viewingBookmarks = [];
   }
 
   async showHistoryTutorial() {
@@ -161,7 +163,6 @@ export class HistoryPage {
           return moment(date).format("YYYY-MMM-DD HH:mm:ss");
       }
     }
-    
   }
 
   getBarcodeFormat(barcodeType: string): string {
@@ -210,21 +211,26 @@ export class HistoryPage {
   }
 
   async viewRecord(data: string): Promise<void> {
-    this.isLoadingText = true;
-    this.scanRecords.length = 0;
-    this.bookmarks.length = 0;
+    this.isLoading = true;
+    this.env.viewingScanRecords = [];
+    this.env.viewingScanRecords = [];
+    this.env.viewingBookmarks = [];
     const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
     this.env.result = data;
     this.env.resultFormat = "";
-    this.router.navigate(['tabs/result', { from: 'history', t: new Date().getTime() }], { state: { source: 'view' } }).then(
+    setTimeout(
       () => {
-        loading.dismiss();
-      }
-    );
+        this.router.navigate(['tabs/result', { from: 'history', t: new Date().getTime() }], { state: { source: 'view' } }).then(
+          () => {
+            loading.dismiss();
+          }
+        );
+      }, 200
+    )
   }
 
-  async segmentChanged(ev: any) { 
-    if (ev?.detail?.value  == 'history') {
+  async segmentChanged(ev: any) {
+    if (ev?.detail?.value == 'history') {
       if (this.env.notShowHistoryTutorial === false) {
         this.env.notShowHistoryTutorial = true;
         this.env.storageSet("not-show-history-tutorial", 'yes');
@@ -275,8 +281,8 @@ export class HistoryPage {
                 return true;
               }
               const bookmark = await this.env.saveBookmark(record.text, data.tag);
-              this.bookmarks.unshift(bookmark);
-              this.bookmarks.sort((a, b) => {
+              this.env.viewingBookmarks.unshift(bookmark);
+              this.env.viewingBookmarks.sort((a, b) => {
                 return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
               });
               if (bookmark != null) {
@@ -299,9 +305,9 @@ export class HistoryPage {
       this.deleteToast = null;
     }
     await this.env.deleteBookmark(bookmark.text);
-    const index = this.bookmarks.findIndex(x => x.text === bookmark.text);
+    const index = this.env.viewingBookmarks.findIndex(x => x.text === bookmark.text);
     if (index != -1) {
-      this.bookmarks.splice(index, 1);
+      this.env.viewingBookmarks.splice(index, 1);
     }
     this.deleteToast = await this.toastController.create({
       message: this.translate.instant('MSG.UNDO_DELETE'),
@@ -314,7 +320,7 @@ export class HistoryPage {
           side: 'end',
           handler: async () => {
             await this.env.undoBookmarkDeletion(bookmark);
-            this.bookmarks.splice(index, 0, bookmark);
+            this.env.viewingBookmarks.splice(index, 0, bookmark);
             this.deleteToast.dismiss();
           }
         }
@@ -354,18 +360,18 @@ export class HistoryPage {
                 this.presentToast(this.translate.instant("MSG.TAG_MAX_LENGTH_EXPLAIN"), "short", "bottom");
                 return true;
               }
-              this.isLoadingText = true;
+              this.isLoading = true;
               await this.env.deleteBookmark(bookmark.text);
-              const index = this.bookmarks.findIndex(x => x.text === bookmark.text);
+              const index = this.env.viewingBookmarks.findIndex(x => x.text === bookmark.text);
               if (index != -1) {
-                this.bookmarks.splice(index, 1);
+                this.env.viewingBookmarks.splice(index, 1);
               }
               const newBookmark = await this.env.saveBookmark(bookmark.text, data.tag);
-              this.bookmarks.unshift(newBookmark);
-              this.bookmarks.sort((a, b) => {
+              this.env.viewingBookmarks.unshift(newBookmark);
+              this.env.viewingBookmarks.sort((a, b) => {
                 return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
               });
-              this.isLoadingText = false;
+              this.isLoading = false;
             }
           }
         ]
@@ -381,9 +387,9 @@ export class HistoryPage {
       this.deleteToast = null;
     }
     await this.env.deleteScanRecord(record.id);
-    const index = this.scanRecords.findIndex(x => x.id === record.id);
+    const index = this.env.viewingScanRecords.findIndex(x => x.id === record.id);
     if (index != -1) {
-      this.scanRecords.splice(index, 1);
+      this.env.viewingScanRecords.splice(index, 1);
     }
     this.deleteToast = await this.toastController.create({
       message: this.translate.instant('MSG.UNDO_DELETE'),
@@ -396,7 +402,7 @@ export class HistoryPage {
           side: 'end',
           handler: async () => {
             await this.env.undoScanRecordDeletion(record);
-            this.scanRecords.splice(index, 0, record);
+            this.env.viewingScanRecords.splice(index, 0, record);
             this.deleteToast.dismiss();
           }
         }
@@ -417,7 +423,9 @@ export class HistoryPage {
             text: this.translate.instant('YES'),
             handler: async () => {
               await this.env.deleteAllScanRecords();
-              this.scanRecords.length = 0;
+              this.isLoading = true;
+              this.env.viewingScanRecords = [];
+              this.isLoading = false;
             }
           },
           {
@@ -437,7 +445,9 @@ export class HistoryPage {
             text: this.translate.instant('YES'),
             handler: async () => {
               await this.env.deleteAllBookmarks();
-              this.bookmarks.length = 0;
+              this.isLoading = true;
+              this.env.viewingBookmarks = [];
+              this.isLoading = false;
             }
           },
           {
@@ -451,7 +461,12 @@ export class HistoryPage {
   }
 
   goSetting() {
-    this.router.navigate(['setting-record']);
+    this.isLoading = true;
+    this.env.viewingScanRecords = [];
+    this.env.viewingBookmarks = [];
+    setTimeout(
+      async () => await this.router.navigate(['setting-record']), 200
+    )
   }
 
   async presentAlert(msg: string, head: string, buttonText: string, buttonless: boolean = false): Promise<HTMLIonAlertElement> {

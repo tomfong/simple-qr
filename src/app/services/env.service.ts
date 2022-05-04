@@ -56,6 +56,8 @@ export class EnvService {
   private _scannedDataFormat: string = '';
   private _scanRecords: ScanRecord[] = [];
   private _bookmarks: Bookmark[] = [];
+  viewingScanRecords: ScanRecord[] = [];
+  viewingBookmarks: Bookmark[] = [];
   private _deviceInfo: DeviceInfo | undefined = undefined;
 
   constructor(
