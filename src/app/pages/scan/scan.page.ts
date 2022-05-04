@@ -31,34 +31,12 @@ export class ScanPage {
     public loadingController: LoadingController,
     public routerOutlet: IonRouterOutlet,
     private router: Router,
-    private env: EnvService,
+    public env: EnvService,
     public translate: TranslateService,
     private platform: Platform,
-  ) {
-    if (this.platform.is('android')) {
-      this.platform.backButton.subscribeWithPriority(-1, async () => {
-        if (!this.routerOutlet.canGoBack()) {
-          if (this.router.url?.startsWith("/tabs/result")) {
-            if (this.env.viewResultFrom != null) {
-              const from = this.env.viewResultFrom;
-              this.router.navigate([`${from}`], { replaceUrl: true });
-            }
-          } else {
-            if (this.router.url?.startsWith("/tabs")) {
-              if (this.router.url != "/tabs/scan") {
-                this.router.navigate(['/tabs/scan'], { replaceUrl: true });
-              } else {
-                await this.confirmExitApp();
-              }
-            }
-          }
-        }
-      });
-    }
-  }
+  ) { }
 
   async ionViewDidEnter(): Promise<void> {
-    await SplashScreen.hide();
     await BarcodeScanner.disableTorch().then(
       _ => {
         this.flashActive = false;
@@ -76,24 +54,6 @@ export class ScanPage {
     await this.stopScanner();
   }
 
-  async loadPatchNote() {
-    const storageKey = this.platform.is('ios') ? this.env.IOS_PATCH_NOTE_STORAGE_KEY : this.env.AN_PATCH_NOTE_STORAGE_KEY;
-    await this.env.storageGet(storageKey).then(
-      async value => {
-        if (value != null) {
-          this.env.notShowUpdateNotes = (value === 'yes' ? true : false);
-        } else {
-          this.env.notShowUpdateNotes = false;
-        }
-        await this.env.storageSet(storageKey, 'yes');
-        if (this.env.notShowUpdateNotes === false) {
-          this.env.notShowUpdateNotes = true;
-          await this.showUpdateNotes();
-        }
-      }
-    );
-  }
-
   async stopScanner(): Promise<void> {
     await BarcodeScanner.stopScan();
     this.cameraActive = false;
@@ -102,7 +62,6 @@ export class ScanPage {
   async prepareScanner(): Promise<void> {
     const result = await BarcodeScanner.checkPermission({ force: true });
     if (result.granted) {
-      await this.loadPatchNote();
       await this.scanQr();
     } else {
       this.permissionAlert?.dismiss();
@@ -231,62 +190,4 @@ export class ScanPage {
       await Haptics.impact({ style: ImpactStyle.Medium });
     }
   }
-
-  async showUpdateNotes() {
-    const alert = await this.alertController.create({
-      header: this.translate.instant("UPDATE_NOTES"),
-      subHeader: this.env.appVersionNumber,
-      message: this.platform.is('ios') ? this.translate.instant("UPDATE.UPDATE_NOTES_IOS") : this.translate.instant("UPDATE.UPDATE_NOTES_ANDROID"),
-      buttons: [
-        {
-          text: this.translate.instant("OK"),
-          handler: () => true,
-        },
-        {
-          text: this.translate.instant("GO_STORE_RATE"),
-          handler: () => {
-            if (this.platform.is('android')) {
-              this.openGooglePlay();
-            } else if (this.platform.is('ios')) {
-              this.openAppStore();
-            }
-          }
-        }
-      ],
-      cssClass: ['left-align', 'alert-bg']
-    });
-    await alert.present();
-  }
-
-  openGooglePlay(): void {
-    window.open(this.env.GOOGLE_PLAY_URL, '_system');
-  }
-
-  openAppStore(): void {
-    window.open(this.env.APP_STORE_URL, '_system');
-  }
-
-  async confirmExitApp(): Promise<void> {
-    const alert = await this.alertController.create({
-      header: this.translate.instant('EXIT_APP'),
-      message: this.translate.instant('MSG.EXIT_APP'),
-      cssClass: ['alert-bg'],
-      buttons: [
-        {
-          text: this.translate.instant('EXIT'),
-          handler: () => {
-            navigator['app'].exitApp();
-          }
-        },
-        {
-          text: this.translate.instant('GO_STORE_RATE'),
-          handler: () => {
-            this.openGooglePlay();
-          }
-        }
-      ]
-    });
-    await alert.present();
-  }
-
 }

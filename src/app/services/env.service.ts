@@ -21,6 +21,8 @@ export class EnvService {
 
   public appVersionNumber: string = '1.0.0';
 
+  public startPage: "/tabs/scan" | "/tabs/generate" | "/tabs/import-image" | "/tabs/history" | "/tabs/setting" = "/tabs/scan";
+  public startPageHeader: 'on' | 'off' = 'on';
   public languages: string[] = ['en', 'zh-HK', 'zh-CN'];
   public language: 'en' | 'zh-HK' | 'zh-CN' = 'en';
   public selectedLanguage: 'default' | 'en' | 'zh-HK' | 'zh-CN' = 'default';
@@ -64,6 +66,8 @@ export class EnvService {
   recordSource: 'create' | 'view' | 'scan';
   viewResultFrom: '/tabs/scan' | '/tabs/import-image' | '/tabs/generate' | '/tabs/history';
 
+  public firstAppLoad: boolean = true;  // once loaded, turn it false
+
   constructor(
     private platform: Platform,
     private storage: Storage,
@@ -81,12 +85,30 @@ export class EnvService {
   }
 
   private async init() {
+    const storage = await this.storage.create();
+    await storage.get("start-page").then(
+      value => {
+        if (value != null) {
+          this.startPage = value;
+        } else {
+          this.startPage = '/tabs/scan';
+        }
+      }
+    );
     this._deviceInfo = await Device.getInfo();
     this.appVersionNumber = await this.appVersion.getVersionNumber();
-    const storage = await this.storage.create();
     this._storage = storage;
     if (this.platform.is('android')) this._storage.remove(this.AN_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
     if (this.platform.is('ios')) this._storage.remove(this.IOS_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
+    this.storageGet("start-page-header").then(
+      async value => {
+        if (value !== null && value !== undefined) {
+          this.startPageHeader = value;
+        } else {
+          this.startPageHeader = 'on';
+        }
+      }
+    );
     this.storageGet("language").then(
       async value => {
         if (value !== null && value !== undefined) {
@@ -257,6 +279,8 @@ export class EnvService {
 
   public async resetAll() {
     await this._storage.clear();
+    this.startPage = '/tabs/scan';
+    this.startPageHeader = 'on';
     this.selectedLanguage = 'default';
     this.toggleLanguageChange();
     this.selectedColorTheme = 'default';
@@ -282,6 +306,12 @@ export class EnvService {
   }
 
   public async resetSetting() {
+    this.startPage = '/tabs/scan';
+    await this.storageSet("start-page", this.startPage);
+
+    this.startPageHeader = 'on';
+    await this.storageSet("start-page-header", this.startPage);
+
     this.selectedLanguage = 'default';
     this.toggleLanguageChange();
     await this.storageSet("language", this.selectedLanguage);

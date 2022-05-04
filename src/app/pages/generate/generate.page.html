@@ -1,7 +1,16 @@
 <ion-header>
-  <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'">
-    <ion-title>{{ 'CREATE_QRCODE' | translate }}</ion-title>
-  </ion-toolbar>
+  <div *ngIf="env.startPage == '/tabs/generate' && env.startPageHeader == 'on'; then mainHeader else selfHeader">
+  </div>
+  <ng-template #mainHeader>
+    <ion-toolbar color="primary">
+      <ion-title>{{ 'SIMPLE_QR' | translate}}</ion-title>
+    </ion-toolbar>
+  </ng-template>
+  <ng-template #selfHeader>
+    <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'">
+      <ion-title>{{ 'CREATE_QRCODE' | translate }}</ion-title>
+    </ion-toolbar>
+  </ng-template>
 </ion-header>
 
 <ion-content #content>
@@ -512,8 +521,7 @@
     <ion-button (click)="tapHaptic(); clear()" [color]="'danger'" fill="clear">
       {{ 'CLEAR' | translate }}
     </ion-button>
-    <ion-button (click)="tapHaptic(); goGenerate()" [color]="'primary'" fill="clear"
-      [disabled]="disableGenerateBtn">
+    <ion-button (click)="tapHaptic(); goGenerate()" [color]="'primary'" fill="clear" [disabled]="disableGenerateBtn">
       {{ 'CREATE' | translate }}
     </ion-button>
   </ion-row>
