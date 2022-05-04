@@ -49,10 +49,10 @@ export class EnvService {
   public readonly GOOGLE_PLAY_URL: string = "https://play.google.com/store/apps/details?id=com.tomfong.simpleqr";
   public readonly APP_STORE_URL: string = "https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553";
   public readonly PRIVACY_POLICY: string = "https://www.privacypolicies.com/live/771b1123-99bb-4bfe-815e-1046c0437a0f";
-  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20300";
-  public readonly IOS_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20301";
-  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20400";
-  public readonly IOS_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20400";
+  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20400";
+  public readonly IOS_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20400";
+  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20500";
+  public readonly IOS_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20500";
 
   private _storage: Storage | null = null;
   private _scannedData: string = '';
@@ -85,6 +85,7 @@ export class EnvService {
   }
 
   private async init() {
+    this.appVersionNumber = await this.appVersion.getVersionNumber();
     const storage = await this.storage.create();
     await storage.get("start-page").then(
       value => {
@@ -96,7 +97,6 @@ export class EnvService {
       }
     );
     this._deviceInfo = await Device.getInfo();
-    this.appVersionNumber = await this.appVersion.getVersionNumber();
     this._storage = storage;
     if (this.platform.is('android')) this._storage.remove(this.AN_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
     if (this.platform.is('ios')) this._storage.remove(this.IOS_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
