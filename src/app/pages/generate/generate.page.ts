@@ -101,39 +101,7 @@ export class GeneratePage {
     public alertController: AlertController,
     public loadingController: LoadingController,
     private router: Router,
-  ) {
-    // this.freeTxtText = this.translate.instant("FREE_TEXT");
-    // this.urlText = this.translate.instant("URL");
-    // this.contactText = this.translate.instant("VCARD_CONTACT");
-    // this.phoneText = this.translate.instant("PHONE");
-    // this.smsText = this.translate.instant("SMS");
-    // this.emailW3CText = this.translate.instant("EMAIL_W3C");
-
-    // this.wifiText = this.translate.instant("WIFI");
-    // this.contentTypes = [
-    //   { text: this.freeTxtText, value: 'freeText' },
-    //   { text: this.emailW3CText, value: 'emailW3C' },
-    //   { text: this.phoneText, value: 'phone' },
-    //   { text: this.smsText, value: 'sms' },
-    //   { text: this.urlText, value: 'url' },
-    //   { text: this.contactText, value: 'contact' },
-    //   { text: this.wifiText, value: 'wifi' },
-    // ];
-    // this.noneGenderText = this.translate.instant("NOT_TO_DISCLOSE");
-    // this.maleText = this.translate.instant("MALE");
-    // this.femaleText = this.translate.instant("FEMALE");
-    // this.genders = [
-    //   { text: this.noneGenderText, value: "O" },
-    //   { text: this.maleText, value: "M" },
-    //   { text: this.femaleText, value: "F" },
-    // ]
-    // this.noneWifiEncText = this.translate.instant("NONE");
-    // this.wifiEncryptions = [
-    //   { text: this.noneWifiEncText, value: "nopass" },
-    //   { text: this.wepText, value: "WEP" },
-    //   { text: this.wpaText, value: "WPA" },
-    // ];
-  }
+  ) { }
 
   ionViewDidEnter() {
     this.freeTxtText = this.translate.instant("FREE_TEXT");
