@@ -30,6 +30,8 @@ export class QrCodePage {
 
   qrImageDataUrl: string;
 
+  currentBrightness: number = 0;
+
   constructor(
     private translate: TranslateService,
     public env: EnvService,
@@ -47,6 +49,7 @@ export class QrCodePage {
     this.platform.ready().then(async () => {
       if (this.screenOrientation.type.startsWith(this.screenOrientation.ORIENTATIONS.LANDSCAPE)) {
         this.presentToast(this.translate.instant("MSG.PORTRAIT_ONLY"), "short", "bottom");
+        this.screenOrientation.unlock();
       }
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
       if (this.qrcodeElement != null) {
@@ -54,6 +57,11 @@ export class QrCodePage {
         this.qrcodeElement.createQRCode();
       }
       if (this.env.autoMaxBrightness === 'on') {
+        await ScreenBrightness.getBrightness().then(
+          value => {
+            this.currentBrightness = value.brightness
+          }
+        )
         await ScreenBrightness.setBrightness({ brightness: 1.0 }).catch(
           err => {
             if (this.env.isDebugging) {
@@ -80,13 +88,23 @@ export class QrCodePage {
           })
           this.modal.onDidDismiss().then(
             async _ => {
-              await ScreenBrightness.setBrightness({ brightness: -1 }).catch(
-                err => {
-                  if (this.env.isDebugging) {
-                    this.presentToast("Err when ScreenBrightness.setBrightness -1: " + JSON.stringify(err), "long", "top");
+              if (this.platform.is('android')) {
+                await ScreenBrightness.setBrightness({ brightness: -1 }).catch(
+                  err => {
+                    if (this.env.isDebugging) {
+                      this.presentToast("Err when ScreenBrightness.setBrightness -1: " + JSON.stringify(err), "long", "top");
+                    }
                   }
-                }
-              )
+                )
+              } else if (this.platform.is('ios')) {
+                await ScreenBrightness.setBrightness({ brightness: this.currentBrightness }).catch(
+                  err => {
+                    if (this.env.isDebugging) {
+                      this.presentToast(`Err when ScreenBrightness.setBrightness ${this.currentBrightness}: ` + JSON.stringify(err), "long", "top");
+                    }
+                  }
+                )
+              }
               await this.env.toggleOrientationChange();
             }
           );

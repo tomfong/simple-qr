@@ -11,6 +11,7 @@ import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Toast } from '@capacitor/toast';
 import { BookmarkTutorialPage } from 'src/app/modals/bookmark-tutorial/bookmark-tutorial.page';
 import { fastFadeIn, flyOut } from 'src/app/utils/animations';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
   selector: 'app-history',
@@ -91,6 +92,7 @@ export class HistoryPage {
   }
 
   async ionViewDidEnter() {
+    SplashScreen.hide()
     if (this.segmentModel == 'history') {
       if (this.env.notShowHistoryTutorial === false) {
         this.env.notShowHistoryTutorial = true;

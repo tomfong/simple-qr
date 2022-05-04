@@ -5,6 +5,7 @@ import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 import { AlertController, LoadingController, Platform, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
   selector: 'app-setting',
@@ -23,6 +24,10 @@ export class SettingPage {
     private platform: Platform,
   ) { 
     
+  }
+
+  ionViewDidEnter() {
+    SplashScreen.hide()
   }
 
   get isAndroid(): boolean {

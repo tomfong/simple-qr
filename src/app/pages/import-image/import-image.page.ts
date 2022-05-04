@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Toast } from '@capacitor/toast';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
   selector: 'app-import-image',
@@ -24,6 +25,10 @@ export class ImportImagePage {
     private toastController: ToastController,
     private router: Router,
   ) { }
+
+  ionViewDidEnter() {
+    SplashScreen.hide()
+  }
 
   async importImage() {
     const getPictureLoading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));

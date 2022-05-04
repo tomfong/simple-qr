@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import { EnvService } from 'src/app/services/env.service';
 import { Toast } from '@capacitor/toast';
 import { fadeIn } from 'src/app/utils/animations';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
   selector: 'app-generate',
@@ -104,6 +105,7 @@ export class GeneratePage {
   ) { }
 
   ionViewDidEnter() {
+    SplashScreen.hide()
     this.freeTxtText = this.translate.instant("FREE_TEXT");
     this.urlText = this.translate.instant("URL");
     this.contactText = this.translate.instant("VCARD_CONTACT");

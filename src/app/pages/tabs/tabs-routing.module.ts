@@ -30,17 +30,12 @@ const routes: Routes = [
       {
         path: 'import-image',
         loadChildren: () => import('../import-image/import-image.module').then( m => m.ImportImagePageModule)
-      },
-      {
-        path: '',
-        redirectTo: '/tabs/scan',
-        pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/scan',
+    redirectTo: '/tabs',
     pathMatch: 'full'
   }
 ];
