@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 import { Bookmark } from '../models/bookmark';
 import { ScanRecord } from '../models/scan-record';
 import { Toast } from '@capacitor/toast';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -203,9 +204,12 @@ export class EnvService {
           try {
             this._bookmarks = JSON.parse(value);
             this._bookmarks.forEach(
-              t => {
-                const tCreatedAt = t.createdAt;
-                t.createdAt = new Date(tCreatedAt);
+              b => {
+                if (b.id == null) {
+                  b.id = uuidv4();
+                }
+                const tCreatedAt = b.createdAt;
+                b.createdAt = new Date(tCreatedAt);
               }
             );
             this._bookmarks.sort((a, b) => {
@@ -378,9 +382,12 @@ export class EnvService {
       }
     );
     this._bookmarks.forEach(
-      t => {
-        const tCreatedAt = t.createdAt;
-        t.createdAt = new Date(tCreatedAt);
+      b => {
+        if (b.id == null) {
+          b.id = uuidv4();
+        }
+        const tCreatedAt = b.createdAt;
+        b.createdAt = new Date(tCreatedAt);
       }
     );
     this._bookmarks.sort((a, b) => {
@@ -419,6 +426,7 @@ export class EnvService {
     if (index === -1) {
       const bookmark = new Bookmark();
       const date = new Date();
+      bookmark.id = uuidv4();
       bookmark.text = value;
       bookmark.createdAt = date;
       bookmark.tag = tag;

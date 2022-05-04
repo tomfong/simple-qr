@@ -24,6 +24,6 @@ export const fadeOut = trigger('outAnimation', [
 export const flyOut = trigger('flyOut', [
     transition(':leave', [
         style({ opacity: 1 }),
-        animate('{{duration}}ms ease-in', style({ transform: 'translateX(-80%)', opacity: 0 }))
+        animate('.5s ease-in', style({ transform: 'translateX(-100%)', opacity: 0 }))
     ])
 ])

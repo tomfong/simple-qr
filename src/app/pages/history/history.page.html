@@ -1,9 +1,5 @@
 <ion-header>
   <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'">
-    <!-- <ion-buttons slot="start">
-      <ion-back-button defaultHref="scan" [icon]="'arrow-back'">
-      </ion-back-button>
-    </ion-buttons> -->
     <ion-title *ngIf="segmentModel === 'history'">{{ 'LOG' | translate }}</ion-title>
     <ion-title *ngIf="segmentModel === 'bookmarks'">{{ 'BOOKMARKS' | translate }}</ion-title>
   </ion-toolbar>
@@ -20,7 +16,7 @@
   </ion-segment>
   <ng-container *ngIf="isLoading">
     <ion-list>
-      <ng-container *ngFor="let _ of ['', '', '', '', '', '', '']; index as i">
+      <ng-container *ngFor="let _ of dummyArr">
         <ion-item class="ion-no-padding ripple-parent" detail="false" [lines]="'full'">
           <ion-label class="ion-padding-start">
             <div class="ion-padding">
@@ -65,51 +61,52 @@
   <ng-container
     *ngIf="segmentModel === 'history' && env.viewingScanRecords && env.viewingScanRecords.length > 0 && !isLoading">
     <ion-list>
-      <ion-item-sliding *ngFor="let record of env.viewingScanRecords; index as i" #slidingItem [@fastInAnimation]
-        [@flyOut]="isLoading ? {value:'', params:{duration : 0}} : {value:'', params:{duration : 500}}">
-        <ion-item class="ion-no-padding ripple-parent" detail="false"
-          [lines]="i === env.viewingScanRecords.length - 1? 'none' : 'full'" (click)="viewRecord(record.text)">
-          <ion-label class="ion-padding-start">
-            <div class="ion-padding" style="overflow-x: clip; text-overflow: ellipsis;">
-              <p *ngIf="env.debugMode === 'on'">
-                <ion-text color="medium">
-                  Index {{ i }}
-                </ion-text>
-              </p>
-              <p>
-                <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-                  {{ record.text }}
-                </ion-text>
-              </p>
-              <p *ngIf="env.debugMode === 'on'">
-                <ion-text color="medium">
-                  {{ record.id }}
-                </ion-text>
-              </p>
-              <p>
-                <ion-text color="medium">
-                  {{ maskDatetimeAndSource(record.createdAt, record.source) }}
-                </ion-text>
-              </p>
-              <ion-badge *ngIf="record.barcodeType" class="my-1" color="primary">
-                <div class="d-flex align-items-center">
-                  <span>{{ getBarcodeFormat(record.barcodeType) }}</span>
-                </div>
-              </ion-badge>
-            </div>
-          </ion-label>
-        </ion-item>
-        <ion-item-options side="start">
-          <ion-item-option [color]="'primary'" expandable (click)="addBookmark(record, slidingItem)">
-            <ion-icon slot="icon-only" name="star"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
-        <ion-item-options side="end">
-          <ion-item-option color="danger" expandable (click)="removeRecord(record, slidingItem)">
-            <ion-icon slot="icon-only" name="trash-bin"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
+      <ng-container *ngFor="let record of env.viewingScanRecords; trackBy: scanRecordsTrackByFn; index as i;">
+        <ion-item-sliding #slidingItem [@fastInAnimation] [@flyOut]>
+          <ion-item class="ion-no-padding ripple-parent" detail="false"
+            [lines]="i === env.viewingScanRecords.length - 1? 'none' : 'full'" (click)="viewRecord(record.text)">
+            <ion-label class="ion-padding-start">
+              <div class="ion-padding" style="overflow-x: clip; text-overflow: ellipsis;">
+                <p *ngIf="env.debugMode === 'on'">
+                  <ion-text color="medium">
+                    Index {{ i }}
+                  </ion-text>
+                </p>
+                <p>
+                  <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+                    {{ record.text }}
+                  </ion-text>
+                </p>
+                <p *ngIf="env.debugMode === 'on'">
+                  <ion-text color="medium">
+                    {{ record.id }}
+                  </ion-text>
+                </p>
+                <p>
+                  <ion-text color="medium">
+                    {{ maskDatetimeAndSource(record.createdAt, record.source) }}
+                  </ion-text>
+                </p>
+                <ion-badge *ngIf="record.barcodeType" class="my-1" color="primary">
+                  <div class="d-flex align-items-center">
+                    <span>{{ getBarcodeFormat(record.barcodeType) }}</span>
+                  </div>
+                </ion-badge>
+              </div>
+            </ion-label>
+          </ion-item>
+          <ion-item-options side="start">
+            <ion-item-option [color]="'primary'" expandable (click)="addBookmark(record, slidingItem)">
+              <ion-icon slot="icon-only" name="star"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+          <ion-item-options side="end">
+            <ion-item-option color="danger" expandable (click)="removeRecord(record, slidingItem)">
+              <ion-icon slot="icon-only" name="trash-bin"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ng-container>
     </ion-list>
     <ion-infinite-scroll threshold="100px" (ionInfinite)="onLoadScanRecords($event)">
       <ion-infinite-scroll-content [loadingText]="'LOADING_DATA' | translate">
@@ -130,48 +127,53 @@
   <ng-container
     *ngIf="segmentModel === 'bookmarks' && env.viewingBookmarks && env.viewingBookmarks.length > 0 && !isLoading">
     <ion-list>
-      <ion-item-sliding *ngFor="let bookmark of env.viewingBookmarks; index as i" #slidingItem [@fastInAnimation]
-        [@flyOut]="isLoading ? {value:'', params:{duration : 0}} : {value:'', params:{duration : 500}}">
-        <ion-item class="ion-no-padding ripple-parent" detail="false"
-          [lines]="i === env.viewingBookmarks.length - 1? 'none' : 'full'" (click)="viewRecord(bookmark.text)">
-          <ion-label class="ion-padding-start">
-            <div class="ion-padding">
-              <p *ngIf="env.debugMode === 'on'">
-                <ion-text color="medium">
-                  Index {{ i }}
-                </ion-text>
-              </p>
-              <p style="overflow-x: clip; text-overflow: ellipsis;">
-                <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-                  {{ bookmark.tag? bookmark.tag : '-' }}
-                </ion-text>
-              </p>
-              <p>
-                <ion-text [color]="'medium'">
-                  {{ bookmark.text }}
-                </ion-text>
-              </p>
-            </div>
-          </ion-label>
-        </ion-item>
-        <ion-item-options side="start">
-          <ion-item-option [color]="'primary'" expandable (click)="editBookmark(bookmark, slidingItem)">
-            <ion-icon slot="icon-only" name="pencil"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
-        <ion-item-options side="end">
-          <ion-item-option color="danger" expandable (click)="removeBookmark(bookmark, slidingItem)">
-            <ion-icon slot="icon-only" name="trash-bin"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
+      <ng-container *ngFor="let bookmark of env.viewingBookmarks; trackBy: bookmarksTrackByFn; index as i">
+        <ion-item-sliding #slidingItem [@fastInAnimation] [@flyOut]>
+          <ion-item class="ion-no-padding ripple-parent" detail="false"
+            [lines]="i === env.viewingBookmarks.length - 1? 'none' : 'full'" (click)="viewRecord(bookmark.text)">
+            <ion-label class="ion-padding-start">
+              <div class="ion-padding">
+                <p *ngIf="env.debugMode === 'on'">
+                  <ion-text color="medium">
+                    Index {{ i }}
+                  </ion-text>
+                </p>
+                <p style="overflow-x: clip; text-overflow: ellipsis;">
+                  <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+                    {{ bookmark.tag? bookmark.tag : '-' }}
+                  </ion-text>
+                </p>
+                <p>
+                  <ion-text [color]="'medium'">
+                    {{ bookmark.text }}
+                  </ion-text>
+                </p>
+                <p *ngIf="env.debugMode === 'on'">
+                  <ion-text color="medium">
+                    {{ bookmark.id }}
+                  </ion-text>
+                </p>
+              </div>
+            </ion-label>
+          </ion-item>
+          <ion-item-options side="start">
+            <ion-item-option [color]="'primary'" expandable (click)="editBookmark(bookmark, slidingItem)">
+              <ion-icon slot="icon-only" name="pencil"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+          <ion-item-options side="end">
+            <ion-item-option color="danger" expandable (click)="removeBookmark(bookmark, slidingItem)">
+              <ion-icon slot="icon-only" name="trash-bin"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ng-container>
     </ion-list>
     <ion-infinite-scroll threshold="100px" (ionInfinite)="onLoadBookmarks($event)">
       <ion-infinite-scroll-content [loadingText]="'LOADING_DATA' | translate">
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </ng-container>
-
 </ion-content>
 
 <ion-footer

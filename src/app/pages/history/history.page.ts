@@ -1,13 +1,13 @@
-import { Component, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, IonItemSliding, LoadingController, ModalController, Platform, PopoverController, ToastController } from '@ionic/angular';
+import { AlertController, IonItemSliding, LoadingController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { EnvService } from 'src/app/services/env.service';
 import * as moment from 'moment';
 import { ScanRecord } from 'src/app/models/scan-record';
 import { TranslateService } from '@ngx-translate/core';
 import { Bookmark } from 'src/app/models/bookmark';
 import { HistoryTutorialPage } from 'src/app/modals/history-tutorial/history-tutorial.page';
-import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Toast } from '@capacitor/toast';
 import { BookmarkTutorialPage } from 'src/app/modals/bookmark-tutorial/bookmark-tutorial.page';
 import { fastFadeIn, flyOut } from 'src/app/utils/animations';
@@ -24,8 +24,7 @@ export class HistoryPage {
 
   deleteToast: HTMLIonToastElement;
 
-  // scanRecords: ScanRecord[] = [];
-  // bookmarks: Bookmark[] = [];
+  dummyArr = Array.from(Array(10).keys());
 
   isLoading: boolean = false;
 
@@ -38,7 +37,8 @@ export class HistoryPage {
     public translate: TranslateService,
     public modalController: ModalController,
     public popoverController: PopoverController,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private changeDetectorRef: ChangeDetectorRef
   ) {
     this.route.params.subscribe(val => {
       setTimeout(() => this.firstLoadItems(), 200);
@@ -73,7 +73,7 @@ export class HistoryPage {
       if (this.env.viewingScanRecords.length === this.env.scanRecords.length) {
         ev.target.disabled = true;
       }
-    }, 300);
+    }, 500);
   }
 
   onLoadBookmarks(ev: any) {
@@ -83,7 +83,7 @@ export class HistoryPage {
       if (this.env.viewingBookmarks.length === this.env.bookmarks.length) {
         ev.target.disabled = true;
       }
-    }, 300);
+    }, 500);
   }
 
   ionViewWillEnter() {
@@ -107,15 +107,23 @@ export class HistoryPage {
   }
 
   ionViewWillLeave() {
+    this.changeDetectorRef.detach();
+    this.env.viewingScanRecords = [];
+    this.env.viewingBookmarks = [];
+    this.changeDetectorRef.detectChanges();
+    this.changeDetectorRef.reattach();
     if (this.deleteToast) {
       this.deleteToast.dismiss();
       this.deleteToast = undefined;
     }
   }
 
-  ionViewDidLeave() {
-    this.env.viewingScanRecords = [];
-    this.env.viewingBookmarks = [];
+  scanRecordsTrackByFn(index: number, record: ScanRecord): string {
+    return record.id;
+  }
+
+  bookmarksTrackByFn(index: number, bookmark: Bookmark): string {
+    return bookmark.id;
   }
 
   async showHistoryTutorial() {
@@ -212,21 +220,19 @@ export class HistoryPage {
 
   async viewRecord(data: string): Promise<void> {
     this.isLoading = true;
-    this.env.viewingScanRecords = [];
+    this.changeDetectorRef.detach();
     this.env.viewingScanRecords = [];
     this.env.viewingBookmarks = [];
+    this.changeDetectorRef.detectChanges();
+    this.changeDetectorRef.reattach();
     const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
     this.env.result = data;
     this.env.resultFormat = "";
-    setTimeout(
+    this.router.navigate(['tabs/result', { from: 'history', t: new Date().getTime() }], { state: { source: 'view' } }).then(
       () => {
-        this.router.navigate(['tabs/result', { from: 'history', t: new Date().getTime() }], { state: { source: 'view' } }).then(
-          () => {
-            loading.dismiss();
-          }
-        );
-      }, 200
-    )
+        loading.dismiss();
+      }
+    );
   }
 
   async segmentChanged(ev: any) {
@@ -305,7 +311,7 @@ export class HistoryPage {
       this.deleteToast = null;
     }
     await this.env.deleteBookmark(bookmark.text);
-    const index = this.env.viewingBookmarks.findIndex(x => x.text === bookmark.text);
+    const index = this.env.viewingBookmarks.findIndex(x => x.text == bookmark.text);
     if (index != -1) {
       this.env.viewingBookmarks.splice(index, 1);
     }
@@ -387,7 +393,7 @@ export class HistoryPage {
       this.deleteToast = null;
     }
     await this.env.deleteScanRecord(record.id);
-    const index = this.env.viewingScanRecords.findIndex(x => x.id === record.id);
+    const index = this.env.viewingScanRecords.findIndex(x => x.id == record.id);
     if (index != -1) {
       this.env.viewingScanRecords.splice(index, 1);
     }
@@ -462,11 +468,12 @@ export class HistoryPage {
 
   goSetting() {
     this.isLoading = true;
+    this.changeDetectorRef.detach();
     this.env.viewingScanRecords = [];
     this.env.viewingBookmarks = [];
-    setTimeout(
-      async () => await this.router.navigate(['setting-record']), 200
-    )
+    this.changeDetectorRef.detectChanges();
+    this.changeDetectorRef.reattach();
+    this.router.navigate(['setting-record']);
   }
 
   async presentAlert(msg: string, head: string, buttonText: string, buttonless: boolean = false): Promise<HTMLIonAlertElement> {
