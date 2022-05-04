@@ -292,7 +292,9 @@ export class GeneratePage {
     this.env.result = this.qrCodeContent;
     this.env.resultFormat = "";
     this.qrCodeContent = '';
-    this.router.navigate(['tabs/result', { from: 'generate', t: new Date().getTime() }], { state: { source: 'create' } }).then(
+    this.env.recordSource = "create";
+    this.env.viewResultFrom = "/tabs/generate";
+    this.router.navigate(['tabs/result']).then(
       () => {
         loading.dismiss();
       }

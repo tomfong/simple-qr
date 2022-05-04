@@ -61,6 +61,9 @@ export class EnvService {
   viewingBookmarks: Bookmark[] = [];
   private _deviceInfo: DeviceInfo | undefined = undefined;
 
+  recordSource: 'create' | 'view' | 'scan';
+  viewResultFrom: '/tabs/scan' | '/tabs/import-image' | '/tabs/generate' | '/tabs/history';
+
   constructor(
     private platform: Platform,
     private storage: Storage,
@@ -343,15 +346,17 @@ export class EnvService {
     return this._scanRecords;
   }
 
-  async saveScanRecord(value: string, source: 'create' | 'view' |'scan'): Promise<void> {
+  async saveScanRecord(value: string): Promise<void> {
     const record = new ScanRecord();
     const date = new Date();
     record.id = String(date.getTime());
     record.text = value;
     record.createdAt = date;
-    record.source = source;
-    if (source === 'scan') {
-      record.barcodeType = this._scannedDataFormat;
+    if (this.recordSource != null) {
+      record.source = this.recordSource;
+      if (this.recordSource == 'scan') {
+        record.barcodeType = this._scannedDataFormat;
+      }
     }
     this._scanRecords.unshift(record);
     await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));

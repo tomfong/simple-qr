@@ -1,8 +1,8 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { BarcodeScanner, ScanResult } from '@capacitor-community/barcode-scanner';
 import { SplashScreen } from '@capacitor/splash-screen';
-import { AlertController, IonContent, IonRouterOutlet, LoadingController, ModalController, Platform, ToastController } from '@ionic/angular';
+import { AlertController, IonRouterOutlet, LoadingController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
@@ -33,21 +33,15 @@ export class ScanPage {
     private router: Router,
     private env: EnvService,
     public translate: TranslateService,
-    private toastController: ToastController,
     private platform: Platform,
   ) {
     if (this.platform.is('android')) {
       this.platform.backButton.subscribeWithPriority(-1, async () => {
         if (!this.routerOutlet.canGoBack()) {
           if (this.router.url?.startsWith("/tabs/result")) {
-            const urlSeg = this.router.url?.split(";")
-            if (urlSeg.length > 1) {
-              if (urlSeg[1].startsWith("from=")) {
-                const from = urlSeg[1].substring(5);
-                if (from.length > 0) {
-                  this.router.navigate([`/tabs/${from}`], { replaceUrl: true });
-                }
-              }
+            if (this.env.viewResultFrom != null) {
+              const from = this.env.viewResultFrom;
+              this.router.navigate([`${from}`], { replaceUrl: true });
             }
           } else {
             if (this.router.url?.startsWith("/tabs")) {
@@ -83,7 +77,7 @@ export class ScanPage {
   }
 
   async loadPatchNote() {
-    const storageKey = this.platform.is('ios')? this.env.IOS_PATCH_NOTE_STORAGE_KEY : this.env.AN_PATCH_NOTE_STORAGE_KEY;
+    const storageKey = this.platform.is('ios') ? this.env.IOS_PATCH_NOTE_STORAGE_KEY : this.env.AN_PATCH_NOTE_STORAGE_KEY;
     await this.env.storageGet(storageKey).then(
       async value => {
         if (value != null) {
@@ -97,7 +91,7 @@ export class ScanPage {
           await this.showUpdateNotes();
         }
       }
-    );   
+    );
   }
 
   async stopScanner(): Promise<void> {
@@ -169,7 +163,9 @@ export class ScanPage {
   async processQrCode(scannedData: string, format: string, loading: HTMLIonLoadingElement): Promise<void> {
     this.env.result = scannedData;
     this.env.resultFormat = format;
-    this.router.navigate(['tabs/result', { from: 'scan', t: new Date().getTime() }], { state: { source: 'scan' }}).then(
+    this.env.recordSource = "scan";
+    this.env.viewResultFrom = "/tabs/scan";
+    this.router.navigate(['tabs/result']).then(
       () => {
         loading.dismiss();
       }
@@ -240,14 +236,14 @@ export class ScanPage {
     const alert = await this.alertController.create({
       header: this.translate.instant("UPDATE_NOTES"),
       subHeader: this.env.appVersionNumber,
-      message: this.platform.is('ios')? this.translate.instant("UPDATE.UPDATE_NOTES_IOS") : this.translate.instant("UPDATE.UPDATE_NOTES_ANDROID"),
+      message: this.platform.is('ios') ? this.translate.instant("UPDATE.UPDATE_NOTES_IOS") : this.translate.instant("UPDATE.UPDATE_NOTES_ANDROID"),
       buttons: [
         {
-          text:  this.translate.instant("OK"),
+          text: this.translate.instant("OK"),
           handler: () => true,
         },
         {
-          text:  this.translate.instant("GO_STORE_RATE"),
+          text: this.translate.instant("GO_STORE_RATE"),
           handler: () => {
             if (this.platform.is('android')) {
               this.openGooglePlay();
@@ -256,7 +252,7 @@ export class ScanPage {
             }
           }
         }
-       ],
+      ],
       cssClass: ['left-align', 'alert-bg']
     });
     await alert.present();

@@ -228,7 +228,9 @@ export class HistoryPage {
     const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
     this.env.result = data;
     this.env.resultFormat = "";
-    this.router.navigate(['tabs/result', { from: 'history', t: new Date().getTime() }], { state: { source: 'view' } }).then(
+    this.env.recordSource = "view";
+    this.env.viewResultFrom = "/tabs/history";
+    this.router.navigate(['tabs/result']).then(
       () => {
         loading.dismiss();
       }

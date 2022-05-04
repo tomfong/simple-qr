@@ -92,7 +92,9 @@ export class ImportImagePage {
   async processQrCode(scannedData: string, loading: HTMLIonLoadingElement): Promise<void> {
     this.env.result = scannedData;
     this.env.resultFormat = "QR_CODE";
-    this.router.navigate(['tabs/result', { from: 'import-image', t: new Date().getTime() }], { state: { source: 'scan' }}).then(
+    this.env.recordSource = "scan";
+    this.env.viewResultFrom = "/tabs/import-image";
+    this.router.navigate(['tabs/result']).then(
       () => {
         loading.dismiss();
       }

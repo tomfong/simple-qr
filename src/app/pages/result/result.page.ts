@@ -1,5 +1,4 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { Router } from '@angular/router';
 import { Clipboard } from '@capacitor/clipboard';
 import { Contacts, ContactType, EmailAddress, NewContact, PhoneNumber } from '@capacitor-community/contacts'
 import { SMS } from '@awesome-cordova-plugins/sms/ngx';
@@ -10,7 +9,6 @@ import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiedi
 import { VCardContact } from 'src/app/models/v-card-contact';
 import { EnvService } from 'src/app/services/env.service';
 import { Toast } from '@capacitor/toast';
-import { animate, style, transition, trigger } from '@angular/animations';
 import { MatFormField } from '@angular/material/form-field';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { QrCodePage } from 'src/app/modals/qr-code/qr-code.page';
@@ -22,7 +20,7 @@ import { fadeIn } from 'src/app/utils/animations';
   styleUrls: ['./result.page.scss'],
   animations: [fadeIn]
 })
-export class ResultPage implements OnInit {
+export class ResultPage {
 
   contentType: "freeText" | "url" | "contact" | "phone" | "sms" | "emailW3C" | "emailDocomo" | "wifi" = "freeText";
 
@@ -54,7 +52,6 @@ export class ResultPage implements OnInit {
   bookmarked: boolean = false;
 
   showQrFirst: boolean = false;
-  source: 'create' | 'view' | 'scan';
 
   @ViewChildren(MatFormField) formFields: QueryList<MatFormField>;
 
@@ -62,36 +59,24 @@ export class ResultPage implements OnInit {
     private platform: Platform,
     public alertController: AlertController,
     public loadingController: LoadingController,
-    private router: Router,
     public env: EnvService,
     public modalController: ModalController,
     private sms: SMS,
     public translate: TranslateService,
-  ) {
-    if (this.router.getCurrentNavigation().extras.state) {
-      const state = this.router.getCurrentNavigation().extras.state;
-      if (state.source && (state.source == 'create' || state.source == 'view' || state.source == 'scan')) {
-        if (state.source == 'create' || state.source == 'view') {
-          this.showQrFirst = true;
-        }
-        this.source = state.source;
+  ) { }
+
+  ionViewWillEnter() {
+    if (this.env.recordSource != null) {
+      if (this.env.recordSource == 'create' || this.env.recordSource == 'view') {
+        this.showQrFirst = true;
       }
     }
-  }
-
-  async ngOnInit() {
     this.qrCodeContent = this.env.result;
     this.setContentType();
-    if (this.env.scanRecordLogging === 'on') {
-      await this.env.saveScanRecord(this.qrCodeContent, this.source);
-    }
-    if (this.env.bookmarks.find(x => x.text === this.qrCodeContent)) {
-      this.bookmarked = true;
-    }
   }
 
   async ionViewDidEnter(): Promise<void> {
-    if (this.env.vibration === 'on' || this.env.vibration === 'on-scanned') {
+    if (this.env.vibration == 'on' || this.env.vibration == 'on-scanned') {
       Haptics.vibrate();
     }
     if (this.showQrFirst) {
@@ -100,11 +85,46 @@ export class ResultPage implements OnInit {
         await this.enlarge();
       }
     }
+    if (this.env.scanRecordLogging == 'on') {
+      await this.env.saveScanRecord(this.qrCodeContent);
+    }
+    if (this.env.bookmarks.find(x => x.text == this.qrCodeContent)) {
+      this.bookmarked = true;
+    }
   }
 
   async ionViewWillLeave(): Promise<void> {
     this.base64Decoded = false;
     this.base64Encoded = false;
+  }
+
+  ionViewDidLeave() {
+    this.reset();
+  }
+
+  reset() {
+    this.contentType = "freeText";
+    delete this.qrCodeContent;
+    delete this.phoneNumber
+    delete this.vCardContact
+    delete this.smsContent
+    delete this.toEmails
+    delete this.ccEmails
+    delete this.bccEmails
+    delete this.emailSubject
+    delete this.emailBody
+    delete this.wifiSSID
+    delete this.wifiPassword
+    delete this.wifiEncryption
+    delete this.wifiHidden
+    this.base64Encoded = false;
+    this.base64EncodedText = "";
+    this.base64Decoded = false;
+    this.base64DecodedText = "";
+    this.bookmarked = false;
+    this.showQrFirst = false;
+    delete this.env.recordSource;
+    delete this.env.viewResultFrom;
   }
 
   setContentType(): void {
