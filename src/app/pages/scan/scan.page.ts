@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { BarcodeScanner, ScanResult } from '@capacitor-community/barcode-scanner';
 import { SplashScreen } from '@capacitor/splash-screen';
@@ -20,6 +20,8 @@ enum CameraChoice {
 })
 export class ScanPage {
 
+  @ViewChild('content') contentEl: HTMLIonContentElement;
+
   cameraChoice: CameraChoice = CameraChoice.BACK;
   cameraActive: boolean = false;
   flashActive: boolean = false;
@@ -33,8 +35,13 @@ export class ScanPage {
     private router: Router,
     public env: EnvService,
     public translate: TranslateService,
-    private platform: Platform,
   ) { }
+
+  ionViewWillEnter() {
+    if (this.contentEl != null) {
+      this.contentEl.color = "darker";
+    }
+  }
 
   async ionViewDidEnter(): Promise<void> {
     await SplashScreen.hide()
@@ -95,21 +102,25 @@ export class ScanPage {
     await BarcodeScanner.hideBackground();
     this.cameraActive = true;
     await BarcodeScanner.prepare();
+    if (this.contentEl != null) {
+      this.contentEl.color = "";
+    }
     await BarcodeScanner.startScan().then(
       async (result: ScanResult) => {
         if (result.hasContent) {
-          console.log(result.content);
           const text = result.content;
           if (text === undefined || text === null || (text && text.trim().length <= 0) || text === "") {
             this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), "short", "center");
             this.scanQr();
             return;
           }
+          if (this.contentEl != null) {
+            this.contentEl.color = "darker";
+          }
           if (this.env.vibration === 'on' || this.env.vibration === 'on-scanned') {
             await Haptics.vibrate({ duration: 100 });
           }
           const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
-          await this.stopScanner();
           await this.processQrCode(text, result.format, loading);
         } else {
           this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), "short", "center");
