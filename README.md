@@ -100,22 +100,22 @@ If you want to support me or my projects, please <a href="https://github.com/tom
 
 ```sh
     Ionic CLI                       : 6.19.0
-    Ionic Framework                 : @ionic/angular 6.1.2
-    @angular-devkit/build-angular   : 13.3.3
-    @angular-devkit/schematics      : 13.3.3
-    @angular/cli                    : 13.3.3
+    Ionic Framework                 : @ionic/angular 6.1.4
+    @angular-devkit/build-angular   : 13.3.4
+    @angular-devkit/schematics      : 13.3.4
+    @angular/cli                    : 13.3.4
     @ionic/angular-toolkit          : 6.1.0
 
-    Capacitor CLI      : 3.4.3
-    @capacitor/android : 3.4.3
-    @capacitor/core    : 3.5.0
-    @capacitor/ios     : 3.5.0
+    Capacitor CLI                   : 3.5.0
+    @capacitor/android              : 3.5.0
+    @capacitor/core                 : 3.5.0
+    @capacitor/ios                  : 3.5.0
 
     Cordova CLI                     : 10.0.0
 
     Android SDK Tools               : 26.1.1
-    NodeJS                          : v14.15.4
-    npm                             : 6.14.10
+    NodeJS                          : v16.15.4
+    npm                             : 8.8.0
 ```
 
 ## Privacy Policy
