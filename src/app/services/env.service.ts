@@ -161,7 +161,12 @@ export class EnvService {
     );
   }
 
-  private init() {
+  private async init() {
+    await Device.getInfo().then(
+      value => {
+        this._deviceInfo = value;
+      }
+    )
     this.storageGet("language").then(
       async value => {
         if (value !== null && value !== undefined) {
@@ -260,11 +265,6 @@ export class EnvService {
     this.appVersion.getVersionNumber().then(
       value => {
         this.appVersionNumber = value
-      }
-    )
-    Device.getInfo().then(
-      value => {
-        this._deviceInfo = value;
       }
     )
   }
