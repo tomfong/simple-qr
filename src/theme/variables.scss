@@ -165,6 +165,14 @@ $app-black-theme: mat.define-dark-theme(
   --ion-color-dark-shade: #1e2023;
   --ion-color-dark-tint: #383a3e;
 
+  /** darker **/
+  --ion-color-darker: #1a1a1a;
+  --ion-color-darker-rgb: 26, 26, 26;
+  --ion-color-darker-contrast: #ffffff;
+  --ion-color-darker-contrast-rgb: 255, 255, 255;
+  --ion-color-darker-shade: #1a1a1a;
+  --ion-color-darker-tint: #1a1a1a;
+
   /** medium **/
   --ion-color-medium: #92949c;
   --ion-color-medium-rgb: 146, 148, 156;
@@ -595,6 +603,15 @@ body.dark {
   mat-option {
     background-color: #0f0f0f !important;
   }
+}
+
+.ion-color-darker {
+  --ion-color-base: var(--ion-color-darker);
+  --ion-color-base-rgb: var(--ion-color-darker-rgb);
+  --ion-color-contrast: var(--ion-color-darker-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-darker-contrast-rgb);
+  --ion-color-shade: var(--ion-color-darker-shade);
+  --ion-color-tint: var(--ion-color-darker-tint);
 }
 
 .ion-color-dimgray {

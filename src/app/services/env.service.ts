@@ -49,10 +49,10 @@ export class EnvService {
   public readonly GOOGLE_PLAY_URL: string = "https://play.google.com/store/apps/details?id=com.tomfong.simpleqr";
   public readonly APP_STORE_URL: string = "https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553";
   public readonly PRIVACY_POLICY: string = "https://www.privacypolicies.com/live/771b1123-99bb-4bfe-815e-1046c0437a0f";
-  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20400";
-  public readonly IOS_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20400";
-  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20500";
-  public readonly IOS_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20500";
+  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20500";
+  public readonly IOS_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20500";
+  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20501";
+  public readonly IOS_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20501";
 
   private _storage: Storage | null = null;
   private _scannedData: string = '';
@@ -79,15 +79,19 @@ export class EnvService {
   ) {
     this.platform.ready().then(
       async _ => {
-        await this.prioritizedInit();
-        this.init();
+        await this.init();
       }
     )
   }
 
-  private async prioritizedInit() {
+  private async init() {
+    await Device.getInfo().then(
+      value => {
+        this._deviceInfo = value;
+      }
+    )
     this._storage = await this.storage.create();
-    await this._storage.get("start-page").then(
+    this._storage.get("start-page").then(
       value => {
         if (value != null) {
           this.startPage = value;
@@ -96,7 +100,7 @@ export class EnvService {
         }
       }
     );
-    await this._storage.get("start-page-header").then(
+    this._storage.get("start-page-header").then(
       async value => {
         if (value !== null && value !== undefined) {
           this.startPageHeader = value;
@@ -105,7 +109,7 @@ export class EnvService {
         }
       }
     );
-    await this._storage.get(environment.storageScanRecordKey).then(
+    this._storage.get(environment.storageScanRecordKey).then(
       value => {
         if (value !== null && value !== undefined) {
           try {
@@ -126,7 +130,7 @@ export class EnvService {
         }
       }
     );
-    await this._storage.get(environment.storageBookmarkKey).then(
+    this._storage.get(environment.storageBookmarkKey).then(
       value => {
         if (value !== null && value !== undefined) {
           try {
@@ -150,19 +154,25 @@ export class EnvService {
         }
       }
     )
-    await this._storage.get("debug-mode-on").then(
+    this._storage.get("not-show-history-tutorial").then(
       value => {
-        if (value != null) {
-          this.debugMode = value;
+        if (value !== null && value !== undefined) {
+          this.notShowHistoryTutorial = (value === 'yes' ? true : false);
         } else {
-          this.debugMode = 'off';
+          this.notShowHistoryTutorial = false;
         }
       }
     );
-  }
-
-  private init() {
-    this.storageGet("language").then(
+    this._storage.get("not-show-bookmark-tutorial").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.notShowBookmarkTutorial = (value === 'yes' ? true : false);
+        } else {
+          this.notShowBookmarkTutorial = false;
+        }
+      }
+    );
+    this._storage.get("language").then(
       async value => {
         if (value !== null && value !== undefined) {
           this.selectedLanguage = value;
@@ -172,7 +182,7 @@ export class EnvService {
         this.toggleLanguageChange();
       }
     );
-    this.storageGet("color").then(
+    this._storage.get("color").then(
       async value => {
         if (value !== null && value !== undefined) {
           this.selectedColorTheme = value;
@@ -182,7 +192,16 @@ export class EnvService {
         await this.toggleColorTheme();
       }
     );
-    this.storageGet("orientation").then(
+    this._storage.get("debug-mode-on").then(
+      value => {
+        if (value != null) {
+          this.debugMode = value;
+        } else {
+          this.debugMode = 'off';
+        }
+      }
+    );
+    this._storage.get("orientation").then(
       async value => {
         if (value !== null && value !== undefined) {
           this.orientation = value;
@@ -192,7 +211,7 @@ export class EnvService {
         await this.toggleOrientationChange();
       }
     );
-    this.storageGet("scan-record-logging").then(
+    this._storage.get("scan-record-logging").then(
       value => {
         if (value !== null && value !== undefined) {
           this.scanRecordLogging = value;
@@ -201,7 +220,7 @@ export class EnvService {
         }
       }
     );
-    this.storageGet("vibration").then(
+    this._storage.get("vibration").then(
       value => {
         if (value !== null && value !== undefined) {
           this.vibration = value;
@@ -210,7 +229,7 @@ export class EnvService {
         }
       }
     );
-    this.storageGet("error-correction-level").then(
+    this._storage.get("error-correction-level").then(
       value => {
         if (value !== null && value !== undefined) {
           this.errorCorrectionLevel = value;
@@ -219,7 +238,7 @@ export class EnvService {
         }
       }
     );
-    this.storageGet("auto-max-brightness").then(
+    this._storage.get("auto-max-brightness").then(
       value => {
         if (value !== null && value !== undefined) {
           this.autoMaxBrightness = value;
@@ -228,25 +247,7 @@ export class EnvService {
         }
       }
     );
-    this.storageGet("not-show-history-tutorial").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.notShowHistoryTutorial = (value === 'yes' ? true : false);
-        } else {
-          this.notShowHistoryTutorial = false;
-        }
-      }
-    );
-    this.storageGet("not-show-bookmark-tutorial").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.notShowBookmarkTutorial = (value === 'yes' ? true : false);
-        } else {
-          this.notShowBookmarkTutorial = false;
-        }
-      }
-    );
-    this.storageGet("search-engine").then(
+    this._storage.get("search-engine").then(
       value => {
         if (value !== null && value !== undefined) {
           this.searchEngine = value;
@@ -260,11 +261,6 @@ export class EnvService {
     this.appVersion.getVersionNumber().then(
       value => {
         this.appVersionNumber = value
-      }
-    )
-    Device.getInfo().then(
-      value => {
-        this._deviceInfo = value;
       }
     )
   }
