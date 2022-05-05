@@ -1,37 +1,6 @@
-<ion-header mode="ios">
-  <ion-toolbar [color]="color" mode="md" style="--border-width: 0px;">
-    <ion-title>
-      <span style="padding-left: 10px;">{{ 'TUTORIAL' | translate }}</span>
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-
 <ion-content [color]="color" #content>
 
-  <ion-item class="content-item ion-no-padding" lines="none" [color]="color">
-    <ion-icon class="ion-padding-horizontal" src="assets/icon/history.svg"
-      [color]="'primary'"></ion-icon>
-    <ion-label>
-      <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
-          {{ 'TUTORIAL_TOUCH_LOG' | translate }}
-        </ion-text>
-      </p>
-    </ion-label>
-  </ion-item>
-
-  <ion-item class="content-item ion-no-padding" lines="none" [color]="color">
-    <ion-icon class="ion-padding-horizontal" name="star" [color]="'primary'">
-    </ion-icon>
-    <ion-label>
-      <p class="ion-padding">
-        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
-          {{ 'TUTORIAL_TOUCH_BOOKMARK' | translate }}
-        </ion-text>
-      </p>
-    </ion-label>
-  </ion-item>
+  <ion-list-header class="mt-4 ml-3" style="font-size: x-large;">{{ 'TUTORIAL' | translate }}</ion-list-header>
 
   <ion-item class="content-item ion-no-padding" lines="none" [color]="color">
     <ion-icon class="ion-padding-horizontal" src="assets/icon/swipe-left.svg"
@@ -59,11 +28,11 @@
 
 </ion-content>
 
-<ion-footer mode="md">
+<ion-footer>
 
   <ion-item lines="none" [color]="color" style="--ripple-color: transparent;">
     <ion-checkbox class="ion-margin-horizontal" [(ngModel)]="env.notShowHistoryTutorial"
-      [color]="'primary'" (ionChange)="saveTutorialShowing()"></ion-checkbox>
+      [color]="'primary'" (ionChange)="saveHistoryTutorialShowing()"></ion-checkbox>
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
@@ -73,9 +42,9 @@
     </ion-label>
   </ion-item>
 
-  <ion-toolbar mode="ios" [color]="color" style="border: none;">
+  <ion-toolbar [color]="color" style="border: none;">
     <ion-row class="d-flex align-items-center justify-content-end">
-      <ion-button class="ion-margin-horizontal ion-margin-bottom" mode="md" fill="clear" (click)="tapHaptic(); closeModal()" color="primary">
+      <ion-button class="ion-margin-horizontal ion-margin-bottom" fill="clear" (click)="tapHaptic(); closeModal()" color="primary">
         {{ 'OK' | translate }}
       </ion-button>
     </ion-row>

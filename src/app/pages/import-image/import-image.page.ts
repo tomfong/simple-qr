@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Toast } from '@capacitor/toast';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
   selector: 'app-import-image',
@@ -24,6 +25,10 @@ export class ImportImagePage {
     private toastController: ToastController,
     private router: Router,
   ) { }
+
+  async ionViewDidEnter() {
+    await SplashScreen.hide()
+  }
 
   async importImage() {
     const getPictureLoading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
@@ -92,7 +97,9 @@ export class ImportImagePage {
   async processQrCode(scannedData: string, loading: HTMLIonLoadingElement): Promise<void> {
     this.env.result = scannedData;
     this.env.resultFormat = "QR_CODE";
-    this.router.navigate(['tabs/result', { from: 'import-image', t: new Date().getTime() }]).then(
+    this.env.recordSource = "scan";
+    this.env.viewResultFrom = "/tabs/import-image";
+    this.router.navigate(['tabs/result']).then(
       () => {
         loading.dismiss();
       }
@@ -123,8 +130,7 @@ export class ImportImagePage {
 
   async presentLoading(msg: string): Promise<HTMLIonLoadingElement> {
     const loading = await this.loadingController.create({
-      message: msg,
-      mode: "ios"
+      message: msg
     });
     await loading.present();
     return loading;

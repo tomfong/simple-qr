@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 import { Bookmark } from '../models/bookmark';
 import { ScanRecord } from '../models/scan-record';
 import { Toast } from '@capacitor/toast';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -20,18 +21,22 @@ export class EnvService {
 
   public appVersionNumber: string = '1.0.0';
 
+  public startPage: "/tabs/scan" | "/tabs/generate" | "/tabs/import-image" | "/tabs/history" | "/tabs/setting" = "/tabs/scan";
+  public startPageHeader: 'on' | 'off' = 'on';
   public languages: string[] = ['en', 'zh-HK', 'zh-CN'];
   public language: 'en' | 'zh-HK' | 'zh-CN' = 'en';
   public selectedLanguage: 'default' | 'en' | 'zh-HK' | 'zh-CN' = 'default';
   public colorTheme: 'light' | 'dark' | 'black' = 'light';
   public selectedColorTheme: 'default' | 'light' | 'dark' | 'black' = 'default';
   public scanRecordLogging: 'on' | 'off' = 'on';
+  public autoMaxBrightness: 'on' | 'off' = 'on';
   public errorCorrectionLevel: 'L' | 'M' | 'Q' | 'H' = 'M';
   public vibration: 'on' | 'on-haptic' | 'on-scanned' | 'off' = 'on';
   public orientation: 'default' | 'portrait' | 'landscape' = 'default';
   public notShowHistoryTutorial: boolean = false;
+  public notShowBookmarkTutorial: boolean = false;
   public notShowUpdateNotes: boolean = false;
-  public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' = 'google';
+  public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' | 'yandex' = 'google';
   public debugMode: 'on' | 'off' = 'off';
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
@@ -39,21 +44,29 @@ export class EnvService {
   public readonly BING_SEARCH_URL: string = "https://www.bing.com/search?q=";
   public readonly YAHOO_SEARCH_URL: string = "https://search.yahoo.com/search?p=";
   public readonly DUCK_DUCK_GO_SEARCH_URL: string = "https://duckduckgo.com/?q=";
+  public readonly YANDEX_SEARCH_URL: string = "https://yandex.com/search/?text=";
   public readonly GITHUB_REPO_URL: string = "https://github.com/tomfong/simple-qr";
   public readonly GOOGLE_PLAY_URL: string = "https://play.google.com/store/apps/details?id=com.tomfong.simpleqr";
   public readonly APP_STORE_URL: string = "https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553";
   public readonly PRIVACY_POLICY: string = "https://www.privacypolicies.com/live/771b1123-99bb-4bfe-815e-1046c0437a0f";
-  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20300";
-  public readonly IOS_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20301";
-  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20400";
-  public readonly IOS_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20400";
+  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20400";
+  public readonly IOS_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20400";
+  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20500";
+  public readonly IOS_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20500";
 
   private _storage: Storage | null = null;
   private _scannedData: string = '';
   private _scannedDataFormat: string = '';
   private _scanRecords: ScanRecord[] = [];
   private _bookmarks: Bookmark[] = [];
+  viewingScanRecords: ScanRecord[] = [];
+  viewingBookmarks: Bookmark[] = [];
   private _deviceInfo: DeviceInfo | undefined = undefined;
+
+  recordSource: 'create' | 'view' | 'scan';
+  viewResultFrom: '/tabs/scan' | '/tabs/import-image' | '/tabs/generate' | '/tabs/history';
+
+  public firstAppLoad: boolean = true;  // once loaded, turn it false
 
   constructor(
     private platform: Platform,
@@ -65,19 +78,90 @@ export class EnvService {
     private screenOrientation: ScreenOrientation
   ) {
     this.platform.ready().then(
-      async () => {
-        await this.init();
+      async _ => {
+        await this.prioritizedInit();
+        this.init();
       }
     )
   }
 
-  private async init() {
-    this._deviceInfo = await Device.getInfo();
-    this.appVersionNumber = await this.appVersion.getVersionNumber();
-    const storage = await this.storage.create();
-    this._storage = storage;
-    if (this.platform.is('android')) this._storage.remove(this.AN_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
-    if (this.platform.is('ios')) this._storage.remove(this.IOS_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
+  private async prioritizedInit() {
+    this._storage = await this.storage.create();
+    await this._storage.get("start-page").then(
+      value => {
+        if (value != null) {
+          this.startPage = value;
+        } else {
+          this.startPage = '/tabs/scan';
+        }
+      }
+    );
+    await this._storage.get("start-page-header").then(
+      async value => {
+        if (value !== null && value !== undefined) {
+          this.startPageHeader = value;
+        } else {
+          this.startPageHeader = 'on';
+        }
+      }
+    );
+    await this._storage.get(environment.storageScanRecordKey).then(
+      value => {
+        if (value !== null && value !== undefined) {
+          try {
+            this._scanRecords = JSON.parse(value);
+            this._scanRecords.forEach(
+              r => {
+                const tCreatedAt = r.createdAt;
+                r.createdAt = new Date(tCreatedAt);
+              }
+            );
+            this._scanRecords.sort((r1, r2) => {
+              return r2.createdAt.getTime() - r1.createdAt.getTime();
+            });
+          } catch (err) {
+            console.error(err);
+            this._scanRecords = [];
+          }
+        }
+      }
+    );
+    await this._storage.get(environment.storageBookmarkKey).then(
+      value => {
+        if (value !== null && value !== undefined) {
+          try {
+            this._bookmarks = JSON.parse(value);
+            this._bookmarks.forEach(
+              b => {
+                if (b.id == null) {
+                  b.id = uuidv4();
+                }
+                const tCreatedAt = b.createdAt;
+                b.createdAt = new Date(tCreatedAt);
+              }
+            );
+            this._bookmarks.sort((a, b) => {
+              return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
+            });
+          } catch (err) {
+            console.error(err);
+            this._bookmarks = [];
+          }
+        }
+      }
+    )
+    await this._storage.get("debug-mode-on").then(
+      value => {
+        if (value != null) {
+          this.debugMode = value;
+        } else {
+          this.debugMode = 'off';
+        }
+      }
+    );
+  }
+
+  private init() {
     this.storageGet("language").then(
       async value => {
         if (value !== null && value !== undefined) {
@@ -134,13 +218,31 @@ export class EnvService {
           this.errorCorrectionLevel = 'M';
         }
       }
-    );    
+    );
+    this.storageGet("auto-max-brightness").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.autoMaxBrightness = value;
+        } else {
+          this.autoMaxBrightness = 'on';
+        }
+      }
+    );
     this.storageGet("not-show-history-tutorial").then(
       value => {
         if (value !== null && value !== undefined) {
           this.notShowHistoryTutorial = (value === 'yes' ? true : false);
         } else {
           this.notShowHistoryTutorial = false;
+        }
+      }
+    );
+    this.storageGet("not-show-bookmark-tutorial").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.notShowBookmarkTutorial = (value === 'yes' ? true : false);
+        } else {
+          this.notShowBookmarkTutorial = false;
         }
       }
     );
@@ -153,57 +255,18 @@ export class EnvService {
         }
       }
     );
-    this.storageGet(environment.storageScanRecordKey).then(
+    if (this.platform.is('android')) this._storage.remove(this.AN_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
+    if (this.platform.is('ios')) this._storage.remove(this.IOS_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
+    this.appVersion.getVersionNumber().then(
       value => {
-        if (value !== null && value !== undefined) {
-          try {
-            this._scanRecords = JSON.parse(value);
-            this._scanRecords.forEach(
-              r => {
-                const tCreatedAt = r.createdAt;
-                r.createdAt = new Date(tCreatedAt);
-              }
-            );
-            this._scanRecords.sort((r1, r2) => {
-              return r2.createdAt.getTime() - r1.createdAt.getTime();
-            });
-          } catch (err) {
-            console.error(err);
-            this._scanRecords = [];
-          }
-        }
-      }
-    );
-    this.storageGet(environment.storageBookmarkKey).then(
-      value => {
-        if (value !== null && value !== undefined) {
-          try {
-            this._bookmarks = JSON.parse(value);
-            this._bookmarks.forEach(
-              t => {
-                const tCreatedAt = t.createdAt;
-                t.createdAt = new Date(tCreatedAt);
-              }
-            );
-            this._bookmarks.sort((t1, t2) => {
-              return t2.createdAt.getTime() - t1.createdAt.getTime();
-            });
-          } catch (err) {
-            console.error(err);
-            this._bookmarks = [];
-          }
-        }
+        this.appVersionNumber = value
       }
     )
-    this.storageGet("debug-mode-on").then(
+    Device.getInfo().then(
       value => {
-        if (value != null) {
-          this.debugMode = value;
-        } else {
-          this.debugMode = 'off';
-        }
+        this._deviceInfo = value;
       }
-    );
+    )
   }
 
   public async storageSet(key: string, value: any) {
@@ -227,21 +290,81 @@ export class EnvService {
 
   public async resetAll() {
     await this._storage.clear();
+    this.startPage = '/tabs/scan';
+    this.startPageHeader = 'on';
     this.selectedLanguage = 'default';
     this.toggleLanguageChange();
     this.selectedColorTheme = 'default';
     await this.toggleColorTheme();
     this.scanRecordLogging = 'on';
+    this.autoMaxBrightness = 'on';
     this.errorCorrectionLevel = 'M';
     this.vibration = 'on';
     this.orientation = 'default';
     await this.toggleOrientationChange();
     this.notShowHistoryTutorial = false;
+    this.notShowBookmarkTutorial = false;
     this.notShowUpdateNotes = false;
     this.searchEngine = 'google';
     this._scanRecords = [];
     this._bookmarks = [];
     this.debugMode = 'off';
+  }
+
+  public async resetData() {
+    await this.deleteAllScanRecords();
+    await this.deleteAllBookmarks();
+  }
+
+  public async resetSetting() {
+    this.startPage = '/tabs/scan';
+    await this.storageSet("start-page", this.startPage);
+
+    this.startPageHeader = 'on';
+    await this.storageSet("start-page-header", this.startPage);
+
+    this.selectedLanguage = 'default';
+    this.toggleLanguageChange();
+    await this.storageSet("language", this.selectedLanguage);
+
+    this.selectedColorTheme = 'default';
+    await this.toggleColorTheme();
+    await this.storageSet("color", this.selectedColorTheme);
+
+    this.scanRecordLogging = 'on';
+    await this.storageSet("scan-record-logging", this.scanRecordLogging);
+
+    this.autoMaxBrightness = 'on';
+    await this.storageSet("auto-max-brightness", this.autoMaxBrightness);
+
+    this.errorCorrectionLevel = 'M';
+    await this.storageSet("error-correction-level", this.errorCorrectionLevel);
+
+    this.vibration = 'on';
+    await this.storageSet("vibration", this.vibration);
+
+    this.orientation = 'default';
+    await this.toggleOrientationChange();
+    await this.storageSet("orientation", this.orientation);
+
+    this.notShowHistoryTutorial = false;
+    await this.storageSet("not-show-history-tutorial", 'no');
+
+    this.notShowBookmarkTutorial = false;
+    await this.storageSet("not-show-bookmark-tutorial", 'no');
+
+    this.notShowUpdateNotes = false;
+    if (this.platform.is('ios')) {
+      await this.storageSet(this.IOS_PATCH_NOTE_STORAGE_KEY, 'no');
+    } else if (this.platform.is('android')) {
+      await this.storageSet(this.AN_PATCH_NOTE_STORAGE_KEY, 'no');
+    }
+
+    this.searchEngine = 'google';
+    await this.storageSet("search-engine", this.searchEngine);
+
+    this.debugMode = 'off';
+    await this.storageSet("debug-mode-on", this.debugMode);
   }
 
   get result(): string {
@@ -270,6 +393,12 @@ export class EnvService {
     record.id = String(date.getTime());
     record.text = value;
     record.createdAt = date;
+    if (this.recordSource != null) {
+      record.source = this.recordSource;
+      if (this.recordSource == 'scan') {
+        record.barcodeType = this._scannedDataFormat;
+      }
+    }
     this._scanRecords.unshift(record);
     await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
   }
@@ -299,13 +428,16 @@ export class EnvService {
       }
     );
     this._bookmarks.forEach(
-      t => {
-        const tCreatedAt = t.createdAt;
-        t.createdAt = new Date(tCreatedAt);
+      b => {
+        if (b.id == null) {
+          b.id = uuidv4();
+        }
+        const tCreatedAt = b.createdAt;
+        b.createdAt = new Date(tCreatedAt);
       }
     );
-    this._bookmarks.sort((r1, r2) => {
-      return r2.createdAt.getTime() - r1.createdAt.getTime();
+    this._bookmarks.sort((a, b) => {
+      return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
     });
     await this.storageSet(environment.storageBookmarkKey, JSON.stringify(this._bookmarks));
   }
@@ -335,25 +467,30 @@ export class EnvService {
     return this._bookmarks;
   }
 
-  async saveBookmark(value: string): Promise<boolean> {
+  async saveBookmark(value: string, tag: string): Promise<Bookmark> {
     const index = this._bookmarks.findIndex(x => x.text === value);
     if (index === -1) {
       const bookmark = new Bookmark();
       const date = new Date();
+      bookmark.id = uuidv4();
       bookmark.text = value;
       bookmark.createdAt = date;
+      bookmark.tag = tag;
       this._bookmarks.unshift(bookmark);
+      this._bookmarks.sort((a, b) => {
+        return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
+      });
       await this.storageSet(environment.storageBookmarkKey, JSON.stringify(this._bookmarks));
-      return true;
+      return bookmark;
     } else {
-      return false;
+      return null;
     }
   }
 
   async undoBookmarkDeletion(bookmark: Bookmark): Promise<void> {
     this._bookmarks.push(bookmark);
-    this._bookmarks.sort((t1, t2) => {
-      return t2.createdAt.getTime() - t1.createdAt.getTime();
+    this._bookmarks.sort((a, b) => {
+      return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
     });
     await this.storageSet(environment.storageBookmarkKey, JSON.stringify(this._bookmarks));
   }
@@ -467,7 +604,7 @@ export class EnvService {
         this.screenOrientation.unlock();
         return;
       case 'portrait':
-        this.screenOrientation.unlock();
+        // this.screenOrientation.unlock();
         await this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT)
           .catch(err => {
             if (this.isDebugging) {
@@ -476,7 +613,7 @@ export class EnvService {
           });
         return;
       case 'landscape':
-        this.screenOrientation.unlock();
+        // this.screenOrientation.unlock();
         await this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE)
           .catch(err => {
             if (this.isDebugging) {
@@ -489,53 +626,19 @@ export class EnvService {
     }
   }
 
-  /** 
-      Developer,
-
-      I would like to report an issue regarding Simple QR.
-
-      Date & Time
-      {datetimestr2}
-
-      App Version
-      {appVersion}
-
-      Model
-      {model}
-
-      Platform
-      {os} {osVersion}
-
-      Description
-      (describe the issue below)
-
-   */
-  async getBugReportMailContent(): Promise<string> {
+  getBugReportMailContent(): string {
     const toEmail = "tomfong.dev@gmail.com";
     const now = moment();
     const datetimestr1 = now.format("YYYYMMDDHHmmss");
     const datetimestr2 = now.format("YYYY-MM-DD HH:mm:ss ZZ");
-    const appVersion = this.appVersionNumber + '.' + this.buildEnv;
+    const appVersion = this.appVersionNumber;
     const model = `${this._deviceInfo?.manufacturer} ${this._deviceInfo?.model}`;
     const os = this.platform.is("android") ? "Android" : (this.platform.is("ios") ? "iOS" : "Other");
     const osVersion = this._deviceInfo?.osVersion;
-    let mailContent: string;
-    switch (this.language) {
-      case 'en':
-        mailContent = `
-          mailto:${toEmail}?subject=Simple%20QR%20-%20Report%20Issue%20(%23${datetimestr1})&body=Developer%2C%0A%0AI%20would%20like%20to%20report%20an%20issue%20regarding%20Simple%20QR.%0A%0ADate%20%26%20Time%0A${datetimestr2}%0A%0AApp%20Version%0A${appVersion}%0A%0AModel%0A${model}%0A%0APlatform%0A${os}%20${osVersion}%0A%0ADescription%0D%0A(describe%20the%20issue%20below)%0D%0A%0D%0A
-        ` // must be in a line
-        break;
-      case 'zh-HK':
-        mailContent = `
-          mailto:${toEmail}?subject=%E7%B0%A1%E6%98%93QR%20-%20%E5%9B%9E%E5%A0%B1%E5%95%8F%E9%A1%8C%20(%23${datetimestr1})&body=%E9%96%8B%E7%99%BC%E4%BA%BA%E5%93%A1%EF%BC%9A%0A%0A%E6%9C%AC%E4%BA%BA%E6%AC%B2%E5%9B%9E%E5%A0%B1%E6%9C%89%E9%97%9C%E3%80%8C%E7%B0%A1%E6%98%93QR%E3%80%8D%E7%9A%84%E5%95%8F%E9%A1%8C%E3%80%82%0A%0A%E6%97%A5%E6%9C%9F%E5%8F%8A%E6%99%82%E9%96%93%0A${datetimestr2}%0A%0A%E7%A8%8B%E5%BC%8F%E7%89%88%E6%9C%AC%0A${appVersion}%0A%0A%E5%9E%8B%E8%99%9F%0A${model}%0A%0A%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%B5%B1%0A${os}%20${osVersion}%0A%0A%E5%95%8F%E9%A1%8C%E6%8F%8F%E8%BF%B0%0A(%E8%AB%8B%E6%96%BC%E4%B8%8B%E6%96%B9%E6%8F%8F%E8%BF%B0%E5%95%8F%E9%A1%8C)%0D%0A%0D%0A
-        ` // must be in a line
-        break;
-      default:
-        mailContent = `
-          mailto:${toEmail}?subject=Simple%20QR%20-%20Report%20Issue%20(%23${datetimestr1})&body=Developer%2C%0A%0AI%20would%20like%20to%20report%20an%20issue%20regarding%20Simple%20QR.%0A%0ADate%20%26%20Time%0A${datetimestr2}%0A%0AApp%20Version%0A${appVersion}%0A%0AModel%0A${model}%0A%0APlatform%0A${os}%20${osVersion}%0A%0ADescription%0D%0A(describe%20the%20issue%20below)%0D%0A%0D%0A
-        ` // must be in a line
-    }
+    const mailContent =
+      `
+        mailto:${toEmail}?subject=Simple%20QR%20-%20Report%20Issue%20(%23${datetimestr1})&body=Date%20%26%20Time%0A${datetimestr2}%0A%0AApp%20Version%0A${appVersion}%0A%0AModel%0A${model}%0A%0APlatform%0A${os}%20${osVersion}%0A%0ADescription%0D%0A(describe%20the%20issue%20below)%0D%0A%0D%0A
+      `;
     return mailContent;
   }
 

@@ -8,39 +8,43 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
+        path: '',
+        redirectTo: '/tabs/landing',
+        pathMatch: 'full'
+      },
+      {
+        path: 'landing',
+        loadChildren: () => import('../landing/landing.module').then(m => m.LandingPageModule)
+      },
+      {
         path: 'scan',
         loadChildren: () => import('../scan/scan.module').then(m => m.ScanPageModule)
       },
       {
         path: 'result',
-        loadChildren: () => import('../result/result.module').then( m => m.ResultPageModule)
+        loadChildren: () => import('../result/result.module').then(m => m.ResultPageModule)
       },
       {
         path: 'history',
-        loadChildren: () => import('../history/history.module').then( m => m.HistoryPageModule)
+        loadChildren: () => import('../history/history.module').then(m => m.HistoryPageModule)
       },
       {
         path: 'setting',
-        loadChildren: () => import('../setting/setting.module').then( m => m.SettingPageModule)
+        loadChildren: () => import('../setting/setting.module').then(m => m.SettingPageModule)
       },
       {
         path: 'generate',
-        loadChildren: () => import('../generate/generate.module').then( m => m.GeneratePageModule)
+        loadChildren: () => import('../generate/generate.module').then(m => m.GeneratePageModule)
       },
       {
         path: 'import-image',
-        loadChildren: () => import('../import-image/import-image.module').then( m => m.ImportImagePageModule)
-      },
-      {
-        path: '',
-        redirectTo: '/tabs/scan',
-        pathMatch: 'full'
+        loadChildren: () => import('../import-image/import-image.module').then(m => m.ImportImagePageModule)
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/scan',
+    redirectTo: '/tabs/landing',
     pathMatch: 'full'
   }
 ];

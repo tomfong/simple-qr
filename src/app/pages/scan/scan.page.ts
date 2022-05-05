@@ -1,8 +1,8 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { BarcodeScanner, ScanResult } from '@capacitor-community/barcode-scanner';
 import { SplashScreen } from '@capacitor/splash-screen';
-import { AlertController, IonContent, IonRouterOutlet, LoadingController, ModalController, Platform, ToastController } from '@ionic/angular';
+import { AlertController, IonRouterOutlet, LoadingController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
@@ -31,40 +31,13 @@ export class ScanPage {
     public loadingController: LoadingController,
     public routerOutlet: IonRouterOutlet,
     private router: Router,
-    private env: EnvService,
+    public env: EnvService,
     public translate: TranslateService,
-    private toastController: ToastController,
     private platform: Platform,
-  ) {
-    if (this.platform.is('android')) {
-      this.platform.backButton.subscribeWithPriority(-1, async () => {
-        if (!this.routerOutlet.canGoBack()) {
-          if (this.router.url?.startsWith("/tabs/result")) {
-            const urlSeg = this.router.url?.split(";")
-            if (urlSeg.length > 1) {
-              if (urlSeg[1].startsWith("from=")) {
-                const from = urlSeg[1].substring(5);
-                if (from.length > 0) {
-                  this.router.navigate([`/tabs/${from}`], { replaceUrl: true });
-                }
-              }
-            }
-          } else {
-            if (this.router.url?.startsWith("/tabs")) {
-              if (this.router.url != "/tabs/scan") {
-                this.router.navigate(['/tabs/scan'], { replaceUrl: true });
-              } else {
-                await this.confirmExitApp();
-              }
-            }
-          }
-        }
-      });
-    }
-  }
+  ) { }
 
   async ionViewDidEnter(): Promise<void> {
-    await SplashScreen.hide();
+    await SplashScreen.hide()
     await BarcodeScanner.disableTorch().then(
       _ => {
         this.flashActive = false;
@@ -82,24 +55,6 @@ export class ScanPage {
     await this.stopScanner();
   }
 
-  async loadPatchNote() {
-    const storageKey = this.platform.is('ios')? this.env.IOS_PATCH_NOTE_STORAGE_KEY : this.env.AN_PATCH_NOTE_STORAGE_KEY;
-    await this.env.storageGet(storageKey).then(
-      async value => {
-        if (value != null) {
-          this.env.notShowUpdateNotes = (value === 'yes' ? true : false);
-        } else {
-          this.env.notShowUpdateNotes = false;
-        }
-        await this.env.storageSet(storageKey, 'yes');
-        if (this.env.notShowUpdateNotes === false) {
-          this.env.notShowUpdateNotes = true;
-          await this.showUpdateNotes();
-        }
-      }
-    );   
-  }
-
   async stopScanner(): Promise<void> {
     await BarcodeScanner.stopScan();
     this.cameraActive = false;
@@ -108,7 +63,6 @@ export class ScanPage {
   async prepareScanner(): Promise<void> {
     const result = await BarcodeScanner.checkPermission({ force: true });
     if (result.granted) {
-      await this.loadPatchNote();
       await this.scanQr();
     } else {
       this.permissionAlert?.dismiss();
@@ -152,7 +106,7 @@ export class ScanPage {
             return;
           }
           if (this.env.vibration === 'on' || this.env.vibration === 'on-scanned') {
-            await Haptics.vibrate();
+            await Haptics.vibrate({ duration: 100 });
           }
           const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
           await this.stopScanner();
@@ -169,7 +123,9 @@ export class ScanPage {
   async processQrCode(scannedData: string, format: string, loading: HTMLIonLoadingElement): Promise<void> {
     this.env.result = scannedData;
     this.env.resultFormat = format;
-    this.router.navigate(['tabs/result', { from: 'scan', t: new Date().getTime() }]).then(
+    this.env.recordSource = "scan";
+    this.env.viewResultFrom = "/tabs/scan";
+    this.router.navigate(['tabs/result']).then(
       () => {
         loading.dismiss();
       }
@@ -216,8 +172,7 @@ export class ScanPage {
 
   async presentLoading(msg: string): Promise<HTMLIonLoadingElement> {
     const loading = await this.loadingController.create({
-      message: msg,
-      mode: "ios"
+      message: msg
     });
     await loading.present();
     return loading;
@@ -236,62 +191,4 @@ export class ScanPage {
       await Haptics.impact({ style: ImpactStyle.Medium });
     }
   }
-
-  async showUpdateNotes() {
-    const alert = await this.alertController.create({
-      header: this.translate.instant("UPDATE_NOTES"),
-      subHeader: this.env.appVersionNumber,
-      message: this.platform.is('ios')? this.translate.instant("UPDATE.UPDATE_NOTES_IOS") : this.translate.instant("UPDATE.UPDATE_NOTES_ANDROID"),
-      buttons: [
-        {
-          text:  this.translate.instant("OK"),
-          handler: () => true,
-        },
-        {
-          text:  this.translate.instant("GO_STORE_RATE"),
-          handler: () => {
-            if (this.platform.is('android')) {
-              this.openGooglePlay();
-            } else if (this.platform.is('ios')) {
-              this.openAppStore();
-            }
-          }
-        }
-       ],
-      cssClass: ['left-align', 'alert-bg']
-    });
-    await alert.present();
-  }
-
-  openGooglePlay(): void {
-    window.open(this.env.GOOGLE_PLAY_URL, '_system');
-  }
-
-  openAppStore(): void {
-    window.open(this.env.APP_STORE_URL, '_system');
-  }
-
-  async confirmExitApp(): Promise<void> {
-    const alert = await this.alertController.create({
-      header: this.translate.instant('EXIT_APP'),
-      message: this.translate.instant('MSG.EXIT_APP'),
-      cssClass: ['alert-bg'],
-      buttons: [
-        {
-          text: this.translate.instant('EXIT'),
-          handler: () => {
-            navigator['app'].exitApp();
-          }
-        },
-        {
-          text: this.translate.instant('GO_STORE_RATE'),
-          handler: () => {
-            this.openGooglePlay();
-          }
-        }
-      ]
-    });
-    await alert.present();
-  }
-
 }

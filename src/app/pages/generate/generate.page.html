@@ -1,7 +1,16 @@
-<ion-header mode="ios">
-  <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'" mode="ios">
-    <ion-title>{{ 'CREATE_QRCODE' | translate }}</ion-title>
-  </ion-toolbar>
+<ion-header>
+  <div *ngIf="env.startPage == '/tabs/generate' && env.startPageHeader == 'on'; then mainHeader else selfHeader">
+  </div>
+  <ng-template #mainHeader>
+    <ion-toolbar color="primary">
+      <ion-title>{{ 'SIMPLE_QR' | translate}}</ion-title>
+    </ion-toolbar>
+  </ng-template>
+  <ng-template #selfHeader>
+    <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'">
+      <ion-title>{{ 'CREATE_QRCODE' | translate }}</ion-title>
+    </ion-toolbar>
+  </ng-template>
 </ion-header>
 
 <ion-content #content>
@@ -37,12 +46,12 @@
   </ion-row>
 
   <ng-container *ngIf="contentType === 'freeText'">
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent" [floatLabel]="'always'">
           <mat-label>{{ 'QRCODE_CONTENT' | translate }} </mat-label>
-          <textarea matInput [(ngModel)]="qrCodeContent" [cdkTextareaAutosize]="true" [cdkAutosizeMinRows]="5"
-            [cdkAutosizeMaxRows]="10" [maxLength]="1817" #freeTxtInput></textarea>
+          <textarea matInput [(ngModel)]="qrCodeContent" [cdkTextareaAutosize]="true" [cdkAutosizeMinRows]="7"
+            [cdkAutosizeMaxRows]="20" [maxLength]="1817" #freeTxtInput></textarea>
           <mat-hint align="end">{{ freeTxtInput.value?.length || 0 }}/1817</mat-hint>
           <mat-hint>{{'CREATE_QRCODE_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>
@@ -54,7 +63,7 @@
 
     <!-- Recipients -->
     <ng-container *ngFor="let email of toEmails; index as i; trackBy: trackByIndex;">
-      <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+      <ion-row class="ion-padding-horizontal" [@inAnimation]>
         <ion-col>
           <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
             <mat-label>{{ 'EMAIL_RECIPIENT' | translate}}</mat-label>
@@ -66,7 +75,7 @@
         </ion-col>
       </ion-row>
     </ng-container>
-    <ion-row [@inOutAnimation] style="padding-left: 5px; padding-right: 5px;">
+    <ion-row [@inAnimation] style="padding-left: 5px; padding-right: 5px;">
       <ion-col>
         <ion-button fill="clear" [color]="'primary'" (click)="addEmailField()">
           <ion-icon slot="start" name="add" size="small"></ion-icon>
@@ -83,7 +92,7 @@
 
     <!-- CCs -->
     <ng-container *ngFor="let cc of ccEmails; index as i; trackBy: trackByIndex;">
-      <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+      <ion-row class="ion-padding-horizontal" [@inAnimation]>
         <ion-col>
           <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
             <mat-label>{{ 'CC' | translate}}</mat-label>
@@ -95,7 +104,7 @@
         </ion-col>
       </ion-row>
     </ng-container>
-    <ion-row [@inOutAnimation] style="padding-left: 5px; padding-right: 5px;">
+    <ion-row [@inAnimation] style="padding-left: 5px; padding-right: 5px;">
       <ion-col>
         <ion-button fill="clear" [color]="'primary'" (click)="addCcField()">
           <ion-icon slot="start" name="add" size="small"></ion-icon>
@@ -112,7 +121,7 @@
 
     <!-- BCCs -->
     <ng-container *ngFor="let bcc of bccEmails; index as i; trackBy: trackByIndex;">
-      <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+      <ion-row class="ion-padding-horizontal" [@inAnimation]>
         <ion-col>
           <mat-form-field [class]="ngMatThemeClass " appearance="outline" color="accent">
             <mat-label>{{ 'BCC' | translate}}</mat-label>
@@ -124,7 +133,7 @@
         </ion-col>
       </ion-row>
     </ng-container>
-    <ion-row [@inOutAnimation] style="padding-left: 5px; padding-right: 5px;">
+    <ion-row [@inAnimation] style="padding-left: 5px; padding-right: 5px;">
       <ion-col>
         <ion-button fill="clear" [color]="'primary'" (click)="addBccField()">
           <ion-icon slot="start" name="add" size="small"></ion-icon>
@@ -139,7 +148,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'EMAIL_SUBJECT' | translate}}</mat-label>
@@ -150,7 +159,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent" [floatLabel]="'always'">
           <mat-label>{{ 'EMAIL_BODY' | translate}}</mat-label>
@@ -167,7 +176,7 @@
   <ng-container *ngIf="contentType === 'emailDocomo'">
 
     <!-- Recipient -->
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'EMAIL_RECIPIENT' | translate}}</mat-label>
@@ -179,7 +188,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'EMAIL_SUBJECT' | translate}}</mat-label>
@@ -190,7 +199,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent" [floatLabel]="'always'">
           <mat-label>{{ 'EMAIL_BODY' | translate}}</mat-label>
@@ -205,7 +214,7 @@
   </ng-container>
 
   <ng-container *ngIf="contentType === 'phone'">
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'PHONE_NUMBER' | translate}}</mat-label>
@@ -217,7 +226,7 @@
   </ng-container>
 
   <ng-container *ngIf="contentType === 'sms'">
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'PHONE_NUMBER' | translate}}</mat-label>
@@ -226,7 +235,7 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent" [floatLabel]="'always'">
           <mat-label>{{ 'SMS' | translate}}</mat-label>
@@ -240,7 +249,7 @@
   </ng-container>
 
   <ng-container *ngIf="contentType === 'url'">
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'URL' | translate}}</mat-label>
@@ -264,7 +273,7 @@
         </mat-hint>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'FIRST_NAME' | translate}}</mat-label>
@@ -273,7 +282,7 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'LAST_NAME' | translate}}</mat-label>
@@ -292,7 +301,7 @@
         </mat-hint>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'MOBILE_PHONE_NUMBER' | translate}}</mat-label>
@@ -301,7 +310,7 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'HOME_PHONE_NUMBER' | translate}}</mat-label>
@@ -310,7 +319,7 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'WORK_PHONE_NUMBER' | translate}}</mat-label>
@@ -319,7 +328,7 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'FAX_NUMBER' | translate}}</mat-label>
@@ -328,7 +337,7 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'EMAIL_ADDRESS' | translate}}</mat-label>
@@ -347,7 +356,7 @@
         </mat-hint>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'ORGANIZATION' | translate}}</mat-label>
@@ -356,7 +365,7 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'JOB_TITLE' | translate}}</mat-label>
@@ -375,7 +384,7 @@
         </mat-hint>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'STREET' | translate}}</mat-label>
@@ -384,7 +393,7 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'CITY' | translate}}</mat-label>
@@ -393,7 +402,7 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'STATE' | translate}}</mat-label>
@@ -402,7 +411,7 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'POSTAL_CODE' | translate}}</mat-label>
@@ -411,7 +420,7 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'COUNTRY' | translate}}</mat-label>
@@ -430,7 +439,7 @@
         </mat-hint>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'BIRTHDAY' | translate}}</mat-label>
@@ -440,7 +449,7 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'GENDER' | translate}}</mat-label>
@@ -452,7 +461,7 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'WEBSITE' | translate}}</mat-label>
@@ -464,7 +473,7 @@
   </ng-container>
 
   <ng-container *ngIf="contentType === 'wifi'">
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'WIFI_SSID' | translate}}</mat-label>
@@ -475,7 +484,7 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'PASSWORD' | translate}}</mat-label>
@@ -484,7 +493,7 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'WIFI_ENCRYPTION' | translate}}</mat-label>
@@ -496,24 +505,23 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-padding-horizontal" [@inOutAnimation]>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
-        <ion-item class="ion-no-padding" lines="none" mode="ios" detail="false">
+        <ion-item class="ion-no-padding" lines="none" detail="false">
           <ion-label>{{ 'WIFI_HIDDEN' | translate }}</ion-label>
-          <ion-checkbox mode="md" [(ngModel)]="wifiHidden" [color]="'primary'"></ion-checkbox>
+          <ion-checkbox [(ngModel)]="wifiHidden" [color]="'primary'"></ion-checkbox>
         </ion-item>
       </ion-col>
     </ion-row>
   </ng-container>
 </ion-content>
-<ion-footer mode="ios"
+<ion-footer
   [ngStyle]="env.colorTheme === 'dark'?  {'background-color': '#222428'} : (env.colorTheme === 'black'? {'background-color': '#000000'} : {'background-color': '#F0F0F0'})">
   <ion-row class="d-flex justify-content-around">
-    <ion-button mode="md" (click)="tapHaptic(); clear()" [color]="'danger'" fill="clear">
+    <ion-button (click)="tapHaptic(); clear()" [color]="'danger'" fill="clear">
       {{ 'CLEAR' | translate }}
     </ion-button>
-    <ion-button mode="md" (click)="tapHaptic(); goGenerate()" [color]="'primary'" fill="clear"
-      [disabled]="disableGenerateBtn">
+    <ion-button (click)="tapHaptic(); goGenerate()" [color]="'primary'" fill="clear" [disabled]="disableGenerateBtn">
       {{ 'CREATE' | translate }}
     </ion-button>
   </ion-row>

@@ -1,28 +1,36 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Toast } from '@capacitor/toast';
-import { LoadingController, ModalController } from '@ionic/angular';
+import { LoadingController, ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels, QrcodeComponent } from '@techiediaries/ngx-qrcode';
 import { EnvService } from 'src/app/services/env.service';
+import { ScreenBrightness } from '@capacitor-community/screen-brightness';
 
 @Component({
   selector: 'app-qr-code',
-  templateUrl: './qr-code.component.html',
-  styleUrls: ['./qr-code.component.scss'],
+  templateUrl: './qr-code.page.html',
+  styleUrls: ['./qr-code.page.scss'],
 })
-export class QrCodeComponent {
+export class QrCodePage {
+
+  modal: HTMLIonModalElement;
 
   @ViewChild('qrcode') qrcodeElement: QrcodeComponent;
 
   @Input() qrCodeContent: string;
   qrElementType: NgxQrcodeElementTypes = NgxQrcodeElementTypes.CANVAS;
   errorCorrectionLevel: NgxQrcodeErrorCorrectionLevels;
+  scale: number = 0.8;
+  defaultWidth: number = window.innerHeight * 0.32;
   qrMargin: number = 3;
 
   qrImageDataUrl: string;
+
+  currentBrightness: number = 0;
 
   constructor(
     private translate: TranslateService,
@@ -31,8 +39,83 @@ export class QrCodeComponent {
     private modalController: ModalController,
     private socialSharing: SocialSharing,
     private router: Router,
+    private platform: Platform,
+    private screenOrientation: ScreenOrientation,
   ) {
     this.setErrorCorrectionLevel();
+  }
+
+  async ionViewDidEnter(): Promise<void> {
+    this.platform.ready().then(async () => {
+      if (this.screenOrientation.type.startsWith(this.screenOrientation.ORIENTATIONS.LANDSCAPE)) {
+        this.presentToast(this.translate.instant("MSG.PORTRAIT_ONLY"), "short", "bottom");
+        this.screenOrientation.unlock();
+      }
+      await this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT).then(
+        _ => {
+          if (this.qrcodeElement != null) {
+            setTimeout(() => {
+              this.qrcodeElement.width = this.platform.height() * this.scale * 0.4;
+              this.qrcodeElement.createQRCode();
+            }, 500)
+          }
+        }
+      )
+      if (this.env.autoMaxBrightness === 'on') {
+        await ScreenBrightness.getBrightness().then(
+          value => {
+            this.currentBrightness = value.brightness
+          }
+        )
+        await ScreenBrightness.setBrightness({ brightness: 1.0 }).catch(
+          err => {
+            if (this.env.isDebugging) {
+              this.presentToast("Err when ScreenBrightness.setBrightness 1.0: " + JSON.stringify(err), "long", "top");
+            }
+          }
+        )
+      }
+      await this.modalController.getTop().then(
+        async (modal: HTMLIonModalElement) => {
+          this.modal = modal;
+          this.modal.addEventListener("ionBreakpointDidChange", (ev: any) => {
+            if (this.qrcodeElement != null) {
+              switch (ev.detail.breakpoint) {
+                case 1:
+                  this.qrcodeElement.width = this.platform.width() * this.scale;
+                  break;
+                case 0.5:
+                  this.qrcodeElement.width = this.platform.height() * this.scale * 0.4;
+                  break
+              }
+              this.qrcodeElement.createQRCode();
+            }
+          })
+          this.modal.onDidDismiss().then(
+            async _ => {
+              if (this.platform.is('android')) {
+                await ScreenBrightness.setBrightness({ brightness: -1 }).catch(
+                  err => {
+                    if (this.env.isDebugging) {
+                      this.presentToast("Err when ScreenBrightness.setBrightness -1: " + JSON.stringify(err), "long", "top");
+                    }
+                  }
+                )
+              } else if (this.platform.is('ios')) {
+                await ScreenBrightness.setBrightness({ brightness: this.currentBrightness }).catch(
+                  err => {
+                    if (this.env.isDebugging) {
+                      this.presentToast(`Err when ScreenBrightness.setBrightness ${this.currentBrightness}: ` + JSON.stringify(err), "long", "top");
+                    }
+                  }
+                )
+              }
+              await this.env.toggleOrientationChange();
+            }
+          );
+        }
+      )
+    });
   }
 
   setErrorCorrectionLevel() {
@@ -79,7 +162,7 @@ export class QrCodeComponent {
         this.presentToast("Cannot ref qrcodeElement!", "long", "top");
       }
     }
-  }  
+  }
 
   goErrorCorrectionLevelSetting() {
     this.modalController.dismiss();
@@ -109,10 +192,6 @@ export class QrCodeComponent {
     );
   }
 
-  async close() {
-    this.modalController.dismiss();
-  }
-
   get qrColorDark(): string {
     return "#222428";
   }
@@ -123,8 +202,7 @@ export class QrCodeComponent {
 
   async presentLoading(msg: string): Promise<HTMLIonLoadingElement> {
     const loading = await this.loadingController.create({
-      message: msg,
-      mode: "ios"
+      message: msg
     });
     await loading.present();
     return loading;

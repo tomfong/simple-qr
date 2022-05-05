@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { NoPreloading, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
@@ -33,7 +33,8 @@ const routes: Routes = [
   {
     path: 'setting-debug',
     loadChildren: () => import('./pages/setting-debug/setting-debug.module').then( m => m.SettingDebugPageModule)
-  },  {
+  },
+  {
     path: 'setting-orientation',
     loadChildren: () => import('./pages/setting-orientation/setting-orientation.module').then( m => m.SettingOrientationPageModule)
   },
@@ -41,12 +42,19 @@ const routes: Routes = [
     path: 'setting-qr-ecl',
     loadChildren: () => import('./pages/setting-qr-ecl/setting-qr-ecl.module').then( m => m.SettingQrEclPageModule)
   },
-
+  {
+    path: 'setting-auto-brightness',
+    loadChildren: () => import('./pages/setting-auto-brightness/setting-auto-brightness.module').then( m => m.SettingAutoBrightnessPageModule)
+  },
+  {
+    path: 'setting-start-page',
+    loadChildren: () => import('./pages/setting-start-page/setting-start-page.module').then( m => m.SettingStartPagePageModule)
+  },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: NoPreloading })
   ],
   exports: [RouterModule]
 })

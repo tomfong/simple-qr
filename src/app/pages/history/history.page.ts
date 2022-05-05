@@ -1,21 +1,23 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { AlertController, IonItemSliding, LoadingController, ModalController, Platform, PopoverController, ToastController } from '@ionic/angular';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController, IonItemSliding, LoadingController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { EnvService } from 'src/app/services/env.service';
 import * as moment from 'moment';
 import { ScanRecord } from 'src/app/models/scan-record';
 import { TranslateService } from '@ngx-translate/core';
 import { Bookmark } from 'src/app/models/bookmark';
 import { HistoryTutorialPage } from 'src/app/modals/history-tutorial/history-tutorial.page';
-import { MenuComponent } from 'src/app/components/menu/menu.component';
-import { MenuItem } from 'src/app/models/menu-item';
-import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Toast } from '@capacitor/toast';
+import { BookmarkTutorialPage } from 'src/app/modals/bookmark-tutorial/bookmark-tutorial.page';
+import { fastFadeIn, flyOut } from 'src/app/utils/animations';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
   selector: 'app-history',
   templateUrl: './history.page.html',
   styleUrls: ['./history.page.scss'],
+  animations: [fastFadeIn, flyOut]
 })
 export class HistoryPage {
 
@@ -23,13 +25,11 @@ export class HistoryPage {
 
   deleteToast: HTMLIonToastElement;
 
-  scanRecords: ScanRecord[] = [];
-  bookmarks: Bookmark[] = [];
+  dummyArr = Array.from(Array(10).keys());
 
-  firstLoad: boolean = true;
+  isLoading: boolean = false;
 
   constructor(
-    private platform: Platform,
     public alertController: AlertController,
     public loadingController: LoadingController,
     private router: Router,
@@ -38,91 +38,290 @@ export class HistoryPage {
     public translate: TranslateService,
     public modalController: ModalController,
     public popoverController: PopoverController,
-  ) { }
+    private route: ActivatedRoute,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {
+    this.route.params.subscribe(val => {
+      setTimeout(() => this.firstLoadItems(), 200);
+    });
+  }
 
-  async loadItems() {
-    this.scanRecords = this.env.scanRecords;
-    this.bookmarks = this.env.bookmarks;
+  firstLoadItems() {
+    this.isLoading = true;
+    this.env.viewingScanRecords = [];
+    this.env.viewingBookmarks = [];
+    const scanRecords = [...this.env.scanRecords];
+    this.env.viewingScanRecords = scanRecords.slice(0, 15);
+    const bookmarks = [...this.env.bookmarks];
+    this.env.viewingBookmarks = bookmarks.slice(0, 15);
+    this.isLoading = false;
+  }
+
+  loadMoreScanRecords() {
+    const scanRecords = [...this.env.scanRecords]
+    this.env.viewingScanRecords.push(...scanRecords.slice(this.env.viewingScanRecords.length, this.env.viewingScanRecords.length + 15));
+  }
+
+  loadMoreBookmarks() {
+    const bookmarks = [...this.env.bookmarks]
+    this.env.viewingBookmarks.push(...bookmarks.slice(this.env.viewingBookmarks.length, this.env.viewingBookmarks.length + 15));
+  }
+
+  onLoadScanRecords(ev: any) {
+    setTimeout(() => {
+      ev.target.complete();
+      this.loadMoreScanRecords();
+      if (this.env.viewingScanRecords.length === this.env.scanRecords.length) {
+        ev.target.disabled = true;
+      }
+    }, 500);
+  }
+
+  onLoadBookmarks(ev: any) {
+    setTimeout(() => {
+      ev.target.complete();
+      this.loadMoreBookmarks();
+      if (this.env.viewingBookmarks.length === this.env.bookmarks.length) {
+        ev.target.disabled = true;
+      }
+    }, 500);
+  }
+
+  ionViewWillEnter() {
+    this.isLoading = true;
   }
 
   async ionViewDidEnter() {
-    this.firstLoad = true;
-    setTimeout(
-      async () => {
-        await this.loadItems();
-        this.firstLoad = false;
-      }, 200
-    );   
-    if (this.env.notShowHistoryTutorial === false) {
-      this.env.notShowHistoryTutorial = true;
-      this.env.storageSet("not-show-history-tutorial", 'yes');
-      await this.showTutorial();
+    await SplashScreen.hide()
+    if (this.segmentModel == 'history') {
+      if (this.env.notShowHistoryTutorial === false) {
+        this.env.notShowHistoryTutorial = true;
+        this.env.storageSet("not-show-history-tutorial", 'yes');
+        await this.showHistoryTutorial();
+      }
+    } else if (this.segmentModel == 'bookmarks') {
+      if (this.env.notShowBookmarkTutorial === false) {
+        this.env.notShowBookmarkTutorial = true;
+        this.env.storageSet("not-show-bookmark-tutorial", 'yes');
+        await this.showBookmarkTutorial();
+      }
     }
   }
 
-  async ionViewWillLeave() {
+  ionViewWillLeave() {
+    this.changeDetectorRef.detach();
+    this.env.viewingScanRecords = [];
+    this.env.viewingBookmarks = [];
+    this.changeDetectorRef.detectChanges();
+    this.changeDetectorRef.reattach();
     if (this.deleteToast) {
       this.deleteToast.dismiss();
       this.deleteToast = undefined;
     }
   }
 
-  async showTutorial() {
+  scanRecordsTrackByFn(index: number, record: ScanRecord): string {
+    return record.id;
+  }
+
+  bookmarksTrackByFn(index: number, bookmark: Bookmark): string {
+    return bookmark.id;
+  }
+
+  async showHistoryTutorial() {
     const modal = await this.modalController.create({
       component: HistoryTutorialPage,
-      cssClass: 'tutorial-modal-page',
       componentProps: {
       }
     });
     modal.present();
   }
 
-  maskDatetime(date: Date): string {
+  async showBookmarkTutorial() {
+    const modal = await this.modalController.create({
+      component: BookmarkTutorialPage,
+      componentProps: {
+      }
+    });
+    modal.present();
+  }
+
+  maskDatetimeAndSource(date: Date, source: 'create' | 'view' | 'scan' | undefined): string {
     if (!date) {
       return "-";
     }
     if (this.translate.currentLang === 'zh-HK' || this.translate.currentLang === 'zh-CN') {
-      return moment(date).format("YYYY年M月D日 HH:mm:ss");
+      switch (source) {
+        case 'create':
+          return moment(date).format("YYYY年M月D日 HH:mm:ss") + ' ' + this.translate.instant("CREATED");
+        case 'view':
+          return moment(date).format("YYYY年M月D日 HH:mm:ss") + ' ' + this.translate.instant("VIEWED");
+        case 'scan':
+          return moment(date).format("YYYY年M月D日 HH:mm:ss") + ' ' + this.translate.instant("SCANNED");
+        default:
+          return moment(date).format("YYYY年M月D日 HH:mm:ss");
+      }
+    } else {
+      switch (source) {
+        case 'create':
+          return this.translate.instant("CREATED") + ' at ' + moment(date).format("YYYY-MMM-DD HH:mm:ss");
+        case 'view':
+          return this.translate.instant("VIEWED") + ' at ' + moment(date).format("YYYY-MMM-DD HH:mm:ss");
+        case 'scan':
+          return this.translate.instant("SCANNED") + ' at ' + moment(date).format("YYYY-MMM-DD HH:mm:ss");
+        default:
+          return moment(date).format("YYYY-MMM-DD HH:mm:ss");
+      }
     }
-    return moment(date).format("YYYY-MMM-DD HH:mm:ss");
   }
 
-  async processQrCode(scannedData: string): Promise<void> {
+  getBarcodeFormat(barcodeType: string): string {
+    switch (barcodeType) {
+      case "UPC_A":
+        return this.translate.instant("BARCODE_TYPE.UPC");
+      case "UPC_E":
+        return this.translate.instant("BARCODE_TYPE.UPC");
+      case "UPC_EAN_EXTENSION":
+        return this.translate.instant("BARCODE_TYPE.UPC");
+      case "EAN_8":
+        return this.translate.instant("BARCODE_TYPE.EAN");
+      case "EAN_13":
+        return this.translate.instant("BARCODE_TYPE.EAN");
+      case "CODE_39":
+        return this.translate.instant("BARCODE_TYPE.1D");
+      case "CODE_39_MOD_43":
+        return this.translate.instant("BARCODE_TYPE.1D");
+      case "CODE_93":
+        return this.translate.instant("BARCODE_TYPE.1D");
+      case "CODE_128":
+        return this.translate.instant("BARCODE_TYPE.1D");
+      case "CODABAR":
+        return this.translate.instant("BARCODE_TYPE.1D");
+      case "ITF":
+        return this.translate.instant("BARCODE_TYPE.1D");
+      case "ITF_14":
+        return this.translate.instant("BARCODE_TYPE.1D");
+      case "AZTEC":
+        return this.translate.instant("BARCODE_TYPE.AZTEC");
+      case "DATA_MATRIX":
+        return this.translate.instant("BARCODE_TYPE.DATA_MATRIX");
+      case "MAXICODE":
+        return this.translate.instant("BARCODE_TYPE.MAXICODE");
+      case "PDF_417":
+        return this.translate.instant("BARCODE_TYPE.PDF_417");
+      case "QR_CODE":
+        return this.translate.instant("BARCODE_TYPE.QR_CODE");
+      case "RSS_14":
+        return this.translate.instant("BARCODE_TYPE.RSS");
+      case "RSS_EXPANDED":
+        return this.translate.instant("BARCODE_TYPE.RSS");
+      default:
+        return this.env.resultFormat;
+    }
+  }
+
+  async viewRecord(data: string): Promise<void> {
+    this.isLoading = true;
+    this.changeDetectorRef.detach();
+    this.env.viewingScanRecords = [];
+    this.env.viewingBookmarks = [];
+    this.changeDetectorRef.detectChanges();
+    this.changeDetectorRef.reattach();
     const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
-    this.env.result = scannedData;
+    this.env.result = data;
     this.env.resultFormat = "";
-    this.router.navigate(['tabs/result', { from: 'history', t: new Date().getTime() }], { state: { page: 'generate'}}).then(
+    this.env.recordSource = "view";
+    this.env.viewResultFrom = "/tabs/history";
+    this.router.navigate(['tabs/result']).then(
       () => {
         loading.dismiss();
       }
     );
   }
 
-  segmentChanged(ev: any) { }
-
-  async addFavourite(record: ScanRecord, slidingItem: IonItemSliding) {
-    slidingItem.close();
-    const flag = await this.env.saveBookmark(record.text);
-    await this.loadItems();
-    if (flag === true) {
-      await this.presentToast(this.translate.instant("MSG.BOOKMARKED"), "short", "bottom");
-    } else {
-      await this.presentToast(this.translate.instant("MSG.ALREADY_BOOKMARKED"), "short", "bottom");
+  async segmentChanged(ev: any) {
+    if (ev?.detail?.value == 'history') {
+      if (this.env.notShowHistoryTutorial === false) {
+        this.env.notShowHistoryTutorial = true;
+        this.env.storageSet("not-show-history-tutorial", 'yes');
+        await this.showHistoryTutorial();
+      }
+    } else if (ev?.detail?.value == 'bookmarks') {
+      if (this.env.notShowBookmarkTutorial === false) {
+        this.env.notShowBookmarkTutorial = true;
+        this.env.storageSet("not-show-bookmark-tutorial", 'yes');
+        await this.showBookmarkTutorial();
+      }
     }
+    this.firstLoadItems();
+  }
+
+  async addBookmark(record: ScanRecord, slidingItem: IonItemSliding) {
+    await slidingItem.close();
+    if (this.env.bookmarks.find(x => x.text === record.text)) {
+      await this.presentToast(this.translate.instant("MSG.ALREADY_BOOKMARKED"), "short", "bottom");
+      return;
+    }
+    await this.showBookmarkAlert(record);
+  }
+
+  async showBookmarkAlert(record: ScanRecord) {
+    const alert = await this.alertController.create(
+      {
+        header: this.translate.instant('BOOKMARK'),
+        message: this.translate.instant('MSG.INPUT_TAG'),
+        cssClass: ['alert-bg'],
+        inputs: [
+          {
+            name: 'tag',
+            id: 'tag',
+            type: 'text',
+            label: `${this.translate.instant("TAG_MAX_LENGTH")}`,
+            placeholder: `${this.translate.instant("TAG_MAX_LENGTH")}`,
+            max: 30
+          }
+        ],
+        buttons: [
+          {
+            text: this.translate.instant('CREATE'),
+            handler: async data => {
+              alert.dismiss();
+              if (data.tag != null && data.tag.trim().length > 30) {
+                this.presentToast(this.translate.instant("MSG.TAG_MAX_LENGTH_EXPLAIN"), "short", "bottom");
+                return true;
+              }
+              const bookmark = await this.env.saveBookmark(record.text, data.tag);
+              this.env.viewingBookmarks.unshift(bookmark);
+              this.env.viewingBookmarks.sort((a, b) => {
+                return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
+              });
+              if (bookmark != null) {
+                await this.presentToast(this.translate.instant("MSG.BOOKMARKED"), "short", "bottom");
+              } else {
+                await this.presentToast(this.translate.instant("MSG.ALREADY_BOOKMARKED"), "short", "bottom");
+              }
+            }
+          }
+        ]
+      }
+    )
+    await alert.present();
   }
 
   async removeBookmark(bookmark: Bookmark, slidingItem: IonItemSliding) {
-    slidingItem.close();
+    await slidingItem.close();
     if (this.deleteToast) {
       await this.deleteToast.dismiss();
       this.deleteToast = null;
     }
     await this.env.deleteBookmark(bookmark.text);
-    await this.loadItems();
+    const index = this.env.viewingBookmarks.findIndex(x => x.text == bookmark.text);
+    if (index != -1) {
+      this.env.viewingBookmarks.splice(index, 1);
+    }
     this.deleteToast = await this.toastController.create({
       message: this.translate.instant('MSG.UNDO_DELETE'),
       duration: 2000,
-      mode: "ios",
       color: "light",
       position: "top",
       buttons: [
@@ -131,7 +330,7 @@ export class HistoryPage {
           side: 'end',
           handler: async () => {
             await this.env.undoBookmarkDeletion(bookmark);
-            await this.loadItems();
+            this.env.viewingBookmarks.splice(index, 0, bookmark);
             this.deleteToast.dismiss();
           }
         }
@@ -140,18 +339,71 @@ export class HistoryPage {
     await this.deleteToast.present();
   }
 
+  async editBookmark(bookmark: Bookmark, slidingItem: IonItemSliding) {
+    await slidingItem.close();
+    await this.showEditBookmarkAlert(bookmark);
+  }
+
+  async showEditBookmarkAlert(bookmark: Bookmark) {
+    const alert = await this.alertController.create(
+      {
+        header: this.translate.instant('BOOKMARK'),
+        message: this.translate.instant('MSG.INPUT_TAG'),
+        cssClass: ['alert-bg'],
+        inputs: [
+          {
+            name: 'tag',
+            id: 'tag',
+            type: 'text',
+            label: `${this.translate.instant("TAG_MAX_LENGTH")}`,
+            placeholder: `${this.translate.instant("TAG_MAX_LENGTH")}`,
+            value: bookmark.tag ?? '',
+            max: 30
+          }
+        ],
+        buttons: [
+          {
+            text: this.translate.instant('EDIT'),
+            handler: async data => {
+              alert.dismiss();
+              if (data.tag != null && data.tag.trim().length > 30) {
+                this.presentToast(this.translate.instant("MSG.TAG_MAX_LENGTH_EXPLAIN"), "short", "bottom");
+                return true;
+              }
+              this.isLoading = true;
+              await this.env.deleteBookmark(bookmark.text);
+              const index = this.env.viewingBookmarks.findIndex(x => x.text === bookmark.text);
+              if (index != -1) {
+                this.env.viewingBookmarks.splice(index, 1);
+              }
+              const newBookmark = await this.env.saveBookmark(bookmark.text, data.tag);
+              this.env.viewingBookmarks.unshift(newBookmark);
+              this.env.viewingBookmarks.sort((a, b) => {
+                return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
+              });
+              this.isLoading = false;
+            }
+          }
+        ]
+      }
+    )
+    await alert.present();
+  }
+
   async removeRecord(record: ScanRecord, slidingItem: IonItemSliding) {
-    slidingItem.close();
+    await slidingItem.close();
     if (this.deleteToast) {
       await this.deleteToast.dismiss();
       this.deleteToast = null;
     }
     await this.env.deleteScanRecord(record.id);
-    await this.loadItems();
+    const index = this.env.viewingScanRecords.findIndex(x => x.id == record.id);
+    if (index != -1) {
+      this.env.viewingScanRecords.splice(index, 1);
+    }
     this.deleteToast = await this.toastController.create({
       message: this.translate.instant('MSG.UNDO_DELETE'),
       duration: 2000,
-      mode: "ios",
       color: "light",
       position: "top",
       buttons: [
@@ -160,7 +412,7 @@ export class HistoryPage {
           side: 'end',
           handler: async () => {
             await this.env.undoScanRecordDeletion(record);
-            await this.loadItems();
+            this.env.viewingScanRecords.splice(index, 0, record);
             this.deleteToast.dismiss();
           }
         }
@@ -181,7 +433,9 @@ export class HistoryPage {
             text: this.translate.instant('YES'),
             handler: async () => {
               await this.env.deleteAllScanRecords();
-              await this.loadItems();
+              this.isLoading = true;
+              this.env.viewingScanRecords = [];
+              this.isLoading = false;
             }
           },
           {
@@ -201,7 +455,9 @@ export class HistoryPage {
             text: this.translate.instant('YES'),
             handler: async () => {
               await this.env.deleteAllBookmarks();
-              await this.loadItems();
+              this.isLoading = true;
+              this.env.viewingBookmarks = [];
+              this.isLoading = false;
             }
           },
           {
@@ -215,6 +471,12 @@ export class HistoryPage {
   }
 
   goSetting() {
+    this.isLoading = true;
+    this.changeDetectorRef.detach();
+    this.env.viewingScanRecords = [];
+    this.env.viewingBookmarks = [];
+    this.changeDetectorRef.detectChanges();
+    this.changeDetectorRef.reattach();
     this.router.navigate(['setting-record']);
   }
 
@@ -242,8 +504,7 @@ export class HistoryPage {
 
   async presentLoading(msg: string): Promise<HTMLIonLoadingElement> {
     const loading = await this.loadingController.create({
-      message: msg,
-      mode: "ios"
+      message: msg
     });
     await loading.present();
     return loading;

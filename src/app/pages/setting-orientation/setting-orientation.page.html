@@ -1,7 +1,7 @@
-<ion-header mode="ios">
-  <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'" mode="ios">
+<ion-header>
+  <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'">
     <ion-buttons slot="start">
-      <ion-back-button mode="md" defaultHref="scan" [icon]="'arrow-back'">
+      <ion-back-button text="">
       </ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'SCREEN_ORIENTATION' | translate }}</ion-title>
@@ -11,7 +11,7 @@
 <ion-content>
 
   <ion-radio-group [(ngModel)]="env.orientation" (ionChange)="saveOrientation()">
-    <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none">
+    <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-label class="ion-padding-start">
         <p class="ion-padding">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
@@ -19,10 +19,10 @@
           </ion-text>
         </p>
       </ion-label>
-      <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="'default'" [color]="'primary'">
+      <ion-radio class="ion-margin-end" slot="end" [value]="'default'" [color]="'primary'">
       </ion-radio>
     </ion-item>
-    <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none">
+    <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-label class="ion-padding-start">
         <p class="ion-padding">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
@@ -30,10 +30,10 @@
           </ion-text>
         </p>
       </ion-label>
-      <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="'portrait'" [color]="'primary'">
+      <ion-radio class="ion-margin-end" slot="end" [value]="'portrait'" [color]="'primary'">
       </ion-radio>
     </ion-item>
-    <ion-item mode="ios" class="ion-no-padding ripple-parent" detail="false" lines="none">
+    <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-label class="ion-padding-start">
         <p class="ion-padding">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
@@ -41,7 +41,7 @@
           </ion-text>
         </p>
       </ion-label>
-      <ion-radio class="ion-margin-end" mode="md" slot="end" [value]="'landscape'" [color]="'primary'">
+      <ion-radio class="ion-margin-end" slot="end" [value]="'landscape'" [color]="'primary'">
       </ion-radio>
     </ion-item>
   </ion-radio-group>

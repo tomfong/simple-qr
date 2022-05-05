@@ -1,43 +1,26 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Clipboard } from '@capacitor/clipboard';
 import { Contacts, ContactType, EmailAddress, NewContact, PhoneNumber } from '@capacitor-community/contacts'
 import { SMS } from '@awesome-cordova-plugins/sms/ngx';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
-import { AlertController, LoadingController, ModalController, Platform, PopoverController, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
 import { VCardContact } from 'src/app/models/v-card-contact';
 import { EnvService } from 'src/app/services/env.service';
-import { QrCodeComponent } from 'src/app/components/qr-code/qr-code.component';
 import { Toast } from '@capacitor/toast';
-import { animate, style, transition, trigger } from '@angular/animations';
 import { MatFormField } from '@angular/material/form-field';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+import { QrCodePage } from 'src/app/modals/qr-code/qr-code.page';
+import { fadeIn } from 'src/app/utils/animations';
 
 @Component({
   selector: 'app-result',
   templateUrl: './result.page.html',
   styleUrls: ['./result.page.scss'],
-  animations: [
-    trigger(
-      'inOutAnimation',
-      [
-        transition(
-          ':enter',
-          [
-            style({ opacity: 0 }),
-            animate(
-              '1s ease',
-              style({ opacity: 1 })
-            )
-          ]
-        )
-      ]
-    )
-  ]
+  animations: [fadeIn]
 })
-export class ResultPage implements OnInit {
+export class ResultPage {
 
   contentType: "freeText" | "url" | "contact" | "phone" | "sms" | "emailW3C" | "emailDocomo" | "wifi" = "freeText";
 
@@ -76,55 +59,69 @@ export class ResultPage implements OnInit {
     private platform: Platform,
     public alertController: AlertController,
     public loadingController: LoadingController,
-    private route: ActivatedRoute,
-    private router: Router,
     public env: EnvService,
     public modalController: ModalController,
     private sms: SMS,
     public translate: TranslateService,
-    private popoverController: PopoverController,
-  ) {
-    if (this.router.getCurrentNavigation().extras.state) {
-      const state = this.router.getCurrentNavigation().extras.state;
-      if (state.page == 'generate') {
+  ) { }
+
+  ionViewWillEnter() {
+    if (this.env.recordSource != null) {
+      if (this.env.recordSource == 'create' || this.env.recordSource == 'view') {
         this.showQrFirst = true;
       }
     }
-  }
-
-  async ngOnInit() {
     this.qrCodeContent = this.env.result;
     this.setContentType();
-    if (this.env.scanRecordLogging === 'on') {
-      await this.env.saveScanRecord(this.qrCodeContent);
-    }
-    if (this.env.bookmarks.find(x => x.text === this.qrCodeContent)) {
-      this.bookmarked = true;
-    }
   }
 
   async ionViewDidEnter(): Promise<void> {
-    if (this.env.vibration === 'on' || this.env.vibration === 'on-scanned') {
-      setTimeout(
-        async () => {
-          await Haptics.vibrate();
-        }, 200
-      );
-    }
     if (this.showQrFirst) {
       this.showQrFirst = false;
       if (this.qrCodeContent && this.qrCodeContent.trim().length > 0) {
-        setTimeout(
-          async () => await this.enlarge(), 100
-        );
-        ;
+        await this.enlarge();
       }
+    }
+    if (this.env.scanRecordLogging == 'on') {
+      await this.env.saveScanRecord(this.qrCodeContent);
+    }
+    if (this.env.bookmarks.find(x => x.text == this.qrCodeContent)) {
+      this.bookmarked = true;
     }
   }
 
   async ionViewWillLeave(): Promise<void> {
     this.base64Decoded = false;
     this.base64Encoded = false;
+  }
+
+  ionViewDidLeave() {
+    this.reset();
+  }
+
+  reset() {
+    this.contentType = "freeText";
+    delete this.qrCodeContent;
+    delete this.phoneNumber
+    delete this.vCardContact
+    delete this.smsContent
+    delete this.toEmails
+    delete this.ccEmails
+    delete this.bccEmails
+    delete this.emailSubject
+    delete this.emailBody
+    delete this.wifiSSID
+    delete this.wifiPassword
+    delete this.wifiEncryption
+    delete this.wifiHidden
+    this.base64Encoded = false;
+    this.base64EncodedText = "";
+    this.base64Decoded = false;
+    this.base64DecodedText = "";
+    this.bookmarked = false;
+    this.showQrFirst = false;
+    delete this.env.recordSource;
+    delete this.env.viewResultFrom;
   }
 
   setContentType(): void {
@@ -336,8 +333,9 @@ export class ResultPage implements OnInit {
 
   async enlarge(): Promise<void> {
     const modal = await this.modalController.create({
-      component: QrCodeComponent,
-      cssClass: 'qrcode-modal',
+      component: QrCodePage,
+      breakpoints: [0, 0.5, 1],
+      initialBreakpoint: 0.5,
       componentProps: { qrCodeContent: this.qrCodeContent }
     });
     await modal.present();
@@ -357,6 +355,9 @@ export class ResultPage implements OnInit {
         break;
       case 'duckduckgo':
         searchUrl = this.env.DUCK_DUCK_GO_SEARCH_URL;
+        break;
+      case 'yandex':
+        searchUrl = this.env.YANDEX_SEARCH_URL;
         break;
       default:
         searchUrl = this.env.GOOGLE_SEARCH_URL;
@@ -720,12 +721,46 @@ export class ResultPage implements OnInit {
   }
 
   async addBookmark() {
-    const flag = await this.env.saveBookmark(this.qrCodeContent);
-    if (this.env.bookmarks.find(x => x.text === this.qrCodeContent)) {
-      this.bookmarked = true;
-    } else {
-      this.bookmarked = false;
-    }
+    await this.showBookmarkAlert(this.qrCodeContent);
+  }
+
+  async showBookmarkAlert(content: string) {
+    const alert = await this.alertController.create(
+      {
+        header: this.translate.instant('BOOKMARK'),
+        message: this.translate.instant('MSG.INPUT_TAG'),
+        cssClass: ['alert-bg'],
+        inputs: [
+          {
+            name: 'tag',
+            id: 'tag',
+            type: 'text',
+            label: `${this.translate.instant("TAG_MAX_LENGTH")}`,
+            placeholder: `${this.translate.instant("TAG_MAX_LENGTH")}`,
+            max: 30
+          }
+        ],
+        buttons: [
+          {
+            text: this.translate.instant('CREATE'),
+            handler: async data => {
+              alert.dismiss();
+              if (data.tag != null && data.tag.trim().length > 30) {
+                this.presentToast(this.translate.instant("MSG.TAG_MAX_LENGTH_EXPLAIN"), "short", "bottom");
+                return true;
+              }
+              await this.env.saveBookmark(content, data.tag);
+              if (this.env.bookmarks.find(x => x.text === this.qrCodeContent)) {
+                this.bookmarked = true;
+              } else {
+                this.bookmarked = false;
+              }
+            }
+          }
+        ]
+      }
+    )
+    await alert.present();
   }
 
   async removeBookmark() {
@@ -885,8 +920,7 @@ export class ResultPage implements OnInit {
 
   async presentLoading(msg: string): Promise<HTMLIonLoadingElement> {
     const loading = await this.loadingController.create({
-      message: msg,
-      mode: "ios"
+      message: msg
     });
     await loading.present();
     return loading;

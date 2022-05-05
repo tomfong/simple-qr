@@ -25,7 +25,7 @@ export class HistoryTutorialPage {
     );
   }
 
-  async saveTutorialShowing() {
+  async saveHistoryTutorialShowing() {
     if (this.env.notShowHistoryTutorial === true) {
       await this.env.storageSet("not-show-history-tutorial", 'yes');
     } else {

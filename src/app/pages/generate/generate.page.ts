@@ -7,28 +7,14 @@ import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
 import { EnvService } from 'src/app/services/env.service';
 import { Toast } from '@capacitor/toast';
+import { fadeIn } from 'src/app/utils/animations';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
   selector: 'app-generate',
   templateUrl: './generate.page.html',
   styleUrls: ['./generate.page.scss'],
-  animations: [
-    trigger(
-      'inOutAnimation',
-      [
-        transition(
-          ':enter',
-          [
-            style({ opacity: 0 }),
-            animate(
-              '1s ease',
-              style({ opacity: 1 })
-            )
-          ]
-        )
-      ]
-    )
-  ]
+  animations: [fadeIn]
 })
 export class GeneratePage {
 
@@ -116,41 +102,10 @@ export class GeneratePage {
     public alertController: AlertController,
     public loadingController: LoadingController,
     private router: Router,
-  ) {
-    // this.freeTxtText = this.translate.instant("FREE_TEXT");
-    // this.urlText = this.translate.instant("URL");
-    // this.contactText = this.translate.instant("VCARD_CONTACT");
-    // this.phoneText = this.translate.instant("PHONE");
-    // this.smsText = this.translate.instant("SMS");
-    // this.emailW3CText = this.translate.instant("EMAIL_W3C");
+  ) { }
 
-    // this.wifiText = this.translate.instant("WIFI");
-    // this.contentTypes = [
-    //   { text: this.freeTxtText, value: 'freeText' },
-    //   { text: this.emailW3CText, value: 'emailW3C' },
-    //   { text: this.phoneText, value: 'phone' },
-    //   { text: this.smsText, value: 'sms' },
-    //   { text: this.urlText, value: 'url' },
-    //   { text: this.contactText, value: 'contact' },
-    //   { text: this.wifiText, value: 'wifi' },
-    // ];
-    // this.noneGenderText = this.translate.instant("NOT_TO_DISCLOSE");
-    // this.maleText = this.translate.instant("MALE");
-    // this.femaleText = this.translate.instant("FEMALE");
-    // this.genders = [
-    //   { text: this.noneGenderText, value: "O" },
-    //   { text: this.maleText, value: "M" },
-    //   { text: this.femaleText, value: "F" },
-    // ]
-    // this.noneWifiEncText = this.translate.instant("NONE");
-    // this.wifiEncryptions = [
-    //   { text: this.noneWifiEncText, value: "nopass" },
-    //   { text: this.wepText, value: "WEP" },
-    //   { text: this.wpaText, value: "WPA" },
-    // ];
-  }
-
-  ionViewDidEnter() {
+  async ionViewDidEnter() {
+    await SplashScreen.hide()
     this.freeTxtText = this.translate.instant("FREE_TEXT");
     this.urlText = this.translate.instant("URL");
     this.contactText = this.translate.instant("VCARD_CONTACT");
@@ -339,7 +294,9 @@ export class GeneratePage {
     this.env.result = this.qrCodeContent;
     this.env.resultFormat = "";
     this.qrCodeContent = '';
-    this.router.navigate(['tabs/result', { from: 'generate', t: new Date().getTime() }], { state: { page: 'generate' } }).then(
+    this.env.recordSource = "create";
+    this.env.viewResultFrom = "/tabs/generate";
+    this.router.navigate(['tabs/result']).then(
       () => {
         loading.dismiss();
       }
@@ -451,8 +408,7 @@ export class GeneratePage {
 
   async presentLoading(msg: string): Promise<HTMLIonLoadingElement> {
     const loading = await this.loadingController.create({
-      message: msg,
-      mode: "ios"
+      message: msg
     });
     await loading.present();
     return loading;

@@ -40,7 +40,6 @@ export class AboutPage {
     window.open(this.env.APP_STORE_URL, '_system');
   }
 
-
   async showBarcodeType() {
     const alert = await this.alertController.create({
       header: this.translate.instant("SUPPORTED_TYPE"),
@@ -54,7 +53,6 @@ export class AboutPage {
   async showUpdateNotes() {
     const alert = await this.alertController.create({
       header: this.translate.instant("UPDATE_NOTES"),
-      subHeader: this.env.appVersionNumber,
       message: this.platform.is('ios')? this.translate.instant("UPDATE.UPDATE_NOTES_IOS") : this.translate.instant("UPDATE.UPDATE_NOTES_ANDROID"),
       buttons: [
         {
@@ -82,7 +80,7 @@ export class AboutPage {
   }
 
   async reportBug() {
-    const mailContent = await this.env.getBugReportMailContent();
+    const mailContent = this.env.getBugReportMailContent();
     window.open(mailContent, '_system');
   }
 
