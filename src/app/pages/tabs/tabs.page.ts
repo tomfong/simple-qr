@@ -45,12 +45,11 @@ export class TabsPage {
 
   async ionViewDidEnter() {
     if (this.env.firstAppLoad) {
-      this.env.firstAppLoad = false;
       await SplashScreen.show();
-      await this.env.init();
+      this.env.firstAppLoad = false;
+      await this.loadPatchNote();
       await this.router.navigate([this.env.startPage], { replaceUrl: true });
     }
-    await this.loadPatchNote();
   }
 
   async loadPatchNote() {
@@ -74,7 +73,6 @@ export class TabsPage {
   async showUpdateNotes() {
     const alert = await this.alertController.create({
       header: this.translate.instant("UPDATE_NOTES"),
-      subHeader: this.env.appVersionNumber,
       message: this.platform.is('ios') ? this.translate.instant("UPDATE.UPDATE_NOTES_IOS") : this.translate.instant("UPDATE.UPDATE_NOTES_ANDROID"),
       buttons: [
         {

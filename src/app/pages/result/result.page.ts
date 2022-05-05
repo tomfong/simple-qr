@@ -82,9 +82,6 @@ export class ResultPage {
         await this.enlarge();
       }
     }
-    if (this.env.vibration == 'on' || this.env.vibration == 'on-scanned') {
-      Haptics.vibrate({ duration: 100 });
-    }
     if (this.env.scanRecordLogging == 'on') {
       await this.env.saveScanRecord(this.qrCodeContent);
     }

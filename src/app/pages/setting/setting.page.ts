@@ -26,8 +26,8 @@ export class SettingPage {
     
   }
 
-  ionViewDidEnter() {
-    SplashScreen.hide()
+  async ionViewDidEnter() {
+    await SplashScreen.hide()
   }
 
   get isAndroid(): boolean {

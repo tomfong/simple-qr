@@ -13,7 +13,6 @@ import { Bookmark } from '../models/bookmark';
 import { ScanRecord } from '../models/scan-record';
 import { Toast } from '@capacitor/toast';
 import { v4 as uuidv4 } from 'uuid';
-import { SplashScreen } from '@capacitor/splash-screen';
 
 @Injectable({
   providedIn: 'root'
@@ -77,184 +76,197 @@ export class EnvService {
     private themeDetection: ThemeDetection,
     private appVersion: AppVersion,
     private screenOrientation: ScreenOrientation
-  ) { }
-
-  async init() {
-    await this.platform.ready().then(
+  ) {
+    this.platform.ready().then(
       async _ => {
-        this.appVersionNumber = await this.appVersion.getVersionNumber();
-        const storage = await this.storage.create();
-        await storage.get("start-page").then(
-          value => {
-            if (value != null) {
-              this.startPage = value;
-            } else {
-              this.startPage = '/tabs/scan';
-            }
-          }
-        );
-        this._deviceInfo = await Device.getInfo();
-        this._storage = storage;
-        if (this.platform.is('android')) this._storage.remove(this.AN_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
-        if (this.platform.is('ios')) this._storage.remove(this.IOS_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
-        await this.storageGet("start-page-header").then(
-          async value => {
-            if (value !== null && value !== undefined) {
-              this.startPageHeader = value;
-            } else {
-              this.startPageHeader = 'on';
-            }
-          }
-        );
-        await this.storageGet("language").then(
-          async value => {
-            if (value !== null && value !== undefined) {
-              this.selectedLanguage = value;
-            } else {
-              this.selectedLanguage = 'default';
-            }
-            this.toggleLanguageChange();
-          }
-        );
-        await this.storageGet("color").then(
-          async value => {
-            if (value !== null && value !== undefined) {
-              this.selectedColorTheme = value;
-            } else {
-              this.selectedColorTheme = 'default';
-            }
-            await this.toggleColorTheme();
-          }
-        );
-        await this.storageGet("orientation").then(
-          async value => {
-            if (value !== null && value !== undefined) {
-              this.orientation = value;
-            } else {
-              this.orientation = 'default';
-            }
-            await this.toggleOrientationChange();
-          }
-        );
-        await this.storageGet("scan-record-logging").then(
-          value => {
-            if (value !== null && value !== undefined) {
-              this.scanRecordLogging = value;
-            } else {
-              this.scanRecordLogging = 'on';
-            }
-          }
-        );
-        await this.storageGet("vibration").then(
-          value => {
-            if (value !== null && value !== undefined) {
-              this.vibration = value;
-            } else {
-              this.vibration = 'on';
-            }
-          }
-        );
-        this.storageGet("error-correction-level").then(
-          value => {
-            if (value !== null && value !== undefined) {
-              this.errorCorrectionLevel = value;
-            } else {
-              this.errorCorrectionLevel = 'M';
-            }
-          }
-        );
-        this.storageGet("auto-max-brightness").then(
-          value => {
-            if (value !== null && value !== undefined) {
-              this.autoMaxBrightness = value;
-            } else {
-              this.autoMaxBrightness = 'on';
-            }
-          }
-        );
-        await this.storageGet("not-show-history-tutorial").then(
-          value => {
-            if (value !== null && value !== undefined) {
-              this.notShowHistoryTutorial = (value === 'yes' ? true : false);
-            } else {
-              this.notShowHistoryTutorial = false;
-            }
-          }
-        );
-        await this.storageGet("not-show-bookmark-tutorial").then(
-          value => {
-            if (value !== null && value !== undefined) {
-              this.notShowBookmarkTutorial = (value === 'yes' ? true : false);
-            } else {
-              this.notShowBookmarkTutorial = false;
-            }
-          }
-        );
-        await this.storageGet("search-engine").then(
-          value => {
-            if (value !== null && value !== undefined) {
-              this.searchEngine = value;
-            } else {
-              this.searchEngine = 'google';
-            }
-          }
-        );
-        await this.storageGet(environment.storageScanRecordKey).then(
-          value => {
-            if (value !== null && value !== undefined) {
-              try {
-                this._scanRecords = JSON.parse(value);
-                this._scanRecords.forEach(
-                  r => {
-                    const tCreatedAt = r.createdAt;
-                    r.createdAt = new Date(tCreatedAt);
-                  }
-                );
-                this._scanRecords.sort((r1, r2) => {
-                  return r2.createdAt.getTime() - r1.createdAt.getTime();
-                });
-              } catch (err) {
-                console.error(err);
-                this._scanRecords = [];
-              }
-            }
-          }
-        );
-        await this.storageGet(environment.storageBookmarkKey).then(
-          value => {
-            if (value !== null && value !== undefined) {
-              try {
-                this._bookmarks = JSON.parse(value);
-                this._bookmarks.forEach(
-                  b => {
-                    if (b.id == null) {
-                      b.id = uuidv4();
-                    }
-                    const tCreatedAt = b.createdAt;
-                    b.createdAt = new Date(tCreatedAt);
-                  }
-                );
-                this._bookmarks.sort((a, b) => {
-                  return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
-                });
-              } catch (err) {
-                console.error(err);
-                this._bookmarks = [];
-              }
-            }
-          }
-        )
-        this.storageGet("debug-mode-on").then(
-          value => {
-            if (value != null) {
-              this.debugMode = value;
-            } else {
-              this.debugMode = 'off';
-            }
-          }
-        );
+        await this.prioritizedInit();
+        this.init();
+      }
+    )
+  }
+
+  private async prioritizedInit() {
+    this._storage = await this.storage.create();
+    await this._storage.get("start-page").then(
+      value => {
+        if (value != null) {
+          this.startPage = value;
+        } else {
+          this.startPage = '/tabs/scan';
+        }
       }
     );
+    await this._storage.get("start-page-header").then(
+      async value => {
+        if (value !== null && value !== undefined) {
+          this.startPageHeader = value;
+        } else {
+          this.startPageHeader = 'on';
+        }
+      }
+    );
+    await this._storage.get(environment.storageScanRecordKey).then(
+      value => {
+        if (value !== null && value !== undefined) {
+          try {
+            this._scanRecords = JSON.parse(value);
+            this._scanRecords.forEach(
+              r => {
+                const tCreatedAt = r.createdAt;
+                r.createdAt = new Date(tCreatedAt);
+              }
+            );
+            this._scanRecords.sort((r1, r2) => {
+              return r2.createdAt.getTime() - r1.createdAt.getTime();
+            });
+          } catch (err) {
+            console.error(err);
+            this._scanRecords = [];
+          }
+        }
+      }
+    );
+    await this._storage.get(environment.storageBookmarkKey).then(
+      value => {
+        if (value !== null && value !== undefined) {
+          try {
+            this._bookmarks = JSON.parse(value);
+            this._bookmarks.forEach(
+              b => {
+                if (b.id == null) {
+                  b.id = uuidv4();
+                }
+                const tCreatedAt = b.createdAt;
+                b.createdAt = new Date(tCreatedAt);
+              }
+            );
+            this._bookmarks.sort((a, b) => {
+              return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
+            });
+          } catch (err) {
+            console.error(err);
+            this._bookmarks = [];
+          }
+        }
+      }
+    )
+    await this._storage.get("debug-mode-on").then(
+      value => {
+        if (value != null) {
+          this.debugMode = value;
+        } else {
+          this.debugMode = 'off';
+        }
+      }
+    );
+  }
+
+  private init() {
+    this.storageGet("language").then(
+      async value => {
+        if (value !== null && value !== undefined) {
+          this.selectedLanguage = value;
+        } else {
+          this.selectedLanguage = 'default';
+        }
+        this.toggleLanguageChange();
+      }
+    );
+    this.storageGet("color").then(
+      async value => {
+        if (value !== null && value !== undefined) {
+          this.selectedColorTheme = value;
+        } else {
+          this.selectedColorTheme = 'default';
+        }
+        await this.toggleColorTheme();
+      }
+    );
+    this.storageGet("orientation").then(
+      async value => {
+        if (value !== null && value !== undefined) {
+          this.orientation = value;
+        } else {
+          this.orientation = 'default';
+        }
+        await this.toggleOrientationChange();
+      }
+    );
+    this.storageGet("scan-record-logging").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.scanRecordLogging = value;
+        } else {
+          this.scanRecordLogging = 'on';
+        }
+      }
+    );
+    this.storageGet("vibration").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.vibration = value;
+        } else {
+          this.vibration = 'on';
+        }
+      }
+    );
+    this.storageGet("error-correction-level").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.errorCorrectionLevel = value;
+        } else {
+          this.errorCorrectionLevel = 'M';
+        }
+      }
+    );
+    this.storageGet("auto-max-brightness").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.autoMaxBrightness = value;
+        } else {
+          this.autoMaxBrightness = 'on';
+        }
+      }
+    );
+    this.storageGet("not-show-history-tutorial").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.notShowHistoryTutorial = (value === 'yes' ? true : false);
+        } else {
+          this.notShowHistoryTutorial = false;
+        }
+      }
+    );
+    this.storageGet("not-show-bookmark-tutorial").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.notShowBookmarkTutorial = (value === 'yes' ? true : false);
+        } else {
+          this.notShowBookmarkTutorial = false;
+        }
+      }
+    );
+    this.storageGet("search-engine").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.searchEngine = value;
+        } else {
+          this.searchEngine = 'google';
+        }
+      }
+    );
+    if (this.platform.is('android')) this._storage.remove(this.AN_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
+    if (this.platform.is('ios')) this._storage.remove(this.IOS_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
+    this.appVersion.getVersionNumber().then(
+      value => {
+        this.appVersionNumber = value
+      }
+    )
+    Device.getInfo().then(
+      value => {
+        this._deviceInfo = value;
+      }
+    )
   }
 
   public async storageSet(key: string, value: any) {

@@ -26,8 +26,8 @@ export class ImportImagePage {
     private router: Router,
   ) { }
 
-  ionViewDidEnter() {
-    SplashScreen.hide()
+  async ionViewDidEnter() {
+    await SplashScreen.hide()
   }
 
   async importImage() {

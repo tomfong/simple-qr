@@ -104,8 +104,8 @@ export class GeneratePage {
     private router: Router,
   ) { }
 
-  ionViewDidEnter() {
-    SplashScreen.hide()
+  async ionViewDidEnter() {
+    await SplashScreen.hide()
     this.freeTxtText = this.translate.instant("FREE_TEXT");
     this.urlText = this.translate.instant("URL");
     this.contactText = this.translate.instant("VCARD_CONTACT");

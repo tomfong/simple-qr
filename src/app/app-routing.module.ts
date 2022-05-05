@@ -50,7 +50,6 @@ const routes: Routes = [
     path: 'setting-start-page',
     loadChildren: () => import('./pages/setting-start-page/setting-start-page.module').then( m => m.SettingStartPagePageModule)
   },
-
 ];
 
 @NgModule({

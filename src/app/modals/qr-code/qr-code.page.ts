@@ -51,11 +51,16 @@ export class QrCodePage {
         this.presentToast(this.translate.instant("MSG.PORTRAIT_ONLY"), "short", "bottom");
         this.screenOrientation.unlock();
       }
-      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
-      if (this.qrcodeElement != null) {
-        this.qrcodeElement.width = this.platform.height() * this.scale * 0.4;
-        this.qrcodeElement.createQRCode();
-      }
+      await this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT).then(
+        _ => {
+          if (this.qrcodeElement != null) {
+            setTimeout(() => {
+              this.qrcodeElement.width = this.platform.height() * this.scale * 0.4;
+              this.qrcodeElement.createQRCode();
+            }, 500)
+          }
+        }
+      )
       if (this.env.autoMaxBrightness === 'on') {
         await ScreenBrightness.getBrightness().then(
           value => {

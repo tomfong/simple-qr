@@ -37,6 +37,7 @@ export class ScanPage {
   ) { }
 
   async ionViewDidEnter(): Promise<void> {
+    await SplashScreen.hide()
     await BarcodeScanner.disableTorch().then(
       _ => {
         this.flashActive = false;
@@ -46,7 +47,6 @@ export class ScanPage {
   }
 
   async ionViewDidLeave(): Promise<void> {
-    SplashScreen.hide()
     await BarcodeScanner.disableTorch().then(
       _ => {
         this.flashActive = false;
