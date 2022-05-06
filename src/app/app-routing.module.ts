@@ -51,7 +51,11 @@ const routes: Routes = [
   {
     path: 'setting-start-page',
     loadChildren: () => import('./pages/setting-start-page/setting-start-page.module').then(m => m.SettingStartPagePageModule)
+  },  {
+    path: 'setting-result',
+    loadChildren: () => import('./pages/setting-result/setting-result.module').then( m => m.SettingResultPageModule)
   },
+
 ];
 
 @NgModule({

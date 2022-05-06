@@ -231,6 +231,7 @@
     "INITIAL_PAGE": "起始页面",
     "START_PAGE_EXPLAIN": "选择应用程式的起始页面",
     "START_PAGE_HEADER_EXPLAIN": "在起始页显示「简易 QR」顶栏",
+    "RESULT_PAGE_SETTINGS": "结果页面设定",
     "MSG": {
         "CALL_PHONE": "确定要致电 {phoneNumber} ?",
         "FAIL_CALL_PHONE": "无法开启电话",

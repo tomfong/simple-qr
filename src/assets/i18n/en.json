@@ -231,6 +231,7 @@
     "INITIAL_PAGE": "Initial Page",
     "START_PAGE_EXPLAIN": "Choose the initial page of the app",
     "START_PAGE_HEADER_EXPLAIN": "Show Simple QR header on the initial page",
+    "RESULT_PAGE_SETTINGS": "Result Page Settings",
     "MSG": {
         "CALL_PHONE": "Are you sure to call {phoneNumber} now?",
         "FAIL_CALL_PHONE": "Failed to open dialer",

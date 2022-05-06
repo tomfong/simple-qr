@@ -58,20 +58,12 @@ export class SettingPage {
     this.router.navigate(['backup-restore']);
   }
 
-  setErrorCorrectionLevel() {
-    this.router.navigate(['setting-qr-ecl']);
-  }
-
-  setAutoMaxBrightness() {
-    this.router.navigate(['setting-auto-brightness']);
-  }
-
-  setSearchEngine() {
-    this.router.navigate(['setting-search-engine']);
-  }
-
   setStartPage() {
     this.router.navigate(['setting-start-page']);
+  }
+
+  setResult() {
+    this.router.navigate(['setting-result']);
   }
 
   setDebugMode() {
