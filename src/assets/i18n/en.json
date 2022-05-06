@@ -253,6 +253,7 @@
     "AFTER_BOOKMARK_VIEW": "View Bookmark",
     "AUTO_SHOW_QR_EXPLAIN": "Automatically pop up QR code on Result page after",
     "BOOKMARKED": "Bookmarked",
+    "HISTORY_PAGE_START_EXPLAIN": "Choose the initial segment on the Log/Bookmark page",
     "MSG": {
         "CALL_PHONE": "Are you sure to call {phoneNumber} now?",
         "FAIL_CALL_PHONE": "Failed to open dialer",

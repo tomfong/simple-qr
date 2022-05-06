@@ -22,6 +22,7 @@ export class EnvService {
   public appVersionNumber: string = '1.0.0';
 
   public startPage: "/tabs/scan" | "/tabs/generate" | "/tabs/import-image" | "/tabs/history" | "/tabs/setting" = "/tabs/scan";
+  public historyPageStartSegment: 'history' | 'bookmarks' = 'history';
   public startPageHeader: 'on' | 'off' = 'on';
   public languages: string[] = ['en', 'zh-HK', 'zh-CN'];
   public language: 'en' | 'zh-HK' | 'zh-CN' = 'en';
@@ -104,6 +105,15 @@ export class EnvService {
           this.startPage = value;
         } else {
           this.startPage = '/tabs/scan';
+        }
+      }
+    );
+    this._storage.get("history-page-start-segment").then(
+      value => {
+        if (value != null) {
+          this.historyPageStartSegment = value;
+        } else {
+          this.historyPageStartSegment = 'history';
         }
       }
     );
@@ -348,6 +358,7 @@ export class EnvService {
   public async resetAll() {
     await this._storage.clear();
     this.startPage = '/tabs/scan';
+    this.historyPageStartSegment = 'history';
     this.startPageHeader = 'on';
     this.selectedLanguage = 'default';
     this.toggleLanguageChange();
@@ -382,6 +393,9 @@ export class EnvService {
   public async resetSetting() {
     this.startPage = '/tabs/scan';
     await this.storageSet("start-page", this.startPage);
+
+    this.historyPageStartSegment = 'history';
+    await this.storageSet("history-page-start-segment", this.historyPageStartSegment);
 
     this.startPageHeader = 'on';
     await this.storageSet("start-page-header", this.startPage);

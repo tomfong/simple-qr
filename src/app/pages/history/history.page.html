@@ -30,7 +30,7 @@
       <ion-icon src="assets/icon/history.svg"></ion-icon>
     </ion-segment-button>
     <ion-segment-button [value]="'bookmarks'">
-      <ion-icon name="star"></ion-icon>
+      <ion-icon name="bookmark"></ion-icon>
     </ion-segment-button>
   </ion-segment>
   <ng-container *ngIf="isLoading">
@@ -116,7 +116,7 @@
           </ion-item>
           <ion-item-options side="start">
             <ion-item-option [color]="'primary'" expandable (click)="addBookmark(record, slidingItem)">
-              <ion-icon slot="icon-only" name="star"></ion-icon>
+              <ion-icon slot="icon-only" name="bookmark"></ion-icon>
             </ion-item-option>
           </ion-item-options>
           <ion-item-options side="end">
@@ -135,7 +135,7 @@
   <ng-container
     *ngIf="segmentModel === 'bookmarks' && (!env.viewingBookmarks || (env.viewingBookmarks.length <= 0)) && !isLoading">
     <div class="ion-padding-horizontal fullscreen-vertical-center" style="height: 85%">
-      <ion-icon name="star" [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: 3rem"></ion-icon>
+      <ion-icon name="bookmark" [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: 3rem"></ion-icon>
       <p class="ion-text-center pt-3">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'FAVOURITE_TEXT_SHOWN' | translate }}

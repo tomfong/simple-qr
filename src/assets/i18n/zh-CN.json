@@ -253,6 +253,7 @@
     "AFTER_BOOKMARK_VIEW": "查看书签后",
     "AUTO_SHOW_QR_EXPLAIN": "在进行以下已选择的动作后，自动弹出 QR 码。",
     "BOOKMARKED": "已书签",
+    "HISTORY_PAGE_START_EXPLAIN": "选择记录/书签页的起始分页",
     "MSG": {
         "CALL_PHONE": "确定要致电 {phoneNumber} ?",
         "FAIL_CALL_PHONE": "无法开启电话",

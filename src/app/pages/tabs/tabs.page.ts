@@ -15,7 +15,7 @@ export class TabsPage {
 
   constructor(
     private translate: TranslateService,
-    private env: EnvService,
+    public env: EnvService,
     private platform: Platform,
     private router: Router,
     private alertController: AlertController,

@@ -93,6 +93,7 @@ export class HistoryPage {
 
   async ionViewDidEnter() {
     await SplashScreen.hide()
+    this.segmentModel = this.env.historyPageStartSegment;
     if (this.segmentModel == 'history') {
       if (this.env.notShowHistoryTutorial === false) {
         this.env.notShowHistoryTutorial = true;
