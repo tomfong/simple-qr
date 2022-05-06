@@ -25,4 +25,8 @@ export class SettingResultPage {
   setSearchEngine() {
     this.router.navigate(['setting-search-engine']);
   }
+
+  setResultPageButtons() {
+    this.router.navigate(['setting-result-buttons']);
+  }
 }

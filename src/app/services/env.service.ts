@@ -37,6 +37,7 @@ export class EnvService {
   public notShowBookmarkTutorial: boolean = false;
   public notShowUpdateNotes: boolean = false;
   public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' | 'yandex' = 'google';
+  public resultPageButtons: 'detailed' | 'icon-only' = 'detailed';
   public debugMode: 'on' | 'off' = 'off';
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
@@ -256,6 +257,15 @@ export class EnvService {
         }
       }
     );
+    this._storage.get("result-page-buttons").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.resultPageButtons = value;
+        } else {
+          this.resultPageButtons = 'detailed';
+        }
+      }
+    );
     if (this.platform.is('android')) this._storage.remove(this.AN_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
     if (this.platform.is('ios')) this._storage.remove(this.IOS_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
     this.appVersion.getVersionNumber().then(
@@ -302,6 +312,7 @@ export class EnvService {
     this.notShowBookmarkTutorial = false;
     this.notShowUpdateNotes = false;
     this.searchEngine = 'google';
+    this.resultPageButtons = 'detailed';
     this._scanRecords = [];
     this._bookmarks = [];
     this.debugMode = 'off';
@@ -358,6 +369,9 @@ export class EnvService {
 
     this.searchEngine = 'google';
     await this.storageSet("search-engine", this.searchEngine);
+
+    this.resultPageButtons = 'detailed';
+    await this.storageSet("result-page-buttons", this.resultPageButtons);
 
     this.debugMode = 'off';
     await this.storageSet("debug-mode-on", this.debugMode);

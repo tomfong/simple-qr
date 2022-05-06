@@ -720,8 +720,17 @@ export class ResultPage {
     }
   }
 
-  async addBookmark() {
-    await this.showBookmarkAlert(this.qrCodeContent);
+  async handleBookmark() {
+    if (!this.bookmarked) {
+      await this.showBookmarkAlert(this.qrCodeContent);
+    } else {
+      await this.env.deleteBookmark(this.qrCodeContent);
+      if (this.env.bookmarks.find(x => x.text === this.qrCodeContent)) {
+        this.bookmarked = true;
+      } else {
+        this.bookmarked = false;
+      }
+    }
   }
 
   async showBookmarkAlert(content: string) {
@@ -763,14 +772,14 @@ export class ResultPage {
     await alert.present();
   }
 
-  async removeBookmark() {
-    await this.env.deleteBookmark(this.qrCodeContent);
-    if (this.env.bookmarks.find(x => x.text === this.qrCodeContent)) {
-      this.bookmarked = true;
-    } else {
-      this.bookmarked = false;
-    }
-  }
+  // async removeBookmark() {
+  //   await this.env.deleteBookmark(this.qrCodeContent);
+  //   if (this.env.bookmarks.find(x => x.text === this.qrCodeContent)) {
+  //     this.bookmarked = true;
+  //   } else {
+  //     this.bookmarked = false;
+  //   }
+  // }
 
   get contentTypeText(): string {
     switch (this.contentType) {

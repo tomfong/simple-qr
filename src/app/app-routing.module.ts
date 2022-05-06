@@ -55,6 +55,10 @@ const routes: Routes = [
     path: 'setting-result',
     loadChildren: () => import('./pages/setting-result/setting-result.module').then( m => m.SettingResultPageModule)
   },
+  {
+    path: 'setting-result-buttons',
+    loadChildren: () => import('./pages/setting-result-buttons/setting-result-buttons.module').then( m => m.SettingResultButtonsPageModule)
+  },
 
 ];
 

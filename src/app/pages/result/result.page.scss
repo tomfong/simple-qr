@@ -28,3 +28,8 @@ ion-textarea[readonly] {
         max-height: 150px;
     }
 }
+
+.button-row::after {
+    content: "";
+    flex: auto;
+}
