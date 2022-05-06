@@ -4,15 +4,14 @@
       <ion-back-button text="">
       </ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'RESULT_PAGE_SETTINGS' | translate }}</ion-title>
+    <ion-title>{{ 'QR_RESULT_SETTINGS' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setErrorCorrectionLevel()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="qr-code-outline"></ion-icon>
-    <ion-label>
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="setErrorCorrectionLevel()">
+    <ion-label class="ion-padding-start">
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'ERROR_CORRECTION_LEVEL' | translate }}
@@ -20,9 +19,8 @@
       </p>
     </ion-label>
   </ion-item>
-  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setAutoMaxBrightness()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="sunny"></ion-icon>
-    <ion-label>
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="setAutoMaxBrightness()">
+    <ion-label class="ion-padding-start">
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'AUTO_MAX_BRIGHTNESS' | translate }}
@@ -31,17 +29,7 @@
     </ion-label>
   </ion-item>
   <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="setSearchEngine()">
-    <ion-icon *ngIf="env.searchEngine === 'google'" class="ion-margin-start ion-padding-horizontal" [color]="'primary'"
-      name="logo-google"></ion-icon>
-    <ion-icon *ngIf="env.searchEngine === 'bing'" class="ion-margin-start ion-padding-horizontal" [color]="'primary'"
-      src="assets/icon/microsoft-bing.svg"></ion-icon>
-    <ion-icon *ngIf="env.searchEngine === 'yahoo'" class="ion-margin-start ion-padding-horizontal" [color]="'primary'"
-      src="assets/icon/yahoo.svg"></ion-icon>
-    <ion-icon *ngIf="env.searchEngine === 'duckduckgo'" class="ion-margin-start ion-padding-horizontal"
-      [color]="'primary'" src="assets/icon/duck-duck-go.svg"></ion-icon>
-    <ion-icon *ngIf="env.searchEngine === 'yandex'" class="ion-margin-start ion-padding-horizontal" [color]="'primary'"
-      src="assets/icon/yandex.svg"></ion-icon>
-    <ion-label>
+    <ion-label class="ion-padding-start">
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'SEARCH_ENGINE' | translate }}
