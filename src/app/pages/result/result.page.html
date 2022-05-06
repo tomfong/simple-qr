@@ -1,6 +1,11 @@
 <ion-header>
   <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'">
     <ion-title>{{ 'RESULT' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="tapHaptic(); goSetting()" fill="clear" [color]="'primary'">
+        {{ 'SETTINGS' | translate }}
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -246,7 +251,8 @@
           [color]="!bookmarked? (env.colorTheme === 'light'? 'dark' : 'light') : 'warning'" fill="outline" shape="round"
           [@inAnimation] [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
           <ion-icon class="pr-2" slot="icon-only" name="star"></ion-icon>
-          <ion-label>{{ 'BOOKMARK' | translate}}</ion-label>
+          <ion-label *ngIf="!bookmarked">{{ 'BOOKMARK' | translate}}</ion-label>
+          <ion-label *ngIf="bookmarked">{{ 'BOOKMARKED' | translate}}</ion-label>
         </ion-button>
       </div>
     </ion-row>

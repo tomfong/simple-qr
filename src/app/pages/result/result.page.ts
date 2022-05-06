@@ -13,6 +13,7 @@ import { MatFormField } from '@angular/material/form-field';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { QrCodePage } from 'src/app/modals/qr-code/qr-code.page';
 import { fadeIn } from 'src/app/utils/animations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-result',
@@ -63,6 +64,7 @@ export class ResultPage {
     public modalController: ModalController,
     private sms: SMS,
     public translate: TranslateService,
+    private router: Router,
   ) { }
 
   ionViewWillEnter() {
@@ -895,6 +897,10 @@ export class ResultPage {
     return this.translate.instant("NOT_PROVIDED");
   }
 
+  goSetting() {
+    this.router.navigate(['setting-result']);
+  }
+
   get ngMatThemeClass() {
     switch (this.env.colorTheme) {
       case 'dark':
@@ -918,17 +924,6 @@ export class ResultPage {
       duration: duration,
       position: pos
     });
-  }
-
-  private base64toBlob(base64Data: string, contentType: string): Blob {
-    const byteString = atob(base64Data);
-    const ab = new ArrayBuffer(byteString.length);
-    const ia = new Uint8Array(ab);
-    for (let i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
-    }
-    const blob = new Blob([ab], { type: contentType });
-    return blob;
   }
 
   async presentLoading(msg: string): Promise<HTMLIonLoadingElement> {

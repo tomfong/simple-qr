@@ -252,6 +252,7 @@
     "AFTER_LOG_VIEW": "View Log",
     "AFTER_BOOKMARK_VIEW": "View Bookmark",
     "AUTO_SHOW_QR_EXPLAIN": "Automatically pop up QR code on Result page after",
+    "BOOKMARKED": "Bookmarked",
     "MSG": {
         "CALL_PHONE": "Are you sure to call {phoneNumber} now?",
         "FAIL_CALL_PHONE": "Failed to open dialer",
