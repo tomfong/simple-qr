@@ -245,6 +245,13 @@
     "ICON_ONLY": "Icon Only",
     "TASK": "Task",
     "QR_CODE": "QR Code",
+    "AUTO_SHOW_QR": "Auto QR Code Pop-up",
+    "AFTER_CAMERA_SCAN": "Scan by Camera",
+    "AFTER_IMAGE_SCAN": "Import Image",
+    "AFTER_CREATE": "Create QR Code",
+    "AFTER_LOG_VIEW": "View Log",
+    "AFTER_BOOKMARK_VIEW": "View Bookmark",
+    "AUTO_SHOW_QR_EXPLAIN": "Automatically pop up QR code on Result page after",
     "MSG": {
         "CALL_PHONE": "Are you sure to call {phoneNumber} now?",
         "FAIL_CALL_PHONE": "Failed to open dialer",

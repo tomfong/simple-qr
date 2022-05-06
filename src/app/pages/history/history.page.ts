@@ -220,7 +220,7 @@ export class HistoryPage {
     }
   }
 
-  async viewRecord(data: string): Promise<void> {
+  async viewRecord(data: string, source: "view-log" | "view-bookmark"): Promise<void> {
     this.isLoading = true;
     this.changeDetectorRef.detach();
     this.env.viewingScanRecords = [];
@@ -231,6 +231,7 @@ export class HistoryPage {
     this.env.result = data;
     this.env.resultFormat = "";
     this.env.recordSource = "view";
+    this.env.detailedRecordSource = source;
     this.env.viewResultFrom = "/tabs/history";
     this.router.navigate(['tabs/result']).then(
       () => {

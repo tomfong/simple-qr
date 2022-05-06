@@ -295,6 +295,7 @@ export class GeneratePage {
     this.env.resultFormat = "";
     this.qrCodeContent = '';
     this.env.recordSource = "create";
+    this.env.detailedRecordSource = "create";
     this.env.viewResultFrom = "/tabs/generate";
     this.router.navigate(['tabs/result']).then(
       () => {

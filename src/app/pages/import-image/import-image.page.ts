@@ -98,6 +98,7 @@ export class ImportImagePage {
     this.env.result = scannedData;
     this.env.resultFormat = "QR_CODE";
     this.env.recordSource = "scan";
+    this.env.detailedRecordSource = "scan-image";
     this.env.viewResultFrom = "/tabs/import-image";
     this.router.navigate(['tabs/result']).then(
       () => {

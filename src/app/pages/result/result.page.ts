@@ -66,8 +66,16 @@ export class ResultPage {
   ) { }
 
   ionViewWillEnter() {
-    if (this.env.recordSource != null) {
-      if (this.env.recordSource == 'create' || this.env.recordSource == 'view') {
+    if (this.env.detailedRecordSource != null) {
+      if (this.env.detailedRecordSource == 'create' && this.env.showQrAfterCreate == 'on') {
+        this.showQrFirst = true;
+      } else if (this.env.detailedRecordSource == 'view-log' && this.env.showQrAfterLogView == 'on') {
+        this.showQrFirst = true;
+      } else if (this.env.detailedRecordSource == 'view-bookmark' && this.env.showQrAfterBookmarkView == 'on') {
+        this.showQrFirst = true;
+      } else if (this.env.detailedRecordSource == 'scan-camera' && this.env.showQrAfterCameraScan == 'on') {
+        this.showQrFirst = true;
+      } else if (this.env.detailedRecordSource == 'scan-image' && this.env.showQrAfterImageScan == 'on') {
         this.showQrFirst = true;
       }
     }
@@ -88,11 +96,6 @@ export class ResultPage {
     if (this.env.bookmarks.find(x => x.text == this.qrCodeContent)) {
       this.bookmarked = true;
     }
-  }
-
-  async ionViewWillLeave(): Promise<void> {
-    this.base64Decoded = false;
-    this.base64Encoded = false;
   }
 
   ionViewDidLeave() {
@@ -121,6 +124,7 @@ export class ResultPage {
     this.bookmarked = false;
     this.showQrFirst = false;
     delete this.env.recordSource;
+    delete this.env.detailedRecordSource;
     delete this.env.viewResultFrom;
   }
 

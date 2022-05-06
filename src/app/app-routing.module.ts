@@ -59,6 +59,10 @@ const routes: Routes = [
     path: 'setting-result-buttons',
     loadChildren: () => import('./pages/setting-result-buttons/setting-result-buttons.module').then( m => m.SettingResultButtonsPageModule)
   },
+  {
+    path: 'setting-auto-qr',
+    loadChildren: () => import('./pages/setting-auto-qr/setting-auto-qr.module').then( m => m.SettingAutoQrPageModule)
+  },
 
 ];
 

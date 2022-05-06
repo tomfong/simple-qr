@@ -245,6 +245,13 @@
     "ICON_ONLY": "僅限圖示",
     "TASK": "行動",
     "QR_CODE": "QR 碼",
+    "AUTO_SHOW_QR": "自動彈出 QR 碼",
+    "AFTER_CAMERA_SCAN": "相機掃描後",
+    "AFTER_IMAGE_SCAN": "匯入圖片後",
+    "AFTER_CREATE": "建立 QR 碼後",
+    "AFTER_LOG_VIEW": "查看記錄後",
+    "AFTER_BOOKMARK_VIEW": "查看書籤後",
+    "AUTO_SHOW_QR_EXPLAIN": "在進行以下已選擇的動作後，自動彈出 QR 碼。",
     "MSG": {
         "CALL_PHONE": "確定要致電 {phoneNumber} ?",
         "FAIL_CALL_PHONE": "無法開啟電話",

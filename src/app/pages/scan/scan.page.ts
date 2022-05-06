@@ -135,6 +135,7 @@ export class ScanPage {
     this.env.result = scannedData;
     this.env.resultFormat = format;
     this.env.recordSource = "scan";
+    this.env.detailedRecordSource = "scan-camera";
     this.env.viewResultFrom = "/tabs/scan";
     this.router.navigate(['tabs/result']).then(
       () => {

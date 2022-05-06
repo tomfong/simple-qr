@@ -73,7 +73,7 @@
       <ng-container *ngFor="let record of env.viewingScanRecords; trackBy: scanRecordsTrackByFn; index as i;">
         <ion-item-sliding #slidingItem [@fastInAnimation] [@flyOut]>
           <ion-item class="ion-no-padding ripple-parent" detail="false"
-            [lines]="i === env.viewingScanRecords.length - 1? 'none' : 'full'" (click)="viewRecord(record.text)">
+            [lines]="i === env.viewingScanRecords.length - 1? 'none' : 'full'" (click)="viewRecord(record.text, 'view-log')">
             <ion-label class="ion-padding-start">
               <div class="ion-padding" style="overflow-x: clip; text-overflow: ellipsis;">
                 <p *ngIf="env.debugMode === 'on'">
@@ -139,7 +139,7 @@
       <ng-container *ngFor="let bookmark of env.viewingBookmarks; trackBy: bookmarksTrackByFn; index as i">
         <ion-item-sliding #slidingItem [@fastInAnimation] [@flyOut]>
           <ion-item class="ion-no-padding ripple-parent" detail="false"
-            [lines]="i === env.viewingBookmarks.length - 1? 'none' : 'full'" (click)="viewRecord(bookmark.text)">
+            [lines]="i === env.viewingBookmarks.length - 1? 'none' : 'full'" (click)="viewRecord(bookmark.text, 'view-bookmark')">
             <ion-label class="ion-padding-start">
               <div class="ion-padding">
                 <p *ngIf="env.debugMode === 'on'">

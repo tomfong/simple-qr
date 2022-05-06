@@ -245,6 +245,13 @@
     "ICON_ONLY": "仅限图示",
     "TASK": "行动",
     "QR_CODE": "QR 码",
+    "AUTO_SHOW_QR": "自动弹出 QR 码",
+    "AFTER_CAMERA_SCAN": "相机扫描后",
+    "AFTER_IMAGE_SCAN": "汇入图片后",
+    "AFTER_CREATE": "建立 QR 码后",
+    "AFTER_LOG_VIEW": "查看记录后",
+    "AFTER_BOOKMARK_VIEW": "查看书签后",
+    "AUTO_SHOW_QR_EXPLAIN": "在进行以下已选择的动作后，自动弹出 QR 码。",
     "MSG": {
         "CALL_PHONE": "确定要致电 {phoneNumber} ?",
         "FAIL_CALL_PHONE": "无法开启电话",

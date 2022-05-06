@@ -14,6 +14,10 @@ export class SettingResultPage {
     private router: Router,
   ) { }
 
+  setAutoQr() {
+    this.router.navigate(['setting-auto-qr']);
+  }
+
   setAutoMaxBrightness() {
     this.router.navigate(['setting-auto-brightness']);
   }

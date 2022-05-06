@@ -38,6 +38,11 @@ export class EnvService {
   public notShowUpdateNotes: boolean = false;
   public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' | 'yandex' = 'google';
   public resultPageButtons: 'detailed' | 'icon-only' = 'detailed';
+  public showQrAfterCameraScan: 'on' | 'off' = 'off';
+  public showQrAfterImageScan: 'on' | 'off' = 'off';
+  public showQrAfterCreate: 'on' | 'off' = 'on';
+  public showQrAfterLogView: 'on' | 'off' = 'on';
+  public showQrAfterBookmarkView: 'on' | 'off' = 'on';
   public debugMode: 'on' | 'off' = 'off';
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
@@ -65,6 +70,7 @@ export class EnvService {
   private _deviceInfo: DeviceInfo | undefined = undefined;
 
   recordSource: 'create' | 'view' | 'scan';
+  detailedRecordSource: 'create' | 'view-log' | 'view-bookmark' | 'scan-camera' | 'scan-image';
   viewResultFrom: '/tabs/scan' | '/tabs/import-image' | '/tabs/generate' | '/tabs/history';
 
   public firstAppLoad: boolean = true;  // once loaded, turn it false
@@ -266,6 +272,51 @@ export class EnvService {
         }
       }
     );
+    this._storage.get("show-qr-after-camera-scan").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showQrAfterCameraScan = value;
+        } else {
+          this.showQrAfterCameraScan = 'off';
+        }
+      }
+    );
+    this._storage.get("show-qr-after-image-scan").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showQrAfterImageScan = value;
+        } else {
+          this.showQrAfterImageScan = 'off';
+        }
+      }
+    );
+    this._storage.get("show-qr-after-create").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showQrAfterCreate = value;
+        } else {
+          this.showQrAfterCreate = 'on';
+        }
+      }
+    );
+    this._storage.get("show-qr-after-log-view").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showQrAfterLogView = value;
+        } else {
+          this.showQrAfterLogView = 'on';
+        }
+      }
+    );
+    this._storage.get("show-qr-after-bookmark-view").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showQrAfterBookmarkView = value;
+        } else {
+          this.showQrAfterBookmarkView = 'on';
+        }
+      }
+    );
     if (this.platform.is('android')) this._storage.remove(this.AN_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
     if (this.platform.is('ios')) this._storage.remove(this.IOS_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
     this.appVersion.getVersionNumber().then(
@@ -313,6 +364,11 @@ export class EnvService {
     this.notShowUpdateNotes = false;
     this.searchEngine = 'google';
     this.resultPageButtons = 'detailed';
+    this.showQrAfterCameraScan = 'off';
+    this.showQrAfterImageScan = 'off';
+    this.showQrAfterCreate = 'on';
+    this.showQrAfterLogView = 'on';
+    this.showQrAfterBookmarkView = 'on';
     this._scanRecords = [];
     this._bookmarks = [];
     this.debugMode = 'off';
@@ -372,6 +428,21 @@ export class EnvService {
 
     this.resultPageButtons = 'detailed';
     await this.storageSet("result-page-buttons", this.resultPageButtons);
+
+    this.showQrAfterCameraScan = 'off';
+    await this.storageSet("show-qr-after-camera-scan", this.showQrAfterCameraScan);
+
+    this.showQrAfterImageScan = 'off';
+    await this.storageSet("show-qr-after-image-scan", this.showQrAfterImageScan);
+
+    this.showQrAfterCreate = 'on';
+    await this.storageSet("show-qr-after-create", this.showQrAfterCreate);
+
+    this.showQrAfterLogView = 'on';
+    await this.storageSet("show-qr-after-log-view", this.showQrAfterLogView);
+
+    this.showQrAfterBookmarkView = 'on';
+    await this.storageSet("show-qr-after-bookmark-view", this.showQrAfterBookmarkView);
 
     this.debugMode = 'off';
     await this.storageSet("debug-mode-on", this.debugMode);
