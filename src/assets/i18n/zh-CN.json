@@ -329,10 +329,10 @@
         "1D": "一维条码",
         "AZTEC": "阿兹特克码",
         "DATA_MATRIX": "数据矩阵",
-        "MAXICODE": "MaxiCode 条码",
-        "PDF_417": "PDF417 条码",
+        "MAXICODE": "MaxiCode",
+        "PDF_417": "PDF417",
         "QR_CODE": "QR 码",
-        "RSS": "GS1 DataBar 条码"
+        "RSS": "GS1 DataBar"
     },
     "UPDATE": {
         "UPDATE_NOTES_ANDROID": "<p>若您喜欢简易QR，欢迎前往商店评分。</p><p>是次更新进一步改善效能及降低程式载入时间。</p><p>版本 2.5 更新了界面与动画、大幅提升流畅度与稳定度及为您带来新功能，包括</p><ul><li>显示 QR 码时，动态调整大小及自动将萤幕亮度调校到最大</li><li>可选择起始页面</li><li>记录页显示更多资讯</li><li>可为每个书签加上标签</li><li>支援 Yandex 搜寻</li><li>更多重设的选项</li></ul>",
