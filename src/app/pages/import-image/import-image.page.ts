@@ -86,7 +86,7 @@ export class ImportImagePage {
                 }
               },
               {
-                text: this.translate.instant("OK"),
+                text: this.translate.instant("CLOSE"),
                 handler: () => {
                   return true;
                 }

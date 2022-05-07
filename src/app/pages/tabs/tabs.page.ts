@@ -54,7 +54,7 @@ export class TabsPage {
       message: this.platform.is('ios') ? this.translate.instant("UPDATE.UPDATE_NOTES_IOS") : this.translate.instant("UPDATE.UPDATE_NOTES_ANDROID"),
       buttons: [
         {
-          text: this.translate.instant("OK"),
+          text: this.translate.instant("CLOSE"),
           handler: () => true,
         },
         {

@@ -25,7 +25,8 @@ export class QrCodePage {
   qrElementType: NgxQrcodeElementTypes = NgxQrcodeElementTypes.CANVAS;
   errorCorrectionLevel: NgxQrcodeErrorCorrectionLevels;
   scale: number = 0.8;
-  defaultWidth: number = window.innerHeight * 0.32;
+  readonly MAX_WIDTH = 500;
+  defaultWidth: number = window.innerHeight * 0.32 > this.MAX_WIDTH?  this.MAX_WIDTH : window.innerHeight * 0.32;
   qrMargin: number = 3;
 
   qrImageDataUrl: string;
@@ -56,6 +57,9 @@ export class QrCodePage {
           if (this.qrcodeElement != null) {
             setTimeout(() => {
               this.qrcodeElement.width = this.platform.height() * this.scale * 0.4;
+              if (this.qrcodeElement.width > this.MAX_WIDTH) {
+                this.qrcodeElement.width = this.MAX_WIDTH;
+              }
               this.qrcodeElement.createQRCode();
             }, 500)
           }
@@ -87,6 +91,9 @@ export class QrCodePage {
                 case 0.5:
                   this.qrcodeElement.width = this.platform.height() * this.scale * 0.4;
                   break
+              }
+              if (this.qrcodeElement.width > this.MAX_WIDTH) {
+                this.qrcodeElement.width = this.MAX_WIDTH;
               }
               this.qrcodeElement.createQRCode();
             }

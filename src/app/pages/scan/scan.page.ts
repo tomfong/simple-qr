@@ -85,7 +85,7 @@ export class ScanPage {
             }
           },
           {
-            text: this.translate.instant("OK"),
+            text: this.translate.instant("CLOSE"),
             handler: () => {
               return true;
             }

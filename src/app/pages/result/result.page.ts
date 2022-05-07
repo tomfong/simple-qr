@@ -268,7 +268,7 @@ export class ResultPage {
                   }
                 },
                 {
-                  text: this.translate.instant("OK"),
+                  text: this.translate.instant("CLOSE"),
                   handler: () => {
                     return true;
                   }
@@ -342,6 +342,7 @@ export class ResultPage {
       component: QrCodePage,
       breakpoints: [0, 0.5, 1],
       initialBreakpoint: 0.5,
+      cssClass: 'fullscreen-modal',
       componentProps: { qrCodeContent: this.qrCodeContent }
     });
     await modal.present();

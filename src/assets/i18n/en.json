@@ -217,7 +217,7 @@
     "LOCK_LANDSCAPE": "Lock Landscape",
     "ERROR_CORRECTION_LEVEL": "Error Correction Level",
     "LEVEL_L": "Level L",
-    "LEVEL_M": "Level M (Recommended)",
+    "LEVEL_M": "Level M",
     "LEVEL_Q": "Level Q",
     "LEVEL_H": "Level H",
     "ECL_EXPLAIN": "<p>QR code has error correction capability to restore data even if the code is damaged.</p><br><p>There are 4 levels available:</p><p>Level L restores 7% of data bytes.</p><p>Level M restores 15% of data bytes.</p><p>Level Q restores 25% of data bytes.</p><p>Level H restores 30% of data bytes.</p><br><p>Please be reminded that raising the level can improve error correction capability but also increases the QR code size. Therefore, for general cases, level M is recommended.</p>",

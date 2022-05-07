@@ -44,7 +44,7 @@ export class AboutPage {
     const alert = await this.alertController.create({
       header: this.translate.instant("SUPPORTED_TYPE"),
       message: this.translate.instant("MSG.BARCODE_TYPE"),
-      buttons: [this.translate.instant("OK")],
+      buttons: [this.translate.instant("CLOSE")],
       cssClass: ['left-align', 'alert-bg']
     });
     await alert.present();
@@ -56,7 +56,7 @@ export class AboutPage {
       message: this.platform.is('ios')? this.translate.instant("UPDATE.UPDATE_NOTES_IOS") : this.translate.instant("UPDATE.UPDATE_NOTES_ANDROID"),
       buttons: [
         {
-          text:  this.translate.instant("OK"),
+          text:  this.translate.instant("CLOSE"),
           handler: () => true,
         },
         {
