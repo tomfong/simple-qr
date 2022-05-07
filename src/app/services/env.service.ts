@@ -44,6 +44,16 @@ export class EnvService {
   public showQrAfterCreate: 'on' | 'off' = 'on';
   public showQrAfterLogView: 'on' | 'off' = 'on';
   public showQrAfterBookmarkView: 'on' | 'off' = 'on';
+  public showSearchButton: 'on' | 'off' = 'on';
+  public showCopyButton: 'on' | 'off' = 'on';
+  public showBase64Button: 'on' | 'off' = 'on';
+  public showEnlargeButton: 'on' | 'off' = 'on';
+  public showBookmarkButton: 'on' | 'off' = 'on';
+  public showBrowseButton: 'on' | 'off' = 'on';
+  public showAddContactButton: 'on' | 'off' = 'on';
+  public showCallButton: 'on' | 'off' = 'on';
+  public showSendMessageButton: 'on' | 'off' = 'on';
+  public showSendEmailButton: 'on' | 'off' = 'on';
   public debugMode: 'on' | 'off' = 'off';
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
@@ -327,6 +337,96 @@ export class EnvService {
         }
       }
     );
+    this._storage.get("showSearchButton").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showSearchButton = value;
+        } else {
+          this.showSearchButton = 'on';
+        }
+      }
+    );
+    this._storage.get("showCopyButton").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showCopyButton = value;
+        } else {
+          this.showCopyButton = 'on';
+        }
+      }
+    );
+    this._storage.get("showBase64Button").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showBase64Button = value;
+        } else {
+          this.showBase64Button = 'on';
+        }
+      }
+    );
+    this._storage.get("showEnlargeButton").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showEnlargeButton = value;
+        } else {
+          this.showEnlargeButton = 'on';
+        }
+      }
+    );
+    this._storage.get("showBookmarkButton").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showBookmarkButton = value;
+        } else {
+          this.showBookmarkButton = 'on';
+        }
+      }
+    );
+    this._storage.get("showBrowseButton").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showBrowseButton = value;
+        } else {
+          this.showBrowseButton = 'on';
+        }
+      }
+    );
+    this._storage.get("showAddContactButton").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showAddContactButton = value;
+        } else {
+          this.showAddContactButton = 'on';
+        }
+      }
+    );
+    this._storage.get("showCallButton").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showCallButton = value;
+        } else {
+          this.showCallButton = 'on';
+        }
+      }
+    );
+    this._storage.get("showSendMessageButton").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showSendMessageButton = value;
+        } else {
+          this.showSendMessageButton = 'on';
+        }
+      }
+    );
+    this._storage.get("showSendEmailButton").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showSendEmailButton = value;
+        } else {
+          this.showSendEmailButton = 'on';
+        }
+      }
+    );
     if (this.platform.is('android')) this._storage.remove(this.AN_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
     if (this.platform.is('ios')) this._storage.remove(this.IOS_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
     this.appVersion.getVersionNumber().then(
@@ -380,6 +480,16 @@ export class EnvService {
     this.showQrAfterCreate = 'on';
     this.showQrAfterLogView = 'on';
     this.showQrAfterBookmarkView = 'on';
+    this.showSearchButton = 'on';
+    this.showCopyButton = 'on';
+    this.showBase64Button = 'on';
+    this.showEnlargeButton = 'on';
+    this.showBookmarkButton = 'on';
+    this.showBrowseButton = 'on';
+    this.showAddContactButton = 'on';
+    this.showCallButton = 'on';
+    this.showSendMessageButton = 'on';
+    this.showSendEmailButton = 'on';
     this._scanRecords = [];
     this._bookmarks = [];
     this.debugMode = 'off';
@@ -457,6 +567,36 @@ export class EnvService {
 
     this.showQrAfterBookmarkView = 'on';
     await this.storageSet("show-qr-after-bookmark-view", this.showQrAfterBookmarkView);
+
+    this.showSearchButton = 'on';
+    await this.storageSet("showSearchButton", this.showSearchButton);
+
+    this.showCopyButton = 'on';
+    await this.storageSet("showCopyButton", this.showCopyButton);
+
+    this.showBase64Button = 'on';
+    await this.storageSet("showBase64Button", this.showBase64Button);
+
+    this.showEnlargeButton = 'on';
+    await this.storageSet("showEnlargeButton", this.showEnlargeButton);
+
+    this.showBookmarkButton = 'on';
+    await this.storageSet("showBookmarkButton", this.showBookmarkButton);
+
+    this.showBrowseButton = 'on';
+    await this.storageSet("showBrowseButton", this.showBrowseButton);
+
+    this.showAddContactButton = 'on';
+    await this.storageSet("showAddContactButton", this.showAddContactButton);
+
+    this.showCallButton = 'on';
+    await this.storageSet("showCallButton", this.showCallButton);
+
+    this.showSendMessageButton = 'on';
+    await this.storageSet("showSendMessageButton", this.showSendMessageButton);
+
+    this.showSendEmailButton = 'on';
+    await this.storageSet("showSendEmailButton", this.showSendEmailButton);
 
     this.debugMode = 'off';
     await this.storageSet("debug-mode-on", this.debugMode);
