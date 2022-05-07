@@ -300,7 +300,7 @@
         "SCAN_QR_FROM_IMAGE": "Simple QR uses \"cozmo/jsQR\" module to scan QR code from image. To scan successfully,",
         "SCAN_QR_FROM_IMAGE_R1": "Please authorize the app to access Storage or Photo Library.",
         "SCAN_QR_FROM_IMAGE_R2": "Please ensure that the background of the selected image is not transparent. It is recommended to choose a picture that is not captured by the camera.",
-        "SCAN_QR_FROM_IMAGE_R3": "Please cancel photo editing if you want to scan the full image.",
+        "SCAN_QR_FROM_IMAGE_R3": "Please cancel photo editing if you want to scan the full image. (if applicable)",
         "BARCODE_TYPE": "Scan<ul><li>QR Code</li><li>1D Barcode</li><li>Aztec Code</li><li>Data Matrix</li><li>PDF417</li></ul>Import Image<ul><li>QR Code</li></ul>Create<ul><li>QR Code</li></ul>",
         "TAP_TO_ZOOM_IN": "Tap to zoom in",
         "ONLY_VCARD_3_0": "Only vCard 3.0 is supported",

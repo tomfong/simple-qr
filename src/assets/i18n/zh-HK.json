@@ -300,7 +300,7 @@
         "SCAN_QR_FROM_IMAGE": "簡易 QR 使用「cozmo/jsQR」模組掃描圖片裡 QR 碼。請注意，",
         "SCAN_QR_FROM_IMAGE_R1": "匯入圖片時您必須授權程式存取儲存空間或相簿。",
         "SCAN_QR_FROM_IMAGE_R2": "請確保所選擇的圖片並非透明背景。建議選擇非相機攝取的圖片。",
-        "SCAN_QR_FROM_IMAGE_R3": "若要掃描整張圖片，請取消或略過相片編輯步驟。",
+        "SCAN_QR_FROM_IMAGE_R3": "若要掃描整張圖片，請取消或略過相片編輯步驟。（如適用）",
         "BARCODE_TYPE": "掃描<ul><li>QR 碼</li><li>一維條碼</li><li>Aztec 碼</li><li>數據矩陣碼</li><li>PDF417 條碼</li></ul>匯入圖片<ul><li>QR 碼</li></ul>建立<ul><li>QR 碼</li></ul>",
         "TAP_TO_ZOOM_IN": "輕觸以放大",
         "ONLY_VCARD_3_0": "只支援 vCard 3.0",
