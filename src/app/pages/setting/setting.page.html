@@ -14,7 +14,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="navigateAbout()">
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="navigateAbout()">
     <div class="d-flex align-items-baseline my-3">
       <div class="ion-margin-start ion-padding-horizontal">
         <img src="assets/img/round_icon.png" width="24">
@@ -30,7 +30,7 @@
   </ion-item>
 
   <ion-list-header class="ion-margin-start ion-padding-horizontal mt-3">{{ 'FUNCTIONS' | translate }}</ion-list-header>
-  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="setResult()">
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setResult()">
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="qr-code-outline">
     </ion-icon>
     <ion-label>
@@ -41,7 +41,7 @@
       </p>
     </ion-label>
   </ion-item>
-  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="setScanRecordLogging()">
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setScanRecordLogging()">
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/history.svg">
     </ion-icon>
     <ion-label>
@@ -54,7 +54,7 @@
   </ion-item>
 
   <ion-list-header class="ion-margin-start ion-padding-horizontal mt-3">{{ 'APPEARANCE_EFFECT' | translate }}</ion-list-header>
-  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="setLanguage()">
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setLanguage()">
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="language">
     </ion-icon>
     <ion-label>
@@ -65,7 +65,7 @@
       </p>
     </ion-label>
   </ion-item>
-  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="setColorTheme()">
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setColorTheme()">
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="color-palette"></ion-icon>
     <ion-label>
       <p class="ion-padding">
@@ -75,7 +75,7 @@
       </p>
     </ion-label>
   </ion-item>
-  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="setOrientation()">
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setOrientation()">
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/screen-rotation.svg">
     </ion-icon>
     <ion-label>
@@ -86,7 +86,7 @@
       </p>
     </ion-label>
   </ion-item>
-  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="setVibration()">
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setVibration()">
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/vibration.svg">
     </ion-icon>
     <ion-label>
@@ -99,7 +99,7 @@
   </ion-item>
 
   <ion-list-header class="ion-margin-start ion-padding-horizontal mt-3">{{ 'OTHERS' | translate }}</ion-list-header>
-  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="setStartPage()">
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setStartPage()">
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="log-in">
     </ion-icon>
     <ion-label>
@@ -110,7 +110,7 @@
       </p>
     </ion-label>
   </ion-item>
-  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" button (click)="resetApp()">
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="resetApp()">
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/reset.svg">
     </ion-icon>
     <ion-label>
