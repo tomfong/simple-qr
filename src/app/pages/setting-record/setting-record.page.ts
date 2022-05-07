@@ -30,6 +30,10 @@ export class SettingRecordPage {
     private platform: Platform
   ) { }
 
+  async saveHistoryPageStartSegment() {
+    await this.env.storageSet("history-page-start-segment", this.env.historyPageStartSegment);
+  }
+
   async saveScanRecord() {
     await this.env.storageSet("scan-record-logging", this.env.scanRecordLogging);
   }

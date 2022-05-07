@@ -21,8 +21,4 @@ export class SettingStartPagePage {
   async saveStartPageHeader() {
     await this.env.storageSet("start-page-header", this.env.startPageHeader);
   }
-
-  async saveHistoryPageStartSegment() {
-    await this.env.storageSet("history-page-start-segment", this.env.historyPageStartSegment);
-  }
 }

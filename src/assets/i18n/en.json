@@ -90,6 +90,7 @@
     "LOG_BACKUP_RESTORE": "Log, Backup & Restore",
     "TURN_ON": "On",
     "TURN_OFF": "Off",
+    "HISTORY_PAGE_START": "Initial Segment",
     "AUTO_LOGGING": "Auto Logging",
     "AUTO_LOGGING_EXPLAIN": "Every QR code and barcode content are logged and stored automatically after you scan, create or view it again. You can view them on Log page.",
     "BACKUP_AND_RESTORE": "Backup & Restore",

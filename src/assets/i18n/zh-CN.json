@@ -90,6 +90,7 @@
     "LOG_BACKUP_RESTORE": "记录、备份与还原",
     "TURN_ON": "开启",
     "TURN_OFF": "关闭",
+    "HISTORY_PAGE_START": "起始分页",
     "AUTO_LOGGING": "自动记录",
     "AUTO_LOGGING_EXPLAIN": "在您扫描、建立或查看记录时，条码内容会自动被记录并储存在本地储存空间。您可在「记录」页面浏览所有记录。",
     "BACKUP_AND_RESTORE": "备份与还原",
