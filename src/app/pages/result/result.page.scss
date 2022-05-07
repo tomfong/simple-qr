@@ -29,7 +29,11 @@ ion-textarea[readonly] {
     }
 }
 
-.button-row::after {
-    content: "";
-    flex: auto;
+.detailed-action-button-container {
+    flex: 1;
+    overflow-x: scroll;
+}
+
+.detailed-action-button-container::before, .detailed-action-button-container::after {
+    content: ''
 }

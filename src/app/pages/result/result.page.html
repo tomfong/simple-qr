@@ -198,7 +198,7 @@
 
   <ng-container *ngIf="env.resultPageButtons === 'detailed'">
     <ion-row class="ion-padding-horizontal py-2">
-      <div style="display: flex; flex: 1; overflow-x: scroll;">
+      <div class="d-flex justify-content-between detailed-action-button-container">
         <ion-button class="pr-1" *ngIf="contentType === 'url' && env.showBrowseButton === 'on'"
           (click)="tapHaptic(); browseWebsite()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="outline"
           shape="round" [@inAnimation]>
