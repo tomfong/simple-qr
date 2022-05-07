@@ -236,7 +236,7 @@
     "INITIAL_PAGE": "App Initial Page",
     "START_PAGE_EXPLAIN": "Choose the initial page of the app",
     "START_PAGE_HEADER_EXPLAIN": "Show Simple QR header on the initial page",
-    "QR_RESULT_SETTINGS": "QR Code and Result Settings",
+    "QR_RESULT_SETTINGS": "QR Code and Decoded Result",
     "FUNCTIONS": "Functions",
     "APPEARANCE_EFFECT": "Appearance & Effects",
     "OTHERS": "Others",
