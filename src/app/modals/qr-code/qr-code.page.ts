@@ -33,6 +33,8 @@ export class QrCodePage {
 
   currentBrightness: number = 0;
 
+  isSharing: boolean = false;
+
   constructor(
     private translate: TranslateService,
     public env: EnvService,
@@ -47,6 +49,7 @@ export class QrCodePage {
   }
 
   async ionViewDidEnter(): Promise<void> {
+    this.isSharing = false;
     this.platform.ready().then(async () => {
       if (this.screenOrientation.type.startsWith(this.screenOrientation.ORIENTATIONS.LANDSCAPE)) {
         this.presentToast(this.translate.instant("MSG.PORTRAIT_ONLY"), "short", "bottom");
@@ -178,25 +181,38 @@ export class QrCodePage {
 
   async shareQrCode(): Promise<void> {
     const loading = await this.presentLoading(this.translate.instant('PREPARING'));
-    const canvases = document.querySelectorAll("canvas") as NodeListOf<HTMLCanvasElement>;
-    const canvas = canvases[canvases.length - 1];
-    if (this.qrImageDataUrl) {
-      delete this.qrImageDataUrl;
-    }
-    this.qrImageDataUrl = canvas.toDataURL("image/png", 0.8);
-    loading.dismiss();
-    await this.socialSharing.share(this.translate.instant('MSG.SHARE_QR'), this.translate.instant('SIMPLE_QR'), this.qrImageDataUrl, null).then(
-      _ => {
+    this.isSharing = true;
+    const currentWidth = this.qrcodeElement.width;
+    this.qrcodeElement.width = 1000;
+    this.qrcodeElement.createQRCode();
+    setTimeout(async () => {
+      const canvases = document.querySelectorAll("canvas") as NodeListOf<HTMLCanvasElement>;
+      const canvas = canvases[canvases.length - 1];
+      if (this.qrImageDataUrl) {
         delete this.qrImageDataUrl;
       }
-    ).catch(
-      err => {
-        if (this.env.isDebugging) {
-          this.presentToast("Error when call SocialSharing.share: " + JSON.stringify(err), "long", "top");
+      this.qrImageDataUrl = canvas.toDataURL("image/png", 1);
+      await this.socialSharing.share(this.translate.instant('MSG.SHARE_QR'), this.translate.instant('SIMPLE_QR'), this.qrImageDataUrl, null).then(
+        _ => {
+          this.qrcodeElement.width = currentWidth;
+          this.qrcodeElement.createQRCode();
+          delete this.qrImageDataUrl;
+          this.isSharing = false;
+          loading.dismiss();
         }
-        delete this.qrImageDataUrl;
-      }
-    );
+      ).catch(
+        err => {
+          if (this.env.isDebugging) {
+            this.presentToast("Error when call SocialSharing.share: " + JSON.stringify(err), "long", "top");
+          }
+          this.qrcodeElement.width = currentWidth;
+          this.qrcodeElement.createQRCode();
+          delete this.qrImageDataUrl;
+          this.isSharing = false;
+          loading.dismiss();
+        }
+      );
+    }, 500)
   }
 
   get qrColorDark(): string {
