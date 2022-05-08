@@ -26,7 +26,7 @@ export class QrCodePage {
   errorCorrectionLevel: NgxQrcodeErrorCorrectionLevels;
   scale: number = 0.8;
   readonly MAX_WIDTH = 500;
-  defaultWidth: number = window.innerHeight * 0.32 > this.MAX_WIDTH?  this.MAX_WIDTH : window.innerHeight * 0.32;
+  defaultWidth: number = window.innerHeight * 0.32 > this.MAX_WIDTH ? this.MAX_WIDTH : window.innerHeight * 0.32;
   qrMargin: number = 3;
 
   qrImageDataUrl: string;
@@ -238,7 +238,12 @@ export class QrCodePage {
 
   async tapHaptic() {
     if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
-      await Haptics.impact({ style: ImpactStyle.Medium });
+      await Haptics.impact({ style: ImpactStyle.Medium })
+        .catch(async err => {
+          if (this.env.debugMode === 'on') {
+            await Toast.show({ text: 'Err when Haptics.impact: ' + JSON.stringify(err), position: "top", duration: "long" })
+          }
+        })
     }
   }
 }

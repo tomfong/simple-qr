@@ -118,7 +118,12 @@ export class ScanPage {
             this.contentEl.color = "darker";
           }
           if (this.env.vibration === 'on' || this.env.vibration === 'on-scanned') {
-            await Haptics.vibrate({ duration: 100 });
+            await Haptics.vibrate({ duration: 100 })
+              .catch(async err => {
+                if (this.env.debugMode === 'on') {
+                  await Toast.show({ text: 'Err when Haptics.impact: ' + JSON.stringify(err), position: "top", duration: "long" })
+                }
+              })
           }
           const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
           await this.processQrCode(text, result.format, loading);
@@ -200,7 +205,12 @@ export class ScanPage {
 
   async tapHaptic() {
     if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
-      await Haptics.impact({ style: ImpactStyle.Medium });
+      await Haptics.impact({ style: ImpactStyle.Medium })
+        .catch(async err => {
+          if (this.env.debugMode === 'on') {
+            await Toast.show({ text: 'Err when Haptics.impact: ' + JSON.stringify(err), position: "top", duration: "long" })
+          }
+        })
     }
   }
 }

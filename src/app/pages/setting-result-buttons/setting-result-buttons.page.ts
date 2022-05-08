@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { Toast } from '@capacitor/toast';
 import { EnvService } from 'src/app/services/env.service';
 
 @Component({
@@ -79,7 +80,12 @@ export class SettingResultButtonsPage {
 
   async tapHaptic() {
     if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
-      await Haptics.impact({ style: ImpactStyle.Light });
+      await Haptics.impact({ style: ImpactStyle.Light })
+        .catch(async err => {
+          if (this.env.debugMode === 'on') {
+            await Toast.show({ text: 'Err when Haptics.impact: ' + JSON.stringify(err), position: "top", duration: "long" })
+          }
+        })
     }
   }
 }

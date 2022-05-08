@@ -196,7 +196,12 @@ export class ImportImagePage {
 
   async tapHaptic() {
     if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
-      await Haptics.impact({ style: ImpactStyle.Medium });
+      await Haptics.impact({ style: ImpactStyle.Medium })
+        .catch(async err => {
+          if (this.env.debugMode === 'on') {
+            await Toast.show({ text: 'Err when Haptics.impact: ' + JSON.stringify(err), position: "top", duration: "long" })
+          }
+        })
     }
   }
 }
