@@ -50,7 +50,7 @@ export class TabsPage {
 
   async showUpdateNotes() {
     const alert = await this.alertController.create({
-      header: this.translate.instant("UPDATE_NOTES"),
+      header: this.translate.instant("UPDATE_SUCCESS"),
       message: this.platform.is('ios') ? this.translate.instant("UPDATE.UPDATE_NOTES_IOS") : this.translate.instant("UPDATE.UPDATE_NOTES_ANDROID"),
       buttons: [
         {

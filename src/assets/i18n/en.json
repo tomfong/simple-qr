@@ -2,6 +2,7 @@
     "SIMPLE_QR": "Simple QR",
     "MESSAGE": "Message",
     "UPDATE_NOTES": "Patch Notes",
+    "UPDATE_SUCCESS": "Update Successfully",
     "PERMISSION_REQUIRED": "Permission Required",
     "CAMERA_PAUSED": "Camera Paused",
     "CREATE_QRCODE": "Create QR Code",
@@ -337,7 +338,7 @@
         "RSS": "GS1 DataBar "
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "<p>If you like Simple QR, please rate it on the store.</p><p>This update further enhances performance and reduce app loading time.</p><p>Version 2.5 updates UI and animation, greatly improve performance, and brings you new features, including</p><ul><li>QR code can be shown with dynamic size and auto maximum brightness</li><li>Initial page of the app can be set</li><li>More information is shown for each log</li><li>Tag can be added to each bookmark</li><li>Support Yandex as search engine</li><li>More reset options</li></ul>",
-        "UPDATE_NOTES_IOS": "<p>If you like Simple QR, please rate it on the store.</p><p>This update further enhances performance and reduce app loading time.</p><p>Version 2.5 updates UI and animation, greatly improve performance, and brings you new features, including</p><ul><li>QR code can be shown with dynamic size and auto maximum brightness</li><li>Initial page of the app can be set</li><li>More information is shown for each log</li><li>Tag can be added to each bookmark</li><li>Support Yandex as search engine</li><li>More reset options</li></ul>"
+        "UPDATE_NOTES_ANDROID": "<p>Simple QR is an open-source app. If you like and enjoy using it, please rate it on the store and support the developer.</p><p>New version provides more in-app settings for customization, allows editing when importing image, updates UI, improves performance and fixes known issues.</ul>",
+        "UPDATE_NOTES_IOS": "<p>Simple QR is an open-source app. If you like it and enjoy using it, please rate it on the store and support the developer.</p><p>New version provides more in-app settings for customization, updates UI, improves performance and fixes known issues.</ul>"
     }
 }
