@@ -25,7 +25,7 @@ export class QrCodePage {
   qrElementType: NgxQrcodeElementTypes = NgxQrcodeElementTypes.CANVAS;
   errorCorrectionLevel: NgxQrcodeErrorCorrectionLevels;
   scale: number = 0.8;
-  readonly MAX_WIDTH = 500;
+  readonly MAX_WIDTH = 350;
   defaultWidth: number = window.innerHeight * 0.32 > this.MAX_WIDTH ? this.MAX_WIDTH : window.innerHeight * 0.32;
   qrMargin: number = 3;
 

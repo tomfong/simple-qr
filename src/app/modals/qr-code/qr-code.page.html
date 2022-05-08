@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar mode="ios">
+  <ion-toolbar mode="ios" [color]="color">
     <ion-buttons slot="end">
       <ion-button (click)="tapHaptic(); shareQrCode()" fill="clear" [color]="'primary'">
         {{ 'SHARE' | translate }}
