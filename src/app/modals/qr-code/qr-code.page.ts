@@ -192,13 +192,15 @@ export class QrCodePage {
         delete this.qrImageDataUrl;
       }
       this.qrImageDataUrl = canvas.toDataURL("image/png", 1);
+      loading.dismiss();
+      const loading2 = await this.presentLoading(this.translate.instant('SHARING'));
       await this.socialSharing.share(this.translate.instant('MSG.SHARE_QR'), this.translate.instant('SIMPLE_QR'), this.qrImageDataUrl, null).then(
         _ => {
           this.qrcodeElement.width = currentWidth;
           this.qrcodeElement.createQRCode();
           delete this.qrImageDataUrl;
           this.isSharing = false;
-          loading.dismiss();
+          loading2.dismiss();
         }
       ).catch(
         err => {
@@ -209,7 +211,7 @@ export class QrCodePage {
           this.qrcodeElement.createQRCode();
           delete this.qrImageDataUrl;
           this.isSharing = false;
-          loading.dismiss();
+          loading2.dismiss();
         }
       );
     }, 500)

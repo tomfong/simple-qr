@@ -15,6 +15,9 @@
           [errorCorrectionLevel]="errorCorrectionLevel" [colorDark]="qrColorDark" [colorLight]="qrColorLight"
           [margin]="qrMargin" #qrcode [hidden]="isSharing">
         </ngx-qrcode>
+        <div class="d-flex flex-column align-items-center" *ngIf="isSharing">
+          <ion-spinner class="my-3"></ion-spinner>
+        </div>
       </ion-col>
     </ion-row>
     <ion-row style="max-width: 300px;">
