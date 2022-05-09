@@ -46,7 +46,9 @@ By using the app, you can
     * Generate a new shareable QR code by using it as the content.
     * Directly do special tasks, if it is a link, vCard contact, phone number, message or email.
 
-6. Customize the app, e.g. error correction level setting, language and color theme etc.
+6. Adjust the generated QR code, e.g. error correction level and screen brightness.
+
+7. Customize the app, e.g. app initial page, language and color theme etc.
 
 ## Languages Supported
 
