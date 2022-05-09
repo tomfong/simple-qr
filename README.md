@@ -21,11 +21,11 @@
 
 Simple QR (簡易QR) is an app providing the simplest way to scan, create and store QR codes on your phone. No backend service connected. No data collected. No ads.
 
-It's available on both the App Store and Google Play.
+It's available on both the App Store and Google Play. You can also download the apk from <a href="https://github.com/tomfong/simple-qr/releases">release</a>.
 
-| Android  | iOS |
+| App Store | Google Play  |
 |:-:|:-:|
-| [<img src="badges/google-play-badge.png" height="50">](https://play.google.com/store/apps/details?id=com.tomfong.simpleqr) | [<img src="badges/appstore-badge.png" height="50">](https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553) |
+| [<img src="badges/appstore-badge.png" height="50">](https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553) | [<img src="badges/google-play-badge.png" height="50">](https://play.google.com/store/apps/details?id=com.tomfong.simpleqr) | 
 
 ## Features
 
