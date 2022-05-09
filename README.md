@@ -52,7 +52,7 @@ By using the app, you can
 
 ### Demo
 
-[![Simple QR Demo](https://img.youtube.com/vi/D57VveikN8U/0.jpg)](https://www.youtube.com/watch?v=D57VveikN8U)
+[![Simple QR Demo]()](https://www.youtube.com/watch?v=D57VveikN8U)
 
 ## Languages Supported
 
