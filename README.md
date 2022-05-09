@@ -42,9 +42,9 @@ By using the app, you can
 5. Do tasks on the result with a tap, including but not limited to
     * Use it as a keyword to do web search.
     * Quickly copy it to the clipboard.
-    * Execute Base64 encoding/decoding on it.
+    * Execute base64 encoding/decoding on it.
     * Generate a new shareable QR code by using it as the content.
-    * Directly do special tasks inside the app, if it is a link, vCard contact, phone number, message or email, .
+    * Directly do special tasks, if it is a link, vCard contact, phone number, message or email.
 
 6. Customize the app, e.g. error correction level setting, language and color theme etc.
 
@@ -76,7 +76,7 @@ If you want to support me or my projects, please <a href="https://github.com/tom
 ## Build the project (Android)
 
 1. Run ```npm install``` to install all dependencies
-2. Run ```npm run build:an```
+2. Run ```npm run sync``` and ```npm run copy:an```
 3. In ```android/capacitor-cordova-android-plugins/src/main/AndroidManifest.xml```, add ```android:exported="true"``` inside receiver tag.
 4. In ```android/capacitor-cordova-android-plugins/src/main/java/nl/xservices/plugins/SocialSharing.java```, change line 274 to
 
