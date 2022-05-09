@@ -19,9 +19,9 @@
 
 ## About
 
-Simple QR (簡易QR) is an open-source app, providing the simplest way to scan, create and manage QR codes. No backend service connected. No data collected from you. No ads.
+Simple QR (簡易QR) is an app providing the simplest way to scan, create and store QR codes on your phone. No backend service connected. No data collected. No ads.
 
-Welcome to download the app from App Store or Google Play.
+It's available on both the App Store and Google Play.
 
 | Android  | iOS |
 |:-:|:-:|
@@ -29,34 +29,32 @@ Welcome to download the app from App Store or Google Play.
 
 ## Features
 
-1. Scan QR Code, 1D Barcode, Aztec Code, Data Matrix Code and PDF417 Barcode using camera.
+By using the app, you can
 
-2. Scan QR Code using image file.
+1. Scan QR Code and other barcodes in a second, including UPC, EAN, Code 39/128, ITF, Codabar, Aztec, Data Matrix, PDF417, MaxiCode and GS1 DataBar.
 
-3. Provide you post actions after scanning:
-"Search" - use decoded content as keyword to execute web search
-"Copy" - click to copy decoded content
-"Base64" - execute Base64 encode and decode
-"Share" - share the original QR code image
-"Bookmark" - save the scanning record and bookmark it
+2. Import image files and scan the QR Code on it.
 
-4. Provide you special post actions, if the barcode content is URL, vCard Contact, Phone Number, Message or Email.
+3. Create QR code from templates, which includes Free Text, URL, vCard Contact, Phone Number, Message, Email and Wi-Fi.
 
-5. Create QR code from templates, including Free Text, URL, vCard Contact, Phone Number, Message, Email and Wi-Fi.
+4. Automatically log results that you scan, create or view again. These logged records can be bookmarked for quick access, and also backupable.
 
-6. View, manage and back up scanning records and bookmarks that stored in the local offline storage.
+5. Do tasks on the result with a tap, including but not limited to
+    * Use it as a keyword to do web search.
+    * Quickly copy it to the clipboard.
+    * Execute Base64 encoding/decoding on it.
+    * Generate a new shareable QR code by using it as the content.
+    * Directly do special tasks inside the app, if it is a link, vCard contact, phone number, message or email, .
 
-7. Enable torch/flashlight during scanning.
-
-8. Personalize the app and settings, e.g. language and color theme.
+6. Customize the app, e.g. error correction level setting, language and color theme etc.
 
 ## Languages Supported
 
-- English (en)
-- Traditional Chinese 正體中文 (zh-HK)
-- Simplified Chinese 简体中文 (zh-CN)
+* English (en)
+* Traditional Chinese 正體中文 (zh-HK)
+* Simplified Chinese 简体中文 (zh-CN)
 
-You are welcomed to help us do translations in more languages! (see <a href="#how-to-help-to-do-translation">section</a>)
+You are welcomed to help me do translations in more languages (see <a href="#how-to-do-the-translation">section</a>)
 
 ## Support Developer
 
@@ -64,52 +62,49 @@ If you want to support me or my projects, please <a href="https://github.com/tom
 
 ## Contribute
 
-- Star the project
-- Do translation for different languages
-- Open issue for bug reports
-- Email me for any ideas regarding Simple QR or Project Simple
+* Star the project
+* Do translation for different languages
+* Open issues for reporting bugs or any new ideas
 
-### Build the project (Android)
+### How to do the translation?
 
-- Run ```npm install``` to install all dependencies
-- Run ```npm run build:an```
-- In ```android/capacitor-cordova-android-plugins/src/main/AndroidManifest.xml```, add ```android:exported="true"``` inside receiver tag.
-- In ```android/capacitor-cordova-android-plugins/src/main/java/nl/xservices/plugins/SocialSharing.java```, change line 274 to
-
-  ```java
-  final PendingIntent pendingIntent = PendingIntent.getBroadcast(cordova.getActivity().getApplicationContext(), 0, receiverIntent, PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
-  ```
-
-- In ```android/app/src/main/res/values/styles.xml```, change
-
-  ```xml
-  <style name="AppTheme.NoActionBarLaunch" parent="AppTheme.NoActionBar">
-    <item name="android:background">#00a5aa</item>
-  </style>
-  ```
-
-### How to help to do translation?
-
-0. (Optional) Clone or fork this project
 1. Take a look at this [JSON](https://github.com/tomfong/simple-qr/blob/master/src/assets/i18n/en.json)
 2. Copy the JSON, rename it to <i>locale</i>.json, e.g. ja.json for Japanese, de.json for German
 3. Change the values of each key. Try to stick to the meaning of the original wordings. <b>DO NOT</b> change key names.
-4. Commit it (please place the JSON in the same directory, i.e. src/assets/i18n), or [email]('mailto:tomfong.dev@gmail.com') me the JSON.
+4. [Email]('mailto:tomfong.dev@gmail.com') the JSON to me.
+
+## Build the project (Android)
+
+1. Run ```npm install``` to install all dependencies
+2. Run ```npm run build:an```
+3. In ```android/capacitor-cordova-android-plugins/src/main/AndroidManifest.xml```, add ```android:exported="true"``` inside receiver tag.
+4. In ```android/capacitor-cordova-android-plugins/src/main/java/nl/xservices/plugins/SocialSharing.java```, change line 274 to
+
+    ```java
+    final PendingIntent pendingIntent = PendingIntent.getBroadcast(cordova.getActivity().getApplicationContext(), 0, receiverIntent, PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
+    ```
+
+5. In ```android/app/src/main/res/values/styles.xml```, change
+
+    ```xml
+    <style name="AppTheme.NoActionBarLaunch" parent="AppTheme.NoActionBar">
+      <item name="android:background">#00a5aa</item>
+    </style>
+    ```
 
 ## Framework
 
 ```sh
     Ionic CLI                       : 6.19.0
     Ionic Framework                 : @ionic/angular 6.1.4
-    @angular-devkit/build-angular   : 13.3.4
-    @angular-devkit/schematics      : 13.3.4
-    @angular/cli                    : 13.3.4
-    @ionic/angular-toolkit          : 6.1.0
+    @angular-devkit/build-angular   : 13.3.5
+    @angular-devkit/schematics      : 13.3.5
+    @angular/cli                    : 13.3.5
 
     Capacitor CLI                   : 3.5.0
-    @capacitor/android              : 3.5.0
-    @capacitor/core                 : 3.5.0
-    @capacitor/ios                  : 3.5.0
+    @capacitor/android              : 3.5.1
+    @capacitor/core                 : 3.5.1
+    @capacitor/ios                  : 3.5.1
 
     Cordova CLI                     : 10.0.0
 
