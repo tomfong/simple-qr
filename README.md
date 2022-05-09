@@ -50,6 +50,10 @@ By using the app, you can
 
 7. Customize the app, e.g. app initial page, language and color theme etc.
 
+### Demo
+
+[![Simple QR Demo](https://img.youtube.com/vi/D57VveikN8U/0.jpg)](https://www.youtube.com/watch?v=D57VveikN8U)
+
 ## Languages Supported
 
 * English (en)
