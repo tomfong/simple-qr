@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
-import { SplashScreen } from '@capacitor/splash-screen';
+import { Toast } from '@capacitor/toast';
 import { AlertController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
@@ -15,7 +15,7 @@ export class TabsPage {
 
   constructor(
     private translate: TranslateService,
-    private env: EnvService,
+    public env: EnvService,
     private platform: Platform,
     private router: Router,
     private alertController: AlertController,
@@ -50,11 +50,11 @@ export class TabsPage {
 
   async showUpdateNotes() {
     const alert = await this.alertController.create({
-      header: this.translate.instant("UPDATE_NOTES"),
+      header: this.translate.instant("UPDATE_SUCCESS"),
       message: this.platform.is('ios') ? this.translate.instant("UPDATE.UPDATE_NOTES_IOS") : this.translate.instant("UPDATE.UPDATE_NOTES_ANDROID"),
       buttons: [
         {
-          text: this.translate.instant("OK"),
+          text: this.translate.instant("CLOSE"),
           handler: () => true,
         },
         {
@@ -83,7 +83,12 @@ export class TabsPage {
 
   async tapHaptic() {
     if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
-      await Haptics.impact({ style: ImpactStyle.Medium });
+      await Haptics.impact({ style: ImpactStyle.Medium })
+        .catch(async err => {
+          if (this.env.debugMode === 'on') {
+            await Toast.show({ text: 'Err when Haptics.impact: ' + JSON.stringify(err), position: "top", duration: "long" })
+          }
+        })
     }
   }
 }

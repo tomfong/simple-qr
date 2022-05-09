@@ -33,41 +33,47 @@ export class ImportImagePage {
   async importImage() {
     const getPictureLoading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
     const options = {
-      quality: 100,
-      allowEditing: false,
+      quality: 50,
+      allowEditing: true,
       resultType: CameraResultType.DataUrl,
       source: CameraSource.Photos
     } as ImageOptions;
-    await Camera.getPhoto(options).then(
-      async (photo: Photo) => {
-        getPictureLoading.dismiss();
-        const decodingLoading = await this.presentLoading(this.translate.instant('DECODING'));
-        await this.convertDataUrlToImageData(photo?.dataUrl ?? '').then(
-          async imageData => {
-            await this.getJsQr(imageData.imageData.data, imageData.width, imageData.height).then(
-              async qrValue => {
-                decodingLoading.dismiss();
-                const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
-                await this.processQrCode(qrValue, loading);
-              },
-              async _ => {
-                decodingLoading.dismiss();
-                await this.presentToast(this.translate.instant("MSG.NO_QR_CODE"), "short", "bottom");
+    await Camera.requestPermissions({ permissions: ['photos'] }).then(
+      async permissionResult => {
+        if (permissionResult.photos === 'granted' || permissionResult.photos === 'limited') {
+          await Camera.getPhoto(options).then(
+            async (photo: Photo) => {
+              getPictureLoading.dismiss();
+              const decodingLoading = await this.presentLoading(this.translate.instant('DECODING'));
+              await this.convertDataUrlToImageData(photo?.dataUrl ?? '').then(
+                async imageData => {
+                  await this.getJsQr(imageData.imageData.data, imageData.width, imageData.height).then(
+                    async qrValue => {
+                      decodingLoading.dismiss();
+                      const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
+                      await this.processQrCode(qrValue, loading);
+                    },
+                    async _ => {
+                      decodingLoading.dismiss();
+                      await this.presentToast(this.translate.instant("MSG.NO_QR_CODE"), "short", "center");
+                    }
+                  )
+                },
+                async _ => {
+                  decodingLoading.dismiss();
+                  await this.presentToast(this.translate.instant("MSG.NO_QR_CODE"), "short", "center");
+                }
+              );
+            },
+            async err => {
+              getPictureLoading.dismiss();
+              if (this.env.isDebugging) {
+                this.presentToast("Error when call Camera.getPhoto: " + JSON.stringify(err), "long", "top");
               }
-            )
-          },
-          async _ => {
-            decodingLoading.dismiss();
-            await this.presentToast(this.translate.instant("MSG.NO_QR_CODE"), "short", "bottom");
-          }
-        );
-      },
-      async err => {
-        getPictureLoading.dismiss();
-        if (this.env.isDebugging) {
-          this.presentToast("Error when call Camera.getPhoto: " + JSON.stringify(err), "long", "top");
-        }
-        if (err?.message != null && err?.message?.toLowerCase() == 'user denied access to photos') {
+            }
+          );
+        } else {
+          getPictureLoading.dismiss();
           const alert = await this.alertController.create({
             header: this.translate.instant("PERMISSION_REQUIRED"),
             message: this.translate.instant("MSG.READ_IMAGE_PERMISSION"),
@@ -80,7 +86,7 @@ export class ImportImagePage {
                 }
               },
               {
-                text: this.translate.instant("OK"),
+                text: this.translate.instant("CLOSE"),
                 handler: () => {
                   return true;
                 }
@@ -98,6 +104,7 @@ export class ImportImagePage {
     this.env.result = scannedData;
     this.env.resultFormat = "QR_CODE";
     this.env.recordSource = "scan";
+    this.env.detailedRecordSource = "scan-image";
     this.env.viewResultFrom = "/tabs/import-image";
     this.router.navigate(['tabs/result']).then(
       () => {
@@ -153,8 +160,20 @@ export class ImportImagePage {
       image.addEventListener('load', function () {
         canvas.width = image.width;
         canvas.height = image.height;
+        context.fillStyle = "white";
+        context.fillRect(0, 0, canvas.width, canvas.height);
         context.drawImage(image, 0, 0, canvas.width, canvas.height);
-        resolve({ imageData: context.getImageData(0, 0, canvas.width, canvas.height), width: image.width, height: image.height });
+        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+        for (let i = 0; i < data.length; i += 4) {
+          const avg = (imageData.data[i] + imageData.data[i + 1] + imageData.data[i + 2]) / 3;
+          imageData.data[i] = avg;
+          imageData.data[i + 1] = avg;
+          imageData.data[i + 2] = avg;
+        }
+        const width = image.width;
+        const height = image.height;
+        resolve({ imageData: imageData, width: width, height: height });
       }, false);
       if (uri.startsWith("data")) {
         image.src = uri;
@@ -166,7 +185,7 @@ export class ImportImagePage {
 
   private async getJsQr(imageData: Uint8ClampedArray, width: number, height: number): Promise<string> {
     return await new Promise((resolve, reject) => {
-      const qrcode = jsQR(imageData, width, height, { inversionAttempts: "dontInvert" });
+      const qrcode = jsQR(imageData, width, height, { inversionAttempts: "attemptBoth" });
       if (qrcode) {
         return resolve(qrcode.data);
       } else {
@@ -177,7 +196,12 @@ export class ImportImagePage {
 
   async tapHaptic() {
     if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
-      await Haptics.impact({ style: ImpactStyle.Medium });
+      await Haptics.impact({ style: ImpactStyle.Medium })
+        .catch(async err => {
+          if (this.env.debugMode === 'on') {
+            await Toast.show({ text: 'Err when Haptics.impact: ' + JSON.stringify(err), position: "top", duration: "long" })
+          }
+        })
     }
   }
 }

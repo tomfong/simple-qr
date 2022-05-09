@@ -28,3 +28,12 @@ ion-textarea[readonly] {
         max-height: 150px;
     }
 }
+
+.detailed-action-button-container {
+    flex: 1;
+    overflow-x: scroll;
+}
+
+.detailed-action-button-container::before, .detailed-action-button-container::after {
+    content: ''
+}

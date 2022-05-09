@@ -25,12 +25,15 @@ export class QrCodePage {
   qrElementType: NgxQrcodeElementTypes = NgxQrcodeElementTypes.CANVAS;
   errorCorrectionLevel: NgxQrcodeErrorCorrectionLevels;
   scale: number = 0.8;
-  defaultWidth: number = window.innerHeight * 0.32;
+  readonly MAX_WIDTH = 350;
+  defaultWidth: number = window.innerHeight * 0.32 > this.MAX_WIDTH ? this.MAX_WIDTH : window.innerHeight * 0.32;
   qrMargin: number = 3;
 
   qrImageDataUrl: string;
 
   currentBrightness: number = 0;
+
+  isSharing: boolean = false;
 
   constructor(
     private translate: TranslateService,
@@ -46,6 +49,7 @@ export class QrCodePage {
   }
 
   async ionViewDidEnter(): Promise<void> {
+    this.isSharing = false;
     this.platform.ready().then(async () => {
       if (this.screenOrientation.type.startsWith(this.screenOrientation.ORIENTATIONS.LANDSCAPE)) {
         this.presentToast(this.translate.instant("MSG.PORTRAIT_ONLY"), "short", "bottom");
@@ -56,6 +60,9 @@ export class QrCodePage {
           if (this.qrcodeElement != null) {
             setTimeout(() => {
               this.qrcodeElement.width = this.platform.height() * this.scale * 0.4;
+              if (this.qrcodeElement.width > this.MAX_WIDTH) {
+                this.qrcodeElement.width = this.MAX_WIDTH;
+              }
               this.qrcodeElement.createQRCode();
             }, 500)
           }
@@ -87,6 +94,9 @@ export class QrCodePage {
                 case 0.5:
                   this.qrcodeElement.width = this.platform.height() * this.scale * 0.4;
                   break
+              }
+              if (this.qrcodeElement.width > this.MAX_WIDTH) {
+                this.qrcodeElement.width = this.MAX_WIDTH;
               }
               this.qrcodeElement.createQRCode();
             }
@@ -171,25 +181,40 @@ export class QrCodePage {
 
   async shareQrCode(): Promise<void> {
     const loading = await this.presentLoading(this.translate.instant('PREPARING'));
-    const canvases = document.querySelectorAll("canvas") as NodeListOf<HTMLCanvasElement>;
-    const canvas = canvases[canvases.length - 1];
-    if (this.qrImageDataUrl) {
-      delete this.qrImageDataUrl;
-    }
-    this.qrImageDataUrl = canvas.toDataURL("image/png", 0.8);
-    loading.dismiss();
-    await this.socialSharing.share(this.translate.instant('MSG.SHARE_QR'), this.translate.instant('SIMPLE_QR'), this.qrImageDataUrl, null).then(
-      _ => {
+    this.isSharing = true;
+    const currentWidth = this.qrcodeElement.width;
+    this.qrcodeElement.width = 1000;
+    this.qrcodeElement.createQRCode();
+    setTimeout(async () => {
+      const canvases = document.querySelectorAll("canvas") as NodeListOf<HTMLCanvasElement>;
+      const canvas = canvases[canvases.length - 1];
+      if (this.qrImageDataUrl) {
         delete this.qrImageDataUrl;
       }
-    ).catch(
-      err => {
-        if (this.env.isDebugging) {
-          this.presentToast("Error when call SocialSharing.share: " + JSON.stringify(err), "long", "top");
+      this.qrImageDataUrl = canvas.toDataURL("image/png", 1);
+      loading.dismiss();
+      const loading2 = await this.presentLoading(this.translate.instant('SHARING'));
+      await this.socialSharing.share(this.translate.instant('MSG.SHARE_QR'), this.translate.instant('SIMPLE_QR'), this.qrImageDataUrl, null).then(
+        _ => {
+          this.qrcodeElement.width = currentWidth;
+          this.qrcodeElement.createQRCode();
+          delete this.qrImageDataUrl;
+          this.isSharing = false;
+          loading2.dismiss();
         }
-        delete this.qrImageDataUrl;
-      }
-    );
+      ).catch(
+        err => {
+          if (this.env.isDebugging) {
+            this.presentToast("Error when call SocialSharing.share: " + JSON.stringify(err), "long", "top");
+          }
+          this.qrcodeElement.width = currentWidth;
+          this.qrcodeElement.createQRCode();
+          delete this.qrImageDataUrl;
+          this.isSharing = false;
+          loading2.dismiss();
+        }
+      );
+    }, 500)
   }
 
   get qrColorDark(): string {
@@ -231,7 +256,12 @@ export class QrCodePage {
 
   async tapHaptic() {
     if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
-      await Haptics.impact({ style: ImpactStyle.Medium });
+      await Haptics.impact({ style: ImpactStyle.Medium })
+        .catch(async err => {
+          if (this.env.debugMode === 'on') {
+            await Toast.show({ text: 'Err when Haptics.impact: ' + JSON.stringify(err), position: "top", duration: "long" })
+          }
+        })
     }
   }
 }

@@ -22,6 +22,7 @@ export class EnvService {
   public appVersionNumber: string = '1.0.0';
 
   public startPage: "/tabs/scan" | "/tabs/generate" | "/tabs/import-image" | "/tabs/history" | "/tabs/setting" = "/tabs/scan";
+  public historyPageStartSegment: 'history' | 'bookmarks' = 'history';
   public startPageHeader: 'on' | 'off' = 'on';
   public languages: string[] = ['en', 'zh-HK', 'zh-CN'];
   public language: 'en' | 'zh-HK' | 'zh-CN' = 'en';
@@ -37,6 +38,22 @@ export class EnvService {
   public notShowBookmarkTutorial: boolean = false;
   public notShowUpdateNotes: boolean = false;
   public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' | 'yandex' = 'google';
+  public resultPageButtons: 'detailed' | 'icon-only' = 'detailed';
+  public showQrAfterCameraScan: 'on' | 'off' = 'off';
+  public showQrAfterImageScan: 'on' | 'off' = 'off';
+  public showQrAfterCreate: 'on' | 'off' = 'on';
+  public showQrAfterLogView: 'on' | 'off' = 'on';
+  public showQrAfterBookmarkView: 'on' | 'off' = 'on';
+  public showSearchButton: 'on' | 'off' = 'on';
+  public showCopyButton: 'on' | 'off' = 'on';
+  public showBase64Button: 'on' | 'off' = 'on';
+  public showEnlargeButton: 'on' | 'off' = 'on';
+  public showBookmarkButton: 'on' | 'off' = 'on';
+  public showBrowseButton: 'on' | 'off' = 'on';
+  public showAddContactButton: 'on' | 'off' = 'on';
+  public showCallButton: 'on' | 'off' = 'on';
+  public showSendMessageButton: 'on' | 'off' = 'on';
+  public showSendEmailButton: 'on' | 'off' = 'on';
   public debugMode: 'on' | 'off' = 'off';
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
@@ -49,10 +66,10 @@ export class EnvService {
   public readonly GOOGLE_PLAY_URL: string = "https://play.google.com/store/apps/details?id=com.tomfong.simpleqr";
   public readonly APP_STORE_URL: string = "https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553";
   public readonly PRIVACY_POLICY: string = "https://www.privacypolicies.com/live/771b1123-99bb-4bfe-815e-1046c0437a0f";
-  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20500";
-  public readonly IOS_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20500";
-  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20501";
-  public readonly IOS_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20501";
+  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20501";
+  public readonly IOS_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20501";
+  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20600";
+  public readonly IOS_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20600";
 
   private _storage: Storage | null = null;
   private _scannedData: string = '';
@@ -64,6 +81,7 @@ export class EnvService {
   private _deviceInfo: DeviceInfo | undefined = undefined;
 
   recordSource: 'create' | 'view' | 'scan';
+  detailedRecordSource: 'create' | 'view-log' | 'view-bookmark' | 'scan-camera' | 'scan-image';
   viewResultFrom: '/tabs/scan' | '/tabs/import-image' | '/tabs/generate' | '/tabs/history';
 
   public firstAppLoad: boolean = true;  // once loaded, turn it false
@@ -97,6 +115,15 @@ export class EnvService {
           this.startPage = value;
         } else {
           this.startPage = '/tabs/scan';
+        }
+      }
+    );
+    this._storage.get("history-page-start-segment").then(
+      value => {
+        if (value != null) {
+          this.historyPageStartSegment = value;
+        } else {
+          this.historyPageStartSegment = 'history';
         }
       }
     );
@@ -256,6 +283,150 @@ export class EnvService {
         }
       }
     );
+    this._storage.get("result-page-buttons").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.resultPageButtons = value;
+        } else {
+          this.resultPageButtons = 'detailed';
+        }
+      }
+    );
+    this._storage.get("show-qr-after-camera-scan").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showQrAfterCameraScan = value;
+        } else {
+          this.showQrAfterCameraScan = 'off';
+        }
+      }
+    );
+    this._storage.get("show-qr-after-image-scan").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showQrAfterImageScan = value;
+        } else {
+          this.showQrAfterImageScan = 'off';
+        }
+      }
+    );
+    this._storage.get("show-qr-after-create").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showQrAfterCreate = value;
+        } else {
+          this.showQrAfterCreate = 'on';
+        }
+      }
+    );
+    this._storage.get("show-qr-after-log-view").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showQrAfterLogView = value;
+        } else {
+          this.showQrAfterLogView = 'on';
+        }
+      }
+    );
+    this._storage.get("show-qr-after-bookmark-view").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showQrAfterBookmarkView = value;
+        } else {
+          this.showQrAfterBookmarkView = 'on';
+        }
+      }
+    );
+    this._storage.get("showSearchButton").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showSearchButton = value;
+        } else {
+          this.showSearchButton = 'on';
+        }
+      }
+    );
+    this._storage.get("showCopyButton").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showCopyButton = value;
+        } else {
+          this.showCopyButton = 'on';
+        }
+      }
+    );
+    this._storage.get("showBase64Button").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showBase64Button = value;
+        } else {
+          this.showBase64Button = 'on';
+        }
+      }
+    );
+    this._storage.get("showEnlargeButton").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showEnlargeButton = value;
+        } else {
+          this.showEnlargeButton = 'on';
+        }
+      }
+    );
+    this._storage.get("showBookmarkButton").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showBookmarkButton = value;
+        } else {
+          this.showBookmarkButton = 'on';
+        }
+      }
+    );
+    this._storage.get("showBrowseButton").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showBrowseButton = value;
+        } else {
+          this.showBrowseButton = 'on';
+        }
+      }
+    );
+    this._storage.get("showAddContactButton").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showAddContactButton = value;
+        } else {
+          this.showAddContactButton = 'on';
+        }
+      }
+    );
+    this._storage.get("showCallButton").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showCallButton = value;
+        } else {
+          this.showCallButton = 'on';
+        }
+      }
+    );
+    this._storage.get("showSendMessageButton").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showSendMessageButton = value;
+        } else {
+          this.showSendMessageButton = 'on';
+        }
+      }
+    );
+    this._storage.get("showSendEmailButton").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showSendEmailButton = value;
+        } else {
+          this.showSendEmailButton = 'on';
+        }
+      }
+    );
     if (this.platform.is('android')) this._storage.remove(this.AN_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
     if (this.platform.is('ios')) this._storage.remove(this.IOS_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
     this.appVersion.getVersionNumber().then(
@@ -287,6 +458,7 @@ export class EnvService {
   public async resetAll() {
     await this._storage.clear();
     this.startPage = '/tabs/scan';
+    this.historyPageStartSegment = 'history';
     this.startPageHeader = 'on';
     this.selectedLanguage = 'default';
     this.toggleLanguageChange();
@@ -302,6 +474,22 @@ export class EnvService {
     this.notShowBookmarkTutorial = false;
     this.notShowUpdateNotes = false;
     this.searchEngine = 'google';
+    this.resultPageButtons = 'detailed';
+    this.showQrAfterCameraScan = 'off';
+    this.showQrAfterImageScan = 'off';
+    this.showQrAfterCreate = 'on';
+    this.showQrAfterLogView = 'on';
+    this.showQrAfterBookmarkView = 'on';
+    this.showSearchButton = 'on';
+    this.showCopyButton = 'on';
+    this.showBase64Button = 'on';
+    this.showEnlargeButton = 'on';
+    this.showBookmarkButton = 'on';
+    this.showBrowseButton = 'on';
+    this.showAddContactButton = 'on';
+    this.showCallButton = 'on';
+    this.showSendMessageButton = 'on';
+    this.showSendEmailButton = 'on';
     this._scanRecords = [];
     this._bookmarks = [];
     this.debugMode = 'off';
@@ -315,6 +503,9 @@ export class EnvService {
   public async resetSetting() {
     this.startPage = '/tabs/scan';
     await this.storageSet("start-page", this.startPage);
+
+    this.historyPageStartSegment = 'history';
+    await this.storageSet("history-page-start-segment", this.historyPageStartSegment);
 
     this.startPageHeader = 'on';
     await this.storageSet("start-page-header", this.startPage);
@@ -358,6 +549,54 @@ export class EnvService {
 
     this.searchEngine = 'google';
     await this.storageSet("search-engine", this.searchEngine);
+
+    this.resultPageButtons = 'detailed';
+    await this.storageSet("result-page-buttons", this.resultPageButtons);
+
+    this.showQrAfterCameraScan = 'off';
+    await this.storageSet("show-qr-after-camera-scan", this.showQrAfterCameraScan);
+
+    this.showQrAfterImageScan = 'off';
+    await this.storageSet("show-qr-after-image-scan", this.showQrAfterImageScan);
+
+    this.showQrAfterCreate = 'on';
+    await this.storageSet("show-qr-after-create", this.showQrAfterCreate);
+
+    this.showQrAfterLogView = 'on';
+    await this.storageSet("show-qr-after-log-view", this.showQrAfterLogView);
+
+    this.showQrAfterBookmarkView = 'on';
+    await this.storageSet("show-qr-after-bookmark-view", this.showQrAfterBookmarkView);
+
+    this.showSearchButton = 'on';
+    await this.storageSet("showSearchButton", this.showSearchButton);
+
+    this.showCopyButton = 'on';
+    await this.storageSet("showCopyButton", this.showCopyButton);
+
+    this.showBase64Button = 'on';
+    await this.storageSet("showBase64Button", this.showBase64Button);
+
+    this.showEnlargeButton = 'on';
+    await this.storageSet("showEnlargeButton", this.showEnlargeButton);
+
+    this.showBookmarkButton = 'on';
+    await this.storageSet("showBookmarkButton", this.showBookmarkButton);
+
+    this.showBrowseButton = 'on';
+    await this.storageSet("showBrowseButton", this.showBrowseButton);
+
+    this.showAddContactButton = 'on';
+    await this.storageSet("showAddContactButton", this.showAddContactButton);
+
+    this.showCallButton = 'on';
+    await this.storageSet("showCallButton", this.showCallButton);
+
+    this.showSendMessageButton = 'on';
+    await this.storageSet("showSendMessageButton", this.showSendMessageButton);
+
+    this.showSendEmailButton = 'on';
+    await this.storageSet("showSendEmailButton", this.showSendEmailButton);
 
     this.debugMode = 'off';
     await this.storageSet("debug-mode-on", this.debugMode);

@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'">
+    <ion-buttons slot="start">
+      <ion-back-button text="">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'AUTO_SHOW_QR' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item class="ion-no-padding" lines="none">
+    <ion-label class="ion-padding-start">
+      <p class="ion-padding-top ion-padding-horizontal">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
+          <div [innerHTML]="'AUTO_SHOW_QR_EXPLAIN' | translate">
+          </div>
+        </ion-text>
+      </p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/qrscan.svg">
+    </ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+          {{ 'AFTER_CAMERA_SCAN' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.showQrAfterCameraScan == 'on'? true : false"
+      (ngModelChange)="onShowQrAfterCameraScanChange($event)">
+    </ion-toggle>
+  </ion-item>
+
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/history.svg">
+    </ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+          {{ 'AFTER_LOG_VIEW' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.showQrAfterLogView == 'on'? true : false"
+      (ngModelChange)="onShowQrAfterLogViewChange($event)">
+    </ion-toggle>
+  </ion-item>
+
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="bookmark"></ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+          {{ 'AFTER_BOOKMARK_VIEW' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.showQrAfterBookmarkView == 'on'? true : false"
+      (ngModelChange)="onShowQrAfterBookmarkViewChange($event)">
+    </ion-toggle>
+  </ion-item>
+
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="create"></ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+          {{ 'AFTER_CREATE' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.showQrAfterCreate == 'on'? true : false"
+      (ngModelChange)="onShowQrAfterCreateChange($event)">
+    </ion-toggle>
+  </ion-item>
+
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="image"></ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+          {{ 'AFTER_IMAGE_SCAN' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.showQrAfterImageScan == 'on'? true : false"
+      (ngModelChange)="onShowQrAfterImageScanChange($event)">
+    </ion-toggle>
+  </ion-item>
+
+</ion-content>

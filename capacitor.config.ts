@@ -5,6 +5,9 @@ const config: CapacitorConfig = {
   appName: 'Simple QR',
   webDir: 'www',
   bundledWebRuntime: false,
+  android: {
+    initialFocus: false
+  },
   plugins: {
     SplashScreen: {
       useDialog: false,

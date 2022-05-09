@@ -295,6 +295,7 @@ export class GeneratePage {
     this.env.resultFormat = "";
     this.qrCodeContent = '';
     this.env.recordSource = "create";
+    this.env.detailedRecordSource = "create";
     this.env.viewResultFrom = "/tabs/generate";
     this.router.navigate(['tabs/result']).then(
       () => {
@@ -437,7 +438,12 @@ export class GeneratePage {
 
   async tapHaptic() {
     if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
-      await Haptics.impact({ style: ImpactStyle.Medium });
+      await Haptics.impact({ style: ImpactStyle.Medium })
+        .catch(async err => {
+          if (this.env.debugMode === 'on') {
+            await Toast.show({ text: 'Err when Haptics.impact: ' + JSON.stringify(err), position: "top", duration: "long" })
+          }
+        })
     }
   }
 }

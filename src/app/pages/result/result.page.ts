@@ -13,6 +13,7 @@ import { MatFormField } from '@angular/material/form-field';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { QrCodePage } from 'src/app/modals/qr-code/qr-code.page';
 import { fadeIn } from 'src/app/utils/animations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-result',
@@ -63,11 +64,20 @@ export class ResultPage {
     public modalController: ModalController,
     private sms: SMS,
     public translate: TranslateService,
+    private router: Router,
   ) { }
 
   ionViewWillEnter() {
-    if (this.env.recordSource != null) {
-      if (this.env.recordSource == 'create' || this.env.recordSource == 'view') {
+    if (this.env.detailedRecordSource != null) {
+      if (this.env.detailedRecordSource == 'create' && this.env.showQrAfterCreate == 'on') {
+        this.showQrFirst = true;
+      } else if (this.env.detailedRecordSource == 'view-log' && this.env.showQrAfterLogView == 'on') {
+        this.showQrFirst = true;
+      } else if (this.env.detailedRecordSource == 'view-bookmark' && this.env.showQrAfterBookmarkView == 'on') {
+        this.showQrFirst = true;
+      } else if (this.env.detailedRecordSource == 'scan-camera' && this.env.showQrAfterCameraScan == 'on') {
+        this.showQrFirst = true;
+      } else if (this.env.detailedRecordSource == 'scan-image' && this.env.showQrAfterImageScan == 'on') {
         this.showQrFirst = true;
       }
     }
@@ -88,11 +98,6 @@ export class ResultPage {
     if (this.env.bookmarks.find(x => x.text == this.qrCodeContent)) {
       this.bookmarked = true;
     }
-  }
-
-  async ionViewWillLeave(): Promise<void> {
-    this.base64Decoded = false;
-    this.base64Encoded = false;
   }
 
   ionViewDidLeave() {
@@ -121,6 +126,7 @@ export class ResultPage {
     this.bookmarked = false;
     this.showQrFirst = false;
     delete this.env.recordSource;
+    delete this.env.detailedRecordSource;
     delete this.env.viewResultFrom;
   }
 
@@ -262,7 +268,7 @@ export class ResultPage {
                   }
                 },
                 {
-                  text: this.translate.instant("OK"),
+                  text: this.translate.instant("CLOSE"),
                   handler: () => {
                     return true;
                   }
@@ -336,6 +342,7 @@ export class ResultPage {
       component: QrCodePage,
       breakpoints: [0, 0.5, 1],
       initialBreakpoint: 0.5,
+      cssClass: 'fullscreen-modal',
       componentProps: { qrCodeContent: this.qrCodeContent }
     });
     await modal.present();
@@ -720,8 +727,17 @@ export class ResultPage {
     }
   }
 
-  async addBookmark() {
-    await this.showBookmarkAlert(this.qrCodeContent);
+  async handleBookmark() {
+    if (!this.bookmarked) {
+      await this.showBookmarkAlert(this.qrCodeContent);
+    } else {
+      await this.env.deleteBookmark(this.qrCodeContent);
+      if (this.env.bookmarks.find(x => x.text === this.qrCodeContent)) {
+        this.bookmarked = true;
+      } else {
+        this.bookmarked = false;
+      }
+    }
   }
 
   async showBookmarkAlert(content: string) {
@@ -763,14 +779,14 @@ export class ResultPage {
     await alert.present();
   }
 
-  async removeBookmark() {
-    await this.env.deleteBookmark(this.qrCodeContent);
-    if (this.env.bookmarks.find(x => x.text === this.qrCodeContent)) {
-      this.bookmarked = true;
-    } else {
-      this.bookmarked = false;
-    }
-  }
+  // async removeBookmark() {
+  //   await this.env.deleteBookmark(this.qrCodeContent);
+  //   if (this.env.bookmarks.find(x => x.text === this.qrCodeContent)) {
+  //     this.bookmarked = true;
+  //   } else {
+  //     this.bookmarked = false;
+  //   }
+  // }
 
   get contentTypeText(): string {
     switch (this.contentType) {
@@ -882,6 +898,10 @@ export class ResultPage {
     return this.translate.instant("NOT_PROVIDED");
   }
 
+  goSetting() {
+    this.router.navigate(['setting-result']);
+  }
+
   get ngMatThemeClass() {
     switch (this.env.colorTheme) {
       case 'dark':
@@ -907,17 +927,6 @@ export class ResultPage {
     });
   }
 
-  private base64toBlob(base64Data: string, contentType: string): Blob {
-    const byteString = atob(base64Data);
-    const ab = new ArrayBuffer(byteString.length);
-    const ia = new Uint8Array(ab);
-    for (let i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
-    }
-    const blob = new Blob([ab], { type: contentType });
-    return blob;
-  }
-
   async presentLoading(msg: string): Promise<HTMLIonLoadingElement> {
     const loading = await this.loadingController.create({
       message: msg
@@ -928,7 +937,12 @@ export class ResultPage {
 
   async tapHaptic() {
     if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
-      await Haptics.impact({ style: ImpactStyle.Medium });
+      await Haptics.impact({ style: ImpactStyle.Medium })
+        .catch(async err => {
+          if (this.env.debugMode === 'on') {
+            await Toast.show({ text: 'Err when Haptics.impact: ' + JSON.stringify(err), position: "top", duration: "long" })
+          }
+        })
     }
   }
 }

@@ -4,25 +4,47 @@
   <ng-template #mainHeader>
     <ion-toolbar color="primary">
       <ion-title>{{ 'SIMPLE_QR' | translate}}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="tapHaptic(); goSetting()" fill="clear">
+          {{ 'SETTING' | translate }}
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ng-template>
   <ng-template #selfHeader>
     <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'">
       <ion-title *ngIf="segmentModel === 'history'">{{ 'LOG' | translate }}</ion-title>
       <ion-title *ngIf="segmentModel === 'bookmarks'">{{ 'BOOKMARKS' | translate }}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="tapHaptic(); goSetting()" fill="clear" color="primary">
+          {{ 'SETTING' | translate }}
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ng-template>
 </ion-header>
 
 <ion-content>
   <ion-segment [(ngModel)]="segmentModel" (ionChange)="segmentChanged($event)" [color]="'primary'">
-    <ion-segment-button [value]="'history'">
-      <ion-icon src="assets/icon/history.svg"></ion-icon>
-    </ion-segment-button>
-    <ion-segment-button [value]="'bookmarks'">
-      <ion-icon name="star"></ion-icon>
-    </ion-segment-button>
+    <ng-container *ngIf="env.historyPageStartSegment === 'history'">
+      <ion-segment-button [value]="'history'">
+        <ion-icon src="assets/icon/history.svg"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button [value]="'bookmarks'">
+        <ion-icon name="bookmark"></ion-icon>
+      </ion-segment-button>
+    </ng-container>
+    <ng-container *ngIf="env.historyPageStartSegment === 'bookmarks'">
+      <ion-segment-button [value]="'bookmarks'">
+        <ion-icon name="bookmark"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button [value]="'history'">
+        <ion-icon src="assets/icon/history.svg"></ion-icon>
+      </ion-segment-button>
+    </ng-container>
   </ion-segment>
+
+  <!-- When loading -->
   <ng-container *ngIf="isLoading">
     <ion-list>
       <ng-container *ngFor="let _ of dummyArr">
@@ -55,9 +77,11 @@
       </ng-container>
     </ion-list>
   </ng-container>
+
+  <!-- When log segment but 0 log -->
   <ng-container
     *ngIf="segmentModel === 'history' && (!env.viewingScanRecords || (env.viewingScanRecords.length <= 0)) && !isLoading">
-    <div class="ion-padding-horizontal fullscreen-vertical-center" style="height: 85%">
+    <div class="ion-padding-horizontal vertical-center" style="height: 85%">
       <ion-icon src="assets/icon/history.svg" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
         style="font-size: 3rem"></ion-icon>
       <p class="ion-text-center pt-3">
@@ -67,13 +91,16 @@
       </p>
     </div>
   </ng-container>
+
+  <!-- When log segment and >0 logs -->
   <ng-container
     *ngIf="segmentModel === 'history' && env.viewingScanRecords && env.viewingScanRecords.length > 0 && !isLoading">
     <ion-list>
       <ng-container *ngFor="let record of env.viewingScanRecords; trackBy: scanRecordsTrackByFn; index as i;">
         <ion-item-sliding #slidingItem [@fastInAnimation] [@flyOut]>
           <ion-item class="ion-no-padding ripple-parent" detail="false"
-            [lines]="i === env.viewingScanRecords.length - 1? 'none' : 'full'" (click)="viewRecord(record.text)">
+            [lines]="i === env.viewingScanRecords.length - 1? 'none' : 'full'"
+            (click)="viewRecord(record.text, 'view-log')">
             <ion-label class="ion-padding-start">
               <div class="ion-padding" style="overflow-x: clip; text-overflow: ellipsis;">
                 <p *ngIf="env.debugMode === 'on'">
@@ -106,7 +133,7 @@
           </ion-item>
           <ion-item-options side="start">
             <ion-item-option [color]="'primary'" expandable (click)="addBookmark(record, slidingItem)">
-              <ion-icon slot="icon-only" name="star"></ion-icon>
+              <ion-icon slot="icon-only" name="bookmark"></ion-icon>
             </ion-item-option>
           </ion-item-options>
           <ion-item-options side="end">
@@ -122,10 +149,13 @@
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </ng-container>
+
+  <!-- When bookmark segment but 0 bookmark  -->
   <ng-container
     *ngIf="segmentModel === 'bookmarks' && (!env.viewingBookmarks || (env.viewingBookmarks.length <= 0)) && !isLoading">
-    <div class="ion-padding-horizontal fullscreen-vertical-center" style="height: 85%">
-      <ion-icon name="star" [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: 3rem"></ion-icon>
+    <div class="ion-padding-horizontal vertical-center" style="height: 85%">
+      <ion-icon name="bookmark" [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: 3rem">
+      </ion-icon>
       <p class="ion-text-center pt-3">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'FAVOURITE_TEXT_SHOWN' | translate }}
@@ -133,13 +163,16 @@
       </p>
     </div>
   </ng-container>
+
+  <!-- When bookmark segment and >0 bookmarks  -->
   <ng-container
     *ngIf="segmentModel === 'bookmarks' && env.viewingBookmarks && env.viewingBookmarks.length > 0 && !isLoading">
     <ion-list>
       <ng-container *ngFor="let bookmark of env.viewingBookmarks; trackBy: bookmarksTrackByFn; index as i">
         <ion-item-sliding #slidingItem [@fastInAnimation] [@flyOut]>
           <ion-item class="ion-no-padding ripple-parent" detail="false"
-            [lines]="i === env.viewingBookmarks.length - 1? 'none' : 'full'" (click)="viewRecord(bookmark.text)">
+            [lines]="i === env.viewingBookmarks.length - 1? 'none' : 'full'"
+            (click)="viewRecord(bookmark.text, 'view-bookmark')">
             <ion-label class="ion-padding-start">
               <div class="ion-padding">
                 <p *ngIf="env.debugMode === 'on'">
@@ -183,6 +216,7 @@
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </ng-container>
+
 </ion-content>
 
 <ion-footer
@@ -191,9 +225,6 @@
     <ion-button (click)="tapHaptic(); removeAll()" [color]="'danger'" fill="clear"
       *ngIf="(segmentModel === 'bookmarks' && env.viewingBookmarks && env.viewingBookmarks.length > 0) || (segmentModel === 'history' && env.viewingScanRecords && env.viewingScanRecords.length > 0)">
       {{ 'REMOVE_ALL' | translate }}
-    </ion-button>
-    <ion-button (click)="tapHaptic(); goSetting()" [color]="'primary'" fill="clear">
-      {{ 'SETTING' | translate }}
     </ion-button>
   </ion-row>
 </ion-footer>

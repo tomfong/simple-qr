@@ -10,6 +10,17 @@
 
 <ion-content>
 
+  <ion-item class="ion-no-padding" lines="none">
+    <ion-label class="ion-padding-start">
+      <p class="ion-padding-top ion-padding-horizontal">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
+          <div [innerHTML]="'VIBRATION_EXPLAIN' | translate">
+          </div>
+        </ion-text>
+      </p>
+    </ion-label>
+  </ion-item>
+
   <ion-radio-group [(ngModel)]="env.vibration" (ionChange)="saveVibration()">
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-label class="ion-padding-start">

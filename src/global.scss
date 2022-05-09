@@ -62,6 +62,14 @@
 .fullscreen-vertical-center {
     display: flex;
     flex-direction: column;
+    // align-items: center;
+    place-content: center;
+    min-height: 100%;
+}
+
+.vertical-center {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     place-content: center;
 }
@@ -108,4 +116,8 @@ ion-tab-button:not(.tab-selected)::part(native):hover {
 .alert-button.sc-ion-alert-ios {
     border-left: 0 !important;
     border-right: 0 !important;
+}
+
+.fullscreen-modal {
+    --min-width: 100%;
 }

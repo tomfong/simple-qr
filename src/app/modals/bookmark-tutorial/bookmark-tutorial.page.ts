@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { Toast } from '@capacitor/toast';
 import { ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
@@ -24,7 +25,7 @@ export class BookmarkTutorialPage {
       }, 750
     );
   }
-  
+
   async saveBookmarkTutorialShowing() {
     if (this.env.notShowBookmarkTutorial === true) {
       await this.env.storageSet("not-show-bookmark-tutorial", 'yes');
@@ -32,10 +33,15 @@ export class BookmarkTutorialPage {
       await this.env.storageSet("not-show-bookmark-tutorial", 'no');
     }
   }
-  
+
   async tapHaptic() {
     if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
-      await Haptics.impact({ style: ImpactStyle.Medium });
+      await Haptics.impact({ style: ImpactStyle.Medium })
+        .catch(async err => {
+          if (this.env.debugMode === 'on') {
+            await Toast.show({ text: 'Err when Haptics.impact: ' + JSON.stringify(err), position: "top", duration: "long" })
+          }
+        })
     }
   }
 

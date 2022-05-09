@@ -23,7 +23,8 @@
 
   <ion-radio-group [(ngModel)]="env.startPage" (ionChange)="saveStartPage()">
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
-      <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/qrscan.svg"></ion-icon>
+      <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/qrscan.svg">
+      </ion-icon>
       <ion-label>
         <p class="ion-padding">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
@@ -31,21 +32,33 @@
           </ion-text>
         </p>
       </ion-label>
-      <ion-radio class="ion-margin-end" slot="end" [value]="'/tabs/scan'"
-        [color]="'primary'">
+      <ion-radio class="ion-margin-end" slot="end" [value]="'/tabs/scan'" [color]="'primary'">
       </ion-radio>
     </ion-item>
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
-      <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/history.svg"></ion-icon>
-      <ion-label>
-        <p class="ion-padding">
-          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-            {{ 'LOG' | translate }}
-          </ion-text>
-        </p>
-      </ion-label>
-      <ion-radio class="ion-margin-end" slot="end" [value]="'/tabs/history'"
-        [color]="'primary'">
+      <ng-container *ngIf="env.historyPageStartSegment == 'history'">
+        <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/history.svg">
+        </ion-icon>
+        <ion-label>
+          <p class="ion-padding">
+            <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+              {{ 'LOG' | translate }}
+            </ion-text>
+          </p>
+        </ion-label>
+      </ng-container>
+      <ng-container *ngIf="env.historyPageStartSegment == 'bookmarks'">
+        <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="bookmark">
+        </ion-icon>
+        <ion-label>
+          <p class="ion-padding">
+            <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+              {{ 'BOOKMARK' | translate }}
+            </ion-text>
+          </p>
+        </ion-label>
+      </ng-container>
+      <ion-radio class="ion-margin-end" slot="end" [value]="'/tabs/history'" [color]="'primary'">
       </ion-radio>
     </ion-item>
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
@@ -57,8 +70,7 @@
           </ion-text>
         </p>
       </ion-label>
-      <ion-radio class="ion-margin-end" slot="end" [value]="'/tabs/generate'"
-        [color]="'primary'">
+      <ion-radio class="ion-margin-end" slot="end" [value]="'/tabs/generate'" [color]="'primary'">
       </ion-radio>
     </ion-item>
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
@@ -70,8 +82,7 @@
           </ion-text>
         </p>
       </ion-label>
-      <ion-radio class="ion-margin-end" slot="end" [value]="'/tabs/import-image'"
-        [color]="'primary'">
+      <ion-radio class="ion-margin-end" slot="end" [value]="'/tabs/import-image'" [color]="'primary'">
       </ion-radio>
     </ion-item>
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
@@ -83,13 +94,12 @@
           </ion-text>
         </p>
       </ion-label>
-      <ion-radio class="ion-margin-end" slot="end" [value]="'/tabs/setting'"
-        [color]="'primary'">
+      <ion-radio class="ion-margin-end" slot="end" [value]="'/tabs/setting'" [color]="'primary'">
       </ion-radio>
     </ion-item>
   </ion-radio-group>
 
-  <ion-item class="pt-3" class="ion-no-padding" lines="none">
+  <ion-item class="ion-no-padding pt-3" lines="none">
     <ion-label class="ion-padding-start">
       <p class="ion-padding-top ion-padding-horizontal">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
