@@ -260,6 +260,12 @@
     "AUTO_SHOW_QR_EXPLAIN": "在进行以下已选择的动作后，自动弹出 QR 码。",
     "BOOKMARKED": "已书签",
     "HISTORY_PAGE_START_EXPLAIN": "选择记录/书签页的起始分页。",
+    "AUTO_CLOSE_APP": "自动停止背景执行",
+    "AUTO_CLOSE_APP_EXPLAIN": "<p>为节省系统资源及减低耗电，当程式进入背景执行时，设定自动停止执行程式及所有背景活动的时间。</p><br><p>若选择<b>由系统控制</b>，程式本身将不会干预其运作及资源占用，全由系统控制。</p><br><p>请注意，在某些情况下系统可能会提前停止程式的背景运作。</p>",
+    "AFTER_1_MIN": "1 分钟后",
+    "AFTER_3_MIN": "3 分钟后",
+    "AFTER_5_MIN": "5 分钟后",
+    "FOLLOW_SYSTEM": "由系统控制",
     "MSG": {
         "CALL_PHONE": "确定要致电 {phoneNumber} ?",
         "FAIL_CALL_PHONE": "无法开启电话",

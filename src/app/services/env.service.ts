@@ -55,6 +55,7 @@ export class EnvService {
   public showSendMessageButton: 'on' | 'off' = 'on';
   public showSendEmailButton: 'on' | 'off' = 'on';
   public debugMode: 'on' | 'off' = 'off';
+  public autoExitAppMin: 1 | 3 | 5 | -1 = 3; 
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
   public readonly GOOGLE_SEARCH_URL: string = "https://www.google.com/search?q=";
@@ -427,6 +428,15 @@ export class EnvService {
         }
       }
     );
+    this._storage.get("autoExitAppMin").then(
+      value => {
+        if (value != null) {
+          this.autoExitAppMin = value;
+        } else {
+          this.autoExitAppMin = 3;
+        }
+      }
+    );
     if (this.platform.is('android')) this._storage.remove(this.AN_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
     if (this.platform.is('ios')) this._storage.remove(this.IOS_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
     this.appVersion.getVersionNumber().then(
@@ -493,6 +503,7 @@ export class EnvService {
     this._scanRecords = [];
     this._bookmarks = [];
     this.debugMode = 'off';
+    this.autoExitAppMin = 3;
   }
 
   public async resetData() {
@@ -600,6 +611,9 @@ export class EnvService {
 
     this.debugMode = 'off';
     await this.storageSet("debug-mode-on", this.debugMode);
+
+    this.autoExitAppMin = 3;
+    await this.storageSet("autoExitAppMin", this.autoExitAppMin);
   }
 
   get result(): string {
