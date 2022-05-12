@@ -13,17 +13,53 @@ import { EnvService } from 'src/app/services/env.service';
 })
 export class TabsPage {
 
+  exitAppTimeout: NodeJS.Timeout;
+
   constructor(
     private translate: TranslateService,
     public env: EnvService,
     private platform: Platform,
     private router: Router,
     private alertController: AlertController,
-  ) { }
+  ) { 
+    this.platform.pause.subscribe(
+      _ => {
+        if (this.platform.is('android')) {
+          if (this.env.autoExitAppMin != -1) {
+            this.exitAppTimeout = setTimeout(
+              () => {
+                if (this.env.isDebugging) {
+                  this.presentToast("App will be killed!", "short", "bottom");
+                }
+                navigator['app'].exitApp();
+              }, this.env.autoExitAppMin * 60 * 1000
+            )
+            if (this.env.isDebugging) {
+              this.presentToast("App will be destroyed after " + this.env.autoExitAppMin + " minutes", "short", "bottom");
+            }
+          } else {
+            if (this.env.isDebugging) {
+              this.presentToast("App won't be destroyed by itself", "short", "bottom");
+            }
+          }
+        };
+      }
+    )
+    this.platform.resume.subscribe(
+      _ => {
+        if (this.exitAppTimeout != null) {
+          clearTimeout(this.exitAppTimeout);
+          delete this.exitAppTimeout;
+          if (this.env.isDebugging) {
+            this.presentToast("Cleared Exit App Timeout", "short", "bottom");
+          }
+        }
+      }
+    )
+  }
 
   async ionViewDidEnter() {
     if (this.env.firstAppLoad) {
-      // await SplashScreen.show();
       this.env.firstAppLoad = false;
       await this.loadPatchNote();
       await this.router.navigate([this.env.startPage], { replaceUrl: true });
@@ -79,6 +115,14 @@ export class TabsPage {
 
   openAppStore(): void {
     window.open(this.env.APP_STORE_URL, '_system');
+  }
+
+  async presentToast(msg: string, duration: "short" | "long", pos: "top" | "center" | "bottom") {
+    await Toast.show({
+      text: msg,
+      duration: duration,
+      position: pos
+    });
   }
 
   async tapHaptic() {

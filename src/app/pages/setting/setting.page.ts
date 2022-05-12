@@ -22,8 +22,8 @@ export class SettingPage {
     public translate: TranslateService,
     public appVersion: AppVersion,
     private platform: Platform,
-  ) { 
-    
+  ) {
+
   }
 
   async ionViewDidEnter() {
@@ -72,6 +72,10 @@ export class SettingPage {
 
   navigateAbout() {
     this.router.navigate(['about']);
+  }
+
+  setAutoCloseApp() {
+    this.router.navigate(['setting-auto-exit']);
   }
 
   async resetApp() {

@@ -111,6 +111,17 @@
       </p>
     </ion-label>
   </ion-item>
+  <ion-item *ngIf="isAndroid" class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setAutoCloseApp()">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="stop-circle">
+    </ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+          {{ 'AUTO_CLOSE_APP' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+  </ion-item>
   <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="resetApp()">
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/reset.svg">
     </ion-icon>

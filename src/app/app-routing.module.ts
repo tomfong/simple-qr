@@ -63,6 +63,10 @@ const routes: Routes = [
     path: 'setting-auto-qr',
     loadChildren: () => import('./pages/setting-auto-qr/setting-auto-qr.module').then( m => m.SettingAutoQrPageModule)
   },
+  {
+    path: 'setting-auto-exit',
+    loadChildren: () => import('./pages/setting-auto-exit/setting-auto-exit.module').then( m => m.SettingAutoExitPageModule)
+  },
 
 ];
 

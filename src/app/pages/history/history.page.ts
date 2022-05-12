@@ -179,29 +179,29 @@ export class HistoryPage {
   getBarcodeFormat(barcodeType: string): string {
     switch (barcodeType) {
       case "UPC_A":
-        return this.translate.instant("BARCODE_TYPE.UPC").trim() + ` (${barcodeType})`;
+        return this.translate.instant("BARCODE_TYPE.UPC").trim() + ` (UPC-A)`;
       case "UPC_E":
-        return this.translate.instant("BARCODE_TYPE.UPC").trim() + ` (${barcodeType})`;
+        return this.translate.instant("BARCODE_TYPE.UPC").trim() + ` (UPC-E)`;
       case "UPC_EAN_EXTENSION":
-        return this.translate.instant("BARCODE_TYPE.UPC").trim() + ` (${barcodeType})`;
+        return this.translate.instant("BARCODE_TYPE.UPC").trim() + ` (UPC/EAN Ext.)`;
       case "EAN_8":
-        return this.translate.instant("BARCODE_TYPE.EAN").trim() + ` (${barcodeType})`;
+        return this.translate.instant("BARCODE_TYPE.EAN").trim() + ` (EAN-8)`;
       case "EAN_13":
-        return this.translate.instant("BARCODE_TYPE.EAN").trim() + ` (${barcodeType})`;
+        return this.translate.instant("BARCODE_TYPE.EAN").trim() + ` (EAN-13)`;
       case "CODE_39":
-        return this.translate.instant("BARCODE_TYPE.1D").trim() + ` (${barcodeType})`;
+        return this.translate.instant("BARCODE_TYPE.1D").trim() + ` (Code 39)`;
       case "CODE_39_MOD_43":
-        return this.translate.instant("BARCODE_TYPE.1D").trim() + ` (${barcodeType})`;
+        return this.translate.instant("BARCODE_TYPE.1D").trim() + ` (Code 39 mod 43)`;
       case "CODE_93":
-        return this.translate.instant("BARCODE_TYPE.1D").trim() + ` (${barcodeType})`;
+        return this.translate.instant("BARCODE_TYPE.1D").trim() + ` (Code 93)`;
       case "CODE_128":
-        return this.translate.instant("BARCODE_TYPE.1D").trim() + ` (${barcodeType})`;
+        return this.translate.instant("BARCODE_TYPE.1D").trim() + ` (Code 128)`;
       case "CODABAR":
-        return this.translate.instant("BARCODE_TYPE.1D").trim() + ` (${barcodeType})`;
+        return this.translate.instant("BARCODE_TYPE.1D").trim() + ` (Codabar)`;
       case "ITF":
-        return this.translate.instant("BARCODE_TYPE.1D").trim() + ` (${barcodeType})`;
+        return this.translate.instant("BARCODE_TYPE.1D").trim() + ` (ITF)`;
       case "ITF_14":
-        return this.translate.instant("BARCODE_TYPE.1D").trim() + ` (${barcodeType})`;
+        return this.translate.instant("BARCODE_TYPE.1D").trim() + ` (ITF-14)`;
       case "AZTEC":
         return this.translate.instant("BARCODE_TYPE.AZTEC").trim();
       case "DATA_MATRIX":

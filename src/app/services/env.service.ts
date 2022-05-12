@@ -55,6 +55,7 @@ export class EnvService {
   public showSendMessageButton: 'on' | 'off' = 'on';
   public showSendEmailButton: 'on' | 'off' = 'on';
   public debugMode: 'on' | 'off' = 'off';
+  public autoExitAppMin: 1 | 3 | 5 | -1 = -1; 
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
   public readonly GOOGLE_SEARCH_URL: string = "https://www.google.com/search?q=";
@@ -66,9 +67,9 @@ export class EnvService {
   public readonly GOOGLE_PLAY_URL: string = "https://play.google.com/store/apps/details?id=com.tomfong.simpleqr";
   public readonly APP_STORE_URL: string = "https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553";
   public readonly PRIVACY_POLICY: string = "https://www.privacypolicies.com/live/771b1123-99bb-4bfe-815e-1046c0437a0f";
-  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20501";
+  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20600";
   public readonly IOS_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20501";
-  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20600";
+  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20601";
   public readonly IOS_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20600";
 
   private _storage: Storage | null = null;
@@ -427,6 +428,15 @@ export class EnvService {
         }
       }
     );
+    this._storage.get("autoExitAppMin").then(
+      value => {
+        if (value != null) {
+          this.autoExitAppMin = value;
+        } else {
+          this.autoExitAppMin = -1;
+        }
+      }
+    );
     if (this.platform.is('android')) this._storage.remove(this.AN_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
     if (this.platform.is('ios')) this._storage.remove(this.IOS_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
     this.appVersion.getVersionNumber().then(
@@ -493,6 +503,7 @@ export class EnvService {
     this._scanRecords = [];
     this._bookmarks = [];
     this.debugMode = 'off';
+    this.autoExitAppMin = -1;
   }
 
   public async resetData() {
@@ -600,6 +611,9 @@ export class EnvService {
 
     this.debugMode = 'off';
     await this.storageSet("debug-mode-on", this.debugMode);
+
+    this.autoExitAppMin = -1;
+    await this.storageSet("autoExitAppMin", this.autoExitAppMin);
   }
 
   get result(): string {
