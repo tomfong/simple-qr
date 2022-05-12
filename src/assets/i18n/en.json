@@ -344,7 +344,7 @@
         "RSS": "GS1 DataBar "
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "<p>Simple QR is an open-source app. If you like and enjoy using it, please rate it on the store and support the developer.</p><p>New version provides more in-app settings for customization, allows editing when importing image, updates UI, improves performance and fixes known issues.</ul>",
+        "UPDATE_NOTES_ANDROID": "<p>Simple QR is an open-source app. If you like and enjoy using it, please rate it on the store and support the developer.</p><p>New version provides a new feature - <b>Auto Kill Background</b> and improves performance.</ul>",
         "UPDATE_NOTES_IOS": "<p>Simple QR is an open-source app. If you like it and enjoy using it, please rate it on the store and support the developer.</p><p>New version provides more in-app settings for customization, updates UI, improves performance and fixes known issues.</ul>"
     }
 }
