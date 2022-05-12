@@ -55,7 +55,7 @@ export class EnvService {
   public showSendMessageButton: 'on' | 'off' = 'on';
   public showSendEmailButton: 'on' | 'off' = 'on';
   public debugMode: 'on' | 'off' = 'off';
-  public autoExitAppMin: 1 | 3 | 5 | -1 = 3; 
+  public autoExitAppMin: 1 | 3 | 5 | -1 = -1; 
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
   public readonly GOOGLE_SEARCH_URL: string = "https://www.google.com/search?q=";
@@ -433,7 +433,7 @@ export class EnvService {
         if (value != null) {
           this.autoExitAppMin = value;
         } else {
-          this.autoExitAppMin = 3;
+          this.autoExitAppMin = -1;
         }
       }
     );
@@ -503,7 +503,7 @@ export class EnvService {
     this._scanRecords = [];
     this._bookmarks = [];
     this.debugMode = 'off';
-    this.autoExitAppMin = 3;
+    this.autoExitAppMin = -1;
   }
 
   public async resetData() {
@@ -612,7 +612,7 @@ export class EnvService {
     this.debugMode = 'off';
     await this.storageSet("debug-mode-on", this.debugMode);
 
-    this.autoExitAppMin = 3;
+    this.autoExitAppMin = -1;
     await this.storageSet("autoExitAppMin", this.autoExitAppMin);
   }
 
