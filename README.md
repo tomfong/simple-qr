@@ -25,7 +25,7 @@ It's available on both the App Store and Google Play. You can also download the 
 
 | App Store | Google Play | IzzyOnDroid |
 |:-:|:-:|:-:|
-| [<img src="badges/appstore-badge.png" height="50">](https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553) | [<img src="badges/google-play-badge.png" height="50">](https://play.google.com/store/apps/details?id=com.tomfong.simpleqr) | [<img src="badges/IzzyOnDroid.png" height="50">](https://apt.izzysoft.de/fdroid/index/apk/com.tomfong.simpleqr) |
+| [<img src="badges/appstore-badge.png" height="50">](https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553) | [<img src="badges/google-play-badge.png" height="50">](https://play.google.com/store/apps/details?id=com.tomfong.simpleqr) | [<img src="badges/IzzyOnDroid.png" height="75">](https://apt.izzysoft.de/fdroid/index/apk/com.tomfong.simpleqr) |
 
 ## Features
 
