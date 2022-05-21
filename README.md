@@ -102,12 +102,13 @@ If you want to support me or my projects, please <a href="https://github.com/tom
 
 ```sh
     Ionic CLI                       : 6.19.0
-    Ionic Framework                 : @ionic/angular 6.1.4
-    @angular-devkit/build-angular   : 13.3.5
-    @angular-devkit/schematics      : 13.3.5
-    @angular/cli                    : 13.3.5
+    Ionic Framework                 : @ionic/angular 6.1.6
+    @angular-devkit/build-angular   : 13.3.6
+    @angular-devkit/schematics      : 13.3.6
+    @angular/cli                    : 13.3.6
+    @ionic/angular-toolkit          : 6.1.0
 
-    Capacitor CLI                   : 3.5.0
+    Capacitor CLI                   : 3.5.1
     @capacitor/android              : 3.5.1
     @capacitor/core                 : 3.5.1
     @capacitor/ios                  : 3.5.1

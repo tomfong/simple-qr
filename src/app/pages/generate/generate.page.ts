@@ -109,10 +109,10 @@ export class GeneratePage {
     this.freeTxtText = this.translate.instant("FREE_TEXT");
     this.urlText = this.translate.instant("URL");
     this.contactText = this.translate.instant("VCARD_CONTACT");
-    this.phoneText = this.translate.instant("PHONE");
-    this.smsText = this.translate.instant("SMS");
-    this.emailW3CText = this.translate.instant("EMAIL_W3C");
-    this.emailDocomoText = this.translate.instant("EMAIL_DOCOMO");
+    this.phoneText = this.translate.instant("PHONE_NO");
+    this.smsText = this.translate.instant("MESSAGE");
+    this.emailW3CText = this.translate.instant("EMAIL_W3C_STANDARD");
+    this.emailDocomoText = this.translate.instant("EMAIL_NTT_DOCOMO");
     this.wifiText = this.translate.instant("WIFI");
     this.contentTypes = [
       { text: this.freeTxtText, value: 'freeText' },
@@ -283,7 +283,7 @@ export class GeneratePage {
     if ((this.qrCodeContent && this.qrCodeContent.trim().length <= 0) || this.qrCodeContent === "") {
       await this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), "short", "bottom");
     } else if (this.qrCodeContent.length > 1817) {
-      await this.presentToast(this.translate.instant('CREATE_QRCODE_MAX_LENGTH'), "short", "bottom");
+      await this.presentToast(this.translate.instant('MSG.CREATE_QRCODE_MAX_LENGTH'), "short", "bottom");
     } else {
       const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
       await this.processQrCode(loading);

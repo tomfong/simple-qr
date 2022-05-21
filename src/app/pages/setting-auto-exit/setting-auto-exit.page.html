@@ -4,7 +4,7 @@
       <ion-back-button text="">
       </ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'AUTO_CLOSE_APP' | translate }}</ion-title>
+    <ion-title>{{ 'AUTO_KILL_BACKGROUND' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,7 +14,7 @@
     <ion-label class="ion-padding-start">
       <p class="ion-padding-top ion-padding-horizontal">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
-          <div [innerHTML]="'AUTO_CLOSE_APP_EXPLAIN' | translate">
+          <div [innerHTML]="'MSG.AUTO_KILL_BACKGROUND_EXPLAIN' | translate">
           </div>
         </ion-text>
       </p>
@@ -26,7 +26,7 @@
       <ion-label class="ion-padding-start">
         <p class="ion-padding">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-            {{ 'AFTER_1_MIN' | translate }}
+            {{ 'AT_LEAST_1_MINUTE_LATER' | translate }}
           </ion-text>
         </p>
       </ion-label>
@@ -38,7 +38,7 @@
       <ion-label class="ion-padding-start">
         <p class="ion-padding">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-            {{ 'AFTER_3_MIN' | translate }}
+            {{ 'AT_LEAST_3_MINUTES_LATER' | translate }}
           </ion-text>
         </p>
       </ion-label>
@@ -50,7 +50,7 @@
       <ion-label class="ion-padding-start">
         <p class="ion-padding">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-            {{ 'AFTER_5_MIN' | translate }}
+            {{ 'AT_LEAST_5_MINUTES_LATER' | translate }}
           </ion-text>
         </p>
       </ion-label>
@@ -62,7 +62,7 @@
       <ion-label class="ion-padding-start">
         <p class="ion-padding">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-            {{ 'FOLLOW_SYSTEM' | translate }}
+            {{ 'FOLLOW_SYSTEM_SETTINGS' | translate }}
           </ion-text>
         </p>
       </ion-label>

@@ -418,7 +418,7 @@ export class ResultPage {
                 alert.dismiss();
                 await Clipboard.write({ string: this.qrCodeContent }).then(
                   async () => {
-                    await this.presentToast(this.translate.instant('MSG.COPIED'), "short", "bottom");
+                    await this.presentToast(this.translate.instant('COPIED'), "short", "bottom");
                   }
                 )
               }
@@ -429,7 +429,7 @@ export class ResultPage {
                 alert.dismiss();
                 await Clipboard.write({ string: this.base64EncodedText }).then(
                   async () => {
-                    await this.presentToast(this.translate.instant('MSG.COPIED'), "short", "bottom");
+                    await this.presentToast(this.translate.instant('COPIED'), "short", "bottom");
                   }
                 )
               }
@@ -440,7 +440,7 @@ export class ResultPage {
                 alert.dismiss();
                 await Clipboard.write({ string: this.base64DecodedText }).then(
                   async () => {
-                    await this.presentToast(this.translate.instant('MSG.COPIED'), "short", "bottom");
+                    await this.presentToast(this.translate.instant('COPIED'), "short", "bottom");
                   }
                 )
               }
@@ -462,7 +462,7 @@ export class ResultPage {
                 alert.dismiss();
                 await Clipboard.write({ string: this.qrCodeContent }).then(
                   async () => {
-                    await this.presentToast(this.translate.instant('MSG.COPIED'), "short", "bottom");
+                    await this.presentToast(this.translate.instant('COPIED'), "short", "bottom");
                   }
                 )
               }
@@ -473,7 +473,7 @@ export class ResultPage {
                 alert.dismiss();
                 await Clipboard.write({ string: this.base64EncodedText }).then(
                   async () => {
-                    await this.presentToast(this.translate.instant('MSG.COPIED'), "short", "bottom");
+                    await this.presentToast(this.translate.instant('COPIED'), "short", "bottom");
                   }
                 )
               }
@@ -495,7 +495,7 @@ export class ResultPage {
                 alert.dismiss();
                 await Clipboard.write({ string: this.qrCodeContent }).then(
                   async () => {
-                    await this.presentToast(this.translate.instant('MSG.COPIED'), "short", "bottom");
+                    await this.presentToast(this.translate.instant('COPIED'), "short", "bottom");
                   }
                 )
               }
@@ -506,7 +506,7 @@ export class ResultPage {
                 alert.dismiss();
                 await Clipboard.write({ string: this.base64DecodedText }).then(
                   async () => {
-                    await this.presentToast(this.translate.instant('MSG.COPIED'), "short", "bottom");
+                    await this.presentToast(this.translate.instant('COPIED'), "short", "bottom");
                   }
                 )
               }
@@ -518,7 +518,7 @@ export class ResultPage {
     } else {
       await Clipboard.write({ string: this.qrCodeContent }).then(
         async () => {
-          await this.presentToast(this.translate.instant('MSG.COPIED'), "short", "bottom");
+          await this.presentToast(this.translate.instant('COPIED'), "short", "bottom");
         }
       )
     }
@@ -751,8 +751,8 @@ export class ResultPage {
             name: 'tag',
             id: 'tag',
             type: 'text',
-            label: `${this.translate.instant("TAG_MAX_LENGTH")}`,
-            placeholder: `${this.translate.instant("TAG_MAX_LENGTH")}`,
+            label: `${this.translate.instant("MSG.TAG_MAX_LENGTH")}`,
+            placeholder: `${this.translate.instant("MSG.TAG_MAX_LENGTH")}`,
             max: 30
           }
         ],
@@ -795,13 +795,13 @@ export class ResultPage {
       case 'contact':
         return this.translate.instant("VCARD_CONTACT");
       case 'emailW3C':
-        return this.translate.instant("EMAIL_W3C");
+        return this.translate.instant("EMAIL_W3C_STANDARD");
       case 'emailDocomo':
-        return this.translate.instant("EMAIL_DOCOMO");
+        return this.translate.instant("EMAIL_NTT_DOCOMO");
       case 'phone':
-        return this.translate.instant("PHONE");
+        return this.translate.instant("PHONE_NO");
       case 'sms':
-        return this.translate.instant("SMS");
+        return this.translate.instant("MESSAGE");
       case 'url':
         return this.translate.instant("URL");
       case 'wifi':

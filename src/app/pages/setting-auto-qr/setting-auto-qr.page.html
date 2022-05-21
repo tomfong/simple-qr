@@ -4,7 +4,7 @@
       <ion-back-button text="">
       </ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'AUTO_SHOW_QR' | translate }}</ion-title>
+    <ion-title>{{ 'AUTO_QR_CODE_POPUP' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,7 +14,7 @@
     <ion-label class="ion-padding-start">
       <p class="ion-padding-top ion-padding-horizontal">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
-          <div [innerHTML]="'AUTO_SHOW_QR_EXPLAIN' | translate">
+          <div [innerHTML]="'MSG.AUTO_SHOW_QR_EXPLAIN' | translate">
           </div>
         </ion-text>
       </p>
@@ -27,7 +27,7 @@
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-          {{ 'AFTER_CAMERA_SCAN' | translate }}
+          {{ 'SCAN_BY_CAMERA' | translate }}
         </ion-text>
       </p>
     </ion-label>
@@ -42,7 +42,7 @@
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-          {{ 'AFTER_LOG_VIEW' | translate }}
+          {{ 'VIEW_LOG' | translate }}
         </ion-text>
       </p>
     </ion-label>
@@ -56,7 +56,7 @@
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-          {{ 'AFTER_BOOKMARK_VIEW' | translate }}
+          {{ 'VIEW_BOOKMARK' | translate }}
         </ion-text>
       </p>
     </ion-label>
@@ -70,7 +70,7 @@
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-          {{ 'AFTER_CREATE' | translate }}
+          {{ 'CREATE_QR_CODE' | translate }}
         </ion-text>
       </p>
     </ion-label>
@@ -84,7 +84,7 @@
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-          {{ 'AFTER_IMAGE_SCAN' | translate }}
+          {{ 'IMPORT_IMAGE' | translate }}
         </ion-text>
       </p>
     </ion-label>

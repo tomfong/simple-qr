@@ -62,7 +62,7 @@ export class LandingPage {
           }
         },
         {
-          text: this.translate.instant('GO_STORE_RATE'),
+          text: this.translate.instant('RATE_THE_APP'),
           handler: () => {
             this.openGooglePlay();
           }

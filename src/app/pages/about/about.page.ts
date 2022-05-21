@@ -52,7 +52,7 @@ export class AboutPage {
 
   async showUpdateNotes() {
     const alert = await this.alertController.create({
-      header: this.translate.instant("UPDATE_NOTES"),
+      header: this.translate.instant("PATCH_NOTES"),
       message: this.platform.is('ios')? this.translate.instant("UPDATE.UPDATE_NOTES_IOS") : this.translate.instant("UPDATE.UPDATE_NOTES_ANDROID"),
       buttons: [
         {
@@ -60,7 +60,7 @@ export class AboutPage {
           handler: () => true,
         },
         {
-          text:  this.translate.instant("GO_STORE_RATE"),
+          text:  this.translate.instant("RATE_THE_APP"),
           handler: () => {
             if (this.platform.is('android')) {
               this.openGooglePlay();

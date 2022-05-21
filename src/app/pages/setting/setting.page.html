@@ -36,7 +36,7 @@
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-          {{ 'QR_RESULT_SETTINGS' | translate }}
+          {{ 'QR_CODE_AND_DECODED_RESULT' | translate }}
         </ion-text>
       </p>
     </ion-label>
@@ -47,13 +47,13 @@
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-          {{ 'LOG_BACKUP_RESTORE' | translate }}
+          {{ 'LOG_BACKUP_AND_RESTORE' | translate }}
         </ion-text>
       </p>
     </ion-label>
   </ion-item>
 
-  <ion-list-header class="ion-margin-start ion-padding-horizontal mt-3">{{ 'APPEARANCE_EFFECT' | translate }}
+  <ion-list-header class="ion-margin-start ion-padding-horizontal mt-3">{{ 'APPEARANCE_AND_EFFECTS' | translate }}
   </ion-list-header>
   <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setLanguage()">
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="language">
@@ -106,7 +106,7 @@
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-          {{ 'INITIAL_PAGE' | translate }}
+          {{ 'APP_INITIAL_PAGE' | translate }}
         </ion-text>
       </p>
     </ion-label>
@@ -117,7 +117,7 @@
     <ion-label>
       <p class="ion-padding">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-          {{ 'AUTO_CLOSE_APP' | translate }}
+          {{ 'AUTO_KILL_BACKGROUND' | translate }}
         </ion-text>
       </p>
     </ion-label>

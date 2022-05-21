@@ -278,8 +278,8 @@ export class HistoryPage {
             name: 'tag',
             id: 'tag',
             type: 'text',
-            label: `${this.translate.instant("TAG_MAX_LENGTH")}`,
-            placeholder: `${this.translate.instant("TAG_MAX_LENGTH")}`,
+            label: `${this.translate.instant("MSG.TAG_MAX_LENGTH")}`,
+            placeholder: `${this.translate.instant("MSG.TAG_MAX_LENGTH")}`,
             max: 30
           }
         ],
@@ -357,8 +357,8 @@ export class HistoryPage {
             name: 'tag',
             id: 'tag',
             type: 'text',
-            label: `${this.translate.instant("TAG_MAX_LENGTH")}`,
-            placeholder: `${this.translate.instant("TAG_MAX_LENGTH")}`,
+            label: `${this.translate.instant("MSG.TAG_MAX_LENGTH")}`,
+            placeholder: `${this.translate.instant("MSG.TAG_MAX_LENGTH")}`,
             value: bookmark.tag ?? '',
             max: 30
           }

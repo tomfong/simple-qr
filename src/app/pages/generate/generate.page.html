@@ -8,7 +8,7 @@
   </ng-template>
   <ng-template #selfHeader>
     <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'">
-      <ion-title>{{ 'CREATE_QRCODE' | translate }}</ion-title>
+      <ion-title>{{ 'CREATE_QR_CODE' | translate }}</ion-title>
     </ion-toolbar>
   </ng-template>
 </ion-header>
@@ -18,7 +18,7 @@
   <ion-row class="ion-padding-horizontal ion-padding">
     <ion-col>
       <mat-hint [style]="env.colorTheme === 'light'? 'color: rgba(0, 0, 0, 0.6);' : 'color: rgba(255, 255, 255, 0.6);'">
-        {{ 'CREATE_QRCODE_MAX_LENGTH_EXPLAIN' | translate}}
+        {{ 'MSG.CREATE_QRCODE_MAX_LENGTH_EXPLAIN' | translate}}
       </mat-hint>
     </ion-col>
   </ion-row>
@@ -49,11 +49,11 @@
     <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent" [floatLabel]="'always'">
-          <mat-label>{{ 'QRCODE_CONTENT' | translate }} </mat-label>
+          <mat-label>{{ 'QR_CODE_CONTENT' | translate }} </mat-label>
           <textarea matInput [(ngModel)]="qrCodeContent" [cdkTextareaAutosize]="true" [cdkAutosizeMinRows]="7"
             [cdkAutosizeMaxRows]="20" [maxLength]="1817" #freeTxtInput></textarea>
           <mat-hint align="end">{{ freeTxtInput.value?.length || 0 }}/1817</mat-hint>
-          <mat-hint>{{'CREATE_QRCODE_MAX_LENGTH' | translate}}</mat-hint>
+          <mat-hint>{{'MSG.CREATE_QRCODE_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -70,7 +70,7 @@
             <input matInput [(ngModel)]="toEmails[i]" type="email" maxlength="254" #emailToInput>
             <mat-hint align="end">{{ emailToInput.value?.length || 0 }}/254</mat-hint>
             <mat-icon matSuffix color="accent">alternate_email</mat-icon>
-            <mat-hint>{{'EMAIL_MAX_LENGTH' | translate}}</mat-hint>
+            <mat-hint>{{'MSG.EMAIL_MAX_LENGTH' | translate}}</mat-hint>
           </mat-form-field>
         </ion-col>
       </ion-row>
@@ -99,7 +99,7 @@
             <input matInput [(ngModel)]="ccEmails[i]" type="email" maxlength="254" #emailCcInput>
             <mat-hint align="end">{{ emailCcInput.value?.length || 0 }}/254</mat-hint>
             <mat-icon matSuffix color="accent">alternate_email</mat-icon>
-            <mat-hint>{{'EMAIL_MAX_LENGTH' | translate}}</mat-hint>
+            <mat-hint>{{'MSG.EMAIL_MAX_LENGTH' | translate}}</mat-hint>
           </mat-form-field>
         </ion-col>
       </ion-row>
@@ -128,7 +128,7 @@
             <input matInput [(ngModel)]="bccEmails[i]" type="email" maxlength="254" #emailBccInput>
             <mat-hint align="end">{{ emailBccInput.value?.length || 0 }}/254</mat-hint>
             <mat-icon matSuffix color="accent">alternate_email</mat-icon>
-            <mat-hint>{{'EMAIL_MAX_LENGTH' | translate}}</mat-hint>
+            <mat-hint>{{'MSG.EMAIL_MAX_LENGTH' | translate}}</mat-hint>
           </mat-form-field>
         </ion-col>
       </ion-row>
@@ -154,7 +154,7 @@
           <mat-label>{{ 'EMAIL_SUBJECT' | translate}}</mat-label>
           <input matInput [(ngModel)]="emailSubject" maxlength="78" #emailSubjectInput>
           <mat-hint align="end">{{ emailSubjectInput.value?.length || 0 }}/78</mat-hint>
-          <mat-hint>{{'EMAIL_SUBJECT_MAX_LENGTH' | translate}}</mat-hint>
+          <mat-hint>{{'MSG.EMAIL_SUBJECT_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -166,7 +166,7 @@
           <textarea matInput [(ngModel)]="emailBody" [cdkTextareaAutosize]="true" [cdkAutosizeMinRows]="5"
             [cdkAutosizeMaxRows]="10" [maxLength]="1817" #emailBodyInput></textarea>
           <mat-hint align="end">{{ emailBodyInput.value?.length || 0 }}/1817</mat-hint>
-          <mat-hint>{{'CREATE_QRCODE_MAX_LENGTH' | translate}}</mat-hint>
+          <mat-hint>{{'MSG.CREATE_QRCODE_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -183,7 +183,7 @@
           <input matInput [(ngModel)]="toEmails[0]" type="email" maxlength="254" #emailToInput>
           <mat-hint align="end">{{ emailToInput.value?.length || 0 }}/254</mat-hint>
           <mat-icon matSuffix color="accent">alternate_email</mat-icon>
-          <mat-hint>{{'EMAIL_MAX_LENGTH' | translate}}</mat-hint>
+          <mat-hint>{{'MSG.EMAIL_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -194,7 +194,7 @@
           <mat-label>{{ 'EMAIL_SUBJECT' | translate}}</mat-label>
           <input matInput [(ngModel)]="emailSubject" maxlength="78" #emailSubjectInput>
           <mat-hint align="end">{{ emailSubjectInput.value?.length || 0 }}/78</mat-hint>
-          <mat-hint>{{'EMAIL_SUBJECT_MAX_LENGTH' | translate}}</mat-hint>
+          <mat-hint>{{'MSG.EMAIL_SUBJECT_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -206,7 +206,7 @@
           <textarea matInput [(ngModel)]="emailBody" [cdkTextareaAutosize]="true" [cdkAutosizeMinRows]="5"
             [cdkAutosizeMaxRows]="10" [maxLength]="1817" #emailBodyInput></textarea>
           <mat-hint align="end">{{ emailBodyInput.value?.length || 0 }}/1817</mat-hint>
-          <mat-hint>{{'CREATE_QRCODE_MAX_LENGTH' | translate}}</mat-hint>
+          <mat-hint>{{'MSG.CREATE_QRCODE_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -238,11 +238,11 @@
     <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent" [floatLabel]="'always'">
-          <mat-label>{{ 'SMS' | translate}}</mat-label>
+          <mat-label>{{ 'MESSAGE' | translate}}</mat-label>
           <textarea matInput [(ngModel)]="smsMessage" [cdkTextareaAutosize]="true" [cdkAutosizeMinRows]="5"
             [cdkAutosizeMaxRows]="10" [maxLength]="160" #smsInput></textarea>
           <mat-hint align="end">{{ smsInput.value?.length || 0 }}/160</mat-hint>
-          <mat-hint>{{'SMS_MAX_LENGTH' | translate}}</mat-hint>
+          <mat-hint>{{'MSG.SMS_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -256,7 +256,7 @@
           <input matInput [(ngModel)]="url" type="url" #urlInput maxlength="1817">
           <mat-icon matSuffix color="accent">link</mat-icon>
           <mat-hint align="end">{{ (urlInput.value?.length) || 0 }}/1817</mat-hint>
-          <mat-hint>{{'CREATE_QRCODE_MAX_LENGTH' | translate}}</mat-hint>
+          <mat-hint>{{'MSG.CREATE_QRCODE_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -442,7 +442,7 @@
     <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
-          <mat-label>{{ 'BIRTHDAY' | translate}}</mat-label>
+          <mat-label>{{ 'DATE_OF_BIRTH' | translate}}</mat-label>
           <input [ngModel]="birthday | date:'yyyy-MM-dd'" (ngModelChange)="birthday = $event" matInput type="date"
             [max]="today">
           <mat-icon matSuffix color="accent">cake</mat-icon>
@@ -480,7 +480,7 @@
           <input matInput [(ngModel)]="ssid" #ssidInput maxlength="32">
           <mat-icon matSuffix color="accent">wifi</mat-icon>
           <mat-hint align="end">{{ (ssidInput.value?.length) || 0 }}/32</mat-hint>
-          <mat-hint>{{'SSID_MAX_LENGTH' | translate}}</mat-hint>
+          <mat-hint>{{'MSG.SSID_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -508,7 +508,7 @@
     <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <ion-item class="ion-no-padding" lines="none" detail="false">
-          <ion-label>{{ 'WIFI_HIDDEN' | translate }}</ion-label>
+          <ion-label>{{ 'HIDDEN_NETWORK_?' | translate }}</ion-label>
           <ion-checkbox [(ngModel)]="wifiHidden" [color]="'primary'"></ion-checkbox>
         </ion-item>
       </ion-col>

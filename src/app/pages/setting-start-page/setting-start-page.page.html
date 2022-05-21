@@ -4,7 +4,7 @@
       <ion-back-button text="">
       </ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'INITIAL_PAGE' | translate }}</ion-title>
+    <ion-title>{{ 'APP_INITIAL_PAGE' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,7 +14,7 @@
     <ion-label class="ion-padding-start">
       <p class="ion-padding-top ion-padding-horizontal">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
-          <div [innerHTML]="'START_PAGE_EXPLAIN' | translate">
+          <div [innerHTML]="'MSG.START_PAGE_EXPLAIN' | translate">
           </div>
         </ion-text>
       </p>
@@ -103,7 +103,7 @@
     <ion-label class="ion-padding-start">
       <p class="ion-padding-top ion-padding-horizontal">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
-          <div [innerHTML]="'START_PAGE_HEADER_EXPLAIN' | translate">
+          <div [innerHTML]="'MSG.START_PAGE_HEADER_EXPLAIN' | translate">
           </div>
         </ion-text>
       </p>
@@ -115,7 +115,7 @@
       <ion-label class="ion-padding-start">
         <p class="ion-padding">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-            {{ 'TURN_ON' | translate }}
+            {{ 'ON' | translate }}
           </ion-text>
         </p>
       </ion-label>
@@ -126,7 +126,7 @@
       <ion-label class="ion-padding-start">
         <p class="ion-padding">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-            {{ 'TURN_OFF' | translate }}
+            {{ 'OFF' | translate }}
           </ion-text>
         </p>
       </ion-label>

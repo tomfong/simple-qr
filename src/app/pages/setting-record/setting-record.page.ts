@@ -69,7 +69,7 @@ export class SettingRecordPage {
                 cssClass: ['alert-bg', 'alert-can-copy'],
                 buttons: [
                   {
-                    text: this.translate.instant('COPY_SECRET_SHARE'),
+                    text: this.translate.instant('COPY_SECRET_AND_SAVE_BACKUP'),
                     handler: async () => {
                       await Clipboard.write({ string: secret }).then(
                         async () => {
@@ -155,8 +155,8 @@ export class SettingRecordPage {
                     name: 'secret',
                     id: 'secret',
                     type: 'text',
-                    label: `${this.translate.instant("SECRET")} (${this.translate.instant("LENGTH_49")})`,
-                    placeholder: `${this.translate.instant("SECRET")} (${this.translate.instant("LENGTH_49")})`,
+                    label: `${this.translate.instant("SECRET")} (${this.translate.instant("49_DIGIT")})`,
+                    placeholder: `${this.translate.instant("SECRET")} (${this.translate.instant("49_DIGIT")})`,
                     max: 49,
                     min: 49,
                   }

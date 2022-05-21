@@ -4,14 +4,14 @@
       <ion-back-button text="">
       </ion-back-button>
     </ion-buttons>
-    <ion-title>{{ 'LOG_BACKUP_RESTORE' | translate }}</ion-title>
+    <ion-title>{{ 'LOG_BACKUP_AND_RESTORE' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
   <div class="ion-padding-vertical">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'HISTORY_PAGE_START' | translate }}</ion-list-header>
+    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'INITIAL_SEGMENT' | translate }}</ion-list-header>
     <ion-radio-group [(ngModel)]="env.historyPageStartSegment" (ionChange)="saveHistoryPageStartSegment()">
       <ion-item class="ion-no-padding ripple-parent py-1 mt-2" detail="false" lines="none">
         <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/history.svg">
@@ -48,7 +48,7 @@
       <ion-label class="ion-padding-start">
         <p class="ion-padding-horizontal">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
-            {{ 'AUTO_LOGGING_EXPLAIN' | translate }}
+            {{ 'MSG.AUTO_LOGGING_EXPLAIN' | translate }}
           </ion-text>
         </p>
       </ion-label>
@@ -58,7 +58,7 @@
         <ion-label class="ion-padding-start">
           <p class="ion-padding-horizontal">
             <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-              {{ 'TURN_ON' | translate }}
+              {{ 'ON' | translate }}
             </ion-text>
           </p>
         </ion-label>
@@ -69,7 +69,7 @@
         <ion-label class="ion-padding-start">
           <p class="ion-padding-horizontal">
             <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-              {{ 'TURN_OFF' | translate }}
+              {{ 'OFF' | translate }}
             </ion-text>
           </p>
         </ion-label>
@@ -85,7 +85,7 @@
       <ion-label class="ion-padding-start">
         <p class="ion-padding-horizontal">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
-            {{ 'BACKUP_EXPLAIN' | translate }}
+            {{ 'MSG.BACKUP_EXPLAIN' | translate }}
           </ion-text>
         </p>
       </ion-label>
@@ -103,7 +103,7 @@
       <ion-label class="ion-padding-start">
         <p class="ion-padding-horizontal">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
-            {{ (isIOS? 'RESTORE_EXPLAIN_IOS' : 'RESTORE_EXPLAIN') | translate }}
+            {{ (isIOS? 'MSG.RESTORE_EXPLAIN_IOS' : 'MSG.RESTORE_EXPLAIN') | translate }}
           </ion-text>
         </p>
       </ion-label>

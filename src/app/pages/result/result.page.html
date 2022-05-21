@@ -94,7 +94,7 @@
 
   <ng-container *ngIf="contentType === 'wifi' && qrCodeContent && qrCodeContent.trim().length > 0"
     [ngTemplateOutlet]="contentBlock"
-    [ngTemplateOutletContext]="{ label: 'WIFI_HIDDEN' | translate, content: wifiHidden === true? ('YES' | translate) : ('NO' | translate) }">
+    [ngTemplateOutletContext]="{ label: 'HIDDEN_NETWORK_?' | translate, content: wifiHidden === true? ('YES' | translate) : ('NO' | translate) }">
   </ng-container>
 
   <div class="ion-padding-horizontal ion-margin-horizontal ion-padding-bottom">
