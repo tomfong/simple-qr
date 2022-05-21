@@ -272,7 +272,7 @@
         "UPC": "Universal Product Code "
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "<p>Simple QR is an open-source app. If you like and enjoy using it, please rate it on the store and support the developer.</p><p>New version removes unnecessary Google APIs connection that was prebuilt by framework and used for styling.</ul>",
-        "UPDATE_NOTES_IOS": "<p>Simple QR is an open-source app. If you like it and enjoy using it, please rate it on the store and support the developer.</p><p>New version removes unnecessary Google APIs connection that was prebuilt by framework and used for styling.</ul>"
+        "UPDATE_NOTES_ANDROID": "<p>Simple QR is an open-source app. If you like and enjoy using it, please rate it on the store and support the developer.</p>",
+        "UPDATE_NOTES_IOS": "<p>Simple QR is an open-source app. If you like it and enjoy using it, please rate it on the store and support the developer.</p>"
     }
 }
