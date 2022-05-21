@@ -5,6 +5,8 @@
   "homepage": "https://tomfong.github.io",
   "scripts": {
     "ng": "ng",
+    "build:an": "ionic cap build android --prod",
+    "build:ios": "ionic cap build ios --prod",
     "sync": "ionic cap sync --prod --no-build",
     "copy:an": "ionic cap copy android --prod",
     "copy:ios": "ionic cap copy ios --prod",
@@ -50,7 +52,7 @@
     "@capacitor/splash-screen": "^1.2.2",
     "@capacitor/status-bar": "^1.0.8",
     "@capacitor/toast": "^1.0.8",
-    "@ionic/angular": "^6.1.4",
+    "@ionic/angular": "^6.1.6",
     "@ionic/storage": "^3.0.6",
     "@ionic/storage-angular": "^3.0.6",
     "@ng-bootstrap/ng-bootstrap": "^11.0.1",
