@@ -21,7 +21,7 @@
 
 Simple QR (簡易QR) is an app providing the simplest way to scan, create and store QR codes on your phone. No backend service connected. No data collected. No ads.
 
-It's available on both the App Store and Google Play. You can also download the apk from <a href="https://github.com/tomfong/simple-qr/releases">release</a>.
+It's available on the App Store, Google Play and IzzyOnDroid. You can also download the apk from <a href="https://github.com/tomfong/simple-qr/releases">release</a>.
 
 | App Store | Google Play | IzzyOnDroid |
 |:-:|:-:|:-:|
