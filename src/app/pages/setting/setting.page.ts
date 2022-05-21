@@ -103,7 +103,7 @@ export class SettingPage {
           }
         },
         {
-          text: this.translate.instant('ONLY_RESET_DATA'),
+          text: this.translate.instant('ONLY_DELETE_DATA'),
           handler: async () => {
             const loading = await this.presentLoading(this.translate.instant("PLEASE_WAIT"));
             await this.env.resetData();
@@ -142,7 +142,7 @@ export class SettingPage {
           }
         },
         {
-          text: this.translate.instant('GO_STORE_RATE'),
+          text: this.translate.instant('RATE_THE_APP'),
           handler: () => {
             this.openGooglePlay();
           }
