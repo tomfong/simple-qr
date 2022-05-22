@@ -18,14 +18,14 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class EnvService {
 
-  public appVersionNumber: string = '2.6.3';
+  public appVersionNumber: string = '2.6.4';
 
   public startPage: "/tabs/scan" | "/tabs/generate" | "/tabs/import-image" | "/tabs/history" | "/tabs/setting" = "/tabs/scan";
   public historyPageStartSegment: 'history' | 'bookmarks' = 'history';
   public startPageHeader: 'on' | 'off' = 'on';
-  public languages: string[] = ['en', 'zh-HK', 'zh-CN'];
-  public language: 'en' | 'zh-HK' | 'zh-CN' = 'en';
-  public selectedLanguage: 'default' | 'en' | 'zh-HK' | 'zh-CN' = 'default';
+  public languages: string[] = ['en', 'zh-HK', 'zh-CN', 'de'];
+  public language: 'en' | 'zh-HK' | 'zh-CN' | 'de' = 'en';
+  public selectedLanguage: 'default' | 'en' | 'zh-HK' | 'zh-CN' | 'de' = 'default';
   public colorTheme: 'light' | 'dark' | 'black' = 'light';
   public selectedColorTheme: 'default' | 'light' | 'dark' | 'black' = 'default';
   public scanRecordLogging: 'on' | 'off' = 'on';
@@ -66,10 +66,10 @@ export class EnvService {
   public readonly GOOGLE_PLAY_URL: string = "https://play.google.com/store/apps/details?id=com.tomfong.simpleqr";
   public readonly APP_STORE_URL: string = "https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553";
   public readonly PRIVACY_POLICY: string = "https://www.privacypolicies.com/live/771b1123-99bb-4bfe-815e-1046c0437a0f";
-  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20602";
-  public readonly IOS_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20602";
-  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20603";
-  public readonly IOS_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20603";
+  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20603";
+  public readonly IOS_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20603";
+  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20604";
+  public readonly IOS_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20604";
 
   private _storage: Storage | null = null;
   private _scannedData: string = '';
@@ -512,7 +512,7 @@ export class EnvService {
     await this.storageSet("history-page-start-segment", this.historyPageStartSegment);
 
     this.startPageHeader = 'on';
-    await this.storageSet("start-page-header", this.startPage);
+    await this.storageSet("start-page-header", this.startPageHeader);
 
     this.selectedLanguage = 'default';
     this.toggleLanguageChange();
@@ -754,19 +754,20 @@ export class EnvService {
     if (this.selectedLanguage === 'default') {
       let language = 'en';
       const browserLang = this.translate.getBrowserCultureLang();
-      console.log("browserLang", browserLang);
       if (browserLang.includes("zh", 0)) {
         if (browserLang === 'zh-CN' || browserLang === 'zh-SG') language = 'zh-CN';
         else language = "zh-HK";
+      } else if (browserLang.includes("de", 0)) {
+        language = "de";
       } else if (browserLang.includes("yue", 0)) {
         language = "zh-HK";
       } else if (this.languages.includes(browserLang)) {
-        language = browserLang as 'en' | 'zh-HK' | 'zh-CN';
+        language = browserLang as 'en' | 'zh-HK' | 'zh-CN' | 'de';
       } else {
         language = 'en';
       }
       this.translate.use(language);
-      this.language = language as 'en' | 'zh-HK' | 'zh-CN';
+      this.language = language as 'en' | 'zh-HK' | 'zh-CN' | 'de';
     } else {
       this.translate.use(this.selectedLanguage);
       this.language = this.selectedLanguage;
@@ -774,7 +775,6 @@ export class EnvService {
   }
 
   async toggleColorTheme(): Promise<void> {
-    console.log("toggle color!")
     if (this.selectedColorTheme === 'default') {
       const version = Number(this._deviceInfo?.osVersion.split(".")[0] ?? 0);
       if (this.platform.is("android") && version <= 9) {  // Android 9 or below

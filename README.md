@@ -19,7 +19,7 @@
 
 ## About
 
-Simple QR (簡易QR) is an app providing the simplest way to scan, create and store QR codes on your phone. No backend service connected. No data collected. No ads.
+Simple QR is an app providing the simplest way to scan, create and store QR codes on your phone. No backend service connected. No data collected. No ads.
 
 It's available on the App Store, Google Play and IzzyOnDroid. You can also download the apk from <a href="https://github.com/tomfong/simple-qr/releases">release</a>.
 
@@ -56,9 +56,10 @@ By using the app, you can
 
 ## Languages Supported
 
-* English (en)
-* Traditional Chinese 正體中文 (zh-HK)
-* Simplified Chinese 简体中文 (zh-CN)
+* English (en), Simple QR
+* Traditional Chinese 正體中文 (zh), 簡易QR
+* Simplified Chinese 简体中文 (zh-CN), 简易QR
+* German Deutsch (de), Einfacher QR
 
 You are welcomed to help me do translations in more languages (see <a href="#how-to-do-the-translation">section</a>)
 
@@ -71,6 +72,12 @@ If you want to support me or my projects, please <a href="https://github.com/tom
 * Star the project
 * Do translation for different languages
 * Open issues for reporting bugs or any new ideas
+
+### Contributors
+
+Thank you the following contributors who made the app better
+
+* [mondstern](https://github.com/mondlicht-und-sterne): Translate the app into German
 
 ### How to do the translation?
 
