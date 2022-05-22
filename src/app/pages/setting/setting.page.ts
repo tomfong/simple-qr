@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Toast } from '@capacitor/toast';
-import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
-import { AlertController, LoadingController, Platform, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 import { SplashScreen } from '@capacitor/splash-screen';
@@ -20,7 +19,6 @@ export class SettingPage {
     private router: Router,
     public env: EnvService,
     public translate: TranslateService,
-    public appVersion: AppVersion,
     private platform: Platform,
   ) {
 

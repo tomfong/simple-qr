@@ -13,7 +13,6 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 import { SMS } from '@awesome-cordova-plugins/sms/ngx';
 import { ThemeDetection } from '@awesome-cordova-plugins/theme-detection/ngx';
-import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 import { AES256 } from '@awesome-cordova-plugins/aes-256/ngx';
 import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
@@ -64,7 +63,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     providers: [
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         EnvService,
-        AppVersion,
         DatePipe,
         SMS,
         SocialSharing,

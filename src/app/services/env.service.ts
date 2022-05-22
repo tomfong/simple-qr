@@ -1,6 +1,5 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Injectable } from '@angular/core';
-import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 import { Device, DeviceInfo } from '@capacitor/device';
 import { ThemeDetection, ThemeDetectionResponse } from '@awesome-cordova-plugins/theme-detection/ngx';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
@@ -19,7 +18,7 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class EnvService {
 
-  public appVersionNumber: string = '1.0.0';
+  public appVersionNumber: string = '2.6.3';
 
   public startPage: "/tabs/scan" | "/tabs/generate" | "/tabs/import-image" | "/tabs/history" | "/tabs/setting" = "/tabs/scan";
   public historyPageStartSegment: 'history' | 'bookmarks' = 'history';
@@ -93,7 +92,6 @@ export class EnvService {
     public translate: TranslateService,
     private overlayContainer: OverlayContainer,
     private themeDetection: ThemeDetection,
-    private appVersion: AppVersion,
     private screenOrientation: ScreenOrientation
   ) {
     this.platform.ready().then(
@@ -439,11 +437,6 @@ export class EnvService {
     );
     if (this.platform.is('android')) this._storage.remove(this.AN_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
     if (this.platform.is('ios')) this._storage.remove(this.IOS_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
-    this.appVersion.getVersionNumber().then(
-      value => {
-        this.appVersionNumber = value
-      }
-    )
   }
 
   public async storageSet(key: string, value: any) {
@@ -880,13 +873,12 @@ export class EnvService {
     const now = moment();
     const datetimestr1 = now.format("YYYYMMDDHHmmss");
     const datetimestr2 = now.format("YYYY-MM-DD HH:mm:ss ZZ");
-    const appVersion = this.appVersionNumber;
     const model = `${this._deviceInfo?.manufacturer} ${this._deviceInfo?.model}`;
     const os = this.platform.is("android") ? "Android" : (this.platform.is("ios") ? "iOS" : "Other");
     const osVersion = this._deviceInfo?.osVersion;
     const mailContent =
       `
-        mailto:${toEmail}?subject=Simple%20QR%20-%20Report%20Issue%20(%23${datetimestr1})&body=Date%20%26%20Time%0A${datetimestr2}%0A%0AApp%20Version%0A${appVersion}%0A%0AModel%0A${model}%0A%0APlatform%0A${os}%20${osVersion}%0A%0ADescription%0D%0A(describe%20the%20issue%20below)%0D%0A%0D%0A
+        mailto:${toEmail}?subject=Simple%20QR%20-%20Report%20Issue%20(%23${datetimestr1})&body=Date%20%26%20Time%0A${datetimestr2}%0A%0AApp%20Version%0A${this.appVersionNumber}%0A%0AModel%0A${model}%0A%0APlatform%0A${os}%20${osVersion}%0A%0ADescription%0D%0A(describe%20the%20issue%20below)%0D%0A%0D%0A
       `;
     return mailContent;
   }
