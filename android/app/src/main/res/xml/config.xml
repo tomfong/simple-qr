@@ -6,10 +6,6 @@
     <param name="android-package" value="com.ideas2it.aes256.AES256"/>
   </feature>
 
-  <feature name="AppVersion">
-    <param name="android-package" value="uk.co.whiteoctober.cordova.AppVersion"/>
-  </feature>
-
   <feature name="Chooser">
     <param name="android-package" value="com.cyph.cordova.Chooser"/>
   </feature>
