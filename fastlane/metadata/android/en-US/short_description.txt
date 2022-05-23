@@ -1,0 +1,1 @@
+the simplest way to scan, create and store QR code
