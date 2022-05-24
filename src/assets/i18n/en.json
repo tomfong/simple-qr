@@ -272,7 +272,7 @@
         "UPC": "Universal Product Code "
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "<p>Simple QR is an open-source app. If you like and enjoy using it, please rate it on the store and support the developer.</p><p>The new version supports German and French languages, and also updates UI.</p>",
-        "UPDATE_NOTES_IOS": "<p>Simple QR is an open-source app. If you like it and enjoy using it, please rate it on the store and support the developer.</p><p>The new version supports German and French languages, and also updates UI.</p>"
+        "UPDATE_NOTES_ANDROID": "<p>Simple QR is an open-source app. If you like and enjoy using it, please rate it on the store and support the developer.</p><p>This version newly supports French and German languages. If you find any translation problem, please report to me.</p>",
+        "UPDATE_NOTES_IOS": "<p>Simple QR is an open-source app. If you like it and enjoy using it, please rate it on the store and support the developer.</p><p>This version newly supports French and German languages. If you find any translation problem, please report to me.</p>"
     }
 }
