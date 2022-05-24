@@ -24,9 +24,9 @@
   <ion-radio-group [(ngModel)]="env.vibration" (ionChange)="saveVibration()">
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-label class="ion-padding-start">
-        <p class="ion-padding">
+        <p class="ion-padding pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-            {{ 'ON' | translate }}
+            {{ 'TURN_ON' | translate }}
           </ion-text>
         </p>
       </ion-label>
@@ -36,7 +36,7 @@
     </ion-item>
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-label class="ion-padding-start">
-        <p class="ion-padding">
+        <p class="ion-padding pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
             {{ 'HAPTIC_FEEDBACK_ONLY' | translate }}
           </ion-text>
@@ -48,7 +48,7 @@
     </ion-item>
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-label class="ion-padding-start">
-        <p class="ion-padding">
+        <p class="ion-padding pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
             {{ 'SCANNING_FEEDBACK_ONLY' | translate }}
           </ion-text>
@@ -60,9 +60,9 @@
     </ion-item>
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-label class="ion-padding-start">
-        <p class="ion-padding">
+        <p class="ion-padding pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-            {{ 'OFF' | translate }}
+            {{ 'TURN_OFF' | translate }}
           </ion-text>
         </p>
       </ion-label>

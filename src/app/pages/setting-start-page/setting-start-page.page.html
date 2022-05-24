@@ -26,7 +26,7 @@
       <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/qrscan.svg">
       </ion-icon>
       <ion-label>
-        <p class="ion-padding">
+        <p class="ion-padding pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
             {{ 'SCAN' | translate }}
           </ion-text>
@@ -40,7 +40,7 @@
         <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/history.svg">
         </ion-icon>
         <ion-label>
-          <p class="ion-padding">
+          <p class="ion-padding pre-line">
             <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
               {{ 'LOG' | translate }}
             </ion-text>
@@ -51,7 +51,7 @@
         <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="bookmark">
         </ion-icon>
         <ion-label>
-          <p class="ion-padding">
+          <p class="ion-padding pre-line">
             <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
               {{ 'BOOKMARK' | translate }}
             </ion-text>
@@ -64,7 +64,7 @@
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="create"></ion-icon>
       <ion-label>
-        <p class="ion-padding">
+        <p class="ion-padding pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
             {{ 'CREATE' | translate }}
           </ion-text>
@@ -76,7 +76,7 @@
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="image"></ion-icon>
       <ion-label>
-        <p class="ion-padding">
+        <p class="ion-padding pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
             {{ 'IMPORT' | translate }}
           </ion-text>
@@ -88,7 +88,7 @@
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="settings"></ion-icon>
       <ion-label>
-        <p class="ion-padding">
+        <p class="ion-padding pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
             {{ 'SETTING' | translate }}
           </ion-text>
@@ -113,9 +113,9 @@
   <ion-radio-group [(ngModel)]="env.startPageHeader" (ionChange)="saveStartPageHeader()">
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-label class="ion-padding-start">
-        <p class="ion-padding">
+        <p class="ion-padding pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-            {{ 'ON' | translate }}
+            {{ 'TURN_ON' | translate }}
           </ion-text>
         </p>
       </ion-label>
@@ -124,9 +124,9 @@
     </ion-item>
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-label class="ion-padding-start">
-        <p class="ion-padding">
+        <p class="ion-padding pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-            {{ 'OFF' | translate }}
+            {{ 'TURN_OFF' | translate }}
           </ion-text>
         </p>
       </ion-label>

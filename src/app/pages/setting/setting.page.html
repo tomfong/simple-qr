@@ -20,7 +20,7 @@
         <img src="assets/img/round_icon.png" width="24">
       </div>
       <ion-label>
-        <p class="ion-padding">
+        <p class="ion-padding pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
             {{ 'ABOUT_SIMPLE_QR' | translate }}
           </ion-text>
@@ -34,7 +34,7 @@
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="qr-code-outline">
     </ion-icon>
     <ion-label>
-      <p class="ion-padding">
+      <p class="ion-padding pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'QR_CODE_AND_DECODED_RESULT' | translate }}
         </ion-text>
@@ -45,7 +45,7 @@
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/history.svg">
     </ion-icon>
     <ion-label>
-      <p class="ion-padding">
+      <p class="ion-padding pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'LOG_BACKUP_AND_RESTORE' | translate }}
         </ion-text>
@@ -59,7 +59,7 @@
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="language">
     </ion-icon>
     <ion-label>
-      <p class="ion-padding">
+      <p class="ion-padding pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'LANGUAGE' | translate }}
         </ion-text>
@@ -69,7 +69,7 @@
   <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setColorTheme()">
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="color-palette"></ion-icon>
     <ion-label>
-      <p class="ion-padding">
+      <p class="ion-padding pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'COLOR_THEME' | translate }}
         </ion-text>
@@ -80,7 +80,7 @@
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/screen-rotation.svg">
     </ion-icon>
     <ion-label>
-      <p class="ion-padding">
+      <p class="ion-padding pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'SCREEN_ORIENTATION' | translate }}
         </ion-text>
@@ -91,7 +91,7 @@
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/vibration.svg">
     </ion-icon>
     <ion-label>
-      <p class="ion-padding">
+      <p class="ion-padding pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'VIBRATION' | translate }}
         </ion-text>
@@ -104,7 +104,7 @@
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="log-in">
     </ion-icon>
     <ion-label>
-      <p class="ion-padding">
+      <p class="ion-padding pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'APP_INITIAL_PAGE' | translate }}
         </ion-text>
@@ -115,7 +115,7 @@
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="stop-circle">
     </ion-icon>
     <ion-label>
-      <p class="ion-padding">
+      <p class="ion-padding pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'AUTO_KILL_BACKGROUND' | translate }}
         </ion-text>
@@ -126,7 +126,7 @@
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/reset.svg">
     </ion-icon>
     <ion-label>
-      <p class="ion-padding">
+      <p class="ion-padding pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'RESET_APP' | translate }}
         </ion-text>
@@ -137,7 +137,7 @@
     (click)="confirmExitApp()">
     <ion-icon class="ion-margin-start ion-padding-horizontal" color="danger" name="exit"></ion-icon>
     <ion-label>
-      <p class="ion-padding">
+      <p class="ion-padding pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'EXIT_APP' | translate }}
         </ion-text>
@@ -149,7 +149,7 @@
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'warning'" name="code-slash">
     </ion-icon>
     <ion-label>
-      <p class="ion-padding">
+      <p class="ion-padding pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'DEBUG_MODE' | translate }}
         </ion-text>
