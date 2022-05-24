@@ -111,9 +111,7 @@
     "NOT_AVAILABLE": "Not Available",
     "NOT_PROVIDED": "Not Provided",
     "NOT_TO_DISCLOSE": "Not to disclose",
-    "OFF": "Off",
     "OK": "OK",
-    "ON": "On",
     "ONLY_DELETE_DATA": "Only Delete Data",
     "ONLY_RESET_SETTING": "Only Reset Setting",
     "ORGANIZATION": "Organization",
@@ -167,6 +165,8 @@
     "SYSTEM_DEFAULT": "System Default",
     "TASK": "Task",
     "TASK_BUTTON_LAYOUT": "Task Button Layout",
+    "TURN_OFF": "Turn Off",
+    "TURN_ON": "Turn On",
     "TUTORIAL": "Tutorial",
     "UNDO": "Undo",
     "UNKNOWN": "Unknown",
@@ -272,7 +272,7 @@
         "UPC": "Universal Product Code "
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "<p>Simple QR is an open-source app. If you like and enjoy using it, please rate it on the store and support the developer.</p><p>The new version supports German and French languages, and also updates UI.</p>",
-        "UPDATE_NOTES_IOS": "<p>Simple QR is an open-source app. If you like it and enjoy using it, please rate it on the store and support the developer.</p><p>The new version supports German and French languages, and also updates UI.</p>"
+        "UPDATE_NOTES_ANDROID": "<p>Simple QR is an open-source app. If you like and enjoy using it, please rate it on the store and support the developer.</p><p>This version newly supports French and German languages. If you find any translation problem, please report to me.</p>",
+        "UPDATE_NOTES_IOS": "<p>Simple QR is an open-source app. If you like it and enjoy using it, please rate it on the store and support the developer.</p><p>This version newly supports French and German languages. If you find any translation problem, please report to me.</p>"
     }
 }

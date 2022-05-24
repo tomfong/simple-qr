@@ -111,9 +111,7 @@
     "NOT_AVAILABLE": "沒有",
     "NOT_PROVIDED": "沒有提供",
     "NOT_TO_DISCLOSE": "不願透露",
-    "OFF": "關閉",
     "OK": "知道",
-    "ON": "開啟",
     "ONLY_DELETE_DATA": "只刪除數據",
     "ONLY_RESET_SETTING": "只重設設定",
     "ORGANIZATION": "組織",
@@ -167,6 +165,8 @@
     "SYSTEM_DEFAULT": "系統預設",
     "TASK": "行動",
     "TASK_BUTTON_LAYOUT": "行動按鍵佈局",
+    "TURN_OFF": "關閉",
+    "TURN_ON": "開啟",
     "TUTORIAL": "教學",
     "UNDO": "還原",
     "UNKNOWN": "未知",
@@ -272,7 +272,7 @@
         "UPC": "通用產品代碼"
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "<p>簡易QR是個開源應用程式。若您喜歡和享受使用它，歡迎前往商店評分和支持開發者。</p><p>新版本支援德文及法文，並更新了界面。</p>",
-        "UPDATE_NOTES_IOS": "<p>簡易QR是個開源應用程式。若您喜歡和享受使用它，歡迎前往商店評分和支持開發者。</p><p>新版本支援德文及法文，並更新了界面。</p>"
+        "UPDATE_NOTES_ANDROID": "<p>簡易QR是個開源應用程式。若您喜歡和享受使用它，歡迎前往商店評分和支持開發者。</p><p>此版本新增支持法文和德文。若您發現任何翻譯問題，請向我回報。</p>",
+        "UPDATE_NOTES_IOS": "<p>簡易QR是個開源應用程式。若您喜歡和享受使用它，歡迎前往商店評分和支持開發者。</p><p>此版本新增支持法文和德文。若您發現任何翻譯問題，請向我回報。</p>"
     }
 }

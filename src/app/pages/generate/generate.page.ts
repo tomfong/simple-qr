@@ -140,6 +140,10 @@ export class GeneratePage {
     ];
   }
 
+  ionViewDidLeave() {
+    this.clear();
+  }
+
   trackByIndex(index: number, obj: any): any {
     return index;
   }

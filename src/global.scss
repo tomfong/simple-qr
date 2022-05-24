@@ -121,3 +121,7 @@ ion-tab-button:not(.tab-selected)::part(native):hover {
 .fullscreen-modal {
     --min-width: 100%;
 }
+
+.pre-line {
+    white-space: pre-line !important;
+}

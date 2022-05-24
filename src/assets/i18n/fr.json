@@ -111,9 +111,7 @@
     "NOT_AVAILABLE": "Pas disponible",
     "NOT_PROVIDED": "Non fourni",
     "NOT_TO_DISCLOSE": "A ne pas dévoiler",
-    "OFF": "Éteindre",
     "OK": "OK",
-    "ON": "Allumer",
     "ONLY_DELETE_DATA": "Supprimer uniquement les données",
     "ONLY_RESET_SETTING": "Paramètre de réinitialisation uniquement",
     "ORGANIZATION": "Organisme",
@@ -167,6 +165,8 @@
     "SYSTEM_DEFAULT": "Système par défaut",
     "TASK": "Tâche",
     "TASK_BUTTON_LAYOUT": "Disposition des boutons de tâche",
+    "TURN_OFF": "Éteindre",
+    "TURN_ON": "Allumer",
     "TUTORIAL": "Didacticiel",
     "UNDO": "Annuler",
     "UNKNOWN": "Inconnu",
@@ -199,7 +199,7 @@
         "BACKUP_FAILED": "Échec de la sauvegarde",
         "BACKUP_FAILED_2": "Échec de la sauvegarde. Veuillez vous assurer que l'autorisation de stockage a été accordée.",
         "BACKUP_SUCCESSFULLY": "<p>Sauvegarde réussie. Veuillez enregistrer le fichier de sauvegarde et conserver le secret suivant en toute sécurité</p><p>{secret}</p>",
-        "BARCODE_TYPE": "Scanner<ul><li>Code QR</li><li>Code-barres 1D</li><li>Code aztèque</li><li>Data Matrix</li><li>PDF417</li></ ul>Importer une image<ul><li>Code QR</li></ul>Créer<ul><li>Code QR</li></ul>",
+        "BARCODE_TYPE": "Scanner<ul><li>Code QR</li><li>Code-barres 1D</li><li>Code aztèque</li><li>Data Matrix</li><li>PDF417</li></ul>Importer une image<ul><li>Code QR</li></ul>Créer<ul><li>Code QR</li></ul>",
         "BOOKMARKED": "Mis en signet avec succès",
         "BOOKMARK_TUTORIAL_SWIPE_RIGHT": "Balayez vers la droite pour modifier la balise du signet correspondant.",
         "BUTTON_DISPLAY_EXPLAIN": "Afficher ou masquer les boutons de tâche.",
@@ -272,7 +272,7 @@
         "UPC": "Code produit universel"
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "<p>Simple QR est une application open source. Si vous aimez et aimez l'utiliser, veuillez l'évaluer sur la magasin et soutenir le développeur.</p><p>La nouvelle version prend en charge les langues allemande et française, et met également à jour l'interface utilisateur.</p>",
-        "UPDATE_NOTES_IOS": "<p>Simple QR est une application open source. Si vous aimez et aimez l'utiliser, veuillez l'évaluer sur la magasin et soutenir le développeur.</p><p>La nouvelle version prend en charge les langues allemande et française, et met également à jour l'interface utilisateur.</p>"
+        "UPDATE_NOTES_ANDROID": "<p>Simple QR est une application open source. Si vous aimez et aimez l'utiliser, veuillez l'évaluer sur la magasin et soutenir le développeur.</p><p>Cette version prend désormais en charge les langues française et allemande. Si vous trouvez un problème de traduction, veuillez me le signaler.</p>",
+        "UPDATE_NOTES_IOS": "<p>Simple QR est une application open source. Si vous aimez et aimez l'utiliser, veuillez l'évaluer sur la magasin et soutenir le développeur.</p><p>Cette version prend désormais en charge les langues française et allemande. Si vous trouvez un problème de traduction, veuillez me le signaler.</p>"
     }
 }

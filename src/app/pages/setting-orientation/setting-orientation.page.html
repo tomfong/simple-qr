@@ -13,7 +13,7 @@
   <ion-radio-group [(ngModel)]="env.orientation" (ionChange)="saveOrientation()">
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-label class="ion-padding-start">
-        <p class="ion-padding">
+        <p class="ion-padding pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
             {{ 'SYSTEM_DEFAULT' | translate }}
           </ion-text>
@@ -24,7 +24,7 @@
     </ion-item>
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-label class="ion-padding-start">
-        <p class="ion-padding">
+        <p class="ion-padding pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
             {{ 'LOCK_PORTRAIT' | translate }}
           </ion-text>
@@ -35,7 +35,7 @@
     </ion-item>
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-label class="ion-padding-start">
-        <p class="ion-padding">
+        <p class="ion-padding pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
             {{ 'LOCK_LANDSCAPE' | translate }}
           </ion-text>

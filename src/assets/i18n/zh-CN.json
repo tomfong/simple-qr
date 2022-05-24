@@ -111,9 +111,7 @@
     "NOT_AVAILABLE": "没有",
     "NOT_PROVIDED": "没有提供",
     "NOT_TO_DISCLOSE": "不愿透露",
-    "OFF": "关闭",
     "OK": "知道",
-    "ON": "开启",
     "ONLY_DELETE_DATA": "只删除数据",
     "ONLY_RESET_SETTING": "只重设设定",
     "ORGANIZATION": "组织",
@@ -167,6 +165,8 @@
     "SYSTEM_DEFAULT": "系统预设",
     "TASK": "行动",
     "TASK_BUTTON_LAYOUT": "行动按键布局",
+    "TURN_OFF": "关闭",
+    "TURN_ON": "开启",
     "TUTORIAL": "教学",
     "UNDO": "复原",
     "UNKNOWN": "未知",
@@ -272,7 +272,7 @@
         "UPC": "通用产品代码"
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "<p>简易QR是个开源应用程式。若您喜欢和享受使用它，欢迎前往商店评分和支持开发者。</p><p>新版本支持德语及法语和更新界面。</p>",
-        "UPDATE_NOTES_IOS": "<p>简易QR是个开源应用程式。若您喜欢和享受使用它，欢迎前往商店评分和支持开发者。</p><p>新版本支持德语及法语和更新界面。</p>"
+        "UPDATE_NOTES_ANDROID": "<p>简易QR是个开源应用程式。若您喜欢和享受使用它，欢迎前往商店评分和支持开发者。</p><p>此版本新支持法语和德语。如果您发现任何翻译问题，请向我报告。</p>",
+        "UPDATE_NOTES_IOS": "<p>简易QR是个开源应用程式。若您喜欢和享受使用它，欢迎前往商店评分和支持开发者。</p><p>此版本新支持法语和德语。如果您发现任何翻译问题，请向我报告。</p>"
     }
 }
