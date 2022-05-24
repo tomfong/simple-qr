@@ -1,35 +1,29 @@
 <ion-tabs>
   <ion-tab-bar slot="bottom">
 
-    <ion-tab-button tab="generate" (click)="tapHaptic()">
+    <ion-tab-button tab="generate" (click)="tapHaptic()" layout="label-hide">
       <ion-icon name="create"></ion-icon>
-      <!-- <ion-label>{{ 'CREATE' | translate }}</ion-label> -->
     </ion-tab-button>
 
-    <ion-tab-button tab="import-image" (click)="tapHaptic()">
+    <ion-tab-button tab="import-image" (click)="tapHaptic()" layout="label-hide">
       <ion-icon name="image"></ion-icon>
-      <!-- <ion-label>{{ 'IMPORT' | translate }}</ion-label> -->
     </ion-tab-button>
 
-    <ion-tab-button tab="scan" (click)="tapHaptic()">
+    <ion-tab-button tab="scan" (click)="tapHaptic()" layout="label-hide">
       <ion-icon src="assets/icon/qrscan.svg"></ion-icon>
-      <!-- <ion-label>{{ 'SCAN' | translate }}</ion-label> -->
     </ion-tab-button>
 
-    <ion-tab-button tab="history" (click)="tapHaptic()">
+    <ion-tab-button tab="history" (click)="tapHaptic()" layout="label-hide">
       <ng-container *ngIf="env.historyPageStartSegment == 'history'">
         <ion-icon src="assets/icon/history.svg"></ion-icon>
-        <!-- <ion-label>{{ 'LOG' | translate }}</ion-label> -->
       </ng-container>
       <ng-container *ngIf="env.historyPageStartSegment == 'bookmarks'">
         <ion-icon name="bookmark"></ion-icon>
-        <!-- <ion-label>{{ 'BOOKMARK' | translate }}</ion-label> -->
       </ng-container>
     </ion-tab-button>
 
-    <ion-tab-button tab="setting" (click)="tapHaptic()">
+    <ion-tab-button tab="setting" (click)="tapHaptic()" layout="label-hide">
       <ion-icon name="settings"></ion-icon>
-      <!-- <ion-label>{{ 'SETTING' | translate }}</ion-label> -->
     </ion-tab-button>
 
   </ion-tab-bar>
