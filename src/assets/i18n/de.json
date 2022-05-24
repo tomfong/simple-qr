@@ -1,7 +1,7 @@
 {
     "49_DIGIT": "49-digit",
     "ABOUT": "Über",
-    "ABOUT_SIMPLE_QR": "Über Einfacher QR",
+    "ABOUT_SIMPLE_QR": "Über Simple QR",
     "ADD": "Hinzufügen",
     "ADD_BCC": "BCC hinzufügen",
     "ADD_CC": "CC hinzufügen",
@@ -158,7 +158,7 @@
     "SHARING": "Teilen",
     "SHOW": "Zeige",
     "SHOW_QR_CODE": "Zeige QR Code",
-    "SIMPLE_QR": "Einfacher QR",
+    "SIMPLE_QR": "Simple QR",
     "STATE": "Staat",
     "STREET": "Straße",
     "SUCCESS": "Erfolg",
@@ -195,7 +195,7 @@
         "AUTO_LOGGING_EXPLAIN": "Jeder QR-Code und Barcode-Inhalt wird protokolliert und automatisch gespeichert, nachdem Du ihn gescannt, erstellt oder erneut angezeigt hast. Du kannst sie auf der Seite Log einsehen.",
         "AUTO_MAX_BRIGHTNESS_EXPLAIN": "Die Bildschirmhelligkeit wird automatisch auf das Maximum eingestellt, wenn ein QR-Code angezeigt wird..",
         "AUTO_SHOW_QR_EXPLAIN": "Nach den folgenden Aktionen wird automatisch ein QR-Code auf der Ergebnisseite angezeigt.",
-        "BACKUP_EXPLAIN": "Du kannst alle Datensätze und Lesezeichen lokal sichern. Nach der Sicherung erhältst du eine Reihe von Geheimnissen. Bewahre das Geheimnis sicher auf, sonst kannst du die Sicherung nicht wiederherstellen. Bitte beachte, dass Einfacher QR keine plattformübergreifende Sicherung und Wiederherstellung unterstützt.",
+        "BACKUP_EXPLAIN": "Du kannst alle Datensätze und Lesezeichen lokal sichern. Nach der Sicherung erhältst du eine Reihe von Geheimnissen. Bewahre das Geheimnis sicher auf, sonst kannst du die Sicherung nicht wiederherstellen. Bitte beachte, dass Simple QR keine plattformübergreifende Sicherung und Wiederherstellung unterstützt.",
         "BACKUP_FAILED": "Sicherung fehlgeschlagen",
         "BACKUP_FAILED_2": "Die Sicherung konnte nicht durchgeführt werden. Bitte stelle sicher, dass die Speichererlaubnis erteilt wurde.",
         "BACKUP_SUCCESSFULLY": "<p>Die Sicherung wurde erfolgreich durchgeführt. Bitte speichere die Sicherungsdatei und bewahre das folgende Geheimnis sicher auf</p><p>{secret}</p>",
@@ -214,7 +214,7 @@
         "EMAIL_MAX_LENGTH": "Max. 254 Zeichen",
         "EMAIL_SUBJECT_MAX_LENGTH": "Max. 78 Zeichen",
         "ERROR_CORRECTION_LEVEL_EXPLAIN": "<p>Der QR-Code verfügt über eine Fehlerkorrekturfunktion, die es ermöglicht, Daten wiederherzustellen, selbst wenn der Code beschädigt ist.</p><br><p>Es stehen 4 Stufen zur Verfügung:</p><p>Level L stellt 7 % der Datenbytes wieder her.</p><p>Level M stellt 15 % der Datenbytes wieder her.</p><p>Level Q stellt 25 % der Datenbytes wieder her.</p><p>Level H stellt 30 % der Datenbytes wieder her.</p><br><p>Bitte beachte, dass eine Erhöhung der Level die Fehlerkorrekturfähigkeit verbessern kann, aber auch die Größe des QR-Codes erhöht. Daher wird für allgemeine Fälle die Level M empfohlen.</p>",
-        "EXIT_APP": "<p>Bist du sicher, dass du die App beenden willst?</p><p>Wenn dir Einfacher QR gefällt, bewerte es bitte im Store.</p>",
+        "EXIT_APP": "<p>Bist du sicher, dass du die App beenden willst?</p><p>Wenn dir Simple QR gefällt, bewerte es bitte im Store.</p>",
         "FAILED_SAVING_CONTACT": "Kontakt konnte nicht gespeichert werden",
         "FAIL_PREPARE_SMS": "Nachricht konnte nicht gesendet werden",
         "INPUT_TAG": "Bitte gib dem Lesezeichen einen Tag",
@@ -241,13 +241,13 @@
         "RESTORE_WRONG_SECRET": "Fehlerhafter Code",
         "SAVED_CONTACT": "Gespeicherter Kontakt",
         "SAVING_CONTACT": "Kontakt speichern",
-        "SCAN_QR_FROM_IMAGE": "Einfacher QR benutzt \"cozmo/jsQR\" Modul zum Scannen von QR-Codes aus Bildern. Um erfolgreich zu scannen,",
+        "SCAN_QR_FROM_IMAGE": "Simple QR benutzt \"cozmo/jsQR\" Modul zum Scannen von QR-Codes aus Bildern. Um erfolgreich zu scannen,",
         "SCAN_QR_FROM_IMAGE_R1": "Bitte gestatte der App den Zugriff auf den Speicher oder die Fotobibliothek.",
         "SCAN_QR_FROM_IMAGE_R2": "Achte darauf, dass der Hintergrund des ausgewählten Bildes nicht transparent ist. Es wird empfohlen, ein Bild zu wählen, das nicht von der Kamera aufgenommen wurde.",
         "SCAN_QR_FROM_IMAGE_R3": "Bitte brich die Fotobearbeitung ab, wenn du das gesamte Bild scannen möchtest. (falls zutreffend)",
         "SEARCH": "Nach welchen Inhalten möchtest du suchen?",
         "SEARCH_ENGINE_EXPLAIN": "Wähle die Suchmaschine für die Websuche, nachdem du das Ergebnis erhalten hast.",
-        "SHARE_QR": "Einfach scannen!\n\nGeteilt von Einfacher QR",
+        "SHARE_QR": "Einfach scannen!\n\nGeteilt von Simple QR",
         "SMS_MAX_LENGTH": "Max. 160 Zeichen",
         "SSID_MAX_LENGTH": "Max. 32 Zeichen",
         "START_PAGE_EXPLAIN": "Wähle die Startseite der App.",
@@ -272,7 +272,7 @@
         "UPC": "Universeller Produktcode "
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "<p>Einfacher QR ist eine Open-Source-Anwendung. Wenn Du sie magst und gerne benutzt, bewerte sie bitte im Store und unterstütze den Programmierer.</p><p>Die neue Version unterstützt die Sprachen Deutsch und Französisch und aktualisiert auch die Benutzeroberfläche./p>",
-        "UPDATE_NOTES_IOS": "<p>Einfacher QR ist eine Open-Source-Anwendung. Wenn Dir die App gefällt und Du sie gerne benutzt, bewerte sie bitte im Store und unterstütze den Programmierer.</p><p>Die neue Version unterstützt die Sprachen Deutsch und Französisch und aktualisiert auch die Benutzeroberfläche.</p>"
+        "UPDATE_NOTES_ANDROID": "<p>Simple QR ist eine Open-Source-Anwendung. Wenn Du sie magst und gerne benutzt, bewerte sie bitte im Store und unterstütze den Programmierer.</p><p>Die neue Version unterstützt die Sprachen Deutsch und Französisch und aktualisiert auch die Benutzeroberfläche./p>",
+        "UPDATE_NOTES_IOS": "<p>Simple QR ist eine Open-Source-Anwendung. Wenn Dir die App gefällt und Du sie gerne benutzt, bewerte sie bitte im Store und unterstütze den Programmierer.</p><p>Die neue Version unterstützt die Sprachen Deutsch und Französisch und aktualisiert auch die Benutzeroberfläche.</p>"
     }
 }
