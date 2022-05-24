@@ -56,11 +56,11 @@ By using the app, you can
 
 ## Languages Supported
 
-* English (en), Simple QR
-* Traditional Chinese 正體中文 (zh), 簡易QR
-* Simplified Chinese 简体中文 (zh-CN), 简易QR
-* German Deutsch (de), Einfacher QR
-* French Français (fr), Simple QR
+* English (en)
+* Traditional Chinese 正體中文 (zh)
+* Simplified Chinese 简体中文 (zh-CN)
+* German Deutsch (de)
+* French Français (fr)
 
 You are welcomed to help translate the app into more languages (see <a href="#how-to-help-translate">section</a>)
 
