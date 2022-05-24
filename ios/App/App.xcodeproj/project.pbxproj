@@ -40,6 +40,8 @@
 		D208D0BE281849AA006217ED /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		D208D0BF281849AD006217ED /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		D208D0C0281849AE006217ED /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		D26FE7F9283D1E6C002A61AE /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D26FE7FA283D1E76002A61AE /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FC68EB0AF532CFC21C3344DD /* Pods-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -154,6 +156,8 @@
 				"zh-HK",
 				"zh-Hant",
 				"zh-Hans",
+				de,
+				fr,
 			);
 			mainGroup = 504EC2FB1FED79650016851F;
 			productRefGroup = 504EC3051FED79650016851F /* Products */;
@@ -259,6 +263,8 @@
 				D208D0BE281849AA006217ED /* zh-HK */,
 				D208D0BF281849AD006217ED /* zh-Hant */,
 				D208D0C0281849AE006217ED /* zh-Hans */,
+				D26FE7F9283D1E6C002A61AE /* fr */,
+				D26FE7FA283D1E76002A61AE /* de */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
