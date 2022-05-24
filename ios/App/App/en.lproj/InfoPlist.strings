@@ -1,0 +1,6 @@
+"CFBundleDisplayName" = "Simple QR";
+"CFBundleName" = "Simple QR";
+"NSCameraUsageDescription" = "Simple QR uses Camera to scan QR code and barcodes";
+"NSContactsUsageDescription" = "Simple QR uses Contacts to add contact";
+"NSPhotoLibraryAddUsageDescription" = "Simple QR uses Photo Library to save QR code image";
+"NSPhotoLibraryUsageDescription" = "Simple QR uses Photo Library to import image and scan QR code";

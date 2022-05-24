@@ -1,0 +1,1 @@
+die einfachste Art QR Codes zu scannen, erstellen und speichern

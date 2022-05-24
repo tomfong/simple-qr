@@ -1,0 +1,18 @@
+<i>Simple QR</i> is an open-source app providing the simplest way to scan, create and store QR code. No backend service connected. No data collected. No ads.
+
+English, Traditional Chinese and Simplified Chinese are supported.
+
+By using the app, you can:
+
+* Scan QR Code and other barcodes in a second, including UPC, EAN, Code 39/128, ITF, Codabar, Aztec, Data Matrix, PDF417, MaxiCode and GS1 DataBar.
+* Import image files and scan the QR Code on it.
+* Create QR code from templates, which includes Free Text, URL, vCard Contact, Phone Number, Message, Email and Wi-Fi.
+* Automatically log results that you scan, create or view again. These logged records can be bookmarked for quick access, and also backupable.
+* Do tasks on the result with a tap, including but not limited to
+    * Use it as a keyword to do web search.
+    * Quickly copy it to the clipboard.
+    * Execute base64 encoding/decoding on it.
+    * Generate a new shareable QR code by using it as the content.
+    * Directly do special tasks, if it is a link, vCard contact, phone number, message or email.
+* Adjust the generated QR code, e.g. error correction level and screen brightness.
+* Customize the app, e.g. app initial page, language and color theme etc.

@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <access origin="*" />
+  
+  <feature name="AES256">
+    <param name="ios-package" value="AES256"/>
+  </feature>
+
+  <feature name="Chooser">
+    <param name="ios-package" value="Chooser"/>
+  </feature>
+
+  <feature name="CDVOrientation">
+    <param name="ios-package" value="CDVOrientation"/>
+  </feature>
+
+  <feature name="ThemeDetection">
+    <param name="ios-package" value="ThemeDetection"/>
+  </feature>
+
+  <feature name="SocialSharing">
+    <param name="ios-package" value="SocialSharing"/>
+    <param name="onload" value="true"/>
+  </feature>
+
+  <feature name="Sms">
+    <param name="ios-package" value="Sms"/>
+  </feature>
+
+  
+  <preference name="ScrollEnabled" value="false" />
+  <preference name="BackupWebStorage" value="none" />
+  <preference name="orientation" value="portrait" />
+</widget>

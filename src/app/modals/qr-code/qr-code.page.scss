@@ -1,0 +1,11 @@
+.qr-code {
+    display: block;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    font-size: medium;
+}
+
+ion-toolbar:first-of-type {
+    --border-width: 0 !important;
+}

@@ -1,0 +1,123 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import "~@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+@import "~material-design-icons/iconfont/material-icons.css";
+
+.text-center-toast {
+    text-align: center;
+    --max-width: 320px;
+    overflow-wrap: anywhere;
+}
+
+.text-start-toast {
+    text-align: left;
+    --max-width: 320px;
+    overflow-wrap: anywhere;
+}
+
+.text-center-short-toast {
+    text-align: center;
+    --max-width: 150px;
+    overflow-wrap: anywhere;
+}
+
+.text-start-short-toast {
+    text-align: left;
+    --max-width: 150px;
+    overflow-wrap: anywhere;
+}
+
+.toolbar-start-btn {
+    padding-left: 10px;
+}
+
+.toolbar-end-btn {
+    padding-right: 10px;
+}
+
+.fullscreen-vertical-center {
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+    place-content: center;
+    min-height: 100%;
+}
+
+.vertical-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    place-content: center;
+}
+
+.larger-alert .alert-wrapper {
+    max-width: 85%;
+    width: 85%;
+}
+
+.ripple-parent {
+    position: relative;
+    overflow: hidden;
+}
+
+ion-item {
+    --background-hover-opacity: 0;
+}
+
+ion-tab-button:not(.tab-selected)::part(native):hover {
+    color: var(--color);
+}
+
+.external-link-icon {
+    padding-left: 0.5rem;
+    font-size: small;
+}
+
+.left-align .alert-message {
+    text-align: left;
+    ul {
+        padding-inline-start: 16px;
+    }
+}
+
+.alert-bg .alert-wrapper {
+    background: var(--background);
+    opacity: 0.5;
+}
+
+.alert-can-copy {
+    user-select: text !important;
+}
+
+.alert-button.sc-ion-alert-ios {
+    border-left: 0 !important;
+    border-right: 0 !important;
+}
+
+.fullscreen-modal {
+    --min-width: 100%;
+}

@@ -1,0 +1,222 @@
+<ion-header>
+  <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'">
+    <ion-buttons slot="start">
+      <ion-back-button text="">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'TASK_BUTTON_LAYOUT' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+  <ion-item class="ion-no-padding" lines="none">
+    <ion-label class="ion-padding-start">
+      <p class="ion-padding-top ion-padding-horizontal">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
+          <div [innerHTML]="'MSG.BUTTON_STYLE_EXPLAIN' | translate">
+          </div>
+        </ion-text>
+      </p>
+    </ion-label>
+  </ion-item>
+
+  <ion-radio-group [(ngModel)]="env.resultPageButtons" (ionChange)="saveResultPageButtons()">
+    <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding">
+          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+            {{ 'DETAILED' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+      <ion-radio class="ion-margin-end" slot="end" [value]="'detailed'" [color]="'primary'">
+      </ion-radio>
+    </ion-item>
+    <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding">
+          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+            {{ 'ICON_ONLY' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+      <ion-radio class="ion-margin-end" slot="end" [value]="'icon-only'" [color]="'primary'">
+      </ion-radio>
+    </ion-item>
+  </ion-radio-group>
+
+  <ion-item class="ion-no-padding pt-3" lines="none">
+    <ion-label class="ion-padding-start">
+      <p class="ion-padding-top ion-padding-horizontal">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
+          <div [innerHTML]="'MSG.BUTTON_DISPLAY_EXPLAIN' | translate">
+          </div>
+        </ion-text>
+      </p>
+    </ion-label>
+  </ion-item>
+
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" *ngIf="env.searchEngine === 'google'"
+      name="logo-google">
+    </ion-icon>
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" *ngIf="env.searchEngine === 'bing'"
+      src="assets/icon/microsoft-bing.svg">
+    </ion-icon>
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" *ngIf="env.searchEngine === 'yahoo'"
+      src="assets/icon/yahoo.svg">
+    </ion-icon>
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'"
+      *ngIf="env.searchEngine === 'duckduckgo'" src="assets/icon/duck-duck-go.svg">
+    </ion-icon>
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" *ngIf="env.searchEngine === 'yandex'"
+      src="assets/icon/yandex.svg">
+    </ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+          {{ 'SEARCH' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.showSearchButton == 'on'? true : false"
+      (ngModelChange)="onSearchButtonChange($event)">
+    </ion-toggle>
+  </ion-item>
+
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="copy">
+    </ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+          {{ 'COPY_TEXT' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.showCopyButton == 'on'? true : false"
+      (ngModelChange)="onCopyButtonChange($event)">
+    </ion-toggle>
+  </ion-item>
+
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="code-working">
+    </ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+          {{ 'BASE64' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.showBase64Button == 'on'? true : false"
+      (ngModelChange)="onBase64ButtonChange($event)">
+    </ion-toggle>
+  </ion-item>
+
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="qr-code-sharp">
+    </ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+          {{ 'SHOW_QR_CODE' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.showEnlargeButton == 'on'? true : false"
+      (ngModelChange)="onEnlargeButtonChange($event)">
+    </ion-toggle>
+  </ion-item>
+
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="bookmark">
+    </ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+          {{ 'BOOKMARK' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.showBookmarkButton == 'on'? true : false"
+      (ngModelChange)="onBookmarkButtonChange($event)">
+    </ion-toggle>
+  </ion-item>
+
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="globe">
+    </ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+          {{ 'BROWSE_WEBSITE' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.showBrowseButton == 'on'? true : false"
+      (ngModelChange)="onBrowseButtonChange($event)">
+    </ion-toggle>
+  </ion-item>
+
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="person-add-sharp">
+    </ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+          {{ 'ADD_CONTACT' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.showAddContactButton == 'on'? true : false"
+      (ngModelChange)="onAddContactButtonChange($event)">
+    </ion-toggle>
+  </ion-item>
+
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="call">
+    </ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+          {{ 'CALL' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.showCallButton == 'on'? true : false"
+      (ngModelChange)="onCallButtonChange($event)">
+    </ion-toggle>
+  </ion-item>
+
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="send">
+    </ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+          {{ 'SEND_MESSAGE' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.showSendMessageButton == 'on'? true : false"
+      (ngModelChange)="onSendMessageButtonChange($event)">
+    </ion-toggle>
+  </ion-item>
+
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="mail">
+    </ion-icon>
+    <ion-label>
+      <p class="ion-padding">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+          {{ 'SEND_EMAIL' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.showSendEmailButton == 'on'? true : false"
+      (ngModelChange)="onSendEmailButtonChange($event)">
+    </ion-toggle>
+  </ion-item>
+
+</ion-content>

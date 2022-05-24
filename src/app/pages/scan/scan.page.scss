@@ -1,0 +1,29 @@
+ion-content,
+body {
+    background: none transparent;
+    --background: none transparent;
+}
+
+.guide {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    opacity: 1.0;
+}
+
+.guide-frame {
+    width: 60%;
+    max-width: 400px;
+    margin-bottom: 6em;
+    max-height: 50%;
+    opacity: 0.7;
+}
+
+.master-fab-btn {
+    --background: var(--ion-color-primary);
+}
+
+.master-fab-btn.fab-button-close-active {
+    --background: var(--ion-color-secondary);
+}
