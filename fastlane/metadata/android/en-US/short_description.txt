@@ -1,1 +1,1 @@
-FOSS app that provides the simplest way to scan, create and store QR code.
+Let you scan, create and store QR codes, all in an app
