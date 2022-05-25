@@ -1,1 +1,1 @@
-FOSS-App, die die einfachste Möglichkeit bietet, QR-Codes zu scannen, zu erstellen und zu speichern.
+Lassen Sie QR-Codes scannen, erstellen und speichern, alles in einer App
