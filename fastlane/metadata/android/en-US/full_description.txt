@@ -1,4 +1,4 @@
-<i>Simple QR</i> is a FOSS app providing the simplest way to scan, create and store QR code. No backend service connected. No data collected. No ads.
+<i>Simple QR</i> is a FOSS app that provides a way for you to scan, create and store QR codes, all in an app. No backend service connected. No data collected. No ads.
 
 English, French, German, Traditional Chinese and Simplified Chinese are supported.
 
