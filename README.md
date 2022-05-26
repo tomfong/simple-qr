@@ -8,11 +8,11 @@ Simple and lightweight app to scan, create and store QR codes.
 
 Simple QR is a FOSS app to scan, create and store QR codes with a simple UI and experience. No backend service connected. No data collected. No ads.
 
-It's now available on the App Store, Google Play and IzzyOnDroid. You can also download the apk from <a href="https://github.com/tomfong/simple-qr/releases">release</a>.
+It's now available on the following platforms.
 
-| App Store | Google Play | IzzyOnDroid |
-|:-:|:-:|:-:|
-| [<img src="badges/appstore-badge.png" height="50">](https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553) | [<img src="badges/google-play-badge.png" height="50">](https://play.google.com/store/apps/details?id=com.tomfong.simpleqr) | [<img src="badges/IzzyOnDroid.png" height="50">](https://apt.izzysoft.de/fdroid/index/apk/com.tomfong.simpleqr) |
+| App Store | Google Play | GitHub | IzzyOnDroid |
+|:-:|:-:|:-:|:-:|
+| [<img src="badges/appstore-badge.png" height="50">](https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553) | [<img src="badges/google-play-badge.png" height="50">](https://play.google.com/store/apps/details?id=com.tomfong.simpleqr) | [<img src="badges/github.png" height="50">](https://github.com/tomfong/simple-qr/releases) | [<img src="badges/IzzyOnDroid.png" height="50">](https://apt.izzysoft.de/fdroid/index/apk/com.tomfong.simpleqr) |
 
 ## Features
 
