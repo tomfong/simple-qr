@@ -19,7 +19,7 @@
 
 ## About
 
-Simple QR is a FOSS app to scan, create and store QR codes with a simple UI, all in one app. No backend service connected. No data collected. No ads.
+Simple QR is a FOSS app to scan, create and store QR codes with a simple UI and experience. No backend service connected. No data collected. No ads.
 
 It's now available on the App Store, Google Play and IzzyOnDroid. You can also download the apk from <a href="https://github.com/tomfong/simple-qr/releases">release</a>.
 
