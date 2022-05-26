@@ -4,19 +4,6 @@
 <img alt="Simple QR" src="./resources/icon.png" width="100px">
 </p>
 
-<p align="center">
-  <a href="#about">About</a>
-• <a href="#features">Features</a>
-• <a href="#support-developer">Support Developer</a>
-
-</p>
-<p align="center">
-  <a href="#contribute">Contribute</a>
-• <a href="#framework">Framework</a>
-• <a href="#privacy-policy">Privacy Policy</a>
-• <a href="#license">License</a>
-</p>
-
 ## About
 
 Simple QR is a FOSS app to scan, create and store QR codes with a simple UI and experience. No backend service connected. No data collected. No ads.
@@ -26,6 +13,8 @@ It's now available on the App Store, Google Play and IzzyOnDroid. You can also d
 | App Store | Google Play | IzzyOnDroid |
 |:-:|:-:|:-:|
 | [<img src="badges/appstore-badge.png" height="50">](https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553) | [<img src="badges/google-play-badge.png" height="50">](https://play.google.com/store/apps/details?id=com.tomfong.simpleqr) | [<img src="badges/IzzyOnDroid.png" height="50">](https://apt.izzysoft.de/fdroid/index/apk/com.tomfong.simpleqr) |
+
+If you want to sponsor my projects, please <a href="https://github.com/tomfong"><b>click here</b></a>😊 Thank you for your support!
 
 ## Features
 
@@ -59,7 +48,7 @@ By using the app, you can
 
 [![Simple QR Demo](https://img.youtube.com/vi/D57VveikN8U/0.jpg)](https://www.youtube.com/watch?v=D57VveikN8U)
 
-## Languages Supported
+### Languages Supported
 
 * English (en)
 * Traditional Chinese 正體中文 (zh)
@@ -67,25 +56,13 @@ By using the app, you can
 * German Deutsch (de)
 * French Français (fr)
 
-You are welcomed to help translate the app into more languages (see <a href="#how-to-help-translate">section</a>)
-
-## Support Developer
-
-If you want to support me or my projects, please <a href="https://github.com/tomfong"><b>click me</b></a>😊
+You are welcomed to help translate the app into more languages (refer to this <a href="#how-to-help-translate">section</a>)
 
 ## Contribute
 
 * Star and watch the project.
 * Translate the app into different languages.
 * Open issues for reporting bugs or any new ideas.
-
-### Contributors
-
-Thank you the following contributors who have made the app better!
-
-| Name | GitHub | How? |
-|:-:|:-:|:-:|
-| mondstern | [mondlicht-und-sterne](https://github.com/mondlicht-und-sterne) | Translate the app into German |
 
 ### How to help translate?
 
@@ -100,7 +77,7 @@ Thank you the following contributors who have made the app better!
     * <b>DO NOT</b> change the order.
 4. Email the JSON to me (tomfong.dev@gmail.com) after you finish.
 
-## Build the project (Android)
+### Build the project (Android)
 
 1. Run ```npm install``` to install all dependencies
 2. Run ```npm run sync``` and ```npm run copy:an```
@@ -118,6 +95,14 @@ Thank you the following contributors who have made the app better!
       <item name="android:background">#00a5aa</item>
     </style>
     ```
+
+### Contributors
+
+Thank you the following contributors who have made the app better!
+
+| Name | GitHub | How? |
+|:-:|:-:|:-:|
+| mondstern | [mondlicht-und-sterne](https://github.com/mondlicht-und-sterne) | Translate the app into German |
 
 ## Framework
 
