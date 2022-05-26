@@ -1,1 +1,1 @@
-Scan, create and store QR codes with a simple UI, all in one app
+Scan, create and store QR codes with a simple UI and experience.
