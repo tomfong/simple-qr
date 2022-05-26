@@ -13,6 +13,11 @@ Mit der App ist das möglich
     * Kopieren in die Zwischenablage.
     * base64-Codierung/Decodierung darauf ausführen.
     * Einen neuen teilbaren QR-Codegenerieren.
-    * Direkt spezielle Aufgaben erledigen, wenn es sich um einen Link, einen vCard-Kontakt, eine Telefonnummer, eine Nachricht oder eine E-Mail handelt.
+    * Führen Sie entsprechende Aufgaben aus, wenn es sich um a handelt
+         * URL: Website durchsuchen
+         * vCard-Kontakt: Kontakt hinzufügen
+         * Telefonnummer: Telefonanruf, Kontakt hinzufügen
+         * Nachricht: Nachricht senden, Kontakt hinzufügen
+         * E-Mail: E-Mail senden
 * Den generierten QR-Code anzupassen, z.B. Fehlerkorrekturstufe und Bildschirmhelligkeit.
 * Die App anzupassen, z.B. App-Startseite, Sprache und Farbthema etc.
