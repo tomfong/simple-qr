@@ -12,7 +12,6 @@ Simple and lightweight app to scan, create and store QR codes.
   <img height="300" src="./screenshots/5.png">
   <img height="300" src="./screenshots/3.png">
   <img height="300" src="./screenshots/7.png">
-  <img height="300" src="./screenshots/8.png">
 </div>
 
 ## About
