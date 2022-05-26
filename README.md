@@ -68,10 +68,9 @@ You are welcomed to help translate the app into more languages (refer to this <a
 
 ## Contribute
 
-* Star the project.
+* Star and <b>sponsor (<a href="https://github.com/tomfong">click here</a>)</b> the project.
 * Translate the app into different languages.
-* Open issues for reporting bugs or any new ideas.
-* Sponsor the project (<a href="https://github.com/tomfong"><b>click here</b></a>😊)
+* Open issues to report bugs or share any new ideas.
 
 ### How to help translate?
 
