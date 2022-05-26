@@ -4,6 +4,17 @@
 
 Simple and lightweight app to scan, create and store QR codes.
 
+<br>
+
+<div>
+  <img height="300" src="./screenshots/2.png">
+  <img height="300" src="./screenshots/4.png">
+  <img height="300" src="./screenshots/5.png">
+  <img height="300" src="./screenshots/3.png">
+  <img height="300" src="./screenshots/7.png">
+  <img height="300" src="./screenshots/8.png">
+</div>
+
 ## About
 
 Simple QR is a FOSS app to scan, create and store QR codes with a simple UI and experience. No backend service connected. No data collected. No ads.
