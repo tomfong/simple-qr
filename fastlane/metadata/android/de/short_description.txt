@@ -1,1 +1,2 @@
-Lassen Sie QR-Codes scannen, erstellen und speichern, alles in einer App
+
+Scannen, erstellen und speichern Sie QR-Codes mit einer einfachen Benutzeroberfläche, alles in einer App
