@@ -1,8 +1,8 @@
+<img align="left" width="130" height="130" src="./resources/icon_round.png" alt="app icon">
+
 # Simple QR
 
-<p align="center">
-<img alt="Simple QR" src="./resources/icon.png" width="100px">
-</p>
+Simple and lightweight app to scan, create and store QR codes.
 
 ## About
 
@@ -13,8 +13,6 @@ It's now available on the App Store, Google Play and IzzyOnDroid. You can also d
 | App Store | Google Play | IzzyOnDroid |
 |:-:|:-:|:-:|
 | [<img src="badges/appstore-badge.png" height="50">](https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553) | [<img src="badges/google-play-badge.png" height="50">](https://play.google.com/store/apps/details?id=com.tomfong.simpleqr) | [<img src="badges/IzzyOnDroid.png" height="50">](https://apt.izzysoft.de/fdroid/index/apk/com.tomfong.simpleqr) |
-
-If you want to sponsor my projects, please <a href="https://github.com/tomfong"><b>click here</b></a>😊 Thank you for your support!
 
 ## Features
 
@@ -60,9 +58,10 @@ You are welcomed to help translate the app into more languages (refer to this <a
 
 ## Contribute
 
-* Star and watch the project.
+* Star the project.
 * Translate the app into different languages.
 * Open issues for reporting bugs or any new ideas.
+* Sponsor the project (<a href="https://github.com/tomfong"><b>click here</b></a>😊)
 
 ### How to help translate?
 
