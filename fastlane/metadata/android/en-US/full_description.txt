@@ -13,6 +13,11 @@ By using the app, you can:
     * Quickly copy it to the clipboard.
     * Execute base64 encoding/decoding on it.
     * Generate a new shareable QR code by using it as the content.
-    * Directly do special tasks, if it is a link, vCard contact, phone number, message or email.
+    * Do corresponding tasks if it is a
+        * URL: Browse website
+        * vCard contact: Add contact
+        * Phone number: Phone call, add contact
+        * Message: Send message, add contact
+        * Email: Send email
 * Adjust the generated QR code, e.g. error correction level and screen brightness.
 * Customize the app, e.g. app initial page, language and color theme etc.
