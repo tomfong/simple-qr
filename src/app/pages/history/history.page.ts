@@ -320,6 +320,10 @@ export class HistoryPage {
     const index = this.env.viewingBookmarks.findIndex(x => x.text == bookmark.text);
     if (index != -1) {
       this.env.viewingBookmarks.splice(index, 1);
+      if (this.env.bookmarks?.length > this.env.viewingBookmarks.length) {
+        const bookmarks = [...this.env.bookmarks]
+        this.env.viewingBookmarks.push(...bookmarks.slice(this.env.viewingBookmarks.length, this.env.viewingBookmarks.length + 1));
+      }
     }
     this.deleteToast = await this.toastController.create({
       message: this.translate.instant('MSG.UNDO_DELETE'),
@@ -402,6 +406,10 @@ export class HistoryPage {
     const index = this.env.viewingScanRecords.findIndex(x => x.id == record.id);
     if (index != -1) {
       this.env.viewingScanRecords.splice(index, 1);
+      if (this.env.scanRecords?.length > this.env.viewingScanRecords.length) {
+        const scanRecords = [...this.env.scanRecords]
+        this.env.viewingScanRecords.push(...scanRecords.slice(this.env.viewingScanRecords.length, this.env.viewingScanRecords.length + 1));
+      }
     }
     this.deleteToast = await this.toastController.create({
       message: this.translate.instant('MSG.UNDO_DELETE'),
