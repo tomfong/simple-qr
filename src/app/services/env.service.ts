@@ -23,9 +23,9 @@ export class EnvService {
   public startPage: "/tabs/scan" | "/tabs/generate" | "/tabs/import-image" | "/tabs/history" | "/tabs/setting" = "/tabs/scan";
   public historyPageStartSegment: 'history' | 'bookmarks' = 'history';
   public startPageHeader: 'on' | 'off' = 'on';
-  public languages: string[] = ['en', 'zh-HK', 'zh-CN', 'de', 'fr'];
-  public language: 'en' | 'zh-HK' | 'zh-CN' | 'de' | 'fr' = 'en';
-  public selectedLanguage: 'default' | 'en' | 'zh-HK' | 'zh-CN' | 'de' | 'fr' = 'default';
+  public languages: string[] = ['en', 'zh-HK', 'zh-CN', 'de', 'fr', 'it'];
+  public language: 'en' | 'zh-HK' | 'zh-CN' | 'de' | 'fr' | 'it' = 'en';
+  public selectedLanguage: 'default' | 'en' | 'zh-HK' | 'zh-CN' | 'de' | 'fr' | 'it' = 'default';
   public colorTheme: 'light' | 'dark' | 'black' = 'light';
   public selectedColorTheme: 'default' | 'light' | 'dark' | 'black' = 'default';
   public scanRecordLogging: 'on' | 'off' = 'on';
@@ -54,7 +54,7 @@ export class EnvService {
   public showSendMessageButton: 'on' | 'off' = 'on';
   public showSendEmailButton: 'on' | 'off' = 'on';
   public debugMode: 'on' | 'off' = 'off';
-  public autoExitAppMin: 1 | 3 | 5 | -1 = -1; 
+  public autoExitAppMin: 1 | 3 | 5 | -1 = -1;
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
   public readonly GOOGLE_SEARCH_URL: string = "https://www.google.com/search?q=";
@@ -754,22 +754,40 @@ export class EnvService {
     if (this.selectedLanguage === 'default') {
       let language = 'en';
       const browserLang = this.translate.getBrowserCultureLang();
-      if (browserLang.includes("zh", 0)) {
-        if (browserLang === 'zh-CN' || browserLang === 'zh-SG') language = 'zh-CN';
-        else language = "zh-HK";
-      } else if (browserLang.includes("de", 0)) {
-        language = "de";
-      } else if (browserLang.includes("fr", 0)) {
-        language = "fr";
-      } else if (browserLang.includes("yue", 0)) {
-        language = "zh-HK";
-      } else if (this.languages.includes(browserLang)) {
-        language = browserLang as 'en' | 'zh-HK' | 'zh-CN' | 'de' | 'fr';
-      } else {
+      if (browserLang == null) {
         language = 'en';
+      } else {
+        const lang = browserLang.slice(0, 2);
+        switch (lang) {
+          case "de":
+            language = "de";
+            break;
+          case "en":
+            language = "en"
+            break;
+          case "fr":
+            language = "fr"
+            break;
+          case "it":
+            language = "it"
+            break;
+          case "zh":
+            if (browserLang === 'zh-CN' || browserLang === 'zh-SG') {
+              language = 'zh-CN';
+            } else {
+              language = "zh-HK";
+            }
+            break;
+          default:
+            if (browserLang.slice(0, 3) === "yue") {
+              language = "zh-HK";
+            } else {
+              language = 'en';
+            }
+        }
       }
       this.translate.use(language);
-      this.language = language as 'en' | 'zh-HK' | 'zh-CN' | 'de' | 'fr';
+      this.language = language as 'en' | 'zh-HK' | 'zh-CN' | 'de' | 'fr' | 'it';
     } else {
       this.translate.use(this.selectedLanguage);
       this.language = this.selectedLanguage;

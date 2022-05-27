@@ -163,15 +163,17 @@ export class HistoryPage {
           return moment(date).format("YYYY年M月D日 HH:mm:ss");
       }
     } else {
+      const momentObj = moment(date);
+      momentObj.locale(this.env.language);
       switch (source) {
         case 'create':
-          return this.translate.instant("CREATED") + ' at ' + moment(date).format("YYYY-MMM-DD HH:mm:ss");
+          return this.translate.instant("CREATED") + ' at ' + momentObj.format("DD MMM YYYY HH:mm:ss");
         case 'view':
-          return this.translate.instant("VIEWED") + ' at ' + moment(date).format("YYYY-MMM-DD HH:mm:ss");
+          return this.translate.instant("VIEWED") + ' at ' + momentObj.format("DD MMM YYYY HH:mm:ss");
         case 'scan':
-          return this.translate.instant("SCANNED") + ' at ' + moment(date).format("YYYY-MMM-DD HH:mm:ss");
+          return this.translate.instant("SCANNED") + ' at ' + momentObj.format("DD MMM YYYY HH:mm:ss");
         default:
-          return moment(date).format("YYYY-MMM-DD HH:mm:ss");
+          return momentObj.format("DD MMM YYYY HH:mm:ss");
       }
     }
   }

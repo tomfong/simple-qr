@@ -63,6 +63,7 @@ By using the app, you can
 * Simplified Chinese 简体中文 (zh-CN)
 * German Deutsch (de)
 * French Français (fr)
+* Italian Italiano (it)
 
 You are welcomed to help translate the app into more languages (refer to this <a href="#how-to-help-translate">section</a>)
 
