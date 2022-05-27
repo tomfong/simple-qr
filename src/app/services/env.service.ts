@@ -18,7 +18,7 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class EnvService {
 
-  public appVersionNumber: string = '2.6.4';
+  public appVersionNumber: string = '2.7.0-dev.20220527';
 
   public startPage: "/tabs/scan" | "/tabs/generate" | "/tabs/import-image" | "/tabs/history" | "/tabs/setting" = "/tabs/scan";
   public historyPageStartSegment: 'history' | 'bookmarks' = 'history';
