@@ -311,7 +311,7 @@ export class HistoryPage {
   }
 
   async removeBookmark(bookmark: Bookmark, slidingItem: IonItemSliding) {
-    await slidingItem.close();
+    slidingItem.disabled = true;
     if (this.deleteToast) {
       await this.deleteToast.dismiss();
       this.deleteToast = null;
@@ -397,7 +397,7 @@ export class HistoryPage {
   }
 
   async removeRecord(record: ScanRecord, slidingItem: IonItemSliding) {
-    await slidingItem.close();
+    slidingItem.disabled = true;
     if (this.deleteToast) {
       await this.deleteToast.dismiss();
       this.deleteToast = null;
