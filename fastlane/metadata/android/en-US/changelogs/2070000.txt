@@ -1,0 +1,3 @@
+* Support Itanlian language.
+* Update UI.
+* Improve performance and fix known bugs.
