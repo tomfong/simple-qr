@@ -1,78 +1,13 @@
 @use '@angular/material' as mat;
 @import "@angular/material/theming";
 @include mat.core();
-$custom-primary: (
-  50: #00a5aa,
-  100: #00a5aa,
-  200: #00a5aa,
-  300: #00a5aa,
-  400: #00a5aa,
-  500: #00a5aa,
-  600: #00a5aa,
-  700: #00a5aa,
-  800: #00a5aa,
-  900: #00a5aa,
-  A100: #00a5aa,
-  A200: #00a5aa,
-  A400: #00a5aa,
-  A700: #00a5aa,
-  contrast: (
-    50: white,
-    100: white,
-    200: white,
-    300: white,
-    400: white,
-    500: white,
-    600: white,
-    700: white,
-    800: white,
-    900: white,
-    A100: white,
-    A200: white,
-    A400: white,
-    A700: white,
-  ),
-);
-$custom-secondary: (
-  50: #00a5aa,
-  100: #00a5aa,
-  200: #00a5aa,
-  300: #00a5aa,
-  400: #00a5aa,
-  500: #00a5aa,
-  600: #00a5aa,
-  700: #00a5aa,
-  800: #00a5aa,
-  900: #00a5aa,
-  A100: #00a5aa,
-  A200: #00a5aa,
-  A400: #00a5aa,
-  A700: #00a5aa,
-  contrast: (
-    50: white,
-    100: white,
-    200: white,
-    300: white,
-    400: white,
-    500: white,
-    600: white,
-    700: white,
-    800: white,
-    900: white,
-    A100: white,
-    A200: white,
-    A400: white,
-    A700: white,
-  ),
-);
-$app-primary: mat.define-palette($custom-primary);
-$app-accent: mat.define-palette($custom-secondary);
+$app-primary: mat.define-palette(mat.$cyan-palette, 600);
 $app-warn: mat.define-palette(mat.$red-palette);
 $app-light-theme: mat.define-light-theme(
   (
     color: (
       primary: $app-primary,
-      accent: $app-accent,
+      accent: $app-primary,
       warn: $app-warn,
     ),
   )
@@ -80,7 +15,7 @@ $app-light-theme: mat.define-light-theme(
 $app-dark-theme: mat.define-dark-theme(
   (
     color: (
-      primary: $app-accent,
+      primary: $app-primary,
       accent: $app-primary,
       warn: $app-warn,
     ),
@@ -89,7 +24,7 @@ $app-dark-theme: mat.define-dark-theme(
 $app-black-theme: mat.define-dark-theme(
   (
     color: (
-      primary: $app-accent,
+      primary: $app-primary,
       accent: $app-primary,
       warn: $app-warn,
     ),
@@ -110,20 +45,20 @@ $app-black-theme: mat.define-dark-theme(
 
 :root {
   /** primary **/
-  --ion-color-primary: #00a5aa;
-  --ion-color-primary-rgb: 0, 165, 170;
+  --ion-color-primary: #00acc1;
+  --ion-color-primary-rgb: 0, 172, 193;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #00a5aa;
-  --ion-color-primary-tint: #00a5aa;
+  --ion-color-primary-shade: #00acc1;
+  --ion-color-primary-tint: #00acc1;
 
   /** secondary **/
-  --ion-color-secondary: #00a5aa;
-  --ion-color-secondary-rgb: 0, 165, 170;
+  --ion-color-secondary: #00acc1;
+  --ion-color-secondary-rgb: 0, 172, 193;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade: #00a5aa;
-  --ion-color-secondary-tint: #00a5aa;
+  --ion-color-secondary-shade: #00acc1;
+  --ion-color-secondary-tint: #00acc1;
 
   /** tertiary **/
   --ion-color-tertiary: #5260ff;
@@ -255,12 +190,12 @@ $app-black-theme: mat.define-dark-theme(
 }
 
 body.dark {
-  --ion-color-primary: #00a5aa;
-  --ion-color-primary-rgb: 0, 165, 170;
+  --ion-color-primary: #00acc1;
+  --ion-color-primary-rgb: 0, 172, 193;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #00a5aa;
-  --ion-color-primary-tint: #00a5aa;
+  --ion-color-primary-shade: #00acc1;
+  --ion-color-primary-tint: #00acc1;
 
   /** secondary **/
   --ion-color-secondary: #1b89cd;
