@@ -54,7 +54,7 @@ By using the app, you can
 
 ### Demo
 
-[![Simple QR Demo](https://img.youtube.com/vi/D57VveikN8U/0.jpg)](https://www.youtube.com/watch?v=TIC6ZAkWoXY)
+[![Simple QR Demo](https://img.youtube.com/vi/TIC6ZAkWoXY/0.jpg)](https://www.youtube.com/watch?v=TIC6ZAkWoXY)
 
 ### Languages Supported
 
