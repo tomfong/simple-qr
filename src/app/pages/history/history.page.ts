@@ -151,30 +151,19 @@ export class HistoryPage {
     if (!date) {
       return "-";
     }
-    if (this.translate.currentLang === 'zh-HK' || this.translate.currentLang === 'zh-CN') {
-      switch (source) {
-        case 'create':
-          return moment(date).format("YYYY年M月D日 HH:mm:ss") + ' ' + this.translate.instant("CREATED");
-        case 'view':
-          return moment(date).format("YYYY年M月D日 HH:mm:ss") + ' ' + this.translate.instant("VIEWED");
-        case 'scan':
-          return moment(date).format("YYYY年M月D日 HH:mm:ss") + ' ' + this.translate.instant("SCANNED");
-        default:
-          return moment(date).format("YYYY年M月D日 HH:mm:ss");
-      }
-    } else {
-      const momentObj = moment(date);
-      momentObj.locale(this.env.language);
-      switch (source) {
-        case 'create':
-          return this.translate.instant("CREATED") + ' at ' + momentObj.format("DD MMM YYYY HH:mm:ss");
-        case 'view':
-          return this.translate.instant("VIEWED") + ' at ' + momentObj.format("DD MMM YYYY HH:mm:ss");
-        case 'scan':
-          return this.translate.instant("SCANNED") + ' at ' + momentObj.format("DD MMM YYYY HH:mm:ss");
-        default:
-          return momentObj.format("DD MMM YYYY HH:mm:ss");
-      }
+    const momentObj = moment(date);
+    if (this.env.language != 'en') {
+      momentObj.locale(this.env.language.toLowerCase());
+    }
+    switch (source) {
+      case 'create':
+        return `${this.translate.instant("CREATED")} ${this.translate.instant("AT")} ${momentObj.format("ll LTS")}`;
+      case 'view':
+        return `${this.translate.instant("VIEWED")} ${this.translate.instant("AT")} ${momentObj.format("ll LTS")}`;
+      case 'scan':
+        return `${this.translate.instant("SCANNED")} ${this.translate.instant("AT")} ${momentObj.format("ll LTS")}`;
+      default:
+        return momentObj.format("ll LTS");
     }
   }
 

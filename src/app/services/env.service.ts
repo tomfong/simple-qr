@@ -13,6 +13,8 @@ import { ScanRecord } from '../models/scan-record';
 import { Toast } from '@capacitor/toast';
 import { v4 as uuidv4 } from 'uuid';
 
+export declare type LanguageType = 'de' | 'en' | 'fr' | 'it' | 'zh-CN' | 'zh-HK';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -23,9 +25,9 @@ export class EnvService {
   public startPage: "/tabs/scan" | "/tabs/generate" | "/tabs/import-image" | "/tabs/history" | "/tabs/setting" = "/tabs/scan";
   public historyPageStartSegment: 'history' | 'bookmarks' = 'history';
   public startPageHeader: 'on' | 'off' = 'on';
-  public languages: string[] = ['en', 'zh-HK', 'zh-CN', 'de', 'fr', 'it'];
-  public language: 'en' | 'zh-HK' | 'zh-CN' | 'de' | 'fr' | 'it' = 'en';
-  public selectedLanguage: 'default' | 'en' | 'zh-HK' | 'zh-CN' | 'de' | 'fr' | 'it' = 'default';
+  public languages: LanguageType[] = ['en', 'zh-HK', 'zh-CN', 'de', 'fr', 'it'];
+  public language: LanguageType = 'en';
+  public selectedLanguage: 'default' | LanguageType = 'default';
   public colorTheme: 'light' | 'dark' | 'black' = 'light';
   public selectedColorTheme: 'default' | 'light' | 'dark' | 'black' = 'default';
   public scanRecordLogging: 'on' | 'off' = 'on';
@@ -751,13 +753,13 @@ export class EnvService {
   }
 
   toggleLanguageChange() {
-    if (this.selectedLanguage === 'default') {
+    if (this.selectedLanguage == 'default') {
       let language = 'en';
-      const browserLang = this.translate.getBrowserCultureLang();
-      if (browserLang == null) {
+      const browserCultureLang = this.translate.getBrowserCultureLang();
+      if (browserCultureLang == null) {
         language = 'en';
       } else {
-        const lang = browserLang.slice(0, 2);
+        const lang = browserCultureLang.slice(0, 2)?.toLowerCase();
         switch (lang) {
           case "de":
             language = "de";
@@ -772,14 +774,14 @@ export class EnvService {
             language = "it"
             break;
           case "zh":
-            if (browserLang === 'zh-CN' || browserLang === 'zh-SG') {
+            if (browserCultureLang == 'zh-CN' || browserCultureLang == 'zh-SG') {
               language = 'zh-CN';
             } else {
               language = "zh-HK";
             }
             break;
           default:
-            if (browserLang.slice(0, 3) === "yue") {
+            if (browserCultureLang.slice(0, 3) == "yue") {
               language = "zh-HK";
             } else {
               language = 'en';
@@ -787,7 +789,7 @@ export class EnvService {
         }
       }
       this.translate.use(language);
-      this.language = language as 'en' | 'zh-HK' | 'zh-CN' | 'de' | 'fr' | 'it';
+      this.language = language as LanguageType;
     } else {
       this.translate.use(this.selectedLanguage);
       this.language = this.selectedLanguage;
