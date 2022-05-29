@@ -31,6 +31,7 @@ export class EnvService {
   public colorTheme: 'light' | 'dark' | 'black' = 'light';
   public selectedColorTheme: 'default' | 'light' | 'dark' | 'black' = 'default';
   public scanRecordLogging: 'on' | 'off' = 'on';
+  public recordsLimit: 30 | 50 | 100 | -1 = -1;
   public autoMaxBrightness: 'on' | 'off' = 'on';
   public errorCorrectionLevel: 'L' | 'M' | 'Q' | 'H' = 'M';
   public vibration: 'on' | 'on-haptic' | 'on-scanned' | 'off' = 'on';
@@ -245,6 +246,15 @@ export class EnvService {
           this.scanRecordLogging = value;
         } else {
           this.scanRecordLogging = 'on';
+        }
+      }
+    );
+    this._storage.get("recordsLimit").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.recordsLimit = value;
+        } else {
+          this.recordsLimit = -1;
         }
       }
     );
@@ -470,6 +480,7 @@ export class EnvService {
     this.selectedColorTheme = 'default';
     await this.toggleColorTheme();
     this.scanRecordLogging = 'on';
+    this.recordsLimit = -1;
     this.autoMaxBrightness = 'on';
     this.errorCorrectionLevel = 'M';
     this.vibration = 'on';
@@ -526,6 +537,9 @@ export class EnvService {
 
     this.scanRecordLogging = 'on';
     await this.storageSet("scan-record-logging", this.scanRecordLogging);
+
+    this.recordsLimit = -1;
+    await this.storageSet("recordsLimit", this.recordsLimit);
 
     this.autoMaxBrightness = 'on';
     await this.storageSet("auto-max-brightness", this.autoMaxBrightness);
@@ -631,6 +645,10 @@ export class EnvService {
     return this._scanRecords;
   }
 
+  set scanRecords(value: ScanRecord[]) {
+    this._scanRecords = value;
+  }
+
   async saveScanRecord(value: string): Promise<void> {
     const record = new ScanRecord();
     const date = new Date();
@@ -644,6 +662,11 @@ export class EnvService {
       }
     }
     this._scanRecords.unshift(record);
+    if (this.recordsLimit != -1) {
+      if (this._scanRecords.length > this.recordsLimit) {
+        this._scanRecords = this._scanRecords.slice(0, this.recordsLimit);
+      }
+    }
     await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
   }
 

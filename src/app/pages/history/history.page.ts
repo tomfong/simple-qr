@@ -48,6 +48,11 @@ export class HistoryPage {
 
   firstLoadItems() {
     this.isLoading = true;
+    if (this.env.recordsLimit != -1) {
+      if (this.env.scanRecords.length > this.env.recordsLimit) {
+        this.env.scanRecords = this.env.scanRecords.slice(0, this.env.recordsLimit);
+      }
+    }
     this.env.viewingScanRecords = [];
     this.env.viewingBookmarks = [];
     const scanRecords = [...this.env.scanRecords];
@@ -479,6 +484,15 @@ export class HistoryPage {
     this.changeDetectorRef.detectChanges();
     this.changeDetectorRef.reattach();
     this.router.navigate(['setting-record']);
+  }
+
+  get denominator() {
+    switch (this.env.recordsLimit) {
+      case -1:
+        return '∞';
+      default:
+        return this.env.recordsLimit;
+    }
   }
 
   async presentAlert(msg: string, head: string, buttonText: string, buttonless: boolean = false): Promise<HTMLIonAlertElement> {

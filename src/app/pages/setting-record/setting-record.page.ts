@@ -19,6 +19,8 @@ import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 })
 export class SettingRecordPage {
 
+  preventRecordsLimitToast: boolean = true;
+
   constructor(
     public translate: TranslateService,
     public env: EnvService,
@@ -30,12 +32,27 @@ export class SettingRecordPage {
     private platform: Platform
   ) { }
 
+  ionViewDidEnter() {
+    setTimeout(() => this.preventRecordsLimitToast = false, 100);
+  }
+
+  ionViewWillLeave() {
+    this.preventRecordsLimitToast = true;
+  }
+
   async saveHistoryPageStartSegment() {
     await this.env.storageSet("history-page-start-segment", this.env.historyPageStartSegment);
   }
 
   async saveScanRecord() {
     await this.env.storageSet("scan-record-logging", this.env.scanRecordLogging);
+  }
+
+  async saveRecordsLimit() {
+    await this.env.storageSet("recordsLimit", this.env.recordsLimit);
+    if (this.env.recordsLimit != -1 && !this.preventRecordsLimitToast) {
+      this.presentToast(this.translate.instant("MSG.DELETE_OVERFLOWED_RECORDS"), "short", "bottom");
+    }
   }
 
   async onBackup() {
