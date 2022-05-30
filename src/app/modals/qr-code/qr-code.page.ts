@@ -148,22 +148,7 @@ export class QrCodePage {
   }
 
   async onErrorCorrectionLevelChange() {
-    switch (this.env.errorCorrectionLevel) {
-      case 'L':
-        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.LOW;
-        break;
-      case 'M':
-        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.MEDIUM;
-        break;
-      case 'Q':
-        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.QUARTILE;
-        break;
-      case 'H':
-        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
-        break;
-      default:
-        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.MEDIUM;
-    }
+    this.setErrorCorrectionLevel();
     await this.env.storageSet("error-correction-level", this.env.errorCorrectionLevel);
     if (this.qrcodeElement != null) {
       this.qrcodeElement.errorCorrectionLevel = this.errorCorrectionLevel;

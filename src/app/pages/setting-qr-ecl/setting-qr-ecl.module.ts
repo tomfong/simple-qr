@@ -10,6 +10,7 @@ import { SettingQrEclPage } from './setting-qr-ecl.page';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -20,6 +21,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     CommonModule,
     FormsModule,
     IonicModule,
+    NgxQRCodeModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
