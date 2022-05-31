@@ -9,6 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels, QrcodeComponent } from '@techiediaries/ngx-qrcode';
 import { EnvService } from 'src/app/services/env.service';
 import { ScreenBrightness } from '@capacitor-community/screen-brightness';
+import { rgbToHex } from 'src/app/utils/helpers';
 
 @Component({
   selector: 'app-qr-code',
@@ -159,9 +160,9 @@ export class QrCodePage {
     }
   }
 
-  goErrorCorrectionLevelSetting() {
+  goQrSetting() {
     this.modalController.dismiss();
-    this.router.navigate(['setting-qr-ecl']);
+    this.router.navigate(['setting-qr']);
   }
 
   async shareQrCode(): Promise<void> {
@@ -203,11 +204,11 @@ export class QrCodePage {
   }
 
   get qrColorDark(): string {
-    return "#222428";
+    return rgbToHex(this.env.qrCodeDarkR, this.env.qrCodeDarkG, this.env.qrCodeDarkB);
   }
 
   get qrColorLight(): string {
-    return "#ffffff";
+    return rgbToHex(this.env.qrCodeLightR, this.env.qrCodeLightG, this.env.qrCodeLightB);
   }
 
   async presentLoading(msg: string): Promise<HTMLIonLoadingElement> {

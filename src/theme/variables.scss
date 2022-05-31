@@ -1,4 +1,4 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 @import "@angular/material/theming";
 @include mat.core();
 $app-primary: mat.define-palette(mat.$cyan-palette, 600);
@@ -187,6 +187,30 @@ $app-black-theme: mat.define-dark-theme(
   --ion-color-metal-contrast-rgb: 212, 175, 55;
   --ion-color-metal-shade: #996515;
   --ion-color-metal-tint: #996515;
+
+  /** red **/
+  --ion-color-red: #ff0000;
+  --ion-color-red-rgb: 255, 0, 0;
+  --ion-color-red-contrast: #ffffff;
+  --ion-color-red-contrast-rgb: 255, 255, 255;
+  --ion-color-red-shade: #ff0000;
+  --ion-color-red-tint: #ff0000;
+
+  /** green **/
+  --ion-color-green: #00ff00;
+  --ion-color-green-rgb: 0, 255, 0;
+  --ion-color-green-contrast: #ffffff;
+  --ion-color-green-contrast-rgb: 255, 255, 255;
+  --ion-color-green-shade: #00ff00;
+  --ion-color-green-tint: #00ff00;
+
+  /** blue **/
+  --ion-color-blue: #0000ff;
+  --ion-color-blue-rgb: 0, 0, 255;
+  --ion-color-blue-contrast: #ffffff;
+  --ion-color-blue-contrast-rgb: 255, 255, 255;
+  --ion-color-blue-shade: #0000ff;
+  --ion-color-blue-tint: #0000ff;
 }
 
 body.dark {
@@ -324,6 +348,30 @@ body.dark {
   --ion-color-purple-contrast-rgb: 0, 0, 0;
   --ion-color-purple-shade: purple;
   --ion-color-purple-tint: purple;
+
+  /** red **/
+  --ion-color-red: #ff0000;
+  --ion-color-red-rgb: 255, 0, 0;
+  --ion-color-red-contrast: #ffffff;
+  --ion-color-red-contrast-rgb: 255, 255, 255;
+  --ion-color-red-shade: #ff0000;
+  --ion-color-red-tint: #ff0000;
+
+  /** green **/
+  --ion-color-green: #00ff00;
+  --ion-color-green-rgb: 0, 255, 0;
+  --ion-color-green-contrast: #ffffff;
+  --ion-color-green-contrast-rgb: 255, 255, 255;
+  --ion-color-green-shade: #00ff00;
+  --ion-color-green-tint: #00ff00;
+
+  /** blue **/
+  --ion-color-blue: #0000ff;
+  --ion-color-blue-rgb: 0, 0, 255;
+  --ion-color-blue-contrast: #ffffff;
+  --ion-color-blue-contrast-rgb: 255, 255, 255;
+  --ion-color-blue-shade: #0000ff;
+  --ion-color-blue-tint: #0000ff;
 }
 
 .ios body.dark {
@@ -628,6 +676,33 @@ body.dark {
   --ion-color-contrast-rgb: var(--ion-color-purple-contrast-rgb);
   --ion-color-shade: var(--ion-color-purple-shade);
   --ion-color-tint: var(--ion-color-purple-tint);
+}
+
+.ion-color-red {
+  --ion-color-base: var(--ion-color-red);
+  --ion-color-base-rgb: var(--ion-color-red-rgb);
+  --ion-color-contrast: var(--ion-color-red-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-red-contrast-rgb);
+  --ion-color-shade: var(--ion-color-red-shade);
+  --ion-color-tint: var(--ion-color-red-tint);
+}
+
+.ion-color-green {
+  --ion-color-base: var(--ion-color-green);
+  --ion-color-base-rgb: var(--ion-color-green-rgb);
+  --ion-color-contrast: var(--ion-color-green-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-green-contrast-rgb);
+  --ion-color-shade: var(--ion-color-green-shade);
+  --ion-color-tint: var(--ion-color-green-tint);
+}
+
+.ion-color-blue {
+  --ion-color-base: var(--ion-color-blue);
+  --ion-color-base-rgb: var(--ion-color-blue-rgb);
+  --ion-color-contrast: var(--ion-color-blue-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-blue-contrast-rgb);
+  --ion-color-shade: var(--ion-color-blue-shade);
+  --ion-color-tint: var(--ion-color-blue-tint);
 }
 
 html,

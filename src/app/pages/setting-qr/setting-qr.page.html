@@ -1,0 +1,146 @@
+<ion-header>
+  <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'">
+    <ion-buttons slot="start">
+      <ion-back-button text="">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'QR_CODE_STYLE' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div class="top-qr-preview">
+  <div class="d-flex align-items-center justify-content-top flex-column ion-padding-bottom">
+    <ion-row class="ion-padding-vertical">
+      <ion-col class="ion-text-center" style="max-width: 100% !important;">
+        <ngx-qrcode [elementType]="qrElementType" [value]="qrCodeContent" [width]="defaultWidth"
+          [errorCorrectionLevel]="errorCorrectionLevel" [colorDark]="qrColorDark" [colorLight]="qrColorLight"
+          [margin]="qrMargin" #qrcode>
+        </ngx-qrcode>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'">
+          {{ qrCodeContent }}
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </div>
+</div>
+
+<ion-content>
+
+  <div class="ion-padding-bottom">
+    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'ERROR_CORRECTION_LEVEL' | translate }}
+    </ion-list-header>
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding-horizontal">
+          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
+            <div [innerHTML]="'MSG.ERROR_CORRECTION_LEVEL_EXPLAIN' | translate">
+            </div>
+          </ion-text>
+        </p>
+      </ion-label>
+    </ion-item>
+    <ion-radio-group [(ngModel)]="env.errorCorrectionLevel" (ionChange)="saveErrorCorrectionLevel()">
+      <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+        <ion-label class="ion-padding-start">
+          <p class="ion-padding-horizontal pre-line">
+            <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+              {{ 'LEVEL_L' | translate }}
+            </ion-text>
+          </p>
+        </ion-label>
+        <ion-radio class="ion-margin-end" slot="end" [value]="'L'" [color]="'primary'">
+        </ion-radio>
+      </ion-item>
+      <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+        <ion-label class="ion-padding-start">
+          <p class="ion-padding-horizontal pre-line">
+            <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+              {{ 'LEVEL_M' | translate }}
+            </ion-text>
+          </p>
+        </ion-label>
+        <ion-radio class="ion-margin-end" slot="end" [value]="'M'" [color]="'primary'">
+        </ion-radio>
+      </ion-item>
+      <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+        <ion-label class="ion-padding-start">
+          <p class="ion-padding-horizontal pre-line">
+            <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+              {{ 'LEVEL_Q' | translate }}
+            </ion-text>
+          </p>
+        </ion-label>
+        <ion-radio class="ion-margin-end" slot="end" [value]="'Q'" [color]="'primary'">
+        </ion-radio>
+      </ion-item>
+      <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+        <ion-label class="ion-padding-start">
+          <p class="ion-padding-horizontal pre-line">
+            <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+              {{ 'LEVEL_H' | translate }}
+            </ion-text>
+          </p>
+        </ion-label>
+        <ion-radio class="ion-margin-end" slot="end" [value]="'H'" [color]="'primary'">
+        </ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </div>
+
+  <div class="ion-padding-vertical">
+    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'COLOR' | translate }}
+    </ion-list-header>
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-range class="ion-margin-start ion-padding-horizontal" min="0" max="255" [(ngModel)]="env.qrCodeDarkR"
+        color="red" (ionChange)="saveQrCodeDarkR()">
+        <ion-label slot="start">R</ion-label>
+        <ion-label slot="end">{{ env.qrCodeDarkR }}</ion-label>
+      </ion-range>
+    </ion-item>
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-range class="ion-margin-start ion-padding-horizontal" min="0" max="255" [(ngModel)]="env.qrCodeDarkG"
+        color="green" (ionChange)="saveQrCodeDarkG()">
+        <ion-label slot="start">G</ion-label>
+        <ion-label slot="end">{{ env.qrCodeDarkG }}</ion-label>
+      </ion-range>
+    </ion-item>
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-range class="ion-margin-start ion-padding-horizontal" min="0" max="255" [(ngModel)]="env.qrCodeDarkB"
+        color="blue" (ionChange)="saveQrCodeDarkB()">
+        <ion-label slot="start">B</ion-label>
+        <ion-label slot="end">{{ env.qrCodeDarkB }}</ion-label>
+      </ion-range>
+    </ion-item>
+  </div>
+
+  <div class="ion-padding-vertical">
+    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'BACKGROUND_COLOR' | translate }}
+    </ion-list-header>
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-range class="ion-margin-start ion-padding-horizontal" min="0" max="255" [(ngModel)]="env.qrCodeLightR"
+        color="red" (ionChange)="saveQrCodeLightR()">
+        <ion-label slot="start">R</ion-label>
+        <ion-label slot="end">{{ env.qrCodeLightR }}</ion-label>
+      </ion-range>
+    </ion-item>
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-range class="ion-margin-start ion-padding-horizontal" min="0" max="255" [(ngModel)]="env.qrCodeLightG"
+        color="green" (ionChange)="saveQrCodeLightG()">
+        <ion-label slot="start">G</ion-label>
+        <ion-label slot="end">{{ env.qrCodeLightG }}</ion-label>
+      </ion-range>
+    </ion-item>
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-range class="ion-margin-start ion-padding-horizontal" min="0" max="255" [(ngModel)]="env.qrCodeLightB"
+        color="blue" (ionChange)="saveQrCodeLightB()">
+        <ion-label slot="start">B</ion-label>
+        <ion-label slot="end">{{ env.qrCodeLightB }}</ion-label>
+      </ion-range>
+    </ion-item>
+  </div>
+
+</ion-content>

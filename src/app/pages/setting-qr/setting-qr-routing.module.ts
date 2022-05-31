@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { SettingQrEclPage } from './setting-qr-ecl.page';
+import { SettingQrPage } from './setting-qr.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: SettingQrEclPage
+    component: SettingQrPage
   }
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class SettingQrEclPageRoutingModule {}
+export class SettingQrPageRoutingModule {}

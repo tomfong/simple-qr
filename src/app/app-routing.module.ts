@@ -41,8 +41,8 @@ const routes: Routes = [
     loadChildren: () => import('./pages/setting-orientation/setting-orientation.module').then(m => m.SettingOrientationPageModule)
   },
   {
-    path: 'setting-qr-ecl',
-    loadChildren: () => import('./pages/setting-qr-ecl/setting-qr-ecl.module').then(m => m.SettingQrEclPageModule)
+    path: 'setting-qr',
+    loadChildren: () => import('./pages/setting-qr/setting-qr.module').then(m => m.SettingQrPageModule)
   },
   {
     path: 'setting-auto-brightness',
@@ -51,7 +51,8 @@ const routes: Routes = [
   {
     path: 'setting-start-page',
     loadChildren: () => import('./pages/setting-start-page/setting-start-page.module').then(m => m.SettingStartPagePageModule)
-  },  {
+  },
+  {
     path: 'setting-result',
     loadChildren: () => import('./pages/setting-result/setting-result.module').then( m => m.SettingResultPageModule)
   },
