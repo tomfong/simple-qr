@@ -13,7 +13,7 @@
     <ion-accordion value="preview">
       <ion-item [ngClass]="isAndroid? ['ion-no-padding', 'ion-margin-end'] : 'ion-no-padding'" lines="none"
         slot="header" style="--ripple-color: transparent;">
-        <ion-list-header class="ion-margin-start" style="font-size: large;">
+        <ion-list-header class="ion-padding-start ion-margin-start align-items-center" style="font-size: large;">
           {{ 'PREVIEW' | translate }}
         </ion-list-header>
       </ion-item>
@@ -45,7 +45,7 @@
       <ion-accordion>
         <ion-item [ngClass]="isAndroid? ['ion-no-padding', 'ion-margin-end'] : 'ion-no-padding'" lines="none"
           slot="header" style="--ripple-color: transparent;">
-          <ion-list-header class="ion-margin-start" style="font-size: large;">
+          <ion-list-header class="ion-padding-start ion-margin-start align-items-center" style="font-size: large;">
             {{ 'ERROR_CORRECTION_LEVEL' | translate }}
           </ion-list-header>
         </ion-item>
