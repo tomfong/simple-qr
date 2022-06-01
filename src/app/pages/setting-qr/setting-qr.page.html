@@ -9,40 +9,56 @@
 </ion-header>
 
 <div class="top-qr-preview">
-  <div class="d-flex align-items-center justify-content-top flex-column ion-padding-bottom">
-    <ion-row class="ion-padding-vertical">
-      <ion-col class="ion-text-center" style="max-width: 100% !important;">
-        <ngx-qrcode [elementType]="qrElementType" [value]="qrCodeContent" [width]="defaultWidth"
-          [errorCorrectionLevel]="errorCorrectionLevel" [colorDark]="qrColorDark" [colorLight]="qrColorLight"
-          [margin]="qrMargin" #qrcode>
-        </ngx-qrcode>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col class="ion-text-center">
-        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'">
-          {{ qrCodeContent }}
-        </ion-text>
-      </ion-col>
-    </ion-row>
-  </div>
+  <ion-accordion-group value="preview">
+    <ion-accordion value="preview">
+      <ion-item class="ion-margin-end" lines="none" slot="header">
+        <ion-list-header>
+          {{ 'PREVIEW' | translate }}
+        </ion-list-header>
+      </ion-item>
+      <div class="d-flex align-items-center justify-content-top flex-column ion-padding-bottom" slot="content">
+        <ion-row class="ion-padding-vertical">
+          <ion-col class="ion-text-center" style="max-width: 100% !important;">
+            <ngx-qrcode [elementType]="qrElementType" [value]="qrCodeContent" [width]="defaultWidth"
+              [errorCorrectionLevel]="errorCorrectionLevel" [colorDark]="qrColorDark" [colorLight]="qrColorLight"
+              [margin]="qrMargin" #qrcode>
+            </ngx-qrcode>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="ion-text-center">
+            <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'">
+              {{ qrCodeContent }}
+            </ion-text>
+          </ion-col>
+        </ion-row>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
 </div>
 
 <ion-content>
 
   <div class="ion-padding-bottom">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'ERROR_CORRECTION_LEVEL' | translate }}
-    </ion-list-header>
-    <ion-item class="ion-no-padding" lines="none">
-      <ion-label class="ion-padding-start">
-        <p class="ion-padding-horizontal">
-          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
-            <div [innerHTML]="'MSG.ERROR_CORRECTION_LEVEL_EXPLAIN' | translate">
-            </div>
-          </ion-text>
-        </p>
-      </ion-label>
-    </ion-item>
+    <ion-accordion-group>
+      <ion-accordion>
+        <ion-item class="ion-margin-end" lines="none" slot="header">
+          <ion-list-header>
+            {{ 'ERROR_CORRECTION_LEVEL' | translate }}
+          </ion-list-header>
+        </ion-item>
+        <ion-item class="ion-no-padding" lines="none" slot="content">
+          <ion-label class="ion-padding-start">
+            <p class="ion-padding-horizontal">
+              <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
+                <div [innerHTML]="'MSG.ERROR_CORRECTION_LEVEL_EXPLAIN' | translate">
+                </div>
+              </ion-text>
+            </p>
+          </ion-label>
+        </ion-item>
+      </ion-accordion>
+    </ion-accordion-group>
     <ion-radio-group [(ngModel)]="env.errorCorrectionLevel" (ionChange)="saveErrorCorrectionLevel()">
       <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
         <ion-label class="ion-padding-start">
@@ -91,7 +107,7 @@
     </ion-radio-group>
   </div>
 
-  <div class="ion-padding-vertical">
+  <div class="ion-padding-bottom">
     <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'COLOR' | translate }}
     </ion-list-header>
     <ion-item class="ion-no-padding" lines="none">
@@ -117,7 +133,7 @@
     </ion-item>
   </div>
 
-  <div class="ion-padding-vertical">
+  <div class="ion-padding-bottom">
     <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'BACKGROUND_COLOR' | translate }}
     </ion-list-header>
     <ion-item class="ion-no-padding" lines="none">
@@ -144,3 +160,12 @@
   </div>
 
 </ion-content>
+
+<ion-footer
+  [ngStyle]="env.colorTheme === 'dark'?  {'background-color': '#222428'} : (env.colorTheme === 'black'? {'background-color': '#000000'} : {'background-color': '#F0F0F0'})">
+  <ion-row class="d-flex justify-content-around">
+    <ion-button (click)="tapHaptic(); resetDefault()" fill="clear">
+      {{ 'RESET_DEFAULT' | translate }}
+    </ion-button>
+  </ion-row>
+</ion-footer>

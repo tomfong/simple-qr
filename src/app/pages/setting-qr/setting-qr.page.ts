@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { Toast } from '@capacitor/toast';
+import { AlertController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
 import { EnvService } from 'src/app/services/env.service';
 import { rgbToHex } from 'src/app/utils/helpers';
@@ -19,6 +23,8 @@ export class SettingQrPage {
 
   constructor(
     public env: EnvService,
+    private translate: TranslateService,
+    private alertController: AlertController,
   ) { 
     this.setErrorCorrectionLevel();
   }
@@ -77,5 +83,37 @@ export class SettingQrPage {
 
   async saveQrCodeLightB() {
     await this.env.storageSet("qrCodeLightB", this.env.qrCodeLightB);
+  }
+
+  async resetDefault() {
+    const alert = await this.alertController.create({
+      header: this.translate.instant('RESET_DEFAULT'),
+      message: this.translate.instant('MSG.RESET_DEFAULT'),
+      cssClass: ['alert-bg'],
+      buttons: [
+        {
+          text: this.translate.instant('YES'),
+          handler: async () => {
+            await this.env.resetQrCodeSettings();
+          }
+        },
+        {
+          text: this.translate.instant('NO'),
+          handler: () => true
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async tapHaptic() {
+    if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
+      await Haptics.impact({ style: ImpactStyle.Medium })
+        .catch(async err => {
+          if (this.env.debugMode === 'on') {
+            await Toast.show({ text: 'Err when Haptics.impact: ' + JSON.stringify(err), position: "top", duration: "long" })
+          }
+        })
+    }
   }
 }

@@ -618,13 +618,13 @@ export class EnvService {
 
     this.qrCodeLightG = 255;
     await this.storageSet("qrCodeLightG", this.qrCodeLightG);
-    
+
     this.qrCodeLightB = 255;
     await this.storageSet("qrCodeLightB", this.qrCodeLightB);
-    
+
     this.qrCodeDarkR = 34;
     await this.storageSet("qrCodeDarkR", this.qrCodeDarkR);
-    
+
     this.qrCodeDarkG = 36;
     await this.storageSet("qrCodeDarkG", this.qrCodeDarkG);
 
@@ -707,6 +707,29 @@ export class EnvService {
 
     this.autoExitAppMin = -1;
     await this.storageSet("autoExitAppMin", this.autoExitAppMin);
+  }
+
+  async resetQrCodeSettings() {
+    this.errorCorrectionLevel = 'M';
+    await this.storageSet("error-correction-level", this.errorCorrectionLevel);
+
+    this.qrCodeLightR = 255;
+    await this.storageSet("qrCodeLightR", this.qrCodeLightR);
+
+    this.qrCodeLightG = 255;
+    await this.storageSet("qrCodeLightG", this.qrCodeLightG);
+
+    this.qrCodeLightB = 255;
+    await this.storageSet("qrCodeLightB", this.qrCodeLightB);
+
+    this.qrCodeDarkR = 34;
+    await this.storageSet("qrCodeDarkR", this.qrCodeDarkR);
+
+    this.qrCodeDarkG = 36;
+    await this.storageSet("qrCodeDarkG", this.qrCodeDarkG);
+
+    this.qrCodeDarkB = 40;
+    await this.storageSet("qrCodeDarkB", this.qrCodeDarkB);
   }
 
   get result(): string {
