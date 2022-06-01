@@ -13,7 +13,7 @@
       <ion-col class="ion-text-center ion-padding" style="max-width: 100% !important;">
         <ngx-qrcode [elementType]="qrElementType" [value]="qrCodeContent" [width]="defaultWidth"
           [errorCorrectionLevel]="errorCorrectionLevel" [colorDark]="qrColorDark" [colorLight]="qrColorLight"
-          [margin]="qrMargin" #qrcode [hidden]="isSharing">
+          [margin]="env.qrCodeMargin" #qrcode [hidden]="isSharing">
         </ngx-qrcode>
         <div class="d-flex flex-column align-items-center" *ngIf="isSharing">
           <ion-spinner class="my-3"></ion-spinner>

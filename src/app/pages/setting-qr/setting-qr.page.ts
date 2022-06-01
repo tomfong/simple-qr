@@ -19,22 +19,23 @@ export class SettingQrPage {
   errorCorrectionLevel: NgxQrcodeErrorCorrectionLevels;
   readonly MAX_WIDTH = 300;
   defaultWidth: number = window.innerWidth * 0.4 > this.MAX_WIDTH ? this.MAX_WIDTH : window.innerWidth * 0.4;
-  qrMargin: number = 3;
 
   colorLocked: boolean = true;
   backgroundColorLocked: boolean = true;
+  marginLocked: boolean = true;
 
   constructor(
     public env: EnvService,
     private translate: TranslateService,
     private alertController: AlertController,
-  ) { 
+  ) {
     this.setErrorCorrectionLevel();
   }
 
   ionViewWillLeave() {
     this.colorLocked = true;
     this.backgroundColorLocked = true;
+    this.marginLocked = true;
   }
 
   get qrColorDark(): string {
@@ -91,6 +92,10 @@ export class SettingQrPage {
 
   async saveQrCodeLightB() {
     await this.env.storageSet("qrCodeLightB", this.env.qrCodeLightB);
+  }
+
+  async saveQrCodeMargin() {
+    await this.env.storageSet("qrCodeMargin", this.env.qrCodeMargin);
   }
 
   async resetDefault() {

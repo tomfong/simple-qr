@@ -21,7 +21,7 @@
           <ion-col class="ion-text-center" style="max-width: 100% !important;">
             <ngx-qrcode [elementType]="qrElementType" [value]="qrCodeContent" [width]="defaultWidth"
               [errorCorrectionLevel]="errorCorrectionLevel" [colorDark]="qrColorDark" [colorLight]="qrColorLight"
-              [margin]="qrMargin" #qrcode>
+              [margin]="env.qrCodeMargin" #qrcode>
             </ngx-qrcode>
           </ion-col>
         </ion-row>
@@ -144,7 +144,8 @@
   </div>
 
   <div class="ion-padding-bottom">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal" (click)="backgroundColorLocked = !backgroundColorLocked">
+    <ion-list-header class="ion-margin-start ion-padding-horizontal"
+      (click)="backgroundColorLocked = !backgroundColorLocked">
       <div class="d-flex justify-content-between align-items-center ion-margin-end ion-padding-end"
         style="width: 100%;">
         <span>
@@ -180,6 +181,28 @@
       </ion-range>
     </ion-item>
   </div>
+
+  <div class="ion-padding-bottom">
+    <ion-list-header class="ion-margin-start ion-padding-horizontal" (click)="marginLocked = !marginLocked">
+      <div class="d-flex justify-content-between align-items-center ion-margin-end ion-padding-end"
+        style="width: 100%;">
+        <span>
+          {{ 'MARGIN' | translate }}
+        </span>
+        <ion-icon *ngIf="marginLocked" name="lock-closed" [color]="env.colorTheme === 'light'? 'dark' : 'light'">
+        </ion-icon>
+        <ion-icon *ngIf="!marginLocked" name="lock-open" [color]="env.colorTheme === 'light'? 'dark' : 'light'">
+        </ion-icon>
+      </div>
+    </ion-list-header>
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-range class="ion-margin-start ion-padding-horizontal" min="0" max="50" [(ngModel)]="env.qrCodeMargin"
+        color="primary" (ionChange)="saveQrCodeMargin()" [disabled]="marginLocked">
+        <ion-label slot="end">{{ env.qrCodeMargin }}</ion-label>
+      </ion-range>
+    </ion-item>
+  </div>
+
 
 </ion-content>
 

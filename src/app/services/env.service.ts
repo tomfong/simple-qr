@@ -40,6 +40,7 @@ export class EnvService {
   public qrCodeDarkR: number = 34;
   public qrCodeDarkG: number = 36;
   public qrCodeDarkB: number = 40;
+  public qrCodeMargin: number = 3;
   public vibration: 'on' | 'on-haptic' | 'on-scanned' | 'off' = 'on';
   public orientation: 'default' | 'portrait' | 'landscape' = 'default';
   public notShowHistoryTutorial: boolean = false;
@@ -336,6 +337,15 @@ export class EnvService {
         }
       }
     );
+    this._storage.get("qrCodeMargin").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.qrCodeMargin = value;
+        } else {
+          this.qrCodeMargin = 3;
+        }
+      }
+    );
     this._storage.get("auto-max-brightness").then(
       value => {
         if (value !== null && value !== undefined) {
@@ -549,6 +559,7 @@ export class EnvService {
     this.qrCodeDarkR = 34;
     this.qrCodeDarkG = 36;
     this.qrCodeDarkB = 40;
+    this.qrCodeMargin = 3;
     this.vibration = 'on';
     this.orientation = 'default';
     await this.toggleOrientationChange();
@@ -630,6 +641,9 @@ export class EnvService {
 
     this.qrCodeDarkB = 40;
     await this.storageSet("qrCodeDarkB", this.qrCodeDarkB);
+
+    this.qrCodeMargin = 3;
+    await this.storageSet("qrCodeMargin", this.qrCodeMargin);
 
     this.vibration = 'on';
     await this.storageSet("vibration", this.vibration);
@@ -730,6 +744,9 @@ export class EnvService {
 
     this.qrCodeDarkB = 40;
     await this.storageSet("qrCodeDarkB", this.qrCodeDarkB);
+
+    this.qrCodeMargin = 3;
+    await this.storageSet("qrCodeMargin", this.qrCodeMargin);
   }
 
   get result(): string {
