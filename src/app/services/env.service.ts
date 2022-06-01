@@ -75,11 +75,12 @@ export class EnvService {
   public readonly GITHUB_REPO_URL: string = "https://github.com/tomfong/simple-qr";
   public readonly GOOGLE_PLAY_URL: string = "https://play.google.com/store/apps/details?id=com.tomfong.simpleqr";
   public readonly APP_STORE_URL: string = "https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553";
+  public readonly GITHUB_RELEASE_URL: string = "https://github.com/tomfong/simple-qr/releases";
   public readonly PRIVACY_POLICY: string = "https://www.privacypolicies.com/live/771b1123-99bb-4bfe-815e-1046c0437a0f";
-  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20603";
-  public readonly IOS_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20603";
-  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20604";
-  public readonly IOS_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20604";
+  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20604";
+  public readonly IOS_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20604";
+  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20700";
+  public readonly IOS_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20700";
 
   private _storage: Storage | null = null;
   private _scannedData: string = '';

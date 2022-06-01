@@ -188,6 +188,7 @@
     "VIBRATION": "震动效果",
     "VIEWED": "查看",
     "VIEW_BOOKMARK": "查看书签",
+    "VIEW_GITHUB": "查看 GitHub",
     "VIEW_LOG": "查看记录",
     "VIEW_STORE_AND_SOURCE_CODE": "查看商店及源代码",
     "WEBSITE": "网站",
@@ -285,7 +286,7 @@
         "UPC": "通用产品代码"
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "<p>简易QR是个开源应用程式。若您喜欢和享受使用它，欢迎前往商店评分和支持开发者。</p><p>Pending</p>",
-        "UPDATE_NOTES_IOS": "<p>简易QR是个开源应用程式。若您喜欢和享受使用它，欢迎前往商店评分和支持开发者。</p><p>Pending</p>"
+        "UPDATE_NOTES_ANDROID": "此版本为您带来多项更新和新功能，详情请查看 GitHub。",
+        "UPDATE_NOTES_IOS": "此版本为您带来多项更新和新功能，详情请查看 GitHub。"
     }
 }

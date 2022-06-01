@@ -188,6 +188,7 @@
     "VIBRATION": "Vibration",
     "VIEWED": "Gesehen",
     "VIEW_BOOKMARK": "Lesezeichen ansehen",
+    "VIEW_GITHUB": "GitHub anzeigen",
     "VIEW_LOG": "Protokoll anzeigen",
     "VIEW_STORE_AND_SOURCE_CODE": "Store und Quellcode anzeigen",
     "WEBSITE": "Website",
@@ -285,7 +286,7 @@
         "UPC": "Universeller Produktcode "
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "<p>Simple QR ist eine Open-Source-Anwendung. Wenn Du sie magst und gerne benutzt, bewerte sie bitte im Store und unterstütze den Programmierer.</p><p>Pending</p>",
-        "UPDATE_NOTES_IOS": "<p>Simple QR ist eine Open-Source-Anwendung. Wenn Dir die App gefällt und Du sie gerne benutzt, bewerte sie bitte im Store und unterstütze den Programmierer.</p><p>Pending</p>"
+        "UPDATE_NOTES_ANDROID": "Diese Version bringt Ihnen mehrere Updates und neue Funktionen. Bitte überprüfen Sie GitHub für Details.",
+        "UPDATE_NOTES_IOS": "Diese Version bringt Ihnen mehrere Updates und neue Funktionen. Bitte überprüfen Sie GitHub für Details."
     }
 }
