@@ -12,7 +12,7 @@
   <ion-accordion-group value="preview">
     <ion-accordion value="preview">
       <ion-item class="ion-margin-end" lines="none" slot="header">
-        <ion-list-header>
+        <ion-list-header mode="md" style="font-size: large;">
           {{ 'PREVIEW' | translate }}
         </ion-list-header>
       </ion-item>
@@ -43,7 +43,7 @@
     <ion-accordion-group>
       <ion-accordion>
         <ion-item class="ion-margin-end" lines="none" slot="header">
-          <ion-list-header>
+          <ion-list-header mode="md" style="font-size: large;">
             {{ 'ERROR_CORRECTION_LEVEL' | translate }}
           </ion-list-header>
         </ion-item>
@@ -108,7 +108,8 @@
   </div>
 
   <div class="ion-padding-bottom">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal" (click)="colorLocked = !colorLocked">
+    <ion-list-header class="ion-margin-start ion-padding-horizontal" mode="md" style="font-size: large;"
+      (click)="colorLocked = !colorLocked">
       <div class="d-flex justify-content-between align-items-center ion-margin-end ion-padding-end"
         style="width: 100%;">
         <span>
@@ -144,7 +145,7 @@
   </div>
 
   <div class="ion-padding-bottom">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal"
+    <ion-list-header class="ion-margin-start ion-padding-horizontal" mode="md" style="font-size: large;"
       (click)="backgroundColorLocked = !backgroundColorLocked">
       <div class="d-flex justify-content-between align-items-center ion-margin-end ion-padding-end"
         style="width: 100%;">
@@ -183,7 +184,8 @@
   </div>
 
   <div class="ion-padding-bottom">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal" (click)="marginLocked = !marginLocked">
+    <ion-list-header class="ion-margin-start ion-padding-horizontal" mode="md" style="font-size: large;"
+      (click)="marginLocked = !marginLocked">
       <div class="d-flex justify-content-between align-items-center ion-margin-end ion-padding-end"
         style="width: 100%;">
         <span>

@@ -107,6 +107,9 @@ export class SettingQrPage {
         {
           text: this.translate.instant('YES'),
           handler: async () => {
+            this.colorLocked = true;
+            this.backgroundColorLocked = true;
+            this.marginLocked = true;
             await this.env.resetQrCodeSettings();
           }
         },
