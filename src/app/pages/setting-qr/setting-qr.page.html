@@ -11,8 +11,9 @@
 <div class="top-qr-preview">
   <ion-accordion-group value="preview">
     <ion-accordion value="preview">
-      <ion-item class="ion-margin-end" lines="none" slot="header">
-        <ion-list-header mode="md" style="font-size: large;">
+      <ion-item [ngClass]="isAndroid? ['ion-no-padding', 'ion-margin-end'] : 'ion-no-padding'" lines="none"
+        slot="header" style="--ripple-color: transparent;">
+        <ion-list-header class="ion-margin-start" style="font-size: large;">
           {{ 'PREVIEW' | translate }}
         </ion-list-header>
       </ion-item>
@@ -42,8 +43,9 @@
   <div class="ion-padding-bottom">
     <ion-accordion-group>
       <ion-accordion>
-        <ion-item class="ion-margin-end" lines="none" slot="header">
-          <ion-list-header mode="md" style="font-size: large;">
+        <ion-item [ngClass]="isAndroid? ['ion-no-padding', 'ion-margin-end'] : 'ion-no-padding'" lines="none"
+          slot="header" style="--ripple-color: transparent;">
+          <ion-list-header class="ion-margin-start" style="font-size: large;">
             {{ 'ERROR_CORRECTION_LEVEL' | translate }}
           </ion-list-header>
         </ion-item>

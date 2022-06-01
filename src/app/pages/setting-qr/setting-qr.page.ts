@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Toast } from '@capacitor/toast';
-import { AlertController } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
 import { EnvService } from 'src/app/services/env.service';
@@ -28,6 +28,7 @@ export class SettingQrPage {
     public env: EnvService,
     private translate: TranslateService,
     private alertController: AlertController,
+    private platform: Platform,
   ) {
     this.setErrorCorrectionLevel();
   }
@@ -132,4 +133,13 @@ export class SettingQrPage {
         })
     }
   }
+
+  get isAndroid(): boolean {
+    return this.platform.is('android');
+  }
+
+  get isIos(): boolean {
+    return this.platform.is('ios');
+  }
+
 }
