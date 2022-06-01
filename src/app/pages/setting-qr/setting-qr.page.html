@@ -108,25 +108,35 @@
   </div>
 
   <div class="ion-padding-bottom">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'COLOR' | translate }}
+    <ion-list-header class="ion-margin-start ion-padding-horizontal" (click)="colorLocked = !colorLocked">
+      <div class="d-flex justify-content-between align-items-center ion-margin-end ion-padding-end"
+        style="width: 100%;">
+        <span>
+          {{ 'COLOR' | translate }}
+        </span>
+        <ion-icon *ngIf="colorLocked" name="lock-closed" [color]="env.colorTheme === 'light'? 'dark' : 'light'">
+        </ion-icon>
+        <ion-icon *ngIf="!colorLocked" name="lock-open" [color]="env.colorTheme === 'light'? 'dark' : 'light'">
+        </ion-icon>
+      </div>
     </ion-list-header>
     <ion-item class="ion-no-padding" lines="none">
       <ion-range class="ion-margin-start ion-padding-horizontal" min="0" max="255" [(ngModel)]="env.qrCodeDarkR"
-        color="red" (ionChange)="saveQrCodeDarkR()">
+        color="red" (ionChange)="saveQrCodeDarkR()" [disabled]="colorLocked">
         <ion-label slot="start">R</ion-label>
         <ion-label slot="end">{{ env.qrCodeDarkR }}</ion-label>
       </ion-range>
     </ion-item>
     <ion-item class="ion-no-padding" lines="none">
       <ion-range class="ion-margin-start ion-padding-horizontal" min="0" max="255" [(ngModel)]="env.qrCodeDarkG"
-        color="green" (ionChange)="saveQrCodeDarkG()">
+        color="green" (ionChange)="saveQrCodeDarkG()" [disabled]="colorLocked">
         <ion-label slot="start">G</ion-label>
         <ion-label slot="end">{{ env.qrCodeDarkG }}</ion-label>
       </ion-range>
     </ion-item>
     <ion-item class="ion-no-padding" lines="none">
       <ion-range class="ion-margin-start ion-padding-horizontal" min="0" max="255" [(ngModel)]="env.qrCodeDarkB"
-        color="blue" (ionChange)="saveQrCodeDarkB()">
+        color="blue" (ionChange)="saveQrCodeDarkB()" [disabled]="colorLocked">
         <ion-label slot="start">B</ion-label>
         <ion-label slot="end">{{ env.qrCodeDarkB }}</ion-label>
       </ion-range>
@@ -134,25 +144,37 @@
   </div>
 
   <div class="ion-padding-bottom">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'BACKGROUND_COLOR' | translate }}
+    <ion-list-header class="ion-margin-start ion-padding-horizontal" (click)="backgroundColorLocked = !backgroundColorLocked">
+      <div class="d-flex justify-content-between align-items-center ion-margin-end ion-padding-end"
+        style="width: 100%;">
+        <span>
+          {{ 'BACKGROUND_COLOR' | translate }}
+        </span>
+        <ion-icon *ngIf="backgroundColorLocked" name="lock-closed"
+          [color]="env.colorTheme === 'light'? 'dark' : 'light'">
+        </ion-icon>
+        <ion-icon *ngIf="!backgroundColorLocked" name="lock-open"
+          [color]="env.colorTheme === 'light'? 'dark' : 'light'">
+        </ion-icon>
+      </div>
     </ion-list-header>
     <ion-item class="ion-no-padding" lines="none">
       <ion-range class="ion-margin-start ion-padding-horizontal" min="0" max="255" [(ngModel)]="env.qrCodeLightR"
-        color="red" (ionChange)="saveQrCodeLightR()">
+        color="red" (ionChange)="saveQrCodeLightR()" [disabled]="backgroundColorLocked">
         <ion-label slot="start">R</ion-label>
         <ion-label slot="end">{{ env.qrCodeLightR }}</ion-label>
       </ion-range>
     </ion-item>
     <ion-item class="ion-no-padding" lines="none">
       <ion-range class="ion-margin-start ion-padding-horizontal" min="0" max="255" [(ngModel)]="env.qrCodeLightG"
-        color="green" (ionChange)="saveQrCodeLightG()">
+        color="green" (ionChange)="saveQrCodeLightG()" [disabled]="backgroundColorLocked">
         <ion-label slot="start">G</ion-label>
         <ion-label slot="end">{{ env.qrCodeLightG }}</ion-label>
       </ion-range>
     </ion-item>
     <ion-item class="ion-no-padding" lines="none">
       <ion-range class="ion-margin-start ion-padding-horizontal" min="0" max="255" [(ngModel)]="env.qrCodeLightB"
-        color="blue" (ionChange)="saveQrCodeLightB()">
+        color="blue" (ionChange)="saveQrCodeLightB()" [disabled]="backgroundColorLocked">
         <ion-label slot="start">B</ion-label>
         <ion-label slot="end">{{ env.qrCodeLightB }}</ion-label>
       </ion-range>

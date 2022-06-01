@@ -21,12 +21,20 @@ export class SettingQrPage {
   defaultWidth: number = window.innerWidth * 0.4 > this.MAX_WIDTH ? this.MAX_WIDTH : window.innerWidth * 0.4;
   qrMargin: number = 3;
 
+  colorLocked: boolean = true;
+  backgroundColorLocked: boolean = true;
+
   constructor(
     public env: EnvService,
     private translate: TranslateService,
     private alertController: AlertController,
   ) { 
     this.setErrorCorrectionLevel();
+  }
+
+  ionViewWillLeave() {
+    this.colorLocked = true;
+    this.backgroundColorLocked = true;
   }
 
   get qrColorDark(): string {
