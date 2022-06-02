@@ -1,3 +1,5 @@
+* More QR code customization settings, including color, background color and margin.
+* Limit the maximum number of records that can be stored (30, 50, 100 or unlimited).
 * Support Itanlian language.
 * Update UI.
 * Improve performance and fix known bugs.

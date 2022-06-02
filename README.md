@@ -1,10 +1,12 @@
-<img align="left" width="130" height="130" src="./resources/icon_round.png" alt="app icon">
+<img align="left" width="150" height="150" src="./resources/icon_round.png" alt="app icon">
 
 # Simple QR
 
 Simple and lightweight app to scan, create and store QR codes.
 
 <br>
+
+###
 
 <div>
   <img height="300" src="./screenshots/2.png">
@@ -48,7 +50,7 @@ By using the app, you can
         * Message: Send message, add contact
         * Email: Send email
 
-6. Adjust the generated QR code, e.g. error correction level and screen brightness.
+6. Customize the generated QR code, e.g. error correction level, color, margin and screen brightness.
 
 7. Customize the app, e.g. app initial page, language and color theme etc.
 
@@ -69,9 +71,22 @@ You are welcomed to help translate the app into more languages (refer to this <a
 
 ## Contribute
 
-* Star and <b>sponsor (<a href="https://github.com/tomfong">click here</a>)</b> the project.
-* Translate the app into different languages.
+* Sponsor the project.
+
+  <div>
+      <a href="https://linktr.ee/tomfonghk"> <img src="badges/Paypal.png" width="200" alt="tomfong"/></a>
+      <a href="https://www.buymeacoffee.com/tomfong"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="60" width="220" alt="tomfong" /></a>
+  </div>
+
+* Star the project.
+
+  [![Stars](https://img.shields.io/github/stars/tomfong/simple-qr?style=social)](https://github.com/tomfong/simple-qr/stargazers)
+
 * Open issues to report bugs or share any new ideas.
+
+  [![Issues](https://img.shields.io/bitbucket/issues-raw/tomfong/simple-qr?style=plastic)](https://github.com/tomfong/simple-qr/issues)
+
+* Translate the app into different languages.
 
 ### How to help translate?
 
@@ -111,24 +126,23 @@ Thank you the following contributors who have made the app better!
 
 | Name | GitHub | How? |
 |:-:|:-:|:-:|
-| mondstern | [mondlicht-und-sterne](https://github.com/mondlicht-und-sterne) | Translate the app into German |
+| mondstern | [mondlicht-und-sterne](https://github.com/mondlicht-und-sterne) | German language translation |
+| Valentino Bocchetti | [luftmensch-luftmensch](https://github.com/luftmensch-luftmensch) | Italian language translation |
 
 ## Framework
 
 ```sh
     Ionic CLI                       : 6.19.0
-    Ionic Framework                 : @ionic/angular 6.1.6
-    @angular-devkit/build-angular   : 13.3.6
-    @angular-devkit/schematics      : 13.3.6
-    @angular/cli                    : 13.3.6
+    Ionic Framework                 : @ionic/angular 6.1.8
+    @angular-devkit/build-angular   : 13.3.7
+    @angular-devkit/schematics      : 13.3.7
+    @angular/cli                    : 13.3.7
     @ionic/angular-toolkit          : 6.1.0
 
     Capacitor CLI                   : 3.5.1
     @capacitor/android              : 3.5.1
     @capacitor/core                 : 3.5.1
     @capacitor/ios                  : 3.5.1
-
-    Cordova CLI                     : 10.0.0
 
     Android SDK Tools               : 26.1.1
     NodeJS                          : v16.15.4
