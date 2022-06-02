@@ -44,11 +44,11 @@ By using the app, you can
     * Execute base64 encoding/decoding on it.
     * Use it as a content to generate a new shareable QR code.
     * Do corresponding tasks if it is a
-        * URL: Browse website
-        * vCard contact: Add contact
-        * Phone number: Phone call, add contact
-        * Message: Send message, add contact
-        * Email: Send email
+      * URL: Browse website
+      * vCard contact: Add contact
+      * Phone number: Phone call, add contact
+      * Message: Send message, add contact
+      * Email: Send email
 
 6. Customize the generated QR code, e.g. error correction level, color, margin and screen brightness.
 
@@ -74,17 +74,17 @@ You are welcomed to help translate the app into more languages (refer to this <a
 * Sponsor the project.
 
   <div>
-      <a href="https://linktr.ee/tomfonghk"> <img src="badges/Paypal.png" width="200" alt="tomfong"/></a>
-      <a href="https://www.buymeacoffee.com/tomfong"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="60" width="220" alt="tomfong" /></a>
+      <a href="https://linktr.ee/tomfonghk"> <img src="badges/Paypal.png" width="170" alt="tomfong"/></a>
+      <a href="https://www.buymeacoffee.com/tomfong"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="180" alt="tomfong" /></a>
   </div>
 
 * Star the project.
 
-  [![Stars](https://img.shields.io/github/stars/tomfong/simple-qr?style=social)](https://github.com/tomfong/simple-qr/stargazers)
+  [![Stars](https://img.shields.io/github/stars/tomfong/simple-qr?style=flat)](https://github.com/tomfong/simple-qr/stargazers)
 
 * Open issues to report bugs or share any new ideas.
 
-  [![Issues](https://img.shields.io/bitbucket/issues-raw/tomfong/simple-qr?style=plastic)](https://github.com/tomfong/simple-qr/issues)
+  [![Issues](https://img.shields.io/bitbucket/issues-raw/tomfong/simple-qr?style=flat)](https://github.com/tomfong/simple-qr/issues)
 
 * Translate the app into different languages.
 
