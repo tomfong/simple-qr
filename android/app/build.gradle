@@ -6,7 +6,7 @@ android {
         applicationId "com.tomfong.simpleqr"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2070000
+        versionCode 2070001
         versionName "2.7.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
