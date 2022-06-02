@@ -13,24 +13,34 @@ import { ScanRecord } from '../models/scan-record';
 import { Toast } from '@capacitor/toast';
 import { v4 as uuidv4 } from 'uuid';
 
+export declare type LanguageType = 'de' | 'en' | 'fr' | 'it' | 'zh-CN' | 'zh-HK';
+
 @Injectable({
   providedIn: 'root'
 })
 export class EnvService {
 
-  public appVersionNumber: string = '2.6.4';
+  public appVersionNumber: string = '2.7.0-dev.20220601';
 
   public startPage: "/tabs/scan" | "/tabs/generate" | "/tabs/import-image" | "/tabs/history" | "/tabs/setting" = "/tabs/scan";
   public historyPageStartSegment: 'history' | 'bookmarks' = 'history';
   public startPageHeader: 'on' | 'off' = 'on';
-  public languages: string[] = ['en', 'zh-HK', 'zh-CN', 'de', 'fr'];
-  public language: 'en' | 'zh-HK' | 'zh-CN' | 'de' | 'fr' = 'en';
-  public selectedLanguage: 'default' | 'en' | 'zh-HK' | 'zh-CN' | 'de' | 'fr' = 'default';
+  public languages: LanguageType[] = ['en', 'zh-HK', 'zh-CN', 'de', 'fr', 'it'];
+  public language: LanguageType = 'en';
+  public selectedLanguage: 'default' | LanguageType = 'default';
   public colorTheme: 'light' | 'dark' | 'black' = 'light';
   public selectedColorTheme: 'default' | 'light' | 'dark' | 'black' = 'default';
   public scanRecordLogging: 'on' | 'off' = 'on';
+  public recordsLimit: 30 | 50 | 100 | -1 = -1;
   public autoMaxBrightness: 'on' | 'off' = 'on';
   public errorCorrectionLevel: 'L' | 'M' | 'Q' | 'H' = 'M';
+  public qrCodeLightR: number = 255;
+  public qrCodeLightG: number = 255;
+  public qrCodeLightB: number = 255;
+  public qrCodeDarkR: number = 34;
+  public qrCodeDarkG: number = 36;
+  public qrCodeDarkB: number = 40;
+  public qrCodeMargin: number = 3;
   public vibration: 'on' | 'on-haptic' | 'on-scanned' | 'off' = 'on';
   public orientation: 'default' | 'portrait' | 'landscape' = 'default';
   public notShowHistoryTutorial: boolean = false;
@@ -54,7 +64,7 @@ export class EnvService {
   public showSendMessageButton: 'on' | 'off' = 'on';
   public showSendEmailButton: 'on' | 'off' = 'on';
   public debugMode: 'on' | 'off' = 'off';
-  public autoExitAppMin: 1 | 3 | 5 | -1 = -1; 
+  public autoExitAppMin: 1 | 3 | 5 | -1 = -1;
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
   public readonly GOOGLE_SEARCH_URL: string = "https://www.google.com/search?q=";
@@ -65,11 +75,12 @@ export class EnvService {
   public readonly GITHUB_REPO_URL: string = "https://github.com/tomfong/simple-qr";
   public readonly GOOGLE_PLAY_URL: string = "https://play.google.com/store/apps/details?id=com.tomfong.simpleqr";
   public readonly APP_STORE_URL: string = "https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553";
+  public readonly GITHUB_RELEASE_URL: string = "https://github.com/tomfong/simple-qr/releases";
   public readonly PRIVACY_POLICY: string = "https://www.privacypolicies.com/live/771b1123-99bb-4bfe-815e-1046c0437a0f";
-  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20603";
-  public readonly IOS_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20603";
-  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20604";
-  public readonly IOS_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20604";
+  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20604";
+  public readonly IOS_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20604";
+  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20700";
+  public readonly IOS_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20700";
 
   private _storage: Storage | null = null;
   private _scannedData: string = '';
@@ -246,6 +257,15 @@ export class EnvService {
         }
       }
     );
+    this._storage.get("recordsLimit").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.recordsLimit = value;
+        } else {
+          this.recordsLimit = -1;
+        }
+      }
+    );
     this._storage.get("vibration").then(
       value => {
         if (value !== null && value !== undefined) {
@@ -261,6 +281,69 @@ export class EnvService {
           this.errorCorrectionLevel = value;
         } else {
           this.errorCorrectionLevel = 'M';
+        }
+      }
+    );
+    this._storage.get("qrCodeLightR").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.qrCodeLightR = value;
+        } else {
+          this.qrCodeLightR = 255;
+        }
+      }
+    );
+    this._storage.get("qrCodeLightG").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.qrCodeLightG = value;
+        } else {
+          this.qrCodeLightG = 255;
+        }
+      }
+    );
+    this._storage.get("qrCodeLightB").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.qrCodeLightB = value;
+        } else {
+          this.qrCodeLightB = 255;
+        }
+      }
+    );
+    this._storage.get("qrCodeDarkR").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.qrCodeDarkR = value;
+        } else {
+          this.qrCodeDarkR = 34;
+        }
+      }
+    );
+    this._storage.get("qrCodeDarkG").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.qrCodeDarkG = value;
+        } else {
+          this.qrCodeDarkG = 36;
+        }
+      }
+    );
+    this._storage.get("qrCodeDarkB").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.qrCodeDarkB = value;
+        } else {
+          this.qrCodeDarkB = 40;
+        }
+      }
+    );
+    this._storage.get("qrCodeMargin").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.qrCodeMargin = value;
+        } else {
+          this.qrCodeMargin = 3;
         }
       }
     );
@@ -468,8 +551,16 @@ export class EnvService {
     this.selectedColorTheme = 'default';
     await this.toggleColorTheme();
     this.scanRecordLogging = 'on';
+    this.recordsLimit = -1;
     this.autoMaxBrightness = 'on';
     this.errorCorrectionLevel = 'M';
+    this.qrCodeLightR = 255;
+    this.qrCodeLightG = 255;
+    this.qrCodeLightB = 255;
+    this.qrCodeDarkR = 34;
+    this.qrCodeDarkG = 36;
+    this.qrCodeDarkB = 40;
+    this.qrCodeMargin = 3;
     this.vibration = 'on';
     this.orientation = 'default';
     await this.toggleOrientationChange();
@@ -525,11 +616,35 @@ export class EnvService {
     this.scanRecordLogging = 'on';
     await this.storageSet("scan-record-logging", this.scanRecordLogging);
 
+    this.recordsLimit = -1;
+    await this.storageSet("recordsLimit", this.recordsLimit);
+
     this.autoMaxBrightness = 'on';
     await this.storageSet("auto-max-brightness", this.autoMaxBrightness);
 
     this.errorCorrectionLevel = 'M';
     await this.storageSet("error-correction-level", this.errorCorrectionLevel);
+
+    this.qrCodeLightR = 255;
+    await this.storageSet("qrCodeLightR", this.qrCodeLightR);
+
+    this.qrCodeLightG = 255;
+    await this.storageSet("qrCodeLightG", this.qrCodeLightG);
+
+    this.qrCodeLightB = 255;
+    await this.storageSet("qrCodeLightB", this.qrCodeLightB);
+
+    this.qrCodeDarkR = 34;
+    await this.storageSet("qrCodeDarkR", this.qrCodeDarkR);
+
+    this.qrCodeDarkG = 36;
+    await this.storageSet("qrCodeDarkG", this.qrCodeDarkG);
+
+    this.qrCodeDarkB = 40;
+    await this.storageSet("qrCodeDarkB", this.qrCodeDarkB);
+
+    this.qrCodeMargin = 3;
+    await this.storageSet("qrCodeMargin", this.qrCodeMargin);
 
     this.vibration = 'on';
     await this.storageSet("vibration", this.vibration);
@@ -609,6 +724,32 @@ export class EnvService {
     await this.storageSet("autoExitAppMin", this.autoExitAppMin);
   }
 
+  async resetQrCodeSettings() {
+    this.errorCorrectionLevel = 'M';
+    await this.storageSet("error-correction-level", this.errorCorrectionLevel);
+
+    this.qrCodeLightR = 255;
+    await this.storageSet("qrCodeLightR", this.qrCodeLightR);
+
+    this.qrCodeLightG = 255;
+    await this.storageSet("qrCodeLightG", this.qrCodeLightG);
+
+    this.qrCodeLightB = 255;
+    await this.storageSet("qrCodeLightB", this.qrCodeLightB);
+
+    this.qrCodeDarkR = 34;
+    await this.storageSet("qrCodeDarkR", this.qrCodeDarkR);
+
+    this.qrCodeDarkG = 36;
+    await this.storageSet("qrCodeDarkG", this.qrCodeDarkG);
+
+    this.qrCodeDarkB = 40;
+    await this.storageSet("qrCodeDarkB", this.qrCodeDarkB);
+
+    this.qrCodeMargin = 3;
+    await this.storageSet("qrCodeMargin", this.qrCodeMargin);
+  }
+
   get result(): string {
     return this._scannedData;
   }
@@ -629,6 +770,10 @@ export class EnvService {
     return this._scanRecords;
   }
 
+  set scanRecords(value: ScanRecord[]) {
+    this._scanRecords = value;
+  }
+
   async saveScanRecord(value: string): Promise<void> {
     const record = new ScanRecord();
     const date = new Date();
@@ -642,6 +787,11 @@ export class EnvService {
       }
     }
     this._scanRecords.unshift(record);
+    if (this.recordsLimit != -1) {
+      if (this._scanRecords.length > this.recordsLimit) {
+        this._scanRecords = this._scanRecords.slice(0, this.recordsLimit);
+      }
+    }
     await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
   }
 
@@ -751,25 +901,43 @@ export class EnvService {
   }
 
   toggleLanguageChange() {
-    if (this.selectedLanguage === 'default') {
+    if (this.selectedLanguage == 'default') {
       let language = 'en';
-      const browserLang = this.translate.getBrowserCultureLang();
-      if (browserLang.includes("zh", 0)) {
-        if (browserLang === 'zh-CN' || browserLang === 'zh-SG') language = 'zh-CN';
-        else language = "zh-HK";
-      } else if (browserLang.includes("de", 0)) {
-        language = "de";
-      } else if (browserLang.includes("fr", 0)) {
-        language = "fr";
-      } else if (browserLang.includes("yue", 0)) {
-        language = "zh-HK";
-      } else if (this.languages.includes(browserLang)) {
-        language = browserLang as 'en' | 'zh-HK' | 'zh-CN' | 'de' | 'fr';
-      } else {
+      const browserCultureLang = this.translate.getBrowserCultureLang();
+      if (browserCultureLang == null) {
         language = 'en';
+      } else {
+        const lang = browserCultureLang.slice(0, 2)?.toLowerCase();
+        switch (lang) {
+          case "de":
+            language = "de";
+            break;
+          case "en":
+            language = "en"
+            break;
+          case "fr":
+            language = "fr"
+            break;
+          case "it":
+            language = "it"
+            break;
+          case "zh":
+            if (browserCultureLang == 'zh-CN' || browserCultureLang == 'zh-SG') {
+              language = 'zh-CN';
+            } else {
+              language = "zh-HK";
+            }
+            break;
+          default:
+            if (browserCultureLang.slice(0, 3) == "yue") {
+              language = "zh-HK";
+            } else {
+              language = 'en';
+            }
+        }
       }
       this.translate.use(language);
-      this.language = language as 'en' | 'zh-HK' | 'zh-CN' | 'de' | 'fr';
+      this.language = language as LanguageType;
     } else {
       this.translate.use(this.selectedLanguage);
       this.language = this.selectedLanguage;

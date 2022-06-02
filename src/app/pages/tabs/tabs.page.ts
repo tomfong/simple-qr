@@ -21,7 +21,7 @@ export class TabsPage {
     private platform: Platform,
     private router: Router,
     private alertController: AlertController,
-  ) { 
+  ) {
     this.platform.pause.subscribe(
       _ => {
         if (this.platform.is('android')) {
@@ -94,13 +94,9 @@ export class TabsPage {
           handler: () => true,
         },
         {
-          text: this.translate.instant("RATE_THE_APP"),
+          text: this.translate.instant("VIEW_GITHUB"),
           handler: () => {
-            if (this.platform.is('android')) {
-              this.openGooglePlay();
-            } else if (this.platform.is('ios')) {
-              this.openAppStore();
-            }
+            this.openGitHubRelease();
           }
         }
       ],
@@ -115,6 +111,10 @@ export class TabsPage {
 
   openAppStore(): void {
     window.open(this.env.APP_STORE_URL, '_system');
+  }
+
+  openGitHubRelease() {
+    window.open(this.env.GITHUB_RELEASE_URL, '_system');
   }
 
   async presentToast(msg: string, duration: "short" | "long", pos: "top" | "center" | "bottom") {

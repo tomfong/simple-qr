@@ -9,6 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels, QrcodeComponent } from '@techiediaries/ngx-qrcode';
 import { EnvService } from 'src/app/services/env.service';
 import { ScreenBrightness } from '@capacitor-community/screen-brightness';
+import { rgbToHex } from 'src/app/utils/helpers';
 
 @Component({
   selector: 'app-qr-code',
@@ -27,7 +28,6 @@ export class QrCodePage {
   scale: number = 0.8;
   readonly MAX_WIDTH = 350;
   defaultWidth: number = window.innerHeight * 0.32 > this.MAX_WIDTH ? this.MAX_WIDTH : window.innerHeight * 0.32;
-  qrMargin: number = 3;
 
   qrImageDataUrl: string;
 
@@ -148,22 +148,7 @@ export class QrCodePage {
   }
 
   async onErrorCorrectionLevelChange() {
-    switch (this.env.errorCorrectionLevel) {
-      case 'L':
-        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.LOW;
-        break;
-      case 'M':
-        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.MEDIUM;
-        break;
-      case 'Q':
-        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.QUARTILE;
-        break;
-      case 'H':
-        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
-        break;
-      default:
-        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.MEDIUM;
-    }
+    this.setErrorCorrectionLevel();
     await this.env.storageSet("error-correction-level", this.env.errorCorrectionLevel);
     if (this.qrcodeElement != null) {
       this.qrcodeElement.errorCorrectionLevel = this.errorCorrectionLevel;
@@ -174,9 +159,9 @@ export class QrCodePage {
     }
   }
 
-  goErrorCorrectionLevelSetting() {
+  goQrSetting() {
     this.modalController.dismiss();
-    this.router.navigate(['setting-qr-ecl']);
+    this.router.navigate(['setting-qr']);
   }
 
   async shareQrCode(): Promise<void> {
@@ -218,11 +203,11 @@ export class QrCodePage {
   }
 
   get qrColorDark(): string {
-    return "#222428";
+    return rgbToHex(this.env.qrCodeDarkR, this.env.qrCodeDarkG, this.env.qrCodeDarkB);
   }
 
   get qrColorLight(): string {
-    return "#ffffff";
+    return rgbToHex(this.env.qrCodeLightR, this.env.qrCodeLightG, this.env.qrCodeLightB);
   }
 
   async presentLoading(msg: string): Promise<HTMLIonLoadingElement> {

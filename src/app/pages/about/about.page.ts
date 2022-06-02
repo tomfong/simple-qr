@@ -53,26 +53,26 @@ export class AboutPage {
   async showUpdateNotes() {
     const alert = await this.alertController.create({
       header: this.translate.instant("PATCH_NOTES"),
-      message: this.platform.is('ios')? this.translate.instant("UPDATE.UPDATE_NOTES_IOS") : this.translate.instant("UPDATE.UPDATE_NOTES_ANDROID"),
+      message: this.platform.is('ios') ? this.translate.instant("UPDATE.UPDATE_NOTES_IOS") : this.translate.instant("UPDATE.UPDATE_NOTES_ANDROID"),
       buttons: [
         {
-          text:  this.translate.instant("CLOSE"),
+          text: this.translate.instant("CLOSE"),
           handler: () => true,
         },
         {
-          text:  this.translate.instant("RATE_THE_APP"),
+          text: this.translate.instant("VIEW_GITHUB"),
           handler: () => {
-            if (this.platform.is('android')) {
-              this.openGooglePlay();
-            } else if (this.platform.is('ios')) {
-              this.openAppStore();
-            }
+            this.openGitHubRelease();
           }
         }
-       ],
+      ],
       cssClass: ['left-align', 'alert-bg']
     });
     await alert.present();
+  }
+
+  openGitHubRelease() {
+    window.open(this.env.GITHUB_RELEASE_URL, '_system');
   }
 
   viewPrivacyPolicy(): void {

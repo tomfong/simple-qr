@@ -11,6 +11,17 @@
 <ion-content>
 
   <ion-list-header class="ion-margin-start ion-padding-horizontal mt-3">{{ 'QR_CODE' | translate }}</ion-list-header>
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setQrStyle()">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="qr-code-outline">
+    </ion-icon>
+    <ion-label>
+      <p class="ion-padding pre-line">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+          {{ 'QR_CODE_STYLE' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+  </ion-item>
   <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setAutoQr()">
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/popup.svg">
     </ion-icon>
@@ -29,17 +40,6 @@
       <p class="ion-padding pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'AUTO_MAX_BRIGHTNESS' | translate }}
-        </ion-text>
-      </p>
-    </ion-label>
-  </ion-item>
-  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setErrorCorrectionLevel()">
-    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="qr-code-outline">
-    </ion-icon>
-    <ion-label>
-      <p class="ion-padding pre-line">
-        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-          {{ 'ERROR_CORRECTION_LEVEL' | translate }}
         </ion-text>
       </p>
     </ion-label>

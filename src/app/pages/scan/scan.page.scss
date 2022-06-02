@@ -19,11 +19,3 @@ body {
     max-height: 50%;
     opacity: 0.7;
 }
-
-.master-fab-btn {
-    --background: var(--ion-color-primary);
-}
-
-.master-fab-btn.fab-button-close-active {
-    --background: var(--ion-color-secondary);
-}

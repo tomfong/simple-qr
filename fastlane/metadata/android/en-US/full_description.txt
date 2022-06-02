@@ -1,6 +1,6 @@
 <i>Simple QR</i> is a FOSS app to scan, create and store QR codes with a simple UI and experience. No backend service connected. No data collected. No ads.
 
-English, French, German, Traditional Chinese and Simplified Chinese are supported.
+English, French, German, Itanlian, Traditional Chinese and Simplified Chinese are supported.
 
 By using the app, you can:
 
@@ -19,5 +19,5 @@ By using the app, you can:
         * Phone number: Phone call, add contact
         * Message: Send message, add contact
         * Email: Send email
-* Adjust the generated QR code, e.g. error correction level and screen brightness.
+* Customize the generated QR code, e.g. error correction level, color, margin and screen brightness.
 * Customize the app, e.g. app initial page, language and color theme etc.

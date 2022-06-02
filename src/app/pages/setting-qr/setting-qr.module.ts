@@ -4,12 +4,13 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { SettingQrEclPageRoutingModule } from './setting-qr-ecl-routing.module';
+import { SettingQrPageRoutingModule } from './setting-qr-routing.module';
 
-import { SettingQrEclPage } from './setting-qr-ecl.page';
+import { SettingQrPage } from './setting-qr.page';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -20,6 +21,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     CommonModule,
     FormsModule,
     IonicModule,
+    NgxQRCodeModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
@@ -27,8 +29,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         deps: [HttpClient]
       }
     }),
-    SettingQrEclPageRoutingModule
+    SettingQrPageRoutingModule
   ],
-  declarations: [SettingQrEclPage]
+  declarations: [SettingQrPage]
 })
-export class SettingQrEclPageModule {}
+export class SettingQrPageModule {}

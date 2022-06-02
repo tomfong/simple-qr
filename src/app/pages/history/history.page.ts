@@ -48,6 +48,11 @@ export class HistoryPage {
 
   firstLoadItems() {
     this.isLoading = true;
+    if (this.env.recordsLimit != -1) {
+      if (this.env.scanRecords.length > this.env.recordsLimit) {
+        this.env.scanRecords = this.env.scanRecords.slice(0, this.env.recordsLimit);
+      }
+    }
     this.env.viewingScanRecords = [];
     this.env.viewingBookmarks = [];
     const scanRecords = [...this.env.scanRecords];
@@ -151,28 +156,19 @@ export class HistoryPage {
     if (!date) {
       return "-";
     }
-    if (this.translate.currentLang === 'zh-HK' || this.translate.currentLang === 'zh-CN') {
-      switch (source) {
-        case 'create':
-          return moment(date).format("YYYY年M月D日 HH:mm:ss") + ' ' + this.translate.instant("CREATED");
-        case 'view':
-          return moment(date).format("YYYY年M月D日 HH:mm:ss") + ' ' + this.translate.instant("VIEWED");
-        case 'scan':
-          return moment(date).format("YYYY年M月D日 HH:mm:ss") + ' ' + this.translate.instant("SCANNED");
-        default:
-          return moment(date).format("YYYY年M月D日 HH:mm:ss");
-      }
-    } else {
-      switch (source) {
-        case 'create':
-          return this.translate.instant("CREATED") + ' at ' + moment(date).format("YYYY-MMM-DD HH:mm:ss");
-        case 'view':
-          return this.translate.instant("VIEWED") + ' at ' + moment(date).format("YYYY-MMM-DD HH:mm:ss");
-        case 'scan':
-          return this.translate.instant("SCANNED") + ' at ' + moment(date).format("YYYY-MMM-DD HH:mm:ss");
-        default:
-          return moment(date).format("YYYY-MMM-DD HH:mm:ss");
-      }
+    const momentObj = moment(date);
+    if (this.env.language != 'en') {
+      momentObj.locale(this.env.language.toLowerCase());
+    }
+    switch (source) {
+      case 'create':
+        return `${this.translate.instant("CREATED")} ${this.translate.instant("AT")} ${momentObj.format("ll LTS")}`;
+      case 'view':
+        return `${this.translate.instant("VIEWED")} ${this.translate.instant("AT")} ${momentObj.format("ll LTS")}`;
+      case 'scan':
+        return `${this.translate.instant("SCANNED")} ${this.translate.instant("AT")} ${momentObj.format("ll LTS")}`;
+      default:
+        return momentObj.format("ll LTS");
     }
   }
 
@@ -311,7 +307,7 @@ export class HistoryPage {
   }
 
   async removeBookmark(bookmark: Bookmark, slidingItem: IonItemSliding) {
-    await slidingItem.close();
+    slidingItem.disabled = true;
     if (this.deleteToast) {
       await this.deleteToast.dismiss();
       this.deleteToast = null;
@@ -320,6 +316,10 @@ export class HistoryPage {
     const index = this.env.viewingBookmarks.findIndex(x => x.text == bookmark.text);
     if (index != -1) {
       this.env.viewingBookmarks.splice(index, 1);
+      if (this.env.bookmarks?.length > this.env.viewingBookmarks.length) {
+        const bookmarks = [...this.env.bookmarks]
+        this.env.viewingBookmarks.push(...bookmarks.slice(this.env.viewingBookmarks.length, this.env.viewingBookmarks.length + 1));
+      }
     }
     this.deleteToast = await this.toastController.create({
       message: this.translate.instant('MSG.UNDO_DELETE'),
@@ -393,7 +393,7 @@ export class HistoryPage {
   }
 
   async removeRecord(record: ScanRecord, slidingItem: IonItemSliding) {
-    await slidingItem.close();
+    slidingItem.disabled = true;
     if (this.deleteToast) {
       await this.deleteToast.dismiss();
       this.deleteToast = null;
@@ -402,6 +402,10 @@ export class HistoryPage {
     const index = this.env.viewingScanRecords.findIndex(x => x.id == record.id);
     if (index != -1) {
       this.env.viewingScanRecords.splice(index, 1);
+      if (this.env.scanRecords?.length > this.env.viewingScanRecords.length) {
+        const scanRecords = [...this.env.scanRecords]
+        this.env.viewingScanRecords.push(...scanRecords.slice(this.env.viewingScanRecords.length, this.env.viewingScanRecords.length + 1));
+      }
     }
     this.deleteToast = await this.toastController.create({
       message: this.translate.instant('MSG.UNDO_DELETE'),
@@ -480,6 +484,15 @@ export class HistoryPage {
     this.changeDetectorRef.detectChanges();
     this.changeDetectorRef.reattach();
     this.router.navigate(['setting-record']);
+  }
+
+  get denominator() {
+    switch (this.env.recordsLimit) {
+      case -1:
+        return '∞';
+      default:
+        return this.env.recordsLimit;
+    }
   }
 
   async presentAlert(msg: string, head: string, buttonText: string, buttonless: boolean = false): Promise<HTMLIonAlertElement> {

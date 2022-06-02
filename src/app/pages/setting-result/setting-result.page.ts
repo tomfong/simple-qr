@@ -22,8 +22,8 @@ export class SettingResultPage {
     this.router.navigate(['setting-auto-brightness']);
   }
 
-  setErrorCorrectionLevel() {
-    this.router.navigate(['setting-qr-ecl']);
+  setQrStyle() {
+    this.router.navigate(['setting-qr']);
   }
 
   setSearchEngine() {
