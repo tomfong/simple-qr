@@ -155,4 +155,4 @@ Please read the [Privacy Policy](https://www.privacypolicies.com/live/771b1123-9
 
 ## License
 
-Please view the [LICENSE](LICENSE)
+[![License](https://img.shields.io/github/license/tomfong/simple-qr?style=flat)](https://github.com/tomfong/simple-qr/blob/main/LICENSE)
