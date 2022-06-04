@@ -2,8 +2,6 @@
 
 Simple and lightweight app to scan, create and store QR codes.
 
-<br>
-
 <div>
   <img height="200" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/screenshot_0.png">
   <img height="200" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/screenshot_1.png">
