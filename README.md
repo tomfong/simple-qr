@@ -2,7 +2,12 @@
 
 <p align="center"><br><img src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/icon_round.png" width="100" height="100" /></p>
 <p align="center">
-  A simple and lightweight app to scan, create and store QR codes
+  <strong>
+    Simple QR  
+  </strong>
+</p>
+<p align="center">
+  Simple and lightweight app to scan, create and store QR codes
 </p>
 <br>
 <p align="center">
