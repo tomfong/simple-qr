@@ -1,19 +1,16 @@
-<img align="left" width="150" height="150" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/icon_round.png" alt="app icon">
-
 # Simple QR
 
 Simple and lightweight app to scan, create and store QR codes.
 
 <br>
 
-###
-
 <div>
-  <img height="300" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/screenshot_1.png">
-  <img height="300" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/screenshot_2.png">
-  <img height="300" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/screenshot_3.png">
-  <img height="300" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/screenshot_4.png">
-  <img height="300" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/screenshot_5.png">
+  <img height="200" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/screenshot_0.png">
+  <img height="200" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/screenshot_1.png">
+  <img height="200" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/screenshot_2.png">
+  <img height="200" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/screenshot_3.png">
+  <img height="200" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/screenshot_4.png">
+  <img height="200" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/screenshot_5.png">
 </div>
 
 ## About
