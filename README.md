@@ -1,4 +1,4 @@
-<img align="left" width="150" height="150" src="./resources/icon_round.png" alt="app icon">
+<img align="left" width="150" height="150" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/icon_round.png" alt="app icon">
 
 # Simple QR
 
@@ -9,11 +9,11 @@ Simple and lightweight app to scan, create and store QR codes.
 ###
 
 <div>
-  <img height="300" src="./screenshots/2.png">
-  <img height="300" src="./screenshots/4.png">
-  <img height="300" src="./screenshots/5.png">
-  <img height="300" src="./screenshots/3.png">
-  <img height="300" src="./screenshots/7.png">
+  <img height="300" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/screenshot_1.png">
+  <img height="300" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/screenshot_2.png">
+  <img height="300" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/screenshot_3.png">
+  <img height="300" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/screenshot_4.png">
+  <img height="300" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/screenshot_5.png">
 </div>
 
 ## About
@@ -24,7 +24,7 @@ It's now available on the following platforms.
 
 | App Store | Google Play | GitHub | IzzyOnDroid |
 |:-:|:-:|:-:|:-:|
-| [<img src="badges/appstore-badge.png" height="50">](https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553) | [<img src="badges/google-play-badge.png" height="50">](https://play.google.com/store/apps/details?id=com.tomfong.simpleqr) | [<img src="badges/github.png" height="50">](https://github.com/tomfong/simple-qr/releases/latest) | [<img src="badges/IzzyOnDroid.png" height="50">](https://apt.izzysoft.de/fdroid/index/apk/com.tomfong.simpleqr) |
+| [<img src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/appstore-badge.png" height="50">](https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553) | [<img src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/google-play-badge.png" height="50">](https://play.google.com/store/apps/details?id=com.tomfong.simpleqr) | [<img src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/github-badge.png" height="50">](https://github.com/tomfong/simple-qr/releases/latest) | [<img src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/IzzyOnDroid-badge.png" height="50">](https://apt.izzysoft.de/fdroid/index/apk/com.tomfong.simpleqr) |
 
 ## Features
 
@@ -74,7 +74,7 @@ You are welcomed to help translate the app into more languages (refer to this <a
 * Sponsor the project.
 
   <div>
-      <a href="https://linktr.ee/tomfonghk"> <img src="badges/Paypal.png" width="170" alt="tomfong"/></a>
+      <a href="https://linktr.ee/tomfonghk"><img src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/Paypal-badge.png" width="170" alt="tomfong"/></a>
       <a href="https://www.buymeacoffee.com/tomfong"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="180" alt="tomfong" /></a>
   </div>
 
