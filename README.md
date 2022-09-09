@@ -107,14 +107,7 @@ You are welcomed to help translate the app into more languages (refer to this <a
 
 1. Run ```npm install``` to install all dependencies
 2. Run ```npm run sync``` and ```npm run copy:an```
-3. In ```android/capacitor-cordova-android-plugins/src/main/AndroidManifest.xml```, add ```android:exported="true"``` inside receiver tag.
-4. In ```android/capacitor-cordova-android-plugins/src/main/java/nl/xservices/plugins/SocialSharing.java```, change line 274 to
-
-    ```java
-    final PendingIntent pendingIntent = PendingIntent.getBroadcast(cordova.getActivity().getApplicationContext(), 0, receiverIntent, PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
-    ```
-
-5. In ```android/app/src/main/res/values/styles.xml```, change
+3. In ```android/app/src/main/res/values/styles.xml```, change
 
     ```xml
     <style name="AppTheme.NoActionBarLaunch" parent="AppTheme.NoActionBar">
