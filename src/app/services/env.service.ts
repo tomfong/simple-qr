@@ -58,6 +58,7 @@ export class EnvService {
   public showBase64Button: 'on' | 'off' = 'on';
   public showEnlargeButton: 'on' | 'off' = 'on';
   public showBookmarkButton: 'on' | 'off' = 'on';
+  public showOpenUrlButton: 'on' | 'off' = 'on';
   public showBrowseButton: 'on' | 'off' = 'on';
   public showAddContactButton: 'on' | 'off' = 'on';
   public showCallButton: 'on' | 'off' = 'on';
@@ -464,6 +465,15 @@ export class EnvService {
         }
       }
     );
+    this._storage.get("showOpenUrlButton").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showOpenUrlButton = value;
+        } else {
+          this.showOpenUrlButton = 'on';
+        }
+      }
+    );
     this._storage.get("showBrowseButton").then(
       value => {
         if (value !== null && value !== undefined) {
@@ -579,6 +589,7 @@ export class EnvService {
     this.showBase64Button = 'on';
     this.showEnlargeButton = 'on';
     this.showBookmarkButton = 'on';
+    this.showOpenUrlButton = 'on';
     this.showBrowseButton = 'on';
     this.showAddContactButton = 'on';
     this.showCallButton = 'on';
@@ -701,6 +712,9 @@ export class EnvService {
 
     this.showBookmarkButton = 'on';
     await this.storageSet("showBookmarkButton", this.showBookmarkButton);
+
+    this.showOpenUrlButton = 'on';
+    await this.storageSet("showOpenUrlButton", this.showOpenUrlButton);
 
     this.showBrowseButton = 'on';
     await this.storageSet("showBrowseButton", this.showBrowseButton);
