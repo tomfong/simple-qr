@@ -68,12 +68,12 @@ export class QrCodePage {
           }
         }
       )
+      await ScreenBrightness.getBrightness().then(
+        value => {
+          this.currentBrightness = value.brightness
+        }
+      )
       if (this.env.autoMaxBrightness === 'on') {
-        await ScreenBrightness.getBrightness().then(
-          value => {
-            this.currentBrightness = value.brightness
-          }
-        )
         await ScreenBrightness.setBrightness({ brightness: 1.0 }).catch(
           err => {
             if (this.env.isDebugging) {

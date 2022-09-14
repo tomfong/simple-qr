@@ -48,6 +48,12 @@ export class SettingResultButtonsPage {
     await this.tapHaptic();
   }
 
+  async onOpenUrlButtonChange(ev: any) {
+    this.env.showOpenUrlButton = ev ? 'on' : 'off';
+    await this.env.storageSet("showOpenUrlButton", this.env.showOpenUrlButton);
+    await this.tapHaptic();
+  }
+
   async onBrowseButtonChange(ev: any) {
     this.env.showBrowseButton = ev ? 'on' : 'off';
     await this.env.storageSet("showBrowseButton", this.env.showBrowseButton);

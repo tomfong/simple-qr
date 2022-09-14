@@ -131,8 +131,6 @@ export class ResultPage {
   }
 
   setContentType(): void {
-    const urlPrefix1 = "HTTPS://";
-    const urlPrefix2 = "HTTP://";
     const contactPrefix = "BEGIN:VCARD";
     const phonePrefix = "TEL:";
     const smsPrefix = "SMSTO:";
@@ -141,9 +139,7 @@ export class ResultPage {
     const wifiPrefix = "WIFI:";
     const content0 = this.qrCodeContent.trim();
     const tContent = this.qrCodeContent.trim().toUpperCase();
-    if (tContent.substr(0, urlPrefix1.length) === urlPrefix1 || tContent.substr(0, urlPrefix2.length) === urlPrefix2) {
-      this.contentType = "url";
-    } else if (tContent.substr(0, contactPrefix.length) === contactPrefix) {
+    if (tContent.substr(0, contactPrefix.length) === contactPrefix) {
       this.contentType = "contact";
       this.generateVCardContact();
     } else if (tContent.substr(0, phonePrefix.length) === phonePrefix) {
@@ -167,11 +163,25 @@ export class ResultPage {
     } else if (tContent.substr(0, wifiPrefix.length) === wifiPrefix) {
       this.contentType = "wifi";
       this.prepareWifi();
+    } else if (this.isValidUrl(content0)) {
+      this.contentType = "url";
     } else {
       this.contentType = "freeText";
     }
   }
 
+  private isValidUrl(text: string): boolean {
+    let url: URL;
+    
+    try {
+      url = new URL(text);
+    } catch (_) {
+      return false;  
+    }
+  
+    return url.protocol != null && url.protocol.length > 0;
+  }
+  
   get qrColorDark(): string {
     return "#222428";
   }
@@ -180,8 +190,22 @@ export class ResultPage {
     return "#ffffff";
   }
 
-  browseWebsite(): void {
-    window.open(this.qrCodeContent, '_system');
+  browseWebsite() {
+    window.open(this.qrCodeContent, '_system', 'location=yes');
+  }
+
+  async openLink(): Promise<void> {
+    window.open(this.qrCodeContent);
+  }
+
+  get isHttp(): boolean {
+    const urlPrefix1 = "HTTPS://";
+    const urlPrefix2 = "HTTP://";
+    const tContent = this.qrCodeContent.trim().toUpperCase();
+    if (tContent.substring(0, urlPrefix1.length) === urlPrefix1 || tContent.substring(0, urlPrefix2.length) === urlPrefix2) {
+      return true;
+    } 
+    return false;
   }
 
   async addContact(): Promise<void> {

@@ -107,14 +107,7 @@ You are welcomed to help translate the app into more languages (refer to this <a
 
 1. Run ```npm install``` to install all dependencies
 2. Run ```npm run sync``` and ```npm run copy:an```
-3. In ```android/capacitor-cordova-android-plugins/src/main/AndroidManifest.xml```, add ```android:exported="true"``` inside receiver tag.
-4. In ```android/capacitor-cordova-android-plugins/src/main/java/nl/xservices/plugins/SocialSharing.java```, change line 274 to
-
-    ```java
-    final PendingIntent pendingIntent = PendingIntent.getBroadcast(cordova.getActivity().getApplicationContext(), 0, receiverIntent, PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
-    ```
-
-5. In ```android/app/src/main/res/values/styles.xml```, change
+3. In ```android/app/src/main/res/values/styles.xml```, change
 
     ```xml
     <style name="AppTheme.NoActionBarLaunch" parent="AppTheme.NoActionBar">
@@ -134,21 +127,20 @@ Thank you the following contributors who have made the app better!
 ## Framework
 
 ```sh
-    Ionic CLI                       : 6.19.0
-    Ionic Framework                 : @ionic/angular 6.1.8
-    @angular-devkit/build-angular   : 13.3.7
-    @angular-devkit/schematics      : 13.3.7
-    @angular/cli                    : 13.3.7
+    Ionic CLI                       : 6.20.1
+    Ionic Framework                 : @ionic/angular 6.2.7
+    @angular-devkit/build-angular   : 13.3.9
+    @angular-devkit/schematics      : 13.3.9
+    @angular/cli                    : 13.3.9
     @ionic/angular-toolkit          : 6.1.0
 
-    Capacitor CLI                   : 3.5.1
-    @capacitor/android              : 3.5.1
-    @capacitor/core                 : 3.5.1
-    @capacitor/ios                  : 3.5.1
+    Capacitor CLI                   : 3.8.0
+    @capacitor/android              : 3.8.0
+    @capacitor/core                 : 3.8.0
+    @capacitor/ios                  : 3.8.0
 
-    Android SDK Tools               : 26.1.1
-    NodeJS                          : v16.15.4
-    npm                             : 8.8.0
+    NodeJS                          : v16.15.1
+    npm                             : 8.11.0
 ```
 
 ## Privacy Policy
