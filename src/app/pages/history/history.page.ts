@@ -487,12 +487,7 @@ export class HistoryPage {
   }
 
   get denominator() {
-    switch (this.env.recordsLimit) {
-      case -1:
-        return '∞';
-      default:
-        return this.env.recordsLimit;
-    }
+    return this.env.recordsLimit;
   }
 
   async presentAlert(msg: string, head: string, buttonText: string, buttonless: boolean = false): Promise<HTMLIonAlertElement> {
