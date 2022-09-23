@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { SplashScreen } from '@capacitor/splash-screen';
 import { Toast } from '@capacitor/toast';
 import { AlertController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -59,10 +60,11 @@ export class TabsPage {
   }
 
   async ionViewDidEnter() {
+    await SplashScreen.hide()
     if (this.env.firstAppLoad) {
       this.env.firstAppLoad = false;
-      await this.loadPatchNote();
       await this.router.navigate([this.env.startPage], { replaceUrl: true });
+      await this.loadPatchNote();
     }
   }
 
