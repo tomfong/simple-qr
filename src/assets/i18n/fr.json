@@ -294,7 +294,7 @@
         "UPC": "Code produit universel"
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "Cette version vous apporte plusieurs mises à jour et nouvelles fonctionnalités. Veuillez consulter GitHub pour plus de détails.",
+        "UPDATE_NOTES_ANDROID": "<p>Cette version vous apporte plusieurs mises à jour et nouvelles fonctionnalités. Veuillez consulter GitHub pour plus de détails.</p><p>Les utilisateurs d'Android peuvent désormais activer la vignette Simple QR dans le panneau Paramètres rapides pour un accès rapide.</p>",
         "UPDATE_NOTES_IOS": "Cette version vous apporte plusieurs mises à jour et nouvelles fonctionnalités. Veuillez consulter GitHub pour plus de détails."
     }
 }

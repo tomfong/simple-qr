@@ -294,7 +294,7 @@
         "UPC": "通用产品代码"
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "此版本为您带来多项更新和新功能，详情请查看 GitHub。",
+        "UPDATE_NOTES_ANDROID": "<p>此版本为您带来多项更新和新功能，详情请查看 GitHub。</p><p>Android 用户现在可以在快速设定面板中加入简易 QR 按键以进行快速启动。</p>",
         "UPDATE_NOTES_IOS": "此版本为您带来多项更新和新功能，详情请查看 GitHub。"
     }
 }

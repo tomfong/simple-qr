@@ -294,7 +294,7 @@
         "UPC": "Codice Prodotto Universale "
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "Questa versione offre numerosi aggiornamenti e nuove funzionalità. Si prega di controllare GitHub per i dettagli.",
+        "UPDATE_NOTES_ANDROID": "<p>Questa versione offre numerosi aggiornamenti e nuove funzionalità. Si prega di controllare GitHub per i dettagli.</p><p>Gli utenti Android possono ora abilitare il riquadro Simple QR nel pannello Impostazioni rapide per un rapido accesso.</p>",
         "UPDATE_NOTES_IOS": "Questa versione offre numerosi aggiornamenti e nuove funzionalità. Si prega di controllare GitHub per i dettagli."
     }
 }

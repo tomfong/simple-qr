@@ -294,7 +294,7 @@
         "UPC": "Universeller Produktcode "
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "Diese Version bringt Ihnen mehrere Updates und neue Funktionen. Bitte überprüfen Sie GitHub für Details.",
+        "UPDATE_NOTES_ANDROID": "<p>Diese Version bringt Ihnen mehrere Updates und neue Funktionen. Bitte überprüfen Sie GitHub für Details.</p><p>Android-Benutzer können jetzt die Kachel Simple QR im Bereich Schnelleinstellungen für einen schnellen Zugriff aktivieren.</p>",
         "UPDATE_NOTES_IOS": "Diese Version bringt Ihnen mehrere Updates und neue Funktionen. Bitte überprüfen Sie GitHub für Details."
     }
 }
