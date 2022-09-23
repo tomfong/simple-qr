@@ -172,16 +172,16 @@ export class ResultPage {
 
   private isValidUrl(text: string): boolean {
     let url: URL;
-    
+
     try {
       url = new URL(text);
     } catch (_) {
-      return false;  
+      return false;
     }
-  
+
     return url.protocol != null && url.protocol.length > 0;
   }
-  
+
   get qrColorDark(): string {
     return "#222428";
   }
@@ -204,7 +204,7 @@ export class ResultPage {
     const tContent = this.qrCodeContent.trim().toUpperCase();
     if (tContent.substring(0, urlPrefix1.length) === urlPrefix1 || tContent.substring(0, urlPrefix2.length) === urlPrefix2) {
       return true;
-    } 
+    }
     return false;
   }
 
@@ -258,53 +258,60 @@ export class ResultPage {
       } as NewContact;
     }
     if (newContact != null) {
-      await Contacts.getPermissions().then(
-        async permission => {
-          if (permission.granted) {
-            await Contacts.saveContact(newContact).then(
-              _ => {
-                if (this.isIOS) {
-                  this.presentToast(this.translate.instant('MSG.SAVED_CONTACT'), "short", "bottom");
-                } else {
-                  this.presentToast(this.translate.instant('MSG.SAVING_CONTACT'), "short", "bottom");
-                }
-              }
-            )
-              .catch(
-                err => {
-                  if (this.env.isDebugging) {
-                    this.presentToast("Error when call Contacts.saveContact: " + JSON.stringify(err), "long", "top");
-                  } else {
-                    this.presentToast(this.translate.instant('MSG.FAILED_SAVING_CONTACT'), "short", "bottom");
+      if (this.platform.is('ios')) {
+        await Contacts.getPermissions().then(
+          async permission => {
+            if (permission.granted) {
+              await this.saveContact(newContact);
+            } else {
+              const alert = await this.alertController.create({
+                header: this.translate.instant("PERMISSION_REQUIRED"),
+                message: this.translate.instant("MSG.CONTACT_PERMISSION"),
+                buttons: [
+                  {
+                    text: this.translate.instant("SETTING"),
+                    handler: () => {
+                      BarcodeScanner.openAppSettings();
+                      return true;
+                    }
+                  },
+                  {
+                    text: this.translate.instant("CLOSE"),
+                    handler: () => {
+                      return true;
+                    }
                   }
-                }
-              )
-          } else {
-            const alert = await this.alertController.create({
-              header: this.translate.instant("PERMISSION_REQUIRED"),
-              message: this.translate.instant("MSG.CONTACT_PERMISSION"),
-              buttons: [
-                {
-                  text: this.translate.instant("SETTING"),
-                  handler: () => {
-                    BarcodeScanner.openAppSettings();
-                    return true;
-                  }
-                },
-                {
-                  text: this.translate.instant("CLOSE"),
-                  handler: () => {
-                    return true;
-                  }
-                }
-              ],
-              cssClass: ['alert-bg']
-            });
-            await alert.present();
+                ],
+                cssClass: ['alert-bg']
+              });
+              await alert.present();
+            }
           }
-        }
-      );
+        );
+      } else {  // Android doesn't need to get permission
+        await this.saveContact(newContact);
+      }
     }
+  }
+
+  private async saveContact(newContact: any) {
+    await Contacts.saveContact(newContact).then(
+      _ => {
+        if (this.isIOS) {
+          this.presentToast(this.translate.instant('MSG.SAVED_CONTACT'), "short", "bottom");
+        } else {
+          this.presentToast(this.translate.instant('MSG.SAVING_CONTACT'), "short", "bottom");
+        }
+      }
+    ).catch(
+      err => {
+        if (this.env.isDebugging) {
+          this.presentToast("Error when call Contacts.saveContact: " + JSON.stringify(err), "long", "top");
+        } else {
+          this.presentToast(this.translate.instant('MSG.FAILED_SAVING_CONTACT'), "short", "bottom");
+        }
+      }
+    );
   }
 
   async callPhone(): Promise<void> {
