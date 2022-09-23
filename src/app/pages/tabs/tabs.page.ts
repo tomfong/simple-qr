@@ -81,6 +81,8 @@ export class TabsPage {
         if (this.env.notShowUpdateNotes === false) {
           this.env.notShowUpdateNotes = true;
           await this.showUpdateNotes();
+          const versionWording = this.translate.instant("VERSION_VERSION") as string;
+          await this.presentToast(versionWording.replace("{version}", this.env.appVersionNumber), "short", 'bottom');
         }
       }
     );
