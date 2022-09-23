@@ -32,6 +32,7 @@ export class EnvService {
   public selectedColorTheme: 'default' | 'light' | 'dark' | 'black' = 'default';
   public scanRecordLogging: 'on' | 'off' = 'on';
   public recordsLimit: 30 | 50 | 100 | -1 = -1;
+  public showNumberOfRecords: 'on' | 'off' = 'on';
   public autoMaxBrightness: 'on' | 'off' = 'on';
   public errorCorrectionLevel: 'L' | 'M' | 'Q' | 'H' = 'M';
   public qrCodeLightR: number = 255;
@@ -264,6 +265,15 @@ export class EnvService {
           this.recordsLimit = value;
         } else {
           this.recordsLimit = -1;
+        }
+      }
+    );
+    this._storage.get("showNumberOfRecords").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showNumberOfRecords = value;
+        } else {
+          this.showNumberOfRecords = 'on';
         }
       }
     );
@@ -562,6 +572,7 @@ export class EnvService {
     await this.toggleColorTheme();
     this.scanRecordLogging = 'on';
     this.recordsLimit = -1;
+    this.showNumberOfRecords = 'on';
     this.autoMaxBrightness = 'on';
     this.errorCorrectionLevel = 'M';
     this.qrCodeLightR = 255;
@@ -629,6 +640,9 @@ export class EnvService {
 
     this.recordsLimit = -1;
     await this.storageSet("recordsLimit", this.recordsLimit);
+
+    this.showNumberOfRecords = 'on';
+    await this.storageSet("showNumberOfRecords", this.showNumberOfRecords);
 
     this.autoMaxBrightness = 'on';
     await this.storageSet("auto-max-brightness", this.autoMaxBrightness);

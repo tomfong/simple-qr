@@ -136,6 +136,18 @@
         </ion-radio>
       </ion-item>
     </ion-radio-group>
+    <ion-item class="ion-no-padding ripple-parent py-1 pt-2" detail="false" lines="none">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding-horizontal pre-line">
+          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+            {{ 'SHOW_NUMBER_OR_RECORDS' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+      <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.showNumberOfRecords == 'on'? true : false"
+        (ngModelChange)="onShowNumberOfRecordsChange($event)">
+      </ion-toggle>
+    </ion-item>
   </div>
 
   <div class="ion-padding-vertical mb-2">

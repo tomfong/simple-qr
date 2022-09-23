@@ -96,7 +96,7 @@
   <ng-container
     *ngIf="segmentModel === 'history' && env.viewingScanRecords && env.viewingScanRecords.length > 0 && !isLoading">
     <ion-list>
-      <ion-list-header class="ion-padding-horizontal" lines="full">
+      <ion-list-header class="ion-padding-horizontal" lines="none" *ngIf="env.showNumberOfRecords == 'on'">
         <div class="ion-padding-horizontal" *ngIf="env.recordsLimit !== -1">
           {{ 'NUMBER_OF_RECORDS' | translate }}: {{ env.scanRecords.length }} / {{ denominator }}
         </div>

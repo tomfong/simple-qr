@@ -11,6 +11,7 @@ import { Chooser, ChooserResult } from '@awesome-cordova-plugins/chooser/ngx';
 import { ScanRecord } from 'src/app/models/scan-record';
 import { Bookmark } from 'src/app/models/bookmark';
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
 @Component({
   selector: 'app-setting-record',
@@ -53,6 +54,12 @@ export class SettingRecordPage {
     if (this.env.recordsLimit != -1 && !this.preventRecordsLimitToast) {
       this.presentToast(this.translate.instant("MSG.DELETE_OVERFLOWED_RECORDS"), "short", "bottom");
     }
+  }
+
+  async onShowNumberOfRecordsChange(ev: any) {
+    this.env.showNumberOfRecords = ev ? 'on' : 'off';
+    await this.env.storageSet("showNumberOfRecords", this.env.showNumberOfRecords);
+    await this.tapHaptic();
   }
 
   async onBackup() {
@@ -300,6 +307,17 @@ export class SettingRecordPage {
     });
     await loading.present();
     return loading;
+  }
+
+  async tapHaptic() {
+    if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
+      await Haptics.impact({ style: ImpactStyle.Light })
+        .catch(async err => {
+          if (this.env.debugMode === 'on') {
+            await Toast.show({ text: 'Err when Haptics.impact: ' + JSON.stringify(err), position: "top", duration: "long" })
+          }
+        })
+    }
   }
 
   get isIOS() {
