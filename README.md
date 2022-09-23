@@ -105,15 +105,9 @@ You are welcomed to help translate the app into more languages (refer to this <a
 
 ### Build the project (Android)
 
-1. Run ```npm install``` to install all dependencies
-2. Run ```npm run sync``` and ```npm run copy:an```
-3. In ```android/app/src/main/res/values/styles.xml```, change
-
-    ```xml
-    <style name="AppTheme.NoActionBarLaunch" parent="AppTheme.NoActionBar">
-      <item name="android:background">#00a5aa</item>
-    </style>
-    ```
+1. Run ```npm install``` to install all dependencies.
+2. Run ```npm run build:an``` or ```npm run build:ios``` (for first time).
+3. Run ```npm run sync``` and ```npm run copy:an``` or ```npm run copy:ios```.
 
 ### Contributors
 
@@ -128,16 +122,16 @@ Thank you the following contributors who have made the app better!
 
 ```sh
     Ionic CLI                       : 6.20.1
-    Ionic Framework                 : @ionic/angular 6.2.7
-    @angular-devkit/build-angular   : 13.3.9
+    Ionic Framework                 : @ionic/angular 6.2.8
+    @angular-devkit/build-angular   : 14.2.3
     @angular-devkit/schematics      : 13.3.9
-    @angular/cli                    : 13.3.9
+    @angular/cli                    : 14.2.3
     @ionic/angular-toolkit          : 6.1.0
 
-    Capacitor CLI                   : 3.8.0
-    @capacitor/android              : 3.8.0
-    @capacitor/core                 : 3.8.0
-    @capacitor/ios                  : 3.8.0
+    Capacitor CLI                   : 4.3.0
+    @capacitor/android              : 4.3.0
+    @capacitor/core                 : 4.3.0
+    @capacitor/ios                  : 4.3.0
 
     NodeJS                          : v16.15.1
     npm                             : 8.11.0
