@@ -20,7 +20,7 @@ export declare type LanguageType = 'de' | 'en' | 'fr' | 'it' | 'zh-CN' | 'zh-HK'
 })
 export class EnvService {
 
-  public appVersionNumber: string = '2.8.0';
+  public appVersionNumber: string = '3.0.0';
 
   public startPage: "/tabs/scan" | "/tabs/generate" | "/tabs/import-image" | "/tabs/history" | "/tabs/setting" = "/tabs/scan";
   public historyPageStartSegment: 'history' | 'bookmarks' = 'history';
@@ -32,6 +32,7 @@ export class EnvService {
   public selectedColorTheme: 'default' | 'light' | 'dark' | 'black' = 'default';
   public scanRecordLogging: 'on' | 'off' = 'on';
   public recordsLimit: 30 | 50 | 100 | -1 = -1;
+  public showNumberOfRecords: 'on' | 'off' = 'on';
   public autoMaxBrightness: 'on' | 'off' = 'on';
   public errorCorrectionLevel: 'L' | 'M' | 'Q' | 'H' = 'M';
   public qrCodeLightR: number = 255;
@@ -78,10 +79,10 @@ export class EnvService {
   public readonly APP_STORE_URL: string = "https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553";
   public readonly GITHUB_RELEASE_URL: string = "https://github.com/tomfong/simple-qr/releases";
   public readonly PRIVACY_POLICY: string = "https://www.privacypolicies.com/live/771b1123-99bb-4bfe-815e-1046c0437a0f";
-  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20700";
-  public readonly IOS_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20700";
-  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20800";
-  public readonly IOS_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20800";
+  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20800";
+  public readonly IOS_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20800";
+  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v30000";
+  public readonly IOS_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v30000";
 
   private _storage: Storage | null = null;
   private _scannedData: string = '';
@@ -264,6 +265,15 @@ export class EnvService {
           this.recordsLimit = value;
         } else {
           this.recordsLimit = -1;
+        }
+      }
+    );
+    this._storage.get("showNumberOfRecords").then(
+      value => {
+        if (value !== null && value !== undefined) {
+          this.showNumberOfRecords = value;
+        } else {
+          this.showNumberOfRecords = 'on';
         }
       }
     );
@@ -562,6 +572,7 @@ export class EnvService {
     await this.toggleColorTheme();
     this.scanRecordLogging = 'on';
     this.recordsLimit = -1;
+    this.showNumberOfRecords = 'on';
     this.autoMaxBrightness = 'on';
     this.errorCorrectionLevel = 'M';
     this.qrCodeLightR = 255;
@@ -629,6 +640,9 @@ export class EnvService {
 
     this.recordsLimit = -1;
     await this.storageSet("recordsLimit", this.recordsLimit);
+
+    this.showNumberOfRecords = 'on';
+    await this.storageSet("showNumberOfRecords", this.showNumberOfRecords);
 
     this.autoMaxBrightness = 'on';
     await this.storageSet("auto-max-brightness", this.autoMaxBrightness);

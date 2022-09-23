@@ -1,0 +1,4 @@
+* Upgraded framework, improved performance and fixed known bugs.
+* Support quick access tile in the Quick Settings panel.
+* More customizable UI.
+* Removed Read/Write Contacts permission.

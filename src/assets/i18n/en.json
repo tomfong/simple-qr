@@ -172,6 +172,7 @@
     "SHARE": "Share",
     "SHARING": "Sharing",
     "SHOW": "Show",
+    "SHOW_NUMBER_OR_RECORDS": "Show Number of Records",
     "SHOW_QR_CODE": "Show QR Code",
     "SIMPLE_QR": "Simple QR",
     "STATE": "State",
@@ -184,12 +185,15 @@
     "TASK_BUTTON_LAYOUT": "Task Button Layout",
     "TURN_OFF": "Turn Off",
     "TURN_ON": "Turn On",
+    "TURNED_OFF": "Turned Off",
+    "TURNED_ON": "Turned On",
     "TUTORIAL": "Tutorial",
     "UNDO": "Undo",
     "UNKNOWN": "Unknown",
     "UPDATE_SUCCESSFULLY": "Update Successfully",
     "URL": "URL",
     "VCARD_CONTACT": "vCard Contact",
+    "VERSION_VERSION": "Version {version}",
     "VIBRATION": "Vibration",
     "VIEWED": "Viewed",
     "VIEW_BOOKMARK": "View Bookmark",
@@ -291,7 +295,7 @@
         "UPC": "Universal Product Code "
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "This release brings you several updates and new features. Please check GitHub for details.",
+        "UPDATE_NOTES_ANDROID": "<p>This release brings you several updates and new features. Please check GitHub for details.</p><p>Android users can now enable the Simple QR tile in the Quick Settings panel for quick access.</p>",
         "UPDATE_NOTES_IOS": "This release brings you several updates and new features. Please check GitHub for details."
     }
 }

@@ -172,6 +172,7 @@
     "SHARE": "Condividi",
     "SHARING": "Condividendo",
     "SHOW": "Mostra",
+    "SHOW_NUMBER_OR_RECORDS": "Mostra il numero di record",
     "SHOW_QR_CODE": "Mostra il Codice QR",
     "SIMPLE_QR": "Simple QR",
     "STATE": "Stato",
@@ -184,12 +185,15 @@
     "TASK_BUTTON_LAYOUT": "Disposizione Pulsante Operazione",
     "TURN_OFF": "Spegni",
     "TURN_ON": "Accendi",
+    "TURNED_OFF": "Spento",
+    "TURNED_ON": "Acceso",
     "TUTORIAL": "Guida",
     "UNDO": "Annulla",
     "UNKNOWN": "Sconosciuto",
     "UPDATE_SUCCESSFULLY": "Aggiornamento completato con successo",
     "URL": "URL",
     "VCARD_CONTACT": "Contatto vCard",
+    "VERSION_VERSION": "Versione {version}",
     "VIBRATION": "Vibrazione",
     "VIEWED": "Visualizzati",
     "VIEW_BOOKMARK": "Visualizza segnalibri",
@@ -291,7 +295,7 @@
         "UPC": "Codice Prodotto Universale "
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "Questa versione offre numerosi aggiornamenti e nuove funzionalità. Si prega di controllare GitHub per i dettagli.",
+        "UPDATE_NOTES_ANDROID": "<p>Questa versione offre numerosi aggiornamenti e nuove funzionalità. Si prega di controllare GitHub per i dettagli.</p><p>Gli utenti Android possono ora abilitare il riquadro Simple QR nel pannello Impostazioni rapide per un rapido accesso.</p>",
         "UPDATE_NOTES_IOS": "Questa versione offre numerosi aggiornamenti e nuove funzionalità. Si prega di controllare GitHub per i dettagli."
     }
 }

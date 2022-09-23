@@ -172,6 +172,7 @@
     "SHARE": "Partager",
     "SHARING": "Partager",
     "SHOW": "Afficher",
+    "SHOW_NUMBER_OR_RECORDS": "Afficher le nombre d'enregistrements",
     "SHOW_QR_CODE": "Afficher le code QR",
     "SIMPLE_QR": "Simple QR",
     "STATE": "Etat",
@@ -184,12 +185,15 @@
     "TASK_BUTTON_LAYOUT": "Disposition des boutons de tâche",
     "TURN_OFF": "Éteindre",
     "TURN_ON": "Allumer",
+    "TURNED_OFF": "Désactivé",
+    "TURNED_ON": "Activée",
     "TUTORIAL": "Didacticiel",
     "UNDO": "Annuler",
     "UNKNOWN": "Inconnu",
     "UPDATE_SUCCESSFULLY": "Mise à jour réussie",
     "URL": "URL",
     "VCARD_CONTACT": "Contact vCard",
+    "VERSION_VERSION": "Version {version}",
     "VIBRATION": "Vibration",
     "VIEWED": "Vu",
     "VIEW_BOOKMARK": "Afficher le signet",
@@ -291,7 +295,7 @@
         "UPC": "Code produit universel"
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "Cette version vous apporte plusieurs mises à jour et nouvelles fonctionnalités. Veuillez consulter GitHub pour plus de détails.",
+        "UPDATE_NOTES_ANDROID": "<p>Cette version vous apporte plusieurs mises à jour et nouvelles fonctionnalités. Veuillez consulter GitHub pour plus de détails.</p><p>Les utilisateurs d'Android peuvent désormais activer la vignette Simple QR dans le panneau Paramètres rapides pour un accès rapide.</p>",
         "UPDATE_NOTES_IOS": "Cette version vous apporte plusieurs mises à jour et nouvelles fonctionnalités. Veuillez consulter GitHub pour plus de détails."
     }
 }

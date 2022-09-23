@@ -172,6 +172,7 @@
     "SHARE": "分享",
     "SHARING": "正在分享",
     "SHOW": "显示",
+    "SHOW_NUMBER_OR_RECORDS": "显示记录数量",
     "SHOW_QR_CODE": "显示 QR 码",
     "SIMPLE_QR": "简易QR",
     "STATE": "州",
@@ -184,12 +185,15 @@
     "TASK_BUTTON_LAYOUT": "行动按键布局",
     "TURN_OFF": "关闭",
     "TURN_ON": "开启",
+    "TURNED_OFF": "已关闭",
+    "TURNED_ON": "已开启",
     "TUTORIAL": "教学",
     "UNDO": "复原",
     "UNKNOWN": "未知",
     "UPDATE_SUCCESSFULLY": "更新成功",
     "URL": "网址",
     "VCARD_CONTACT": "vCard 联络人",
+    "VERSION_VERSION": "版本 {version}",
     "VIBRATION": "震动效果",
     "VIEWED": "查看",
     "VIEW_BOOKMARK": "查看书签",
@@ -291,7 +295,7 @@
         "UPC": "通用产品代码"
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "此版本为您带来多项更新和新功能，详情请查看 GitHub。",
+        "UPDATE_NOTES_ANDROID": "<p>此版本为您带来多项更新和新功能，详情请查看 GitHub。</p><p>Android 用户现在可以在快速设定面板中加入简易 QR 按键以进行快速启动。</p>",
         "UPDATE_NOTES_IOS": "此版本为您带来多项更新和新功能，详情请查看 GitHub。"
     }
 }

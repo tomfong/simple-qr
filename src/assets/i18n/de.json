@@ -120,7 +120,7 @@
     "NOT_PROVIDED": "Nicht vorgesehen",
     "NOT_TO_DISCLOSE": "Nicht bekannt geben",
     "NO_LIMIT": "Keine Begrenzung",
-    "NUMBER_OF_RECORDS": "Anzahl der Aufzeichnungen",
+    "NUMBER_OF_RECORDS": "Anzahl der Datensätze",
     "OK": "OK",
     "ONLY_DELETE_DATA": "Nur Daten löschen",
     "ONLY_RESET_SETTING": "Nur Einstellung zurücksetzen",
@@ -172,6 +172,7 @@
     "SHARE": "Teile",
     "SHARING": "Teilen",
     "SHOW": "Zeige",
+    "SHOW_NUMBER_OR_RECORDS": "Zeige die Anzahl der Datensätze an",
     "SHOW_QR_CODE": "Zeige QR Code",
     "SIMPLE_QR": "Simple QR",
     "STATE": "Staat",
@@ -184,12 +185,15 @@
     "TASK_BUTTON_LAYOUT": "Aufgaben-Schaltflächen-Layout",
     "TURN_OFF": "Ausschalten",
     "TURN_ON": "Anschalten",
+    "TURNED_OFF": "Ausgeschaltet",
+    "TURNED_ON": "Angeschaltet",
     "TUTORIAL": "Anleitung",
     "UNDO": "Rückgängig",
     "UNKNOWN": "Unbekannt",
     "UPDATE_SUCCESSFULLY": "Erfolgreich aktualisiert",
     "URL": "URL",
     "VCARD_CONTACT": "vCard Kontakt",
+    "VERSION_VERSION": "Version {version}",
     "VIBRATION": "Vibration",
     "VIEWED": "Gesehen",
     "VIEW_BOOKMARK": "Lesezeichen ansehen",
@@ -291,7 +295,7 @@
         "UPC": "Universeller Produktcode "
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "Diese Version bringt Ihnen mehrere Updates und neue Funktionen. Bitte überprüfen Sie GitHub für Details.",
+        "UPDATE_NOTES_ANDROID": "<p>Diese Version bringt Ihnen mehrere Updates und neue Funktionen. Bitte überprüfen Sie GitHub für Details.</p><p>Android-Benutzer können jetzt die Kachel Simple QR im Bereich Schnelleinstellungen für einen schnellen Zugriff aktivieren.</p>",
         "UPDATE_NOTES_IOS": "Diese Version bringt Ihnen mehrere Updates und neue Funktionen. Bitte überprüfen Sie GitHub für Details."
     }
 }

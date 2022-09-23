@@ -53,30 +53,18 @@
         </p>
       </ion-label>
     </ion-item>
-    <ion-radio-group [(ngModel)]="env.scanRecordLogging" (ionChange)="saveScanRecord()">
-      <ion-item class="ion-no-padding ripple-parent py-1" detail="false" lines="none">
-        <ion-label class="ion-padding-start">
-          <p class="ion-padding-horizontal pre-line">
-            <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-              {{ 'TURN_ON' | translate }}
-            </ion-text>
-          </p>
-        </ion-label>
-        <ion-radio class="ion-margin-end" slot="end" [value]="'on'" [color]="'primary'">
-        </ion-radio>
-      </ion-item>
-      <ion-item class="ion-no-padding ripple-parent py-1" detail="false" lines="none">
-        <ion-label class="ion-padding-start">
-          <p class="ion-padding-horizontal pre-line">
-            <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-              {{ 'TURN_OFF' | translate }}
-            </ion-text>
-          </p>
-        </ion-label>
-        <ion-radio class="ion-margin-end" slot="end" [value]="'off'" [color]="'primary'">
-        </ion-radio>
-      </ion-item>
-    </ion-radio-group>
+    <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding pre-line">
+          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+            {{ (env.scanRecordLogging == 'on'? 'TURNED_ON' : 'TURNED_OFF') | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+      <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.scanRecordLogging == 'on'? true : false"
+        (ngModelChange)="onScanRecordLoggingChange($event)">
+      </ion-toggle>
+    </ion-item>
   </div>
 
   <div class="ion-padding-vertical">
@@ -136,6 +124,18 @@
         </ion-radio>
       </ion-item>
     </ion-radio-group>
+    <ion-item class="ion-no-padding ripple-parent py-1 pt-2" detail="false" lines="none">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding-horizontal pre-line">
+          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+            {{ 'SHOW_NUMBER_OR_RECORDS' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+      <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.showNumberOfRecords == 'on'? true : false"
+        (ngModelChange)="onShowNumberOfRecordsChange($event)">
+      </ion-toggle>
+    </ion-item>
   </div>
 
   <div class="ion-padding-vertical mb-2">
