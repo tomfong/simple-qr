@@ -185,6 +185,8 @@
     "TASK_BUTTON_LAYOUT": "Disposition des boutons de tâche",
     "TURN_OFF": "Éteindre",
     "TURN_ON": "Allumer",
+    "TURNED_OFF": "Désactivé",
+    "TURNED_ON": "Activée",
     "TUTORIAL": "Didacticiel",
     "UNDO": "Annuler",
     "UNKNOWN": "Inconnu",

@@ -45,8 +45,10 @@ export class SettingRecordPage {
     await this.env.storageSet("history-page-start-segment", this.env.historyPageStartSegment);
   }
 
-  async saveScanRecord() {
+  async onScanRecordLoggingChange(ev: any) {
+    this.env.scanRecordLogging = ev ? 'on' : 'off';
     await this.env.storageSet("scan-record-logging", this.env.scanRecordLogging);
+    await this.tapHaptic();
   }
 
   async saveRecordsLimit() {

@@ -185,6 +185,8 @@
     "TASK_BUTTON_LAYOUT": "行动按键布局",
     "TURN_OFF": "关闭",
     "TURN_ON": "开启",
+    "TURNED_OFF": "已关闭",
+    "TURNED_ON": "已开启",
     "TUTORIAL": "教学",
     "UNDO": "复原",
     "UNKNOWN": "未知",
