@@ -6,7 +6,7 @@ import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/n
 import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { TranslateService } from '@ngx-translate/core';
-import * as moment from 'moment';
+import { format } from 'date-fns';
 import { environment } from 'src/environments/environment';
 import { Bookmark } from '../models/bookmark';
 import { ScanRecord } from '../models/scan-record';
@@ -1068,9 +1068,9 @@ export class EnvService {
 
   getBugReportMailContent(): string {
     const toEmail = "tomfong.dev@gmail.com";
-    const now = moment();
-    const datetimestr1 = now.format("YYYYMMDDHHmmss");
-    const datetimestr2 = now.format("YYYY-MM-DD HH:mm:ss ZZ");
+    const now = new Date();
+    const datetimestr1 = format(now, "yyyyMMddHHmmss");
+    const datetimestr2 = format(now, "yyyy-MM-dd HH:mm:ss zzzz");
     const model = `${this._deviceInfo?.manufacturer} ${this._deviceInfo?.model}`;
     const os = this.platform.is("android") ? "Android" : (this.platform.is("ios") ? "iOS" : "Other");
     const osVersion = this._deviceInfo?.osVersion;

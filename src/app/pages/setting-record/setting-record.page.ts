@@ -6,7 +6,7 @@ import { Clipboard } from '@capacitor/clipboard';
 import { Toast } from '@capacitor/toast';
 import { EncryptService } from 'src/app/services/encrypt.service';
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
-import * as moment from 'moment';
+import { format } from 'date-fns';
 import { Chooser, ChooserResult } from '@awesome-cordova-plugins/chooser/ngx';
 import { ScanRecord } from 'src/app/models/scan-record';
 import { Bookmark } from 'src/app/models/bookmark';
@@ -75,7 +75,7 @@ export class SettingRecordPage {
       async (value) => {
         loading1.dismiss();
         const loading2 = await this.presentLoading(this.translate.instant("BACKING_UP"));
-        const now = moment().format("yyyyMMDDHHmmss");
+        const now = format(new Date(), "yyyyMMddHHmmss");
         const filename = this.platform.is('ios') ? `i-simpleqr-backup-${now}.isqbk` : `simpleqr-backup-${now}.tfsqbk`;
         await Filesystem.writeFile({
           path: `${filename}`,
