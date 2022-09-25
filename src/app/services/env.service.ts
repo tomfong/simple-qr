@@ -20,7 +20,7 @@ export declare type LanguageType = 'de' | 'en' | 'fr' | 'it' | 'zh-CN' | 'zh-HK'
 })
 export class EnvService {
 
-  public appVersionNumber: string = '3.0.0';
+  public appVersionNumber: string = '3.0.1';
 
   public startPage: "/tabs/scan" | "/tabs/generate" | "/tabs/import-image" | "/tabs/history" | "/tabs/setting" = "/tabs/scan";
   public historyPageStartSegment: 'history' | 'bookmarks' = 'history';
@@ -79,10 +79,10 @@ export class EnvService {
   public readonly APP_STORE_URL: string = "https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553";
   public readonly GITHUB_RELEASE_URL: string = "https://github.com/tomfong/simple-qr/releases";
   public readonly PRIVACY_POLICY: string = "https://www.privacypolicies.com/live/771b1123-99bb-4bfe-815e-1046c0437a0f";
-  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20800";
-  public readonly IOS_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20800";
-  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v30000";
-  public readonly IOS_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v30000";
+  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v30000";
+  public readonly IOS_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v30000";
+  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v30001";
+  public readonly IOS_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v30001";
 
   private _storage: Storage | null = null;
   private _scannedData: string = '';
