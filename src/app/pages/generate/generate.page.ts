@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import * as moment from 'moment';
+// import * as moment from 'moment';
+import { format } from 'date-fns';
 import { EnvService } from 'src/app/services/env.service';
 import { Toast } from '@capacitor/toast';
 import { fadeIn } from 'src/app/utils/animations';
@@ -57,7 +58,7 @@ export class GeneratePage {
   state: string = "";
   postalCode: string = "";
   country: string = "";
-  birthday: Date;
+  birthday: string;
   gender: "M" | "F" | "O" = "O";
   personalUrl: string = "";
 
@@ -320,9 +321,10 @@ export class GeneratePage {
     vCard += `ORG:${this.organization.trim()}\n`;
     vCard += `TITLE:${this.jobTitle.trim()}\n`;
     vCard += `ADR:;;${this.street.trim()};${this.city.trim()};${this.state.trim()};${this.postalCode.trim()};${this.country.trim()}\n`;
-    console.log("birthday => " + this.birthday)
-    if (this.birthday && this.birthday !== null && this.birthday !== undefined) {
-      vCard += `BDAY:${moment(this.birthday).format('YYYYMMDD')}\n`;
+    if (this.birthday != null) {
+      const find = '-';
+      const re = new RegExp(find, 'g');
+      vCard += `BDAY:${this.birthday.replace(re, "")}\n`;
     }
     vCard += `URL:${this.personalUrl.trim()}\n`;
     vCard += `GENDER:${this.gender}\n`;
@@ -340,7 +342,7 @@ export class GeneratePage {
   }
 
   get today() {
-    return moment().format("YYYY-MM-DD");
+    return format(new Date(), "yyyy-MM-dd");
   }
 
   getIcon(type: "freeText" | "url" | "contact" | "phone" | "sms" | "emailW3C" | "emailDocomo" | "wifi"): string {

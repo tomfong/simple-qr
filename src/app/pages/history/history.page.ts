@@ -2,7 +2,8 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, IonItemSliding, LoadingController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { EnvService } from 'src/app/services/env.service';
-import * as moment from 'moment';
+import { format, Locale } from 'date-fns';
+import { de, enUS, fr, it, zhCN, zhHK } from 'date-fns/locale';
 import { ScanRecord } from 'src/app/models/scan-record';
 import { TranslateService } from '@ngx-translate/core';
 import { Bookmark } from 'src/app/models/bookmark';
@@ -156,19 +157,36 @@ export class HistoryPage {
     if (!date) {
       return "-";
     }
-    const momentObj = moment(date);
-    if (this.env.language != 'en') {
-      momentObj.locale(this.env.language.toLowerCase());
+    let locale: Locale;
+    switch (this.env.language) {
+      case "de":
+        locale = de;
+        break;
+      case "en":
+        locale = enUS;
+        break;
+      case "fr":
+        locale = fr;
+        break;
+      case "it":
+        locale = it;
+        break;
+      case "zh-CN":
+        locale = zhCN;
+        break;
+      case "zh-HK":
+        locale = zhHK;
+        break;
+      default:
+        locale = enUS;
     }
     switch (source) {
       case 'create':
-        return `${this.translate.instant("CREATED")} ${this.translate.instant("AT")} ${momentObj.format("ll LTS")}`;
+        return `${this.translate.instant("CREATED")} ${this.translate.instant("AT")} ${format(date, "PP pp", { locale: locale })}`;
       case 'view':
-        return `${this.translate.instant("VIEWED")} ${this.translate.instant("AT")} ${momentObj.format("ll LTS")}`;
+        return `${this.translate.instant("VIEWED")} ${this.translate.instant("AT")} ${format(date, "PP pp", { locale: locale })}`;
       case 'scan':
-        return `${this.translate.instant("SCANNED")} ${this.translate.instant("AT")} ${momentObj.format("ll LTS")}`;
-      default:
-        return momentObj.format("ll LTS");
+        return `${this.translate.instant("SCANNED")} ${this.translate.instant("AT")} ${format(date, "PP pp", { locale: locale })}`;
     }
   }
 

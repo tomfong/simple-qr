@@ -6,7 +6,7 @@ import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/n
 import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { TranslateService } from '@ngx-translate/core';
-import * as moment from 'moment';
+import { format } from 'date-fns';
 import { environment } from 'src/environments/environment';
 import { Bookmark } from '../models/bookmark';
 import { ScanRecord } from '../models/scan-record';
@@ -20,7 +20,7 @@ export declare type LanguageType = 'de' | 'en' | 'fr' | 'it' | 'zh-CN' | 'zh-HK'
 })
 export class EnvService {
 
-  public appVersionNumber: string = '3.0.0';
+  public appVersionNumber: string = '3.0.1';
 
   public startPage: "/tabs/scan" | "/tabs/generate" | "/tabs/import-image" | "/tabs/history" | "/tabs/setting" = "/tabs/scan";
   public historyPageStartSegment: 'history' | 'bookmarks' = 'history';
@@ -79,10 +79,10 @@ export class EnvService {
   public readonly APP_STORE_URL: string = "https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553";
   public readonly GITHUB_RELEASE_URL: string = "https://github.com/tomfong/simple-qr/releases";
   public readonly PRIVACY_POLICY: string = "https://www.privacypolicies.com/live/771b1123-99bb-4bfe-815e-1046c0437a0f";
-  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20800";
-  public readonly IOS_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v20800";
-  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v30000";
-  public readonly IOS_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v30000";
+  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v30000";
+  public readonly IOS_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v30000";
+  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v30001";
+  public readonly IOS_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v30001";
 
   private _storage: Storage | null = null;
   private _scannedData: string = '';
@@ -1068,9 +1068,9 @@ export class EnvService {
 
   getBugReportMailContent(): string {
     const toEmail = "tomfong.dev@gmail.com";
-    const now = moment();
-    const datetimestr1 = now.format("YYYYMMDDHHmmss");
-    const datetimestr2 = now.format("YYYY-MM-DD HH:mm:ss ZZ");
+    const now = new Date();
+    const datetimestr1 = format(now, "yyyyMMddHHmmss");
+    const datetimestr2 = format(now, "yyyy-MM-dd HH:mm:ss zzzz");
     const model = `${this._deviceInfo?.manufacturer} ${this._deviceInfo?.model}`;
     const os = this.platform.is("android") ? "Android" : (this.platform.is("ios") ? "iOS" : "Other");
     const osVersion = this._deviceInfo?.osVersion;

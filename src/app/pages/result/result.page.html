@@ -113,7 +113,7 @@
     </ion-row>
 
     <ion-row *ngIf="contentType === 'url' && env.showOpenUrlButton === 'on' && !isHttp" class="d-flex justify-content-center">
-      <ion-button *ngIf="" (click)="tapHaptic(); openLink()" [color]="'primary'" fill="clear">
+      <ion-button (click)="tapHaptic(); openLink()" [color]="'primary'" fill="clear">
         <ion-icon name="open"></ion-icon>
       </ion-button>
     </ion-row>
