@@ -19,14 +19,12 @@ import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/n
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { HistoryTutorialPageModule } from './modals/history-tutorial/history-tutorial.module';
 import { DatePipe } from '@angular/common';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EnvService } from './services/env.service';
 import { FormsModule } from '@angular/forms';
-import { BookmarkTutorialPageModule } from './modals/bookmark-tutorial/bookmark-tutorial.module';
 import { QrCodePageModule } from './modals/qr-code/qr-code.module';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -51,8 +49,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
             }
         }),
         IonicStorageModule.forRoot(),
-        HistoryTutorialPageModule,
-        BookmarkTutorialPageModule,
         QrCodePageModule,
         BrowserAnimationsModule,
         MatFormFieldModule,

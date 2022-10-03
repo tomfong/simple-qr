@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { AlertController, LoadingController, Platform } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { AlertController, LoadingController, ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 import { Clipboard } from '@capacitor/clipboard';
@@ -18,9 +18,11 @@ import { Haptics, ImpactStyle } from '@capacitor/haptics';
   templateUrl: './setting-record.page.html',
   styleUrls: ['./setting-record.page.scss'],
 })
-export class SettingRecordPage {
+export class SettingRecordPage implements OnInit {
 
   preventRecordsLimitToast: boolean = true;
+
+  presentingElement = null;
 
   constructor(
     public translate: TranslateService,
@@ -30,8 +32,13 @@ export class SettingRecordPage {
     private loadingController: LoadingController,
     private chooser: Chooser,
     private socialSharing: SocialSharing,
-    private platform: Platform
+    private platform: Platform,
+    private modalController: ModalController,
   ) { }
+
+  ngOnInit() {
+    this.presentingElement = document.querySelector('.ion-page');
+  }
 
   ionViewDidEnter() {
     setTimeout(() => this.preventRecordsLimitToast = false, 100);
@@ -40,6 +47,15 @@ export class SettingRecordPage {
   ionViewWillLeave() {
     this.preventRecordsLimitToast = true;
   }
+
+  // async showTutorial() {
+  //   const modal = await this.modalController.create({
+  //     component: HistoryTutorialPage,
+  //     componentProps: {
+  //     }
+  //   });
+  //   modal.present();
+  // }
 
   async saveHistoryPageStartSegment() {
     await this.env.storageSet("history-page-start-segment", this.env.historyPageStartSegment);
@@ -319,6 +335,19 @@ export class SettingRecordPage {
             await Toast.show({ text: 'Err when Haptics.impact: ' + JSON.stringify(err), position: "top", duration: "long" })
           }
         })
+    }
+  }
+
+  get color() {
+    switch (this.env.colorTheme) {
+      case 'dark':
+        return 'dark';
+      case 'light':
+        return 'white';
+      case 'black':
+        return 'black';
+      default:
+        return 'white';
     }
   }
 

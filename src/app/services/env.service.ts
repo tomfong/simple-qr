@@ -44,8 +44,8 @@ export class EnvService {
   public qrCodeMargin: number = 3;
   public vibration: 'on' | 'on-haptic' | 'on-scanned' | 'off' = 'on';
   public orientation: 'default' | 'portrait' | 'landscape' = 'default';
-  public notShowHistoryTutorial: boolean = false;
-  public notShowBookmarkTutorial: boolean = false;
+  // public notShowHistoryTutorial: boolean = false;
+  // public notShowBookmarkTutorial: boolean = false;
   public notShowUpdateNotes: boolean = false;
   public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' | 'yandex' = 'google';
   public resultPageButtons: 'detailed' | 'icon-only' = 'detailed';
@@ -193,24 +193,6 @@ export class EnvService {
         }
       }
     )
-    this._storage.get("not-show-history-tutorial").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.notShowHistoryTutorial = (value === 'yes' ? true : false);
-        } else {
-          this.notShowHistoryTutorial = false;
-        }
-      }
-    );
-    this._storage.get("not-show-bookmark-tutorial").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.notShowBookmarkTutorial = (value === 'yes' ? true : false);
-        } else {
-          this.notShowBookmarkTutorial = false;
-        }
-      }
-    );
     this._storage.get("language").then(
       async value => {
         if (value !== null && value !== undefined) {
@@ -585,8 +567,6 @@ export class EnvService {
     this.vibration = 'on';
     this.orientation = 'default';
     await this.toggleOrientationChange();
-    this.notShowHistoryTutorial = false;
-    this.notShowBookmarkTutorial = false;
     this.notShowUpdateNotes = false;
     this.searchEngine = 'google';
     this.resultPageButtons = 'detailed';
@@ -677,12 +657,6 @@ export class EnvService {
     this.orientation = 'default';
     await this.toggleOrientationChange();
     await this.storageSet("orientation", this.orientation);
-
-    this.notShowHistoryTutorial = false;
-    await this.storageSet("not-show-history-tutorial", 'no');
-
-    this.notShowBookmarkTutorial = false;
-    await this.storageSet("not-show-bookmark-tutorial", 'no');
 
     this.notShowUpdateNotes = false;
     if (this.platform.is('ios')) {
