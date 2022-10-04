@@ -11,6 +11,8 @@ import androidx.annotation.RequiresApi;
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class MyQSTileService extends TileService {
 
+  public MyQSTileService() {}
+
   // Called when the user adds your tile.
   @Override
   public void onTileAdded() {
