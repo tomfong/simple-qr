@@ -60,7 +60,6 @@ export class TabsPage {
   }
 
   async ionViewDidEnter() {
-    await SplashScreen.hide()
     if (this.env.firstAppLoad) {
       this.env.firstAppLoad = false;
       await this.router.navigate([this.env.startPage], { replaceUrl: true });
