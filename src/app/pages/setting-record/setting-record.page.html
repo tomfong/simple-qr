@@ -1,234 +1,218 @@
-<div class="ion-page">
-  <ion-header>
-    <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'">
-      <ion-buttons slot="start">
-        <ion-back-button text="" defaultHref="tabs/setting">
-        </ion-back-button>
-      </ion-buttons>
-      <ion-title>{{ 'LOG_BACKUP_AND_RESTORE' | translate }}</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-header>
+  <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'">
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="tabs/setting">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ 'LOG_BACKUP_AND_RESTORE' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  <ion-content>
+<ion-content>
 
-    <div class="ion-padding-vertical">
-      <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'INITIAL_SEGMENT' | translate }}
-      </ion-list-header>
-      <ion-radio-group [(ngModel)]="env.historyPageStartSegment" (ionChange)="saveHistoryPageStartSegment()">
-        <ion-item class="ion-no-padding ripple-parent py-1 mt-2" detail="false" lines="none">
-          <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/history.svg">
-          </ion-icon>
-          <ion-label>
-            <p class="ion-padding-horizontal pre-line">
-              <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-                {{ 'LOG' | translate }}
-              </ion-text>
-            </p>
-          </ion-label>
-          <ion-radio class="ion-margin-end" slot="end" [value]="'history'" [color]="'primary'">
-          </ion-radio>
-        </ion-item>
-        <ion-item class="ion-no-padding ripple-parent py-1" detail="false" lines="none">
-          <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="bookmark">
-          </ion-icon>
-          <ion-label>
-            <p class="ion-padding-horizontal pre-line">
-              <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-                {{ 'BOOKMARK' | translate }}
-              </ion-text>
-            </p>
-          </ion-label>
-          <ion-radio class="ion-margin-end" slot="end" [value]="'bookmarks'" [color]="'primary'">
-          </ion-radio>
-        </ion-item>
-      </ion-radio-group>
-    </div>
-
-    <div class="ion-padding-vertical">
-      <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'MANAGE_RECORDS' | translate }}
-      </ion-list-header>
-      <div class="ion-padding-horizontal pt-3 d-flex justify-content-center align-content-start flex-column">
-        <ion-button id="open-tutorial-modal" class="ion-padding-horizontal" color="primary">
-          {{ 'VIEW_INSTRUCTIONS' | translate }}
-        </ion-button>
-      </div>
-    </div>
-
-    <ion-modal #tutorialModal trigger="open-tutorial-modal" [presentingElement]="presentingElement" [initialBreakpoint]="0.7" [breakpoints]="[0, 0.7]">
-      <ng-template>
-        <ion-header>
-          <ion-toolbar>
-            <ion-buttons slot="end">
-              <ion-button (click)="tapHaptic(); tutorialModal.dismiss();" color="primary">
-                {{ 'OK' | translate }}
-              </ion-button>
-            </ion-buttons>
-          </ion-toolbar>
-        </ion-header>
-        <ion-content [color]="color">
-        
-          <ion-list-header class="mt-4 ml-3" style="font-size: x-large;">{{ 'TUTORIAL' | translate }}</ion-list-header>
-        
-          <ion-item class="content-item ion-no-padding" lines="none" [color]="color">
-            <ion-icon class="ion-padding-horizontal" src="assets/icon/swipe-left.svg"
-              [color]="'primary'"></ion-icon>
-            <ion-label>
-              <p class="ion-padding">
-                <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
-                  {{ 'MSG.TUTORIAL_SWIPE_LEFT' | translate }}
-                </ion-text>
-              </p>
-            </ion-label>
-          </ion-item>
-        
-          <ion-item class="content-item ion-no-padding" lines="none" [color]="color">
-            <ion-icon class="ion-padding-horizontal" src="assets/icon/swipe-right.svg"
-              [color]="'primary'"></ion-icon>
-            <ion-label>
-              <p class="ion-padding">
-                <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
-                  {{ 'MSG.TUTORIAL_SWIPE_RIGHT' | translate }}
-                </ion-text>
-              </p>
-            </ion-label>
-          </ion-item>
-        </ion-content>
-      </ng-template>
-    </ion-modal>
-
-    <div class="ion-padding-vertical">
-      <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'AUTO_LOGGING' | translate }}
-      </ion-list-header>
-      <ion-item class="ion-no-padding" lines="none">
-        <ion-label class="ion-padding-start">
-          <p class="ion-padding-horizontal">
-            <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
-              {{ 'MSG.AUTO_LOGGING_EXPLAIN' | translate }}
-            </ion-text>
-          </p>
-        </ion-label>
-      </ion-item>
-      <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
-        <ion-label class="ion-padding-start">
-          <p class="ion-padding pre-line">
+  <div class="ion-padding-vertical">
+    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'INITIAL_SEGMENT' | translate }}
+    </ion-list-header>
+    <ion-radio-group [(ngModel)]="env.historyPageStartSegment" (ionChange)="saveHistoryPageStartSegment()">
+      <ion-item class="ion-no-padding ripple-parent py-1 mt-2" detail="false" lines="none">
+        <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/history.svg">
+        </ion-icon>
+        <ion-label>
+          <p class="ion-padding-horizontal pre-line">
             <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-              {{ (env.scanRecordLogging == 'on'? 'TURNED_ON' : 'TURNED_OFF') | translate }}
+              {{ 'LOG' | translate }}
             </ion-text>
           </p>
         </ion-label>
-        <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.scanRecordLogging == 'on'? true : false"
-          (ngModelChange)="onScanRecordLoggingChange($event)">
-        </ion-toggle>
+        <ion-radio class="ion-margin-end" slot="end" [value]="'history'" [color]="'primary'">
+        </ion-radio>
       </ion-item>
-    </div>
+      <ion-item class="ion-no-padding ripple-parent py-1" detail="false" lines="none">
+        <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="bookmark">
+        </ion-icon>
+        <ion-label>
+          <p class="ion-padding-horizontal pre-line">
+            <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+              {{ 'BOOKMARK' | translate }}
+            </ion-text>
+          </p>
+        </ion-label>
+        <ion-radio class="ion-margin-end" slot="end" [value]="'bookmarks'" [color]="'primary'">
+        </ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </div>
 
-    <div class="ion-padding-vertical">
-      <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'RECORDS_LIMIT' | translate }}
-      </ion-list-header>
-      <ion-item class="ion-no-padding" lines="none">
-        <ion-label class="ion-padding-start">
-          <p class="ion-padding-horizontal">
-            <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
-              {{ 'MSG.RECORDS_LIMIT_EXPLAIN' | translate }}
-            </ion-text>
-          </p>
-        </ion-label>
-      </ion-item>
-      <ion-radio-group [(ngModel)]="env.recordsLimit" (ionChange)="saveRecordsLimit()">
-        <ion-item class="ion-no-padding ripple-parent py-1" detail="false" lines="none">
-          <ion-label class="ion-padding-start">
-            <p class="ion-padding-horizontal pre-line">
-              <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-                {{ '30_RECORDS' | translate }}
+  <div class="ion-padding-vertical">
+    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'MANAGE_RECORDS' | translate }}
+    </ion-list-header>
+    <div class="ion-padding-horizontal pt-3 d-flex justify-content-center align-content-start flex-column">
+      <ion-button id="open-tutorial-modal" class="ion-padding-horizontal" color="primary">
+        {{ 'VIEW_INSTRUCTIONS' | translate }}
+      </ion-button>
+    </div>
+  </div>
+
+  <ion-modal #tutorialModal trigger="open-tutorial-modal" [initialBreakpoint]="0.8" [breakpoints]="[0, 0.8]">
+    <ng-template>
+      <ion-content [color]="color">
+        <ion-list-header class="mt-4 ml-3" style="font-size: x-large;">{{ 'TUTORIAL' | translate }}</ion-list-header>
+        <ion-item class="content-item ion-no-padding" lines="none" [color]="color">
+          <ion-icon class="ion-padding-horizontal" src="assets/icon/swipe-left.svg" [color]="'primary'"></ion-icon>
+          <ion-label>
+            <p class="ion-padding">
+              <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
+                {{ 'MSG.TUTORIAL_SWIPE_LEFT' | translate }}
               </ion-text>
             </p>
           </ion-label>
-          <ion-radio class="ion-margin-end" slot="end" [value]="30" [color]="'primary'">
-          </ion-radio>
         </ion-item>
-        <ion-item class="ion-no-padding ripple-parent py-1" detail="false" lines="none">
-          <ion-label class="ion-padding-start">
-            <p class="ion-padding-horizontal pre-line">
-              <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-                {{ '50_RECORDS' | translate }}
+        <ion-item class="content-item ion-no-padding" lines="none" [color]="color">
+          <ion-icon class="ion-padding-horizontal" src="assets/icon/swipe-right.svg" [color]="'primary'"></ion-icon>
+          <ion-label>
+            <p class="ion-padding">
+              <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
+                {{ 'MSG.TUTORIAL_SWIPE_RIGHT' | translate }}
               </ion-text>
             </p>
           </ion-label>
-          <ion-radio class="ion-margin-end" slot="end" [value]="50" [color]="'primary'">
-          </ion-radio>
         </ion-item>
-        <ion-item class="ion-no-padding ripple-parent py-1" detail="false" lines="none">
-          <ion-label class="ion-padding-start">
-            <p class="ion-padding-horizontal pre-line">
-              <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-                {{ '100_RECORDS' | translate }}
-              </ion-text>
-            </p>
-          </ion-label>
-          <ion-radio class="ion-margin-end" slot="end" [value]="100" [color]="'primary'">
-          </ion-radio>
-        </ion-item>
-        <ion-item class="ion-no-padding ripple-parent py-1" detail="false" lines="none">
-          <ion-label class="ion-padding-start">
-            <p class="ion-padding-horizontal pre-line">
-              <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-                {{ 'NO_LIMIT' | translate }}
-              </ion-text>
-            </p>
-          </ion-label>
-          <ion-radio class="ion-margin-end" slot="end" [value]="-1" [color]="'primary'">
-          </ion-radio>
-        </ion-item>
-      </ion-radio-group>
-      <ion-item class="ion-no-padding ripple-parent py-1 pt-2" detail="false" lines="none">
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <div class="ion-padding-vertical">
+    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'AUTO_LOGGING' | translate }}
+    </ion-list-header>
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding-horizontal">
+          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
+            {{ 'MSG.AUTO_LOGGING_EXPLAIN' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+    </ion-item>
+    <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding pre-line">
+          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+            {{ (env.scanRecordLogging == 'on'? 'TURNED_ON' : 'TURNED_OFF') | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+      <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.scanRecordLogging == 'on'? true : false"
+        (ngModelChange)="onScanRecordLoggingChange($event)">
+      </ion-toggle>
+    </ion-item>
+  </div>
+
+  <div class="ion-padding-vertical">
+    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'RECORDS_LIMIT' | translate }}
+    </ion-list-header>
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding-horizontal">
+          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
+            {{ 'MSG.RECORDS_LIMIT_EXPLAIN' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+    </ion-item>
+    <ion-radio-group [(ngModel)]="env.recordsLimit" (ionChange)="saveRecordsLimit()">
+      <ion-item class="ion-no-padding ripple-parent py-1" detail="false" lines="none">
         <ion-label class="ion-padding-start">
           <p class="ion-padding-horizontal pre-line">
             <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-              {{ 'SHOW_NUMBER_OR_RECORDS' | translate }}
+              {{ '30_RECORDS' | translate }}
             </ion-text>
           </p>
         </ion-label>
-        <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.showNumberOfRecords == 'on'? true : false"
-          (ngModelChange)="onShowNumberOfRecordsChange($event)">
-        </ion-toggle>
+        <ion-radio class="ion-margin-end" slot="end" [value]="30" [color]="'primary'">
+        </ion-radio>
       </ion-item>
-    </div>
-
-    <div class="ion-padding-vertical mb-2">
-      <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'BACKUP' | translate }}</ion-list-header>
-      <ion-item class="ion-no-padding" lines="none">
+      <ion-item class="ion-no-padding ripple-parent py-1" detail="false" lines="none">
         <ion-label class="ion-padding-start">
-          <p class="ion-padding-horizontal">
-            <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
-              {{ 'MSG.BACKUP_EXPLAIN' | translate }}
+          <p class="ion-padding-horizontal pre-line">
+            <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+              {{ '50_RECORDS' | translate }}
             </ion-text>
           </p>
         </ion-label>
+        <ion-radio class="ion-margin-end" slot="end" [value]="50" [color]="'primary'">
+        </ion-radio>
       </ion-item>
-      <div class="ion-padding-horizontal pt-3 d-flex justify-content-center align-content-start flex-column">
-        <ion-button class="ion-padding-horizontal" color="primary" (click)="onBackup()">
-          {{ 'BACKUP' | translate }}
-        </ion-button>
-      </div>
-    </div>
-
-    <div class="ion-padding-vertical">
-      <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'RESTORE' | translate }}</ion-list-header>
-      <ion-item class="ion-no-padding" lines="none">
+      <ion-item class="ion-no-padding ripple-parent py-1" detail="false" lines="none">
         <ion-label class="ion-padding-start">
-          <p class="ion-padding-horizontal">
-            <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
-              {{ (isIOS? 'MSG.RESTORE_EXPLAIN_IOS' : 'MSG.RESTORE_EXPLAIN') | translate }}
+          <p class="ion-padding-horizontal pre-line">
+            <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+              {{ '100_RECORDS' | translate }}
             </ion-text>
           </p>
         </ion-label>
+        <ion-radio class="ion-margin-end" slot="end" [value]="100" [color]="'primary'">
+        </ion-radio>
       </ion-item>
-      <div class="ion-padding-horizontal pt-3 d-flex justify-content-center align-content-start flex-column">
-        <ion-button class="ion-padding-horizontal" color="primary" (click)="onRestore()">
-          {{ 'RESTORE' | translate }}
-        </ion-button>
-      </div>
-    </div>
+      <ion-item class="ion-no-padding ripple-parent py-1" detail="false" lines="none">
+        <ion-label class="ion-padding-start">
+          <p class="ion-padding-horizontal pre-line">
+            <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+              {{ 'NO_LIMIT' | translate }}
+            </ion-text>
+          </p>
+        </ion-label>
+        <ion-radio class="ion-margin-end" slot="end" [value]="-1" [color]="'primary'">
+        </ion-radio>
+      </ion-item>
+    </ion-radio-group>
+    <ion-item class="ion-no-padding ripple-parent py-1 pt-2" detail="false" lines="none">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding-horizontal pre-line">
+          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+            {{ 'SHOW_NUMBER_OR_RECORDS' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+      <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.showNumberOfRecords == 'on'? true : false"
+        (ngModelChange)="onShowNumberOfRecordsChange($event)">
+      </ion-toggle>
+    </ion-item>
+  </div>
 
-  </ion-content>
-</div>
+  <div class="ion-padding-vertical mb-2">
+    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'BACKUP' | translate }}</ion-list-header>
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding-horizontal">
+          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
+            {{ 'MSG.BACKUP_EXPLAIN' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+    </ion-item>
+    <div class="ion-padding-horizontal pt-3 d-flex justify-content-center align-content-start flex-column">
+      <ion-button class="ion-padding-horizontal" color="primary" (click)="onBackup()">
+        {{ 'BACKUP' | translate }}
+      </ion-button>
+    </div>
+  </div>
+
+  <div class="ion-padding-vertical">
+    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'RESTORE' | translate }}</ion-list-header>
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding-horizontal">
+          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
+            {{ (isIOS? 'MSG.RESTORE_EXPLAIN_IOS' : 'MSG.RESTORE_EXPLAIN') | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+    </ion-item>
+    <div class="ion-padding-horizontal pt-3 d-flex justify-content-center align-content-start flex-column">
+      <ion-button class="ion-padding-horizontal" color="primary" (click)="onRestore()">
+        {{ 'RESTORE' | translate }}
+      </ion-button>
+    </div>
+  </div>
+
+</ion-content>

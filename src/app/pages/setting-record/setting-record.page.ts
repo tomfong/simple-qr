@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AlertController, LoadingController, ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
@@ -18,11 +18,9 @@ import { Haptics, ImpactStyle } from '@capacitor/haptics';
   templateUrl: './setting-record.page.html',
   styleUrls: ['./setting-record.page.scss'],
 })
-export class SettingRecordPage implements OnInit {
+export class SettingRecordPage {
 
   preventRecordsLimitToast: boolean = true;
-
-  presentingElement = null;
 
   constructor(
     public translate: TranslateService,
@@ -36,10 +34,6 @@ export class SettingRecordPage implements OnInit {
     private modalController: ModalController,
   ) { }
 
-  ngOnInit() {
-    this.presentingElement = document.querySelector('.ion-page');
-  }
-
   ionViewDidEnter() {
     setTimeout(() => this.preventRecordsLimitToast = false, 100);
   }
@@ -47,15 +41,6 @@ export class SettingRecordPage implements OnInit {
   ionViewWillLeave() {
     this.preventRecordsLimitToast = true;
   }
-
-  // async showTutorial() {
-  //   const modal = await this.modalController.create({
-  //     component: HistoryTutorialPage,
-  //     componentProps: {
-  //     }
-  //   });
-  //   modal.present();
-  // }
 
   async saveHistoryPageStartSegment() {
     await this.env.storageSet("history-page-start-segment", this.env.historyPageStartSegment);
