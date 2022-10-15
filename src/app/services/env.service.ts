@@ -44,8 +44,6 @@ export class EnvService {
   public qrCodeMargin: number = 3;
   public vibration: 'on' | 'on-haptic' | 'on-scanned' | 'off' = 'on';
   public orientation: 'default' | 'portrait' | 'landscape' = 'default';
-  // public notShowHistoryTutorial: boolean = false;
-  // public notShowBookmarkTutorial: boolean = false;
   public notShowUpdateNotes: boolean = false;
   public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' | 'yandex' = 'google';
   public resultPageButtons: 'detailed' | 'icon-only' = 'detailed';
@@ -141,7 +139,7 @@ export class EnvService {
     );
     this._storage.get("start-page-header").then(
       async value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.startPageHeader = value;
         } else {
           this.startPageHeader = 'on';
@@ -150,7 +148,7 @@ export class EnvService {
     );
     this._storage.get(environment.storageScanRecordKey).then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           try {
             this._scanRecords = JSON.parse(value);
             this._scanRecords.forEach(
@@ -171,7 +169,7 @@ export class EnvService {
     );
     this._storage.get(environment.storageBookmarkKey).then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           try {
             this._bookmarks = JSON.parse(value);
             this._bookmarks.forEach(
@@ -195,7 +193,7 @@ export class EnvService {
     )
     this._storage.get("language").then(
       async value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.selectedLanguage = value;
         } else {
           this.selectedLanguage = 'default';
@@ -205,7 +203,7 @@ export class EnvService {
     );
     this._storage.get("color").then(
       async value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.selectedColorTheme = value;
         } else {
           this.selectedColorTheme = 'default';
@@ -224,7 +222,7 @@ export class EnvService {
     );
     this._storage.get("orientation").then(
       async value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.orientation = value;
         } else {
           this.orientation = 'default';
@@ -234,7 +232,7 @@ export class EnvService {
     );
     this._storage.get("scan-record-logging").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.scanRecordLogging = value;
         } else {
           this.scanRecordLogging = 'on';
@@ -243,7 +241,7 @@ export class EnvService {
     );
     this._storage.get("recordsLimit").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.recordsLimit = value;
         } else {
           this.recordsLimit = -1;
@@ -252,7 +250,7 @@ export class EnvService {
     );
     this._storage.get("showNumberOfRecords").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.showNumberOfRecords = value;
         } else {
           this.showNumberOfRecords = 'on';
@@ -261,7 +259,7 @@ export class EnvService {
     );
     this._storage.get("vibration").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.vibration = value;
         } else {
           this.vibration = 'on';
@@ -270,7 +268,7 @@ export class EnvService {
     );
     this._storage.get("error-correction-level").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.errorCorrectionLevel = value;
         } else {
           this.errorCorrectionLevel = 'M';
@@ -279,7 +277,7 @@ export class EnvService {
     );
     this._storage.get("qrCodeLightR").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.qrCodeLightR = value;
         } else {
           this.qrCodeLightR = 255;
@@ -288,7 +286,7 @@ export class EnvService {
     );
     this._storage.get("qrCodeLightG").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.qrCodeLightG = value;
         } else {
           this.qrCodeLightG = 255;
@@ -297,7 +295,7 @@ export class EnvService {
     );
     this._storage.get("qrCodeLightB").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.qrCodeLightB = value;
         } else {
           this.qrCodeLightB = 255;
@@ -306,7 +304,7 @@ export class EnvService {
     );
     this._storage.get("qrCodeDarkR").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.qrCodeDarkR = value;
         } else {
           this.qrCodeDarkR = 34;
@@ -315,7 +313,7 @@ export class EnvService {
     );
     this._storage.get("qrCodeDarkG").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.qrCodeDarkG = value;
         } else {
           this.qrCodeDarkG = 36;
@@ -324,7 +322,7 @@ export class EnvService {
     );
     this._storage.get("qrCodeDarkB").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.qrCodeDarkB = value;
         } else {
           this.qrCodeDarkB = 40;
@@ -333,7 +331,7 @@ export class EnvService {
     );
     this._storage.get("qrCodeMargin").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.qrCodeMargin = value;
         } else {
           this.qrCodeMargin = 3;
@@ -342,7 +340,7 @@ export class EnvService {
     );
     this._storage.get("auto-max-brightness").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.autoMaxBrightness = value;
         } else {
           this.autoMaxBrightness = 'on';
@@ -351,7 +349,7 @@ export class EnvService {
     );
     this._storage.get("search-engine").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.searchEngine = value;
         } else {
           this.searchEngine = 'google';
@@ -360,7 +358,7 @@ export class EnvService {
     );
     this._storage.get("result-page-buttons").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.resultPageButtons = value;
         } else {
           this.resultPageButtons = 'detailed';
@@ -369,7 +367,7 @@ export class EnvService {
     );
     this._storage.get("show-qr-after-camera-scan").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.showQrAfterCameraScan = value;
         } else {
           this.showQrAfterCameraScan = 'off';
@@ -378,7 +376,7 @@ export class EnvService {
     );
     this._storage.get("show-qr-after-image-scan").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.showQrAfterImageScan = value;
         } else {
           this.showQrAfterImageScan = 'off';
@@ -387,7 +385,7 @@ export class EnvService {
     );
     this._storage.get("show-qr-after-create").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.showQrAfterCreate = value;
         } else {
           this.showQrAfterCreate = 'on';
@@ -396,7 +394,7 @@ export class EnvService {
     );
     this._storage.get("show-qr-after-log-view").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.showQrAfterLogView = value;
         } else {
           this.showQrAfterLogView = 'on';
@@ -405,7 +403,7 @@ export class EnvService {
     );
     this._storage.get("show-qr-after-bookmark-view").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.showQrAfterBookmarkView = value;
         } else {
           this.showQrAfterBookmarkView = 'on';
@@ -414,7 +412,7 @@ export class EnvService {
     );
     this._storage.get("showSearchButton").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.showSearchButton = value;
         } else {
           this.showSearchButton = 'on';
@@ -423,7 +421,7 @@ export class EnvService {
     );
     this._storage.get("showCopyButton").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.showCopyButton = value;
         } else {
           this.showCopyButton = 'on';
@@ -432,7 +430,7 @@ export class EnvService {
     );
     this._storage.get("showBase64Button").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.showBase64Button = value;
         } else {
           this.showBase64Button = 'on';
@@ -441,7 +439,7 @@ export class EnvService {
     );
     this._storage.get("showEnlargeButton").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.showEnlargeButton = value;
         } else {
           this.showEnlargeButton = 'on';
@@ -450,7 +448,7 @@ export class EnvService {
     );
     this._storage.get("showBookmarkButton").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.showBookmarkButton = value;
         } else {
           this.showBookmarkButton = 'on';
@@ -459,7 +457,7 @@ export class EnvService {
     );
     this._storage.get("showOpenUrlButton").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.showOpenUrlButton = value;
         } else {
           this.showOpenUrlButton = 'on';
@@ -468,7 +466,7 @@ export class EnvService {
     );
     this._storage.get("showBrowseButton").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.showBrowseButton = value;
         } else {
           this.showBrowseButton = 'on';
@@ -477,7 +475,7 @@ export class EnvService {
     );
     this._storage.get("showAddContactButton").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.showAddContactButton = value;
         } else {
           this.showAddContactButton = 'on';
@@ -486,7 +484,7 @@ export class EnvService {
     );
     this._storage.get("showCallButton").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.showCallButton = value;
         } else {
           this.showCallButton = 'on';
@@ -495,7 +493,7 @@ export class EnvService {
     );
     this._storage.get("showSendMessageButton").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.showSendMessageButton = value;
         } else {
           this.showSendMessageButton = 'on';
@@ -504,7 +502,7 @@ export class EnvService {
     );
     this._storage.get("showSendEmailButton").then(
       value => {
-        if (value !== null && value !== undefined) {
+        if (value != null) {
           this.showSendEmailButton = value;
         } else {
           this.showSendEmailButton = 'on';
@@ -1018,7 +1016,6 @@ export class EnvService {
         this.screenOrientation.unlock();
         return;
       case 'portrait':
-        // this.screenOrientation.unlock();
         await this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT)
           .catch(err => {
             if (this.isDebugging) {
@@ -1027,7 +1024,6 @@ export class EnvService {
           });
         return;
       case 'landscape':
-        // this.screenOrientation.unlock();
         await this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE)
           .catch(err => {
             if (this.isDebugging) {

@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-// import * as moment from 'moment';
 import { format } from 'date-fns';
 import { EnvService } from 'src/app/services/env.service';
 import { Toast } from '@capacitor/toast';

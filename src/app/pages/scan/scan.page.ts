@@ -109,7 +109,7 @@ export class ScanPage {
       async (result: ScanResult) => {
         if (result.hasContent) {
           const text = result.content;
-          if (text === undefined || text === null || (text && text.trim().length <= 0) || text === "") {
+          if (text == null || text?.trim()?.length <= 0 || text == "") {
             this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), "short", "center");
             this.scanQr();
             return;

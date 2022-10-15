@@ -810,15 +810,6 @@ export class ResultPage {
     await alert.present();
   }
 
-  // async removeBookmark() {
-  //   await this.env.deleteBookmark(this.qrCodeContent);
-  //   if (this.env.bookmarks.find(x => x.text === this.qrCodeContent)) {
-  //     this.bookmarked = true;
-  //   } else {
-  //     this.bookmarked = false;
-  //   }
-  // }
-
   get contentTypeText(): string {
     switch (this.contentType) {
       case 'freeText':
