@@ -785,6 +785,11 @@ export class EnvService {
       if (this.recordSource == 'scan') {
         record.barcodeType = this._scannedDataFormat;
       }
+    } else {
+      record.source = "view";
+    }
+    if (this._scanRecords == null) {
+      this._scanRecords = [];
     }
     this._scanRecords.unshift(record);
     if (this.recordsLimit != -1) {
@@ -792,7 +797,14 @@ export class EnvService {
         this._scanRecords = this._scanRecords.slice(0, this.recordsLimit);
       }
     }
-    await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
+    try {
+      const stringified = JSON.stringify(this._scanRecords);
+      await this.storageSet(environment.storageScanRecordKey, stringified);
+    } catch (e) {
+      if (this.isDebugging) {
+        this.presentToast("Err when stringify scanRecords: " + JSON.stringify(e), "long", "top");
+      }
+    }
   }
 
   async saveRestoredScanRecords(records: ScanRecord[]): Promise<void> {
@@ -810,7 +822,14 @@ export class EnvService {
     this._scanRecords.sort((r1, r2) => {
       return r2.createdAt.getTime() - r1.createdAt.getTime();
     });
-    await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
+    try {
+      const stringified = JSON.stringify(this._scanRecords);
+      await this.storageSet(environment.storageScanRecordKey, stringified);
+    } catch (e) {
+      if (this.isDebugging) {
+        this.presentToast("Err when stringify scanRecords: " + JSON.stringify(e), "long", "top");
+      }
+    }
   }
 
   async saveRestoredBookmarks(bookmarks: Bookmark[]): Promise<void> {
@@ -831,7 +850,14 @@ export class EnvService {
     this._bookmarks.sort((a, b) => {
       return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
     });
-    await this.storageSet(environment.storageBookmarkKey, JSON.stringify(this._bookmarks));
+    try {
+      const stringified = JSON.stringify(this._bookmarks);
+      await this.storageSet(environment.storageBookmarkKey, stringified);
+    } catch (e) {
+      if (this.isDebugging) {
+        this.presentToast("Err when stringify bookmarks: " + JSON.stringify(e), "long", "top");
+      }
+    }
   }
 
   async undoScanRecordDeletion(record: ScanRecord): Promise<void> {
@@ -839,20 +865,41 @@ export class EnvService {
     this._scanRecords.sort((r1, r2) => {
       return r2.createdAt.getTime() - r1.createdAt.getTime();
     });
-    await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
+    try {
+      const stringified = JSON.stringify(this._scanRecords);
+      await this.storageSet(environment.storageScanRecordKey, stringified);
+    } catch (e) {
+      if (this.isDebugging) {
+        this.presentToast("Err when stringify scanRecords: " + JSON.stringify(e), "long", "top");
+      }
+    }
   }
 
   async deleteScanRecord(recordId: string): Promise<void> {
     const index = this._scanRecords.findIndex(r => r.id === recordId);
     if (index !== -1) {
       this._scanRecords.splice(index, 1);
-      await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
+      try {
+        const stringified = JSON.stringify(this._scanRecords);
+        await this.storageSet(environment.storageScanRecordKey, stringified);
+      } catch (e) {
+        if (this.isDebugging) {
+          this.presentToast("Err when stringify scanRecords: " + JSON.stringify(e), "long", "top");
+        }
+      }
     }
   }
 
   async deleteAllScanRecords(): Promise<void> {
     this._scanRecords = [];
-    await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
+    try {
+      const stringified = JSON.stringify(this._scanRecords);
+      await this.storageSet(environment.storageScanRecordKey, stringified);
+    } catch (e) {
+      if (this.isDebugging) {
+        this.presentToast("Err when stringify scanRecords: " + JSON.stringify(e), "long", "top");
+      }
+    }
   }
 
   get bookmarks(): Bookmark[] {
@@ -872,7 +919,14 @@ export class EnvService {
       this._bookmarks.sort((a, b) => {
         return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
       });
-      await this.storageSet(environment.storageBookmarkKey, JSON.stringify(this._bookmarks));
+      try {
+        const stringified = JSON.stringify(this._bookmarks);
+        await this.storageSet(environment.storageBookmarkKey, stringified);
+      } catch (e) {
+        if (this.isDebugging) {
+          this.presentToast("Err when stringify bookmarks: " + JSON.stringify(e), "long", "top");
+        }
+      }
       return bookmark;
     } else {
       return null;
@@ -884,20 +938,41 @@ export class EnvService {
     this._bookmarks.sort((a, b) => {
       return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
     });
-    await this.storageSet(environment.storageBookmarkKey, JSON.stringify(this._bookmarks));
+    try {
+      const stringified = JSON.stringify(this._bookmarks);
+      await this.storageSet(environment.storageBookmarkKey, stringified);
+    } catch (e) {
+      if (this.isDebugging) {
+        this.presentToast("Err when stringify bookmarks: " + JSON.stringify(e), "long", "top");
+      }
+    }
   }
 
   async deleteBookmark(text: string): Promise<void> {
     const index = this._bookmarks.findIndex(t => t.text === text);
     if (index !== -1) {
       this._bookmarks.splice(index, 1);
-      await this.storageSet(environment.storageBookmarkKey, JSON.stringify(this._bookmarks));
+      try {
+        const stringified = JSON.stringify(this._bookmarks);
+        await this.storageSet(environment.storageBookmarkKey, stringified);
+      } catch (e) {
+        if (this.isDebugging) {
+          this.presentToast("Err when stringify bookmarks: " + JSON.stringify(e), "long", "top");
+        }
+      }
     }
   }
 
   async deleteAllBookmarks(): Promise<void> {
     this._bookmarks = [];
-    await this.storageSet(environment.storageBookmarkKey, JSON.stringify(this._bookmarks));
+    try {
+      const stringified = JSON.stringify(this._bookmarks);
+      await this.storageSet(environment.storageBookmarkKey, stringified);
+    } catch (e) {
+      if (this.isDebugging) {
+        this.presentToast("Err when stringify bookmarks: " + JSON.stringify(e), "long", "top");
+      }
+    }
   }
 
   toggleLanguageChange() {

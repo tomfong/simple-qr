@@ -92,7 +92,7 @@ export class ResultPage {
         await this.enlarge();
       }
     }
-    if (this.env.scanRecordLogging == 'on') {
+    if (this.env.scanRecordLogging == 'on' && this.qrCodeContent != null && this.qrCodeContent != "") {
       await this.env.saveScanRecord(this.qrCodeContent);
     }
     if (this.env.bookmarks.find(x => x.text == this.qrCodeContent)) {
