@@ -86,7 +86,7 @@ You are welcomed to help translate the app into more languages (refer to this <a
 
 * Open issues to report bugs or share any new ideas.
 
-  [![Issues](https://img.shields.io/bitbucket/issues-raw/tomfong/simple-qr?style=flat)](https://github.com/tomfong/simple-qr/issues)
+  [![Issues](https://img.shields.io/github/issues/tomfong/simple-qr?style=flat)](https://github.com/tomfong/simple-qr/issues)
 
 * Translate the app into different languages.
 
