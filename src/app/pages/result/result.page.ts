@@ -397,6 +397,9 @@ export class ResultPage {
       case 'yandex':
         searchUrl = this.env.YANDEX_SEARCH_URL;
         break;
+      case 'ecosia':
+        searchUrl = this.env.ECOSIA_SEARCH_URL;
+        break;
       default:
         searchUrl = this.env.GOOGLE_SEARCH_URL;
         break;

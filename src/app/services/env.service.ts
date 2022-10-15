@@ -45,7 +45,7 @@ export class EnvService {
   public vibration: 'on' | 'on-haptic' | 'on-scanned' | 'off' = 'on';
   public orientation: 'default' | 'portrait' | 'landscape' = 'default';
   public notShowUpdateNotes: boolean = false;
-  public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' | 'yandex' = 'google';
+  public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' | 'yandex' | 'ecosia' = 'google';
   public resultPageButtons: 'detailed' | 'icon-only' = 'detailed';
   public showQrAfterCameraScan: 'on' | 'off' = 'off';
   public showQrAfterImageScan: 'on' | 'off' = 'off';
@@ -67,11 +67,14 @@ export class EnvService {
   public autoExitAppMin: 1 | 3 | 5 | -1 = -1;
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
+
   public readonly GOOGLE_SEARCH_URL: string = "https://www.google.com/search?q=";
   public readonly BING_SEARCH_URL: string = "https://www.bing.com/search?q=";
   public readonly YAHOO_SEARCH_URL: string = "https://search.yahoo.com/search?p=";
   public readonly DUCK_DUCK_GO_SEARCH_URL: string = "https://duckduckgo.com/?q=";
   public readonly YANDEX_SEARCH_URL: string = "https://yandex.com/search/?text=";
+  public readonly ECOSIA_SEARCH_URL: string = "https://www.ecosia.org/search?method=index&q=";
+
   public readonly GITHUB_REPO_URL: string = "https://github.com/tomfong/simple-qr";
   public readonly GOOGLE_PLAY_URL: string = "https://play.google.com/store/apps/details?id=com.tomfong.simpleqr";
   public readonly APP_STORE_URL: string = "https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553";
