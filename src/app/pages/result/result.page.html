@@ -28,7 +28,7 @@
   </ion-row>
 
   <ng-container *ngIf="qrCodeContent && qrCodeContent.trim().length > 0" [ngTemplateOutlet]="contentBlock"
-    [ngTemplateOutletContext]="{ label: barcodeFormat + ('CONTENT' | translate), content: qrCodeContent, hint: env.resultFormat }">
+    [ngTemplateOutletContext]="{ label: barcodeFormat + ('CONTENT' | translate), content: qrCodeContent, hint: env.resultContentFormat }">
   </ng-container>
 
   <ng-container *ngIf="base64Encoded && qrCodeContent && qrCodeContent.trim().length > 0"

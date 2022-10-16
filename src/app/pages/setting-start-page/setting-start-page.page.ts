@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { Preferences } from '@capacitor/preferences';
 import { Toast } from '@capacitor/toast';
 import { EnvService } from 'src/app/services/env.service';
 import { fadeIn } from 'src/app/utils/animations';
@@ -17,12 +18,12 @@ export class SettingStartPagePage {
   ) { }
 
   async saveStartPage() {
-    await this.env.storageSet("start-page", this.env.startPage);
+    await Preferences.set({ key: this.env.KEY_START_PAGE, value: this.env.startPage });
   }
 
   async onStartPageHeaderChange(ev: any) {
     this.env.startPageHeader = ev ? 'on' : 'off';
-    await this.env.storageSet("start-page-header", this.env.startPageHeader);
+    await Preferences.set({ key: this.env.KEY_START_PAGE_HEADER, value: this.env.startPageHeader });
     await this.tapHaptic();
   }
 

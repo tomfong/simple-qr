@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, QueryList, ViewChildren } from '@angular/core';
 import { Clipboard } from '@capacitor/clipboard';
 import { Contacts, ContactType, EmailAddress, NewContact, PhoneNumber } from '@capacitor-community/contacts'
 import { SMS } from '@awesome-cordova-plugins/sms/ngx';
@@ -81,7 +81,7 @@ export class ResultPage {
         this.showQrFirst = true;
       }
     }
-    this.qrCodeContent = this.env.result;
+    this.qrCodeContent = this.env.resultContent;
     this.setContentType();
   }
 
@@ -616,7 +616,6 @@ export class ResultPage {
     lines.forEach(
       line => {
         const tLine = line.trim();
-        console.log(tLine);
         if (tLine.toUpperCase().substr(0, fullNameId1.length) === fullNameId1) {
           this.vCardContact.fullName = tLine.substr(fullNameId1.length);
         } else if (tLine.toUpperCase().substr(0, fullNameId2.length) === fullNameId2) {
@@ -860,7 +859,7 @@ export class ResultPage {
   }
 
   get barcodeFormat(): string {
-    switch (this.env.resultFormat) {
+    switch (this.env.resultContentFormat) {
       case "UPC_A":
         return this.translate.instant("BARCODE_TYPE.UPC");
       case "UPC_E":
@@ -900,7 +899,7 @@ export class ResultPage {
       case "RSS_EXPANDED":
         return this.translate.instant("BARCODE_TYPE.RSS");
       default:
-        return this.env.resultFormat;
+        return this.env.resultContentFormat;
     }
   }
 

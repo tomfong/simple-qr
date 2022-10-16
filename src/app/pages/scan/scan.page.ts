@@ -137,8 +137,8 @@ export class ScanPage {
   }
 
   async processQrCode(scannedData: string, format: string, loading: HTMLIonLoadingElement): Promise<void> {
-    this.env.result = scannedData;
-    this.env.resultFormat = format;
+    this.env.resultContent = scannedData;
+    this.env.resultContentFormat = format;
     this.env.recordSource = "scan";
     this.env.detailedRecordSource = "scan-camera";
     this.env.viewResultFrom = "/tabs/scan";

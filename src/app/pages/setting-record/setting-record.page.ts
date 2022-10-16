@@ -12,6 +12,7 @@ import { ScanRecord } from 'src/app/models/scan-record';
 import { Bookmark } from 'src/app/models/bookmark';
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { Preferences } from '@capacitor/preferences';
 
 @Component({
   selector: 'app-setting-record',
@@ -43,17 +44,17 @@ export class SettingRecordPage {
   }
 
   async saveHistoryPageStartSegment() {
-    await this.env.storageSet("history-page-start-segment", this.env.historyPageStartSegment);
+    await Preferences.set({ key: this.env.KEY_HISTORY_PAGE_START_SEGMENT, value: this.env.historyPageStartSegment });
   }
 
   async onScanRecordLoggingChange(ev: any) {
     this.env.scanRecordLogging = ev ? 'on' : 'off';
-    await this.env.storageSet("scan-record-logging", this.env.scanRecordLogging);
+    await Preferences.set({ key: this.env.KEY_SCAN_RECORD_LOGGING, value: this.env.scanRecordLogging });
     await this.tapHaptic();
   }
 
   async saveRecordsLimit() {
-    await this.env.storageSet("recordsLimit", this.env.recordsLimit);
+    await Preferences.set({ key: this.env.KEY_RECORDS_LIMIT, value: JSON.stringify(this.env.recordsLimit) });
     if (this.env.recordsLimit != -1 && !this.preventRecordsLimitToast) {
       this.presentToast(this.translate.instant("MSG.DELETE_OVERFLOWED_RECORDS"), "short", "bottom");
     }
@@ -61,7 +62,7 @@ export class SettingRecordPage {
 
   async onShowNumberOfRecordsChange(ev: any) {
     this.env.showNumberOfRecords = ev ? 'on' : 'off';
-    await this.env.storageSet("showNumberOfRecords", this.env.showNumberOfRecords);
+    await Preferences.set({ key: this.env.KEY_SHOW_NUMBER_OF_RECORDS, value: this.env.showNumberOfRecords });
     await this.tapHaptic();
   }
 

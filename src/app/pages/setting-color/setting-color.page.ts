@@ -1,5 +1,6 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component } from '@angular/core';
+import { Preferences } from '@capacitor/preferences';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 
@@ -18,7 +19,7 @@ export class SettingColorPage {
 
   async saveColorTheme() {
     await this.env.toggleColorTheme();
-    await this.env.storageSet("color", this.env.selectedColorTheme);
+    await Preferences.set({ key: this.env.KEY_COLOR, value: this.env.selectedColorTheme });
   }
 
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { Preferences } from '@capacitor/preferences';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { Toast } from '@capacitor/toast';
 import { AlertController, Platform } from '@ionic/angular';
@@ -62,29 +63,35 @@ export class TabsPage {
   async ionViewDidEnter() {
     if (this.env.firstAppLoad) {
       this.env.firstAppLoad = false;
-      await this.router.navigate([this.env.startPage], { replaceUrl: true });
-      await this.loadPatchNote();
+      this.env.initObservable.subscribe(async value => {
+        console.log(`tabs.page.ts - ionViewDidEnter() - initObservable value: ${value}`)
+        if (value) {
+          console.log(`tabs.page.ts - ionViewDidEnter() - env.startPage: ${this.env.startPage}`)
+          await this.router.navigate([this.env.startPage], { replaceUrl: true });
+          await this.loadPatchNote();
+        }
+      });
     }
   }
 
   async loadPatchNote() {
-    const storageKey = this.platform.is('ios') ? this.env.IOS_PATCH_NOTE_STORAGE_KEY : this.env.AN_PATCH_NOTE_STORAGE_KEY;
-    await this.env.storageGet(storageKey).then(
-      async value => {
-        if (value != null) {
-          this.env.notShowUpdateNotes = (value === 'yes' ? true : false);
+    const storageKey = this.platform.is('ios') ? this.env.KEY_IOS_NOT_SHOW_UPDATE_NOTES : this.env.KEY_ANDROID_NOT_SHOW_UPDATE_NOTES;
+    await Preferences.get({ key: storageKey }).then(
+      async result => {
+        if (result.value != null) {
+          this.env.notShowUpdateNotes = result.value == 'yes';
         } else {
           this.env.notShowUpdateNotes = false;
         }
-        await this.env.storageSet(storageKey, 'yes');
-        if (this.env.notShowUpdateNotes === false) {
+        await Preferences.set({ key: storageKey, value: 'yes' });
+        if (!this.env.notShowUpdateNotes) {
           this.env.notShowUpdateNotes = true;
           await this.showUpdateNotes();
           const versionWording = this.translate.instant("VERSION_VERSION") as string;
           await this.presentToast(versionWording.replace("{version}", this.env.appVersionNumber), "short", 'bottom');
         }
       }
-    );
+    )
   }
 
   async showUpdateNotes() {

@@ -101,8 +101,8 @@ export class ImportImagePage {
   }
 
   async processQrCode(scannedData: string, loading: HTMLIonLoadingElement): Promise<void> {
-    this.env.result = scannedData;
-    this.env.resultFormat = "QR_CODE";
+    this.env.resultContent = scannedData;
+    this.env.resultContentFormat = "QR_CODE";
     this.env.recordSource = "scan";
     this.env.detailedRecordSource = "scan-image";
     this.env.viewResultFrom = "/tabs/import-image";

@@ -295,8 +295,8 @@ export class GeneratePage {
   }
 
   async processQrCode(loading: HTMLIonLoadingElement): Promise<void> {
-    this.env.result = this.qrCodeContent;
-    this.env.resultFormat = "";
+    this.env.resultContent = this.qrCodeContent;
+    this.env.resultContentFormat = "";
     this.qrCodeContent = '';
     this.env.recordSource = "create";
     this.env.detailedRecordSource = "create";

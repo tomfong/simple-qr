@@ -198,7 +198,7 @@ export class HistoryPage {
       case "RSS_EXPANDED":
         return this.translate.instant("BARCODE_TYPE.RSS").trim();
       default:
-        return this.env.resultFormat;
+        return this.env.resultContentFormat;
     }
   }
 
@@ -210,8 +210,8 @@ export class HistoryPage {
     this.changeDetectorRef.detectChanges();
     this.changeDetectorRef.reattach();
     const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
-    this.env.result = data;
-    this.env.resultFormat = "";
+    this.env.resultContent = data;
+    this.env.resultContentFormat = "";
     this.env.recordSource = "view";
     this.env.detailedRecordSource = source;
     this.env.viewResultFrom = "/tabs/history";

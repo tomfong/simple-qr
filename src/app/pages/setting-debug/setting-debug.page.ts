@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Preferences } from '@capacitor/preferences';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 
@@ -15,7 +16,7 @@ export class SettingDebugPage {
   ) { }
 
   async saveDebugMode() {
-    await this.env.storageSet("debug-mode-on", this.env.debugMode);
+    await Preferences.set({ key: this.env.KEY_DEBUG_MODE, value: this.env.debugMode });
   }
 
 }

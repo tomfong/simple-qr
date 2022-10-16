@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Preferences } from '@capacitor/preferences';
 import { EnvService } from 'src/app/services/env.service';
 
 @Component({
@@ -13,6 +14,6 @@ export class SettingAutoExitPage{
   ) { }
 
   async saveAutoExitAppMin() {
-    await this.env.storageSet("autoExitAppMin", this.env.autoExitAppMin);
+    await Preferences.set({ key: this.env.KEY_AUTO_EXIT_MIN, value: JSON.stringify(this.env.autoExitAppMin) });
   }
 }

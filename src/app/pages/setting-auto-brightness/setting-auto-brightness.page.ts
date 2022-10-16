@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { Preferences } from '@capacitor/preferences';
 import { Toast } from '@capacitor/toast';
 import { EnvService } from 'src/app/services/env.service';
 
@@ -15,12 +16,12 @@ export class SettingAutoBrightnessPage {
   ) { }
 
   async saveAutoMaxBrightness() {
-    await this.env.storageSet("auto-max-brightness", this.env.autoMaxBrightness);
+    await Preferences.set({ key: this.env.KEY_AUTO_MAX_BRIGHTNESS, value: this.env.autoMaxBrightness });
   }
 
   async onAutoMaxBrightnessChange(ev: any) {
     this.env.autoMaxBrightness = ev ? 'on' : 'off';
-    await this.env.storageSet("auto-max-brightness", this.env.autoMaxBrightness);
+    await Preferences.set({ key: this.env.KEY_AUTO_MAX_BRIGHTNESS, value: this.env.autoMaxBrightness });
     await this.tapHaptic();
   }
 

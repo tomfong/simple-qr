@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Preferences } from '@capacitor/preferences';
 import { Toast } from '@capacitor/toast';
 import { AlertController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -89,7 +90,7 @@ export class AboutPage {
     if (this.env.debugMode != 'on') {
       if (this.tapAppVersionTimes >= 5) {
         this.env.debugMode = 'on';
-        await this.env.storageSet("debug-mode-on", 'on');
+        await Preferences.set({ key: this.env.KEY_DEBUG_MODE, value: 'on' });
         await Toast.show({
           text: this.translate.instant("MSG.DEBUG_MODE_ON"),
           duration: "short",

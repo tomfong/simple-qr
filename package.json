@@ -48,6 +48,7 @@
     "@capacitor/haptics": "^4.0.1",
     "@capacitor/ios": "^4.3.0",
     "@capacitor/keyboard": "^4.0.1",
+    "@capacitor/preferences": "^4.0.1",
     "@capacitor/splash-screen": "^4.1.0",
     "@capacitor/status-bar": "^4.0.1",
     "@capacitor/toast": "^4.0.1",
