@@ -299,7 +299,7 @@
         "UPC": "通用產品代碼"
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "<p>此版本為您帶來多項更新和新功能，詳情請查看 GitHub。</p><p>Android 用戶現在可以在快速設定面板中加入簡易 QR 按鍵以進行快速啟動。</p>",
+        "UPDATE_NOTES_ANDROID": "<p>此版本為您帶來多項更新和新功能，詳情請查看 GitHub。</p>",
         "UPDATE_NOTES_IOS": "此版本為您帶來多項更新和新功能，詳情請查看 GitHub。"
     }
 }

@@ -31,7 +31,7 @@ export declare type ResultPageButtonsType = 'detailed' | 'icon-only';
 })
 export class EnvService {
 
-  public appVersionNumber: string = '3.0.1';
+  public appVersionNumber: string = '3.1.0';
 
   public startPage: TabPageType = "/tabs/scan";
   public historyPageStartSegment: HistoryPageSegmentType = 'history';
@@ -119,10 +119,10 @@ export class EnvService {
   public readonly KEY_SHOW_SEND_EMAIL_BUTTON = "showSendEmailButton";
   public readonly KEY_AUTO_EXIT_MIN = "autoExitAppMin";
 
-  public readonly KEY_ANDROID_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30001";
-  public readonly KEY_IOS_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30001";
-  public readonly KEY_ANDROID_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30000";
-  public readonly KEY_IOS_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30000";
+  public readonly KEY_ANDROID_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30100";
+  public readonly KEY_IOS_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30100";
+  public readonly KEY_ANDROID_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30001";
+  public readonly KEY_IOS_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30001";
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
 
