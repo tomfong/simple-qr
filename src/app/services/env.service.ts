@@ -202,7 +202,7 @@ export class EnvService {
           });
         }
       );
-      await this.presentToast(this.translate.instant("OPTIMIZING_DATA"), "short", "bottom");
+      await this.presentToast(this.translate.instant("OPTIMIZING_DATA_..."), "short", "bottom");
       await oldStorage.get(this.KEY_START_PAGE).then(
         async value => {
           if (value != null) {
