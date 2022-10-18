@@ -326,10 +326,10 @@ export class SettingRecordPage {
         rawCsvData = "ID,Content,Created at,Source,Barcode Type,Bookmarked?,Tag\r\n";
     }
     this.env.scanRecords.forEach(r => {
-      rawCsvData += `${r.id},"${r.text}","${this.maskDatetime(r.createdAt)}",${this.maskSource(r.source)},${r.barcodeType ?? ''},`
+      rawCsvData += `${r.id},"${r.text?.split('"').join('') ?? ""}","${this.maskDatetime(r.createdAt)}",${this.maskSource(r.source)},${r.barcodeType ?? ''},`
       const bookmark = this.env.bookmarks.find(b => b.text == r.text);
       if (bookmark != null) {
-        rawCsvData += `TRUE,"${bookmark.tag}"\r\n`;
+        rawCsvData += `TRUE,"${bookmark.tag?.split('"').join('') ?? ""}"\r\n`;
       } else {
         rawCsvData += "FALSE, \r\n";
       }
