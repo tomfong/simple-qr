@@ -197,7 +197,7 @@
     </div>
   </div>
 
-  <div class="ion-padding-vertical">
+  <div class="ion-padding-vertical mb-2">
     <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'RESTORE' | translate }}</ion-list-header>
     <ion-item class="ion-no-padding" lines="none">
       <ion-label class="ion-padding-start">
@@ -211,6 +211,43 @@
     <div class="ion-padding-horizontal pt-3 d-flex justify-content-center align-content-start flex-column">
       <ion-button class="ion-padding-horizontal" color="primary" (click)="onRestore()">
         {{ 'RESTORE' | translate }}
+      </ion-button>
+    </div>
+  </div>
+
+  <div class="ion-padding-vertical mb-2">
+    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'EXPORT' | translate }}</ion-list-header>
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding-horizontal">
+          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
+            {{ 'MSG.EXPORT_TO_CSV_EXPLAIN' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+    </ion-item>
+    <div class="ion-padding-horizontal pt-3 d-flex justify-content-center align-content-start flex-column">
+      <ion-button class="ion-padding-horizontal" color="primary" (click)="onExportToCsv()">
+        {{ 'EXPORT_TO_CSV' | translate }}
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- TODO: Import from CSV -->
+  <div class="ion-padding-vertical">
+    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'IMPORT' | translate }}</ion-list-header>
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding-horizontal">
+          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
+            {{ 'MSG.IMPORT_FROM_CSV_EXPLAIN' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+    </ion-item>
+    <div class="ion-padding-horizontal pt-3 d-flex justify-content-center align-content-start flex-column">
+      <ion-button class="ion-padding-horizontal" color="primary" disabled="true" (click)="onImportFromCsv()">
+        {{ 'COMING_SOON' | translate }}
       </ion-button>
     </div>
   </div>

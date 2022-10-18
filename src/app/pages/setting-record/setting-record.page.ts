@@ -13,6 +13,7 @@ import { Bookmark } from 'src/app/models/bookmark';
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Preferences } from '@capacitor/preferences';
+import { de, enUS, fr, it, zhCN, zhHK } from 'date-fns/locale';
 
 @Component({
   selector: 'app-setting-record',
@@ -295,6 +296,146 @@ export class SettingRecordPage {
           this.presentToast(this.translate.instant("MSG.RESTORE_WRONG_SECRET"), "short", "bottom");
         }
       });
+  }
+
+  async onExportToCsv() {
+    const loading = await this.presentLoading(this.translate.instant("EXPORTING"));
+    const now = format(new Date(), "yyyyMMddHHmmss");
+    const filename = `simpleqr-${now}.csv`;
+    let rawCsvData: string;
+    switch (this.env.language) {
+      case "de":
+        rawCsvData = "ID,Inhalt,Erstellt um,Quelle,Barcode-Typ,Lesezeichen gesetzt?,Etikett\r\n";
+        break;
+      case "en":
+        rawCsvData = "ID,Content,Created at,Source,Barcode Type,Bookmarked?,Tag\r\n";
+        break;
+      case "fr":
+        rawCsvData = "ID,Le contenu,Créé à,La source,Type de code-barres,En signet?,Étiquette\r\n";
+        break;
+      case "it":
+        rawCsvData = "ID,Contenuto,Creato a,Fonte,Tipo di codice a barre,Aggiunto ai preferiti?,Etichetta\r\n";
+        break;
+      case "zh-CN":
+        rawCsvData = "ID,内容,建立于,来源,条码类型,已书签?,标签\r\n";
+        break;
+      case "zh-HK":
+        rawCsvData = "ID,内容,建立於,來源,條碼類型,已書籤?,標籤\r\n";
+        break;
+      default:
+        rawCsvData = "ID,Content,Created at,Source,Barcode Type,Bookmarked?,Tag\r\n";
+    }
+    this.env.scanRecords.forEach(r => {
+      rawCsvData += `${r.id},"${r.text}","${this.maskDatetime(r.createdAt)}",${this.maskSource(r.source)},${r.barcodeType ?? ''},`
+      const bookmark = this.env.bookmarks.find(b => b.text == r.text);
+      if (bookmark != null) {
+        rawCsvData += `TRUE,"${bookmark.tag}"\r\n`;
+      } else {
+        rawCsvData += "FALSE, \r\n";
+      }
+    });
+    await Filesystem.writeFile({
+      path: `${filename}`,
+      data: rawCsvData,
+      directory: Directory.External,
+      encoding: Encoding.UTF8,
+      recursive: true
+    }).then(
+      async result => {
+        loading.dismiss();
+        const loading2 = await this.presentLoading(this.translate.instant("PLEASE_WAIT"));
+        await this.socialSharing.share(null, filename, result.uri, null).then(() => {
+          loading2.dismiss();
+        }).catch(
+          err => {
+            loading2.dismiss();
+            if (this.env.isDebugging) {
+              this.presentToast("Error when SocialSharing.share: " + JSON.stringify(err), "long", "top");
+            }
+          }
+        );
+      }
+    ).catch(
+      err => {
+        loading.dismiss();
+        if (this.env.isDebugging) {
+          this.presentToast("Error when call Filesystem.writeFile: " + JSON.stringify(err), "long", "top");
+        } else {
+          this.presentToast("Error!", "short", "bottom");
+        }
+      }
+    );
+  }
+
+  async onImportFromCsv() {
+    // TODO: Import from CSV
+  }
+
+  maskDatetime(date: Date): string {
+    if (!date) {
+      return "-";
+    }
+    let locale: Locale;
+    switch (this.env.language) {
+      case "de":
+        locale = de;
+        break;
+      case "en":
+        locale = enUS;
+        break;
+      case "fr":
+        locale = fr;
+        break;
+      case "it":
+        locale = it;
+        break;
+      case "zh-CN":
+        locale = zhCN;
+        break;
+      case "zh-HK":
+        locale = zhHK;
+        break;
+      default:
+        locale = enUS;
+    }
+    return format(date, "PP pp", { locale: locale });
+  }
+
+  maskSource(source: 'create' | 'view' | 'scan' | undefined): string {
+    if (source == null) {
+      return "-";
+    }
+    let locale: Locale;
+    switch (this.env.language) {
+      case "de":
+        locale = de;
+        break;
+      case "en":
+        locale = enUS;
+        break;
+      case "fr":
+        locale = fr;
+        break;
+      case "it":
+        locale = it;
+        break;
+      case "zh-CN":
+        locale = zhCN;
+        break;
+      case "zh-HK":
+        locale = zhHK;
+        break;
+      default:
+        locale = enUS;
+    }
+    switch (source) {
+      case 'create':
+        return `${this.translate.instant("CREATED")}`;
+      case 'view':
+        return `${this.translate.instant("VIEWED")}`;
+      case 'scan':
+        return `${this.translate.instant("SCANNED")}`;
+    }
   }
 
   async presentToast(msg: string, duration: "short" | "long", pos: "top" | "center" | "bottom") {
