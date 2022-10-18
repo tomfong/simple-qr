@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-// import * as moment from 'moment';
 import { format } from 'date-fns';
 import { EnvService } from 'src/app/services/env.service';
 import { Toast } from '@capacitor/toast';
@@ -296,8 +295,8 @@ export class GeneratePage {
   }
 
   async processQrCode(loading: HTMLIonLoadingElement): Promise<void> {
-    this.env.result = this.qrCodeContent;
-    this.env.resultFormat = "";
+    this.env.resultContent = this.qrCodeContent;
+    this.env.resultContentFormat = "";
     this.qrCodeContent = '';
     this.env.recordSource = "create";
     this.env.detailedRecordSource = "create";

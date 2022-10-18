@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'">
     <ion-buttons slot="start">
-      <ion-back-button text="">
+      <ion-back-button text="" defaultHref="tabs/setting">
       </ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'LOG_BACKUP_AND_RESTORE' | translate }}</ion-title>
@@ -11,7 +11,8 @@
 <ion-content>
 
   <div class="ion-padding-vertical">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'INITIAL_SEGMENT' | translate }}</ion-list-header>
+    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'INITIAL_SEGMENT' | translate }}
+    </ion-list-header>
     <ion-radio-group [(ngModel)]="env.historyPageStartSegment" (ionChange)="saveHistoryPageStartSegment()">
       <ion-item class="ion-no-padding ripple-parent py-1 mt-2" detail="false" lines="none">
         <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/history.svg">
@@ -43,7 +44,46 @@
   </div>
 
   <div class="ion-padding-vertical">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'AUTO_LOGGING' | translate }}</ion-list-header>
+    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'MANAGE_RECORDS' | translate }}
+    </ion-list-header>
+    <div class="ion-padding-horizontal pt-3 d-flex justify-content-center align-content-start flex-column">
+      <ion-button id="open-tutorial-modal" class="ion-padding-horizontal" color="primary">
+        {{ 'VIEW_INSTRUCTIONS' | translate }}
+      </ion-button>
+    </div>
+  </div>
+
+  <ion-modal #tutorialModal trigger="open-tutorial-modal" [initialBreakpoint]="0.8" [breakpoints]="[0, 0.8]">
+    <ng-template>
+      <ion-content [color]="color">
+        <ion-list-header class="mt-4 ml-3" style="font-size: x-large;">{{ 'TUTORIAL' | translate }}</ion-list-header>
+        <ion-item class="content-item ion-no-padding" lines="none" [color]="color">
+          <ion-icon class="ion-padding-horizontal" src="assets/icon/swipe-left.svg" [color]="'primary'"></ion-icon>
+          <ion-label>
+            <p class="ion-padding">
+              <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
+                {{ 'MSG.TUTORIAL_SWIPE_LEFT' | translate }}
+              </ion-text>
+            </p>
+          </ion-label>
+        </ion-item>
+        <ion-item class="content-item ion-no-padding" lines="none" [color]="color">
+          <ion-icon class="ion-padding-horizontal" src="assets/icon/swipe-right.svg" [color]="'primary'"></ion-icon>
+          <ion-label>
+            <p class="ion-padding">
+              <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
+                {{ 'MSG.TUTORIAL_SWIPE_RIGHT' | translate }}
+              </ion-text>
+            </p>
+          </ion-label>
+        </ion-item>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <div class="ion-padding-vertical">
+    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'AUTO_LOGGING' | translate }}
+    </ion-list-header>
     <ion-item class="ion-no-padding" lines="none">
       <ion-label class="ion-padding-start">
         <p class="ion-padding-horizontal">
@@ -68,7 +108,8 @@
   </div>
 
   <div class="ion-padding-vertical">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'RECORDS_LIMIT' | translate }}</ion-list-header>
+    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'RECORDS_LIMIT' | translate }}
+    </ion-list-header>
     <ion-item class="ion-no-padding" lines="none">
       <ion-label class="ion-padding-start">
         <p class="ion-padding-horizontal">
@@ -149,14 +190,14 @@
         </p>
       </ion-label>
     </ion-item>
-    <div class="ion-padding-horizontal pt-3 d-flex justify-content-center align-content-start flex-column">
+    <div class="ion-padding-horizontal pt-2 d-flex justify-content-center align-content-start flex-column">
       <ion-button class="ion-padding-horizontal" color="primary" (click)="onBackup()">
         {{ 'BACKUP' | translate }}
       </ion-button>
     </div>
   </div>
 
-  <div class="ion-padding-vertical">
+  <div class="ion-padding-vertical mb-2">
     <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'RESTORE' | translate }}</ion-list-header>
     <ion-item class="ion-no-padding" lines="none">
       <ion-label class="ion-padding-start">
@@ -167,9 +208,46 @@
         </p>
       </ion-label>
     </ion-item>
-    <div class="ion-padding-horizontal pt-3 d-flex justify-content-center align-content-start flex-column">
+    <div class="ion-padding-horizontal pt-2 d-flex justify-content-center align-content-start flex-column">
       <ion-button class="ion-padding-horizontal" color="primary" (click)="onRestore()">
         {{ 'RESTORE' | translate }}
+      </ion-button>
+    </div>
+  </div>
+
+  <div class="ion-padding-vertical mb-2">
+    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'EXPORT' | translate }}</ion-list-header>
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding-horizontal">
+          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
+            {{ 'MSG.EXPORT_TO_CSV_EXPLAIN' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+    </ion-item>
+    <div class="ion-padding-horizontal pt-2 d-flex justify-content-center align-content-start flex-column">
+      <ion-button class="ion-padding-horizontal" color="primary" (click)="onExportToCsv()">
+        {{ 'EXPORT_TO_CSV' | translate }}
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- TODO: Import from CSV -->
+  <div class="ion-padding-vertical mb-1">
+    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'IMPORT' | translate }}</ion-list-header>
+    <ion-item class="ion-no-padding" lines="none">
+      <ion-label class="ion-padding-start">
+        <p class="ion-padding-horizontal">
+          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
+            {{ 'MSG.IMPORT_FROM_CSV_EXPLAIN' | translate }}
+          </ion-text>
+        </p>
+      </ion-label>
+    </ion-item>
+    <div class="ion-padding-horizontal pt-2 d-flex justify-content-center align-content-start flex-column">
+      <ion-button class="ion-padding-horizontal" color="primary" disabled="true" (click)="onImportFromCsv()">
+        {{ 'COMING_SOON' | translate }}
       </ion-button>
     </div>
   </div>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { Preferences } from '@capacitor/preferences';
 import { Toast } from '@capacitor/toast';
 import { EnvService } from 'src/app/services/env.service';
 
@@ -16,31 +17,31 @@ export class SettingAutoQrPage {
 
   async onShowQrAfterCameraScanChange(ev: any) {
     this.env.showQrAfterCameraScan = ev ? 'on' : 'off';
-    await this.env.storageSet("show-qr-after-camera-scan", this.env.showQrAfterCameraScan);
+    await Preferences.set({ key: this.env.KEY_SHOW_QR_AFTER_CAMERA_SCAN, value: this.env.showQrAfterCameraScan });
     await this.tapHaptic();
   }
 
   async onShowQrAfterImageScanChange(ev: any) {
     this.env.showQrAfterImageScan = ev ? 'on' : 'off';
-    await this.env.storageSet("show-qr-after-image-scan", this.env.showQrAfterImageScan);
+    await Preferences.set({ key: this.env.KEY_SHOW_QR_AFTER_IMAGE_SCAN, value: this.env.showQrAfterImageScan });
     await this.tapHaptic();
   }
 
   async onShowQrAfterCreateChange(ev: any) {
     this.env.showQrAfterCreate = ev ? 'on' : 'off';
-    await this.env.storageSet("show-qr-after-create", this.env.showQrAfterCreate);
+    await Preferences.set({ key: this.env.KEY_SHOW_QR_AFTER_CREATE, value: this.env.showQrAfterCreate });
     await this.tapHaptic();
   }
 
   async onShowQrAfterLogViewChange(ev: any) {
     this.env.showQrAfterLogView = ev ? 'on' : 'off';
-    await this.env.storageSet("show-qr-after-log-view", this.env.showQrAfterLogView);
+    await Preferences.set({ key: this.env.KEY_SHOW_QR_AFTER_LOG_VIEW, value: this.env.showQrAfterLogView });
     await this.tapHaptic();
   }
 
   async onShowQrAfterBookmarkViewChange(ev: any) {
     this.env.showQrAfterBookmarkView = ev ? 'on' : 'off';
-    await this.env.storageSet("show-qr-after-bookmark-view", this.env.showQrAfterBookmarkView);
+    await Preferences.set({ key: this.env.KEY_SHOW_QR_AFTER_BOOKMARK_VIEW, value: this.env.showQrAfterBookmarkView });
     await this.tapHaptic();
   }
 

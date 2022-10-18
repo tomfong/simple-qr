@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Preferences } from '@capacitor/preferences';
 import { EnvService } from 'src/app/services/env.service';
 
 @Component({
@@ -13,6 +14,6 @@ export class SettingVibrationPage {
   ) { }
 
   async saveVibration() {
-    await this.env.storageSet("vibration", this.env.vibration);
+    await Preferences.set({ key: this.env.KEY_VIBRATION, value: this.env.vibration });
   }
 }

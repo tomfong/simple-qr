@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Preferences } from '@capacitor/preferences';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 
@@ -15,7 +16,7 @@ export class SettingSearchEnginePage {
   ) { }
 
   async saveSearchEngine() {
-   await this.env.storageSet("search-engine", this.env.searchEngine);
+   await Preferences.set({ key: this.env.KEY_SEARCH_ENGINE, value: this.env.searchEngine });
   }
 
 

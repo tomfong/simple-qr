@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Preferences } from '@capacitor/preferences';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 
@@ -16,6 +17,6 @@ export class SettingLanguagePage {
 
   async saveLanguage() {
     this.env.toggleLanguageChange();
-    await this.env.storageSet("language", this.env.selectedLanguage);
+    await Preferences.set({ key: this.env.KEY_LANGUAGE, value: this.env.selectedLanguage });
   }
 }

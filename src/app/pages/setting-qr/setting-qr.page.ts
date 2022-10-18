@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { Preferences } from '@capacitor/preferences';
 import { Toast } from '@capacitor/toast';
 import { AlertController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -68,35 +69,35 @@ export class SettingQrPage {
 
   async saveErrorCorrectionLevel() {
     this.setErrorCorrectionLevel();
-    await this.env.storageSet("error-correction-level", this.env.errorCorrectionLevel);
+    await Preferences.set({ key: this.env.KEY_ERROR_CORRECTION_LEVEL, value: this.env.errorCorrectionLevel });
   }
 
   async saveQrCodeDarkR() {
-    await this.env.storageSet("qrCodeDarkR", this.env.qrCodeDarkR);
+    await Preferences.set({ key: this.env.KEY_QR_CODE_DARK_R, value: JSON.stringify(this.env.qrCodeDarkR) });
   }
 
   async saveQrCodeDarkG() {
-    await this.env.storageSet("qrCodeDarkG", this.env.qrCodeDarkG);
+    await Preferences.set({ key: this.env.KEY_QR_CODE_DARK_G, value: JSON.stringify(this.env.qrCodeDarkG) });
   }
 
   async saveQrCodeDarkB() {
-    await this.env.storageSet("qrCodeDarkB", this.env.qrCodeDarkB);
+    await Preferences.set({ key: this.env.KEY_QR_CODE_DARK_B, value: JSON.stringify(this.env.qrCodeDarkB) });
   }
 
   async saveQrCodeLightR() {
-    await this.env.storageSet("qrCodeLightR", this.env.qrCodeLightR);
+    await Preferences.set({ key: this.env.KEY_QR_CODE_LIGHT_R, value: JSON.stringify(this.env.qrCodeLightR) });
   }
 
   async saveQrCodeLightG() {
-    await this.env.storageSet("qrCodeLightG", this.env.qrCodeLightG);
+    await Preferences.set({ key: this.env.KEY_QR_CODE_LIGHT_G, value: JSON.stringify(this.env.qrCodeLightG) });
   }
 
   async saveQrCodeLightB() {
-    await this.env.storageSet("qrCodeLightB", this.env.qrCodeLightB);
+    await Preferences.set({ key: this.env.KEY_QR_CODE_LIGHT_B, value: JSON.stringify(this.env.qrCodeLightB) });
   }
 
   async saveQrCodeMargin() {
-    await this.env.storageSet("qrCodeMargin", this.env.qrCodeMargin);
+    await Preferences.set({ key: this.env.KEY_QR_CODE_MARGIN, value: JSON.stringify(this.env.qrCodeMargin) });
   }
 
   async resetDefault() {

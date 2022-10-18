@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Device, DeviceInfo } from '@capacitor/device';
 import { ThemeDetection, ThemeDetectionResponse } from '@awesome-cordova-plugins/theme-detection/ngx';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
-import { Platform } from '@ionic/angular';
+import { LoadingController, Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { format } from 'date-fns';
@@ -12,29 +12,40 @@ import { Bookmark } from '../models/bookmark';
 import { ScanRecord } from '../models/scan-record';
 import { Toast } from '@capacitor/toast';
 import { v4 as uuidv4 } from 'uuid';
+import { Preferences } from '@capacitor/preferences';
+import { Observable } from 'rxjs';
 
 export declare type LanguageType = 'de' | 'en' | 'fr' | 'it' | 'zh-CN' | 'zh-HK';
+export declare type TabPageType = "/tabs/scan" | "/tabs/generate" | "/tabs/import-image" | "/tabs/history" | "/tabs/setting";
+export declare type HistoryPageSegmentType = 'history' | 'bookmarks';
+export declare type OnOffType = "on" | "off";
+export declare type ColorThemeType = 'light' | 'dark' | 'black';
+export declare type ErrorCorrectionLevelType = 'L' | 'M' | 'Q' | 'H';
+export declare type VibrationType = "on" | "off" | 'on-haptic' | 'on-scanned';
+export declare type OrientationType = 'portrait' | 'landscape';
+export declare type SearchEngineType = 'google' | 'bing' | 'yahoo' | 'duckduckgo' | 'yandex' | 'ecosia';
+export declare type ResultPageButtonsType = 'detailed' | 'icon-only';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EnvService {
 
-  public appVersionNumber: string = '3.0.1';
+  public appVersionNumber: string = '3.1.0';
 
-  public startPage: "/tabs/scan" | "/tabs/generate" | "/tabs/import-image" | "/tabs/history" | "/tabs/setting" = "/tabs/scan";
-  public historyPageStartSegment: 'history' | 'bookmarks' = 'history';
-  public startPageHeader: 'on' | 'off' = 'on';
+  public startPage: TabPageType = "/tabs/scan";
+  public historyPageStartSegment: HistoryPageSegmentType = 'history';
+  public startPageHeader: OnOffType = 'on';
   public languages: LanguageType[] = ['en', 'zh-HK', 'zh-CN', 'de', 'fr', 'it'];
   public language: LanguageType = 'en';
   public selectedLanguage: 'default' | LanguageType = 'default';
-  public colorTheme: 'light' | 'dark' | 'black' = 'light';
-  public selectedColorTheme: 'default' | 'light' | 'dark' | 'black' = 'default';
-  public scanRecordLogging: 'on' | 'off' = 'on';
+  public colorTheme: ColorThemeType = 'light';
+  public selectedColorTheme: 'default' | ColorThemeType = 'default';
+  public scanRecordLogging: OnOffType = 'on';
   public recordsLimit: 30 | 50 | 100 | -1 = -1;
-  public showNumberOfRecords: 'on' | 'off' = 'on';
-  public autoMaxBrightness: 'on' | 'off' = 'on';
-  public errorCorrectionLevel: 'L' | 'M' | 'Q' | 'H' = 'M';
+  public showNumberOfRecords: OnOffType = 'on';
+  public autoMaxBrightness: OnOffType = 'on';
+  public errorCorrectionLevel: ErrorCorrectionLevelType = 'M';
   public qrCodeLightR: number = 255;
   public qrCodeLightG: number = 255;
   public qrCodeLightB: number = 255;
@@ -42,53 +53,96 @@ export class EnvService {
   public qrCodeDarkG: number = 36;
   public qrCodeDarkB: number = 40;
   public qrCodeMargin: number = 3;
-  public vibration: 'on' | 'on-haptic' | 'on-scanned' | 'off' = 'on';
-  public orientation: 'default' | 'portrait' | 'landscape' = 'default';
-  public notShowHistoryTutorial: boolean = false;
-  public notShowBookmarkTutorial: boolean = false;
+  public vibration: VibrationType = 'on';
+  public orientation: 'default' | OrientationType = 'default';
   public notShowUpdateNotes: boolean = false;
-  public searchEngine: 'google' | 'bing' | 'yahoo' | 'duckduckgo' | 'yandex' = 'google';
-  public resultPageButtons: 'detailed' | 'icon-only' = 'detailed';
-  public showQrAfterCameraScan: 'on' | 'off' = 'off';
-  public showQrAfterImageScan: 'on' | 'off' = 'off';
-  public showQrAfterCreate: 'on' | 'off' = 'on';
-  public showQrAfterLogView: 'on' | 'off' = 'on';
-  public showQrAfterBookmarkView: 'on' | 'off' = 'on';
-  public showSearchButton: 'on' | 'off' = 'on';
-  public showCopyButton: 'on' | 'off' = 'on';
-  public showBase64Button: 'on' | 'off' = 'on';
-  public showEnlargeButton: 'on' | 'off' = 'on';
-  public showBookmarkButton: 'on' | 'off' = 'on';
-  public showOpenUrlButton: 'on' | 'off' = 'on';
-  public showBrowseButton: 'on' | 'off' = 'on';
-  public showAddContactButton: 'on' | 'off' = 'on';
-  public showCallButton: 'on' | 'off' = 'on';
-  public showSendMessageButton: 'on' | 'off' = 'on';
-  public showSendEmailButton: 'on' | 'off' = 'on';
-  public debugMode: 'on' | 'off' = 'off';
+  public searchEngine: SearchEngineType = 'google';
+  public resultPageButtons: ResultPageButtonsType = 'detailed';
+  public showQrAfterCameraScan: OnOffType = 'off';
+  public showQrAfterImageScan: OnOffType = 'off';
+  public showQrAfterCreate: OnOffType = 'on';
+  public showQrAfterLogView: OnOffType = 'on';
+  public showQrAfterBookmarkView: OnOffType = 'on';
+  public showSearchButton: OnOffType = 'on';
+  public showCopyButton: OnOffType = 'on';
+  public showBase64Button: OnOffType = 'on';
+  public showEnlargeButton: OnOffType = 'on';
+  public showBookmarkButton: OnOffType = 'on';
+  public showOpenUrlButton: OnOffType = 'on';
+  public showBrowseButton: OnOffType = 'on';
+  public showAddContactButton: OnOffType = 'on';
+  public showCallButton: OnOffType = 'on';
+  public showSendMessageButton: OnOffType = 'on';
+  public showSendEmailButton: OnOffType = 'on';
+  public debugMode: OnOffType = 'off';
   public autoExitAppMin: 1 | 3 | 5 | -1 = -1;
 
+  public readonly KEY_START_PAGE = "start-page";
+  public readonly KEY_HISTORY_PAGE_START_SEGMENT = "history-page-start-segment";
+  public readonly KEY_START_PAGE_HEADER = "start-page-header";
+  public readonly KEY_SCAN_RECORDS = "scanRecords";
+  public readonly KEY_BOOKMARKS = "bookmarks";
+  public readonly KEY_LANGUAGE = "language";
+  public readonly KEY_COLOR = "color";
+  public readonly KEY_DEBUG_MODE = "debug-mode-on";
+  public readonly KEY_ORIENTATION = "orientation";
+  public readonly KEY_SCAN_RECORD_LOGGING = "scan-record-logging";
+  public readonly KEY_RECORDS_LIMIT = "recordsLimit";
+  public readonly KEY_SHOW_NUMBER_OF_RECORDS = "showNumberOfRecords";
+  public readonly KEY_VIBRATION = "vibration";
+  public readonly KEY_ERROR_CORRECTION_LEVEL = "error-correction-level";
+  public readonly KEY_QR_CODE_LIGHT_R = "qrCodeLightR";
+  public readonly KEY_QR_CODE_LIGHT_G = "qrCodeLightG";
+  public readonly KEY_QR_CODE_LIGHT_B = "qrCodeLightB";
+  public readonly KEY_QR_CODE_DARK_R = "qrCodeDarkR";
+  public readonly KEY_QR_CODE_DARK_G = "qrCodeDarkG";
+  public readonly KEY_QR_CODE_DARK_B = "qrCodeDarkB";
+  public readonly KEY_QR_CODE_MARGIN = "qrCodeMargin";
+  public readonly KEY_AUTO_MAX_BRIGHTNESS = "auto-max-brightness";
+  public readonly KEY_SEARCH_ENGINE = "search-engine";
+  public readonly KEY_RESULT_PAGE_BUTTONS = "result-page-buttons";
+  public readonly KEY_SHOW_QR_AFTER_CAMERA_SCAN = "show-qr-after-camera-scan";
+  public readonly KEY_SHOW_QR_AFTER_IMAGE_SCAN = "show-qr-after-image-scan";
+  public readonly KEY_SHOW_QR_AFTER_CREATE = "show-qr-after-create";
+  public readonly KEY_SHOW_QR_AFTER_LOG_VIEW = "show-qr-after-log-view";
+  public readonly KEY_SHOW_QR_AFTER_BOOKMARK_VIEW = "show-qr-after-bookmark-view";
+  public readonly KEY_SHOW_SEARCH_BUTTON = "showSearchButton";
+  public readonly KEY_SHOW_COPY_BUTTON = "showCopyButton";
+  public readonly KEY_SHOW_BASE64_BUTTON = "showBase64Button";
+  public readonly KEY_SHOW_ENLARGE_BUTTON = "showEnlargeButton";
+  public readonly KEY_SHOW_BOOKMARK_BUTTON = "showBookmarkButton";
+  public readonly KEY_SHOW_OPEN_URL_BUTTON = "showOpenUrlButton";
+  public readonly KEY_SHOW_BROWSE_BUTTON = "showBrowseButton";
+  public readonly KEY_SHOW_ADD_CONTACT_BUTTON = "showAddContactButton";
+  public readonly KEY_SHOW_CALL_BUTTON = "showCallButton";
+  public readonly KEY_SHOW_SEND_MESSAGE_BUTTON = "showSendMessageButton";
+  public readonly KEY_SHOW_SEND_EMAIL_BUTTON = "showSendEmailButton";
+  public readonly KEY_AUTO_EXIT_MIN = "autoExitAppMin";
+
+  public readonly KEY_ANDROID_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30100";
+  public readonly KEY_IOS_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30100";
+  public readonly KEY_ANDROID_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30001";
+  public readonly KEY_IOS_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30001";
+
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
+
   public readonly GOOGLE_SEARCH_URL: string = "https://www.google.com/search?q=";
   public readonly BING_SEARCH_URL: string = "https://www.bing.com/search?q=";
   public readonly YAHOO_SEARCH_URL: string = "https://search.yahoo.com/search?p=";
   public readonly DUCK_DUCK_GO_SEARCH_URL: string = "https://duckduckgo.com/?q=";
   public readonly YANDEX_SEARCH_URL: string = "https://yandex.com/search/?text=";
+  public readonly ECOSIA_SEARCH_URL: string = "https://www.ecosia.org/search?method=index&q=";
+
   public readonly GITHUB_REPO_URL: string = "https://github.com/tomfong/simple-qr";
   public readonly GOOGLE_PLAY_URL: string = "https://play.google.com/store/apps/details?id=com.tomfong.simpleqr";
   public readonly APP_STORE_URL: string = "https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553";
   public readonly GITHUB_RELEASE_URL: string = "https://github.com/tomfong/simple-qr/releases";
   public readonly PRIVACY_POLICY: string = "https://www.privacypolicies.com/live/771b1123-99bb-4bfe-815e-1046c0437a0f";
-  public readonly AN_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v30000";
-  public readonly IOS_PREV_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v30000";
-  public readonly AN_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v30001";
-  public readonly IOS_PATCH_NOTE_STORAGE_KEY = "not-show-update-notes-v30001";
 
-  private _storage: Storage | null = null;
-  private _scannedData: string = '';
-  private _scannedDataFormat: string = '';
-  private _scanRecords: ScanRecord[] = [];
-  private _bookmarks: Bookmark[] = [];
+  resultContent: string = '';
+  resultContentFormat: string = '';
+  scanRecords: ScanRecord[] = [];
+  bookmarks: Bookmark[] = [];
   viewingScanRecords: ScanRecord[] = [];
   viewingBookmarks: Bookmark[] = [];
   private _deviceInfo: DeviceInfo | undefined = undefined;
@@ -99,82 +153,665 @@ export class EnvService {
 
   public firstAppLoad: boolean = true;  // once loaded, turn it false
 
+  initObservable: Observable<boolean>;
+
   constructor(
     private platform: Platform,
-    private storage: Storage,
+    private ionicStorage: Storage,
     public translate: TranslateService,
     private overlayContainer: OverlayContainer,
     private themeDetection: ThemeDetection,
-    private screenOrientation: ScreenOrientation
+    private screenOrientation: ScreenOrientation,
   ) {
     this.platform.ready().then(
       async _ => {
-        await this.init();
+        this.initObservable = new Observable<boolean>(subs => {
+          new Promise(async _ => {
+            await Device.getInfo().then(
+              value => {
+                this._deviceInfo = value;
+              }
+            );
+            await this._transferStorage();
+            console.log(`env.service.ts - constructor - _transferStorage()`)
+            await this._loadStorage();
+            console.log(`env.service.ts - constructor - _loadStorage()`)
+            subs.next(true);
+          });
+        });
       }
     )
   }
 
-  private async init() {
-    await Device.getInfo().then(
-      value => {
-        this._deviceInfo = value;
-      }
-    )
-    this._storage = await this.storage.create();
-    this._storage.get("start-page").then(
-      value => {
-        if (value != null) {
-          this.startPage = value;
+  private async _transferStorage() {
+    const oldStorage = await this.ionicStorage.create();
+    const length = await oldStorage.length();
+    if (length > 0) {
+      await oldStorage.get(this.KEY_LANGUAGE).then(
+        async value => {
+          if (value != null) {
+            this.selectedLanguage = value;
+          } else {
+            this.selectedLanguage = 'default';
+          }
+          this.toggleLanguageChange();
+          await Preferences.set({
+            key: this.KEY_LANGUAGE,
+            value: this.selectedLanguage,
+          });
+        }
+      );
+      await this.presentToast(this.translate.instant("OPTIMIZING_DATA_..."), "short", "bottom");
+      await oldStorage.get(this.KEY_START_PAGE).then(
+        async value => {
+          if (value != null) {
+            this.startPage = value;
+          } else {
+            this.startPage = '/tabs/scan';
+          }
+          await Preferences.set({
+            key: this.KEY_START_PAGE,
+            value: this.startPage,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_HISTORY_PAGE_START_SEGMENT).then(
+        async value => {
+          if (value != null) {
+            this.historyPageStartSegment = value;
+          } else {
+            this.historyPageStartSegment = 'history';
+          }
+          await Preferences.set({
+            key: this.KEY_HISTORY_PAGE_START_SEGMENT,
+            value: this.historyPageStartSegment,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_START_PAGE_HEADER).then(
+        async value => {
+          if (value != null) {
+            this.startPageHeader = value;
+          } else {
+            this.startPageHeader = 'on';
+          }
+          await Preferences.set({
+            key: this.KEY_START_PAGE_HEADER,
+            value: this.startPageHeader,
+          });
+        }
+      );
+      await oldStorage.get("RZUeHwaYWGkiNhsb5nld7vdDYE7pzRyB").then(
+        async value => {
+          if (value != null) {
+            try {
+              this.scanRecords = JSON.parse(value);
+              this.scanRecords.forEach(
+                r => {
+                  const tCreatedAt = r.createdAt;
+                  r.createdAt = new Date(tCreatedAt);
+                }
+              );
+              this.scanRecords.sort((r1, r2) => {
+                return r2.createdAt.getTime() - r1.createdAt.getTime();
+              });
+            } catch (err) {
+              console.error(err);
+              this.scanRecords = [];
+            }
+          }
+          await Preferences.set({
+            key: this.KEY_SCAN_RECORDS,
+            value: JSON.stringify(this.scanRecords),
+          });
+        }
+      );
+      await oldStorage.get("lB9STlXHpk7G8STLcJZNreiIxeFWPxPS").then(
+        async value => {
+          if (value != null) {
+            try {
+              this.bookmarks = JSON.parse(value);
+              this.bookmarks.forEach(
+                b => {
+                  if (b.id == null) {
+                    b.id = uuidv4();
+                  }
+                  const tCreatedAt = b.createdAt;
+                  b.createdAt = new Date(tCreatedAt);
+                }
+              );
+              this.bookmarks.sort((a, b) => {
+                return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
+              });
+            } catch (err) {
+              console.error(err);
+              this.bookmarks = [];
+            }
+          }
+          await Preferences.set({
+            key: this.KEY_BOOKMARKS,
+            value: JSON.stringify(this.bookmarks),
+          });
+        }
+      )
+      await oldStorage.get(this.KEY_COLOR).then(
+        async value => {
+          if (value != null) {
+            this.selectedColorTheme = value;
+          } else {
+            this.selectedColorTheme = 'default';
+          }
+          await this.toggleColorTheme();
+          await Preferences.set({
+            key: this.KEY_COLOR,
+            value: this.selectedColorTheme,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_DEBUG_MODE).then(
+        async value => {
+          if (value != null) {
+            this.debugMode = value;
+          } else {
+            this.debugMode = 'off';
+          }
+          await Preferences.set({
+            key: this.KEY_DEBUG_MODE,
+            value: this.debugMode,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_ORIENTATION).then(
+        async value => {
+          if (value != null) {
+            this.orientation = value;
+          } else {
+            this.orientation = 'default';
+          }
+          await this.toggleOrientationChange();
+          await Preferences.set({
+            key: this.KEY_ORIENTATION,
+            value: this.orientation,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_SCAN_RECORD_LOGGING).then(
+        async value => {
+          if (value != null) {
+            this.scanRecordLogging = value;
+          } else {
+            this.scanRecordLogging = 'on';
+          }
+          await Preferences.set({
+            key: this.KEY_SCAN_RECORD_LOGGING,
+            value: this.scanRecordLogging,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_RECORDS_LIMIT).then(
+        async value => {
+          if (value != null) {
+            this.recordsLimit = value;
+          } else {
+            this.recordsLimit = -1;
+          }
+          await Preferences.set({
+            key: this.KEY_RECORDS_LIMIT,
+            value: JSON.stringify(this.recordsLimit),
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_SHOW_NUMBER_OF_RECORDS).then(
+        async value => {
+          if (value != null) {
+            this.showNumberOfRecords = value;
+          } else {
+            this.showNumberOfRecords = 'on';
+          }
+          await Preferences.set({
+            key: this.KEY_SHOW_NUMBER_OF_RECORDS,
+            value: this.showNumberOfRecords,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_VIBRATION).then(
+        async value => {
+          if (value != null) {
+            this.vibration = value;
+          } else {
+            this.vibration = 'on';
+          }
+          await Preferences.set({
+            key: this.KEY_VIBRATION,
+            value: this.vibration,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_ERROR_CORRECTION_LEVEL).then(
+        async value => {
+          if (value != null) {
+            this.errorCorrectionLevel = value;
+          } else {
+            this.errorCorrectionLevel = 'M';
+          }
+          await Preferences.set({
+            key: this.KEY_ERROR_CORRECTION_LEVEL,
+            value: this.errorCorrectionLevel,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_QR_CODE_LIGHT_R).then(
+        async value => {
+          if (value != null) {
+            this.qrCodeLightR = value;
+          } else {
+            this.qrCodeLightR = 255;
+          }
+          await Preferences.set({
+            key: this.KEY_QR_CODE_LIGHT_R,
+            value: JSON.stringify(this.qrCodeLightR),
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_QR_CODE_LIGHT_G).then(
+        async value => {
+          if (value != null) {
+            this.qrCodeLightG = value;
+          } else {
+            this.qrCodeLightG = 255;
+          }
+          await Preferences.set({
+            key: this.KEY_QR_CODE_LIGHT_G,
+            value: JSON.stringify(this.qrCodeLightG),
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_QR_CODE_LIGHT_B).then(
+        async value => {
+          if (value != null) {
+            this.qrCodeLightB = value;
+          } else {
+            this.qrCodeLightB = 255;
+          }
+          await Preferences.set({
+            key: this.KEY_QR_CODE_LIGHT_B,
+            value: JSON.stringify(this.qrCodeLightB),
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_QR_CODE_DARK_R).then(
+        async value => {
+          if (value != null) {
+            this.qrCodeDarkR = value;
+          } else {
+            this.qrCodeDarkR = 34;
+          }
+          await Preferences.set({
+            key: this.KEY_QR_CODE_DARK_R,
+            value: JSON.stringify(this.qrCodeDarkR),
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_QR_CODE_DARK_G).then(
+        async value => {
+          if (value != null) {
+            this.qrCodeDarkG = value;
+          } else {
+            this.qrCodeDarkG = 36;
+          }
+          await Preferences.set({
+            key: this.KEY_QR_CODE_DARK_G,
+            value: JSON.stringify(this.qrCodeDarkG),
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_QR_CODE_DARK_B).then(
+        async value => {
+          if (value != null) {
+            this.qrCodeDarkB = value;
+          } else {
+            this.qrCodeDarkB = 40;
+          }
+          await Preferences.set({
+            key: this.KEY_QR_CODE_DARK_B,
+            value: JSON.stringify(this.qrCodeDarkB),
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_QR_CODE_MARGIN).then(
+        async value => {
+          if (value != null) {
+            this.qrCodeMargin = value;
+          } else {
+            this.qrCodeMargin = 3;
+          }
+          await Preferences.set({
+            key: this.KEY_QR_CODE_MARGIN,
+            value: JSON.stringify(this.qrCodeMargin),
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_AUTO_MAX_BRIGHTNESS).then(
+        async value => {
+          if (value != null) {
+            this.autoMaxBrightness = value;
+          } else {
+            this.autoMaxBrightness = 'on';
+          }
+          await Preferences.set({
+            key: this.KEY_AUTO_MAX_BRIGHTNESS,
+            value: this.autoMaxBrightness,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_SEARCH_ENGINE).then(
+        async value => {
+          if (value != null) {
+            this.searchEngine = value;
+          } else {
+            this.searchEngine = 'google';
+          }
+          await Preferences.set({
+            key: this.KEY_SEARCH_ENGINE,
+            value: this.searchEngine,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_RESULT_PAGE_BUTTONS).then(
+        async value => {
+          if (value != null) {
+            this.resultPageButtons = value;
+          } else {
+            this.resultPageButtons = 'detailed';
+          }
+          await Preferences.set({
+            key: this.KEY_RESULT_PAGE_BUTTONS,
+            value: this.resultPageButtons,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_SHOW_QR_AFTER_CAMERA_SCAN).then(
+        async value => {
+          if (value != null) {
+            this.showQrAfterCameraScan = value;
+          } else {
+            this.showQrAfterCameraScan = 'off';
+          }
+          await Preferences.set({
+            key: this.KEY_SHOW_QR_AFTER_CAMERA_SCAN,
+            value: this.showQrAfterCameraScan,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_SHOW_QR_AFTER_IMAGE_SCAN).then(
+        async value => {
+          if (value != null) {
+            this.showQrAfterImageScan = value;
+          } else {
+            this.showQrAfterImageScan = 'off';
+          }
+          await Preferences.set({
+            key: this.KEY_SHOW_QR_AFTER_IMAGE_SCAN,
+            value: this.showQrAfterImageScan,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_SHOW_QR_AFTER_CREATE).then(
+        async value => {
+          if (value != null) {
+            this.showQrAfterCreate = value;
+          } else {
+            this.showQrAfterCreate = 'on';
+          }
+          await Preferences.set({
+            key: this.KEY_SHOW_QR_AFTER_CREATE,
+            value: this.showQrAfterCreate,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_SHOW_QR_AFTER_LOG_VIEW).then(
+        async value => {
+          if (value != null) {
+            this.showQrAfterLogView = value;
+          } else {
+            this.showQrAfterLogView = 'on';
+          }
+          await Preferences.set({
+            key: this.KEY_SHOW_QR_AFTER_LOG_VIEW,
+            value: this.showQrAfterLogView,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_SHOW_QR_AFTER_BOOKMARK_VIEW).then(
+        async value => {
+          if (value != null) {
+            this.showQrAfterBookmarkView = value;
+          } else {
+            this.showQrAfterBookmarkView = 'on';
+          }
+          await Preferences.set({
+            key: this.KEY_SHOW_QR_AFTER_BOOKMARK_VIEW,
+            value: this.showQrAfterBookmarkView,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_SHOW_SEARCH_BUTTON).then(
+        async value => {
+          if (value != null) {
+            this.showSearchButton = value;
+          } else {
+            this.showSearchButton = 'on';
+          }
+          await Preferences.set({
+            key: this.KEY_SHOW_SEARCH_BUTTON,
+            value: this.showSearchButton,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_SHOW_COPY_BUTTON).then(
+        async value => {
+          if (value != null) {
+            this.showCopyButton = value;
+          } else {
+            this.showCopyButton = 'on';
+          }
+          await Preferences.set({
+            key: this.KEY_SHOW_COPY_BUTTON,
+            value: this.showCopyButton,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_SHOW_BASE64_BUTTON).then(
+        async value => {
+          if (value != null) {
+            this.showBase64Button = value;
+          } else {
+            this.showBase64Button = 'on';
+          }
+          await Preferences.set({
+            key: this.KEY_SHOW_BASE64_BUTTON,
+            value: this.showBase64Button,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_SHOW_ENLARGE_BUTTON).then(
+        async value => {
+          if (value != null) {
+            this.showEnlargeButton = value;
+          } else {
+            this.showEnlargeButton = 'on';
+          }
+          await Preferences.set({
+            key: this.KEY_SHOW_ENLARGE_BUTTON,
+            value: this.showEnlargeButton,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_SHOW_BOOKMARK_BUTTON).then(
+        async value => {
+          if (value != null) {
+            this.showBookmarkButton = value;
+          } else {
+            this.showBookmarkButton = 'on';
+          }
+          await Preferences.set({
+            key: this.KEY_SHOW_BOOKMARK_BUTTON,
+            value: this.showBookmarkButton,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_SHOW_OPEN_URL_BUTTON).then(
+        async value => {
+          if (value != null) {
+            this.showOpenUrlButton = value;
+          } else {
+            this.showOpenUrlButton = 'on';
+          }
+          await Preferences.set({
+            key: this.KEY_SHOW_OPEN_URL_BUTTON,
+            value: this.showOpenUrlButton,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_SHOW_BROWSE_BUTTON).then(
+        async value => {
+          if (value != null) {
+            this.showBrowseButton = value;
+          } else {
+            this.showBrowseButton = 'on';
+          }
+          await Preferences.set({
+            key: this.KEY_SHOW_BROWSE_BUTTON,
+            value: this.showBrowseButton,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_SHOW_ADD_CONTACT_BUTTON).then(
+        async value => {
+          if (value != null) {
+            this.showAddContactButton = value;
+          } else {
+            this.showAddContactButton = 'on';
+          }
+          await Preferences.set({
+            key: this.KEY_SHOW_ADD_CONTACT_BUTTON,
+            value: this.showAddContactButton,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_SHOW_CALL_BUTTON).then(
+        async value => {
+          if (value != null) {
+            this.showCallButton = value;
+          } else {
+            this.showCallButton = 'on';
+          }
+          await Preferences.set({
+            key: this.KEY_SHOW_CALL_BUTTON,
+            value: this.showCallButton,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_SHOW_SEND_MESSAGE_BUTTON).then(
+        async value => {
+          if (value != null) {
+            this.showSendMessageButton = value;
+          } else {
+            this.showSendMessageButton = 'on';
+          }
+          await Preferences.set({
+            key: this.KEY_SHOW_SEND_MESSAGE_BUTTON,
+            value: this.showSendMessageButton,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_SHOW_SEND_EMAIL_BUTTON).then(
+        async value => {
+          if (value != null) {
+            this.showSendEmailButton = value;
+          } else {
+            this.showSendEmailButton = 'on';
+          }
+          await Preferences.set({
+            key: this.KEY_SHOW_SEND_EMAIL_BUTTON,
+            value: this.showSendEmailButton,
+          });
+        }
+      );
+      await oldStorage.get(this.KEY_AUTO_EXIT_MIN).then(
+        async value => {
+          if (value != null) {
+            this.autoExitAppMin = value;
+          } else {
+            this.autoExitAppMin = -1;
+          }
+          await Preferences.set({
+            key: this.KEY_AUTO_EXIT_MIN,
+            value: JSON.stringify(this.autoExitAppMin),
+          });
+        }
+      );
+    }
+    await oldStorage.clear();
+  }
+
+  private async _loadStorage() {
+    if (this.platform.is('android')) await Preferences.remove({ key: this.KEY_ANDROID_PREV_NOT_SHOW_UPDATE_NOTES });
+    if (this.platform.is('ios')) await Preferences.remove({ key: this.KEY_IOS_PREV_NOT_SHOW_UPDATE_NOTES });
+    await Preferences.get({ key: this.KEY_START_PAGE }).then(
+      async result => {
+        if (result.value != null) {
+          this.startPage = result.value as TabPageType;
         } else {
           this.startPage = '/tabs/scan';
         }
       }
     );
-    this._storage.get("history-page-start-segment").then(
-      value => {
-        if (value != null) {
-          this.historyPageStartSegment = value;
+    await Preferences.get({ key: this.KEY_HISTORY_PAGE_START_SEGMENT }).then(
+      async result => {
+        if (result.value != null) {
+          this.historyPageStartSegment = result.value as HistoryPageSegmentType;
         } else {
           this.historyPageStartSegment = 'history';
         }
       }
     );
-    this._storage.get("start-page-header").then(
-      async value => {
-        if (value !== null && value !== undefined) {
-          this.startPageHeader = value;
+    await Preferences.get({ key: this.KEY_START_PAGE_HEADER }).then(
+      async result => {
+        if (result.value != null) {
+          this.startPageHeader = result.value as OnOffType;
         } else {
           this.startPageHeader = 'on';
         }
       }
     );
-    this._storage.get(environment.storageScanRecordKey).then(
-      value => {
-        if (value !== null && value !== undefined) {
+    await Preferences.get({ key: this.KEY_SCAN_RECORDS }).then(
+      async result => {
+        if (result.value != null) {
           try {
-            this._scanRecords = JSON.parse(value);
-            this._scanRecords.forEach(
+            this.scanRecords = JSON.parse(result.value);
+            this.scanRecords.forEach(
               r => {
                 const tCreatedAt = r.createdAt;
                 r.createdAt = new Date(tCreatedAt);
               }
             );
-            this._scanRecords.sort((r1, r2) => {
+            this.scanRecords.sort((r1, r2) => {
               return r2.createdAt.getTime() - r1.createdAt.getTime();
             });
           } catch (err) {
             console.error(err);
-            this._scanRecords = [];
+            this.scanRecords = [];
           }
         }
       }
     );
-    this._storage.get(environment.storageBookmarkKey).then(
-      value => {
-        if (value !== null && value !== undefined) {
+    await Preferences.get({ key: this.KEY_BOOKMARKS }).then(
+      async result => {
+        if (result.value != null) {
           try {
-            this._bookmarks = JSON.parse(value);
-            this._bookmarks.forEach(
+            this.bookmarks = JSON.parse(result.value);
+            this.bookmarks.forEach(
               b => {
                 if (b.id == null) {
                   b.id = uuidv4();
@@ -183,386 +820,347 @@ export class EnvService {
                 b.createdAt = new Date(tCreatedAt);
               }
             );
-            this._bookmarks.sort((a, b) => {
+            this.bookmarks.sort((a, b) => {
               return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
             });
           } catch (err) {
             console.error(err);
-            this._bookmarks = [];
+            this.bookmarks = [];
           }
         }
       }
     )
-    this._storage.get("not-show-history-tutorial").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.notShowHistoryTutorial = (value === 'yes' ? true : false);
-        } else {
-          this.notShowHistoryTutorial = false;
-        }
-      }
-    );
-    this._storage.get("not-show-bookmark-tutorial").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.notShowBookmarkTutorial = (value === 'yes' ? true : false);
-        } else {
-          this.notShowBookmarkTutorial = false;
-        }
-      }
-    );
-    this._storage.get("language").then(
-      async value => {
-        if (value !== null && value !== undefined) {
-          this.selectedLanguage = value;
+    await Preferences.get({ key: this.KEY_LANGUAGE }).then(
+      async result => {
+        if (result.value != null) {
+          this.selectedLanguage = result.value as 'default' | LanguageType;
         } else {
           this.selectedLanguage = 'default';
         }
         this.toggleLanguageChange();
       }
     );
-    this._storage.get("color").then(
-      async value => {
-        if (value !== null && value !== undefined) {
-          this.selectedColorTheme = value;
+    await Preferences.get({ key: this.KEY_COLOR }).then(
+      async result => {
+        if (result.value != null) {
+          this.selectedColorTheme = result.value as 'default' | ColorThemeType;
         } else {
           this.selectedColorTheme = 'default';
         }
         await this.toggleColorTheme();
       }
     );
-    this._storage.get("debug-mode-on").then(
-      value => {
-        if (value != null) {
-          this.debugMode = value;
+    await Preferences.get({ key: this.KEY_DEBUG_MODE }).then(
+      async result => {
+        if (result.value != null) {
+          this.debugMode = result.value as OnOffType;
         } else {
           this.debugMode = 'off';
         }
       }
     );
-    this._storage.get("orientation").then(
-      async value => {
-        if (value !== null && value !== undefined) {
-          this.orientation = value;
+    await Preferences.get({ key: this.KEY_ORIENTATION }).then(
+      async result => {
+        if (result.value != null) {
+          this.orientation = result.value as 'default' | OrientationType;
         } else {
           this.orientation = 'default';
         }
         await this.toggleOrientationChange();
       }
     );
-    this._storage.get("scan-record-logging").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.scanRecordLogging = value;
+    await Preferences.get({ key: this.KEY_SCAN_RECORD_LOGGING }).then(
+      async result => {
+        if (result.value != null) {
+          this.scanRecordLogging = result.value as OnOffType;
         } else {
           this.scanRecordLogging = 'on';
         }
       }
     );
-    this._storage.get("recordsLimit").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.recordsLimit = value;
+    await Preferences.get({ key: this.KEY_RECORDS_LIMIT }).then(
+      async result => {
+        if (result.value != null) {
+          this.recordsLimit = JSON.parse(result.value);
         } else {
           this.recordsLimit = -1;
         }
       }
     );
-    this._storage.get("showNumberOfRecords").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.showNumberOfRecords = value;
+    await Preferences.get({ key: this.KEY_SHOW_NUMBER_OF_RECORDS }).then(
+      async result => {
+        if (result.value != null) {
+          this.showNumberOfRecords = result.value as OnOffType;
         } else {
           this.showNumberOfRecords = 'on';
         }
       }
     );
-    this._storage.get("vibration").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.vibration = value;
+    await Preferences.get({ key: this.KEY_VIBRATION }).then(
+      async result => {
+        if (result.value != null) {
+          this.vibration = result.value as VibrationType;
         } else {
           this.vibration = 'on';
         }
       }
     );
-    this._storage.get("error-correction-level").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.errorCorrectionLevel = value;
+    await Preferences.get({ key: this.KEY_ERROR_CORRECTION_LEVEL }).then(
+      async result => {
+        if (result.value != null) {
+          this.errorCorrectionLevel = result.value as ErrorCorrectionLevelType;
         } else {
           this.errorCorrectionLevel = 'M';
         }
       }
     );
-    this._storage.get("qrCodeLightR").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.qrCodeLightR = value;
+    await Preferences.get({ key: this.KEY_QR_CODE_LIGHT_R }).then(
+      async result => {
+        if (result.value != null) {
+          this.qrCodeLightR = JSON.parse(result.value);
         } else {
           this.qrCodeLightR = 255;
         }
       }
     );
-    this._storage.get("qrCodeLightG").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.qrCodeLightG = value;
+    await Preferences.get({ key: this.KEY_QR_CODE_LIGHT_G }).then(
+      async result => {
+        if (result.value != null) {
+          this.qrCodeLightG = JSON.parse(result.value);
         } else {
           this.qrCodeLightG = 255;
         }
       }
     );
-    this._storage.get("qrCodeLightB").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.qrCodeLightB = value;
+    await Preferences.get({ key: this.KEY_QR_CODE_LIGHT_B }).then(
+      async result => {
+        if (result.value != null) {
+          this.qrCodeLightB = JSON.parse(result.value);
         } else {
           this.qrCodeLightB = 255;
         }
       }
     );
-    this._storage.get("qrCodeDarkR").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.qrCodeDarkR = value;
+    await Preferences.get({ key: this.KEY_QR_CODE_DARK_R }).then(
+      async result => {
+        if (result.value != null) {
+          this.qrCodeDarkR = JSON.parse(result.value);
         } else {
           this.qrCodeDarkR = 34;
         }
       }
     );
-    this._storage.get("qrCodeDarkG").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.qrCodeDarkG = value;
+    await Preferences.get({ key: this.KEY_QR_CODE_DARK_G }).then(
+      async result => {
+        if (result.value != null) {
+          this.qrCodeDarkG = JSON.parse(result.value);
         } else {
           this.qrCodeDarkG = 36;
         }
       }
     );
-    this._storage.get("qrCodeDarkB").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.qrCodeDarkB = value;
+    await Preferences.get({ key: this.KEY_QR_CODE_DARK_B }).then(
+      async result => {
+        if (result.value != null) {
+          this.qrCodeDarkB = JSON.parse(result.value);
         } else {
           this.qrCodeDarkB = 40;
         }
       }
     );
-    this._storage.get("qrCodeMargin").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.qrCodeMargin = value;
+    await Preferences.get({ key: this.KEY_QR_CODE_MARGIN }).then(
+      async result => {
+        if (result.value != null) {
+          this.qrCodeMargin = JSON.parse(result.value);
         } else {
           this.qrCodeMargin = 3;
         }
       }
     );
-    this._storage.get("auto-max-brightness").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.autoMaxBrightness = value;
+    await Preferences.get({ key: this.KEY_AUTO_MAX_BRIGHTNESS }).then(
+      async result => {
+        if (result.value != null) {
+          this.autoMaxBrightness = result.value as OnOffType;
         } else {
           this.autoMaxBrightness = 'on';
         }
       }
     );
-    this._storage.get("search-engine").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.searchEngine = value;
+    await Preferences.get({ key: this.KEY_SEARCH_ENGINE }).then(
+      async result => {
+        if (result.value != null) {
+          this.searchEngine = result.value as SearchEngineType;
         } else {
           this.searchEngine = 'google';
         }
       }
     );
-    this._storage.get("result-page-buttons").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.resultPageButtons = value;
+    await Preferences.get({ key: this.KEY_RESULT_PAGE_BUTTONS }).then(
+      async result => {
+        if (result.value != null) {
+          this.resultPageButtons = result.value as ResultPageButtonsType;
         } else {
           this.resultPageButtons = 'detailed';
         }
       }
     );
-    this._storage.get("show-qr-after-camera-scan").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.showQrAfterCameraScan = value;
+    await Preferences.get({ key: this.KEY_SHOW_QR_AFTER_CAMERA_SCAN }).then(
+      async result => {
+        if (result.value != null) {
+          this.showQrAfterCameraScan = result.value as OnOffType;
         } else {
           this.showQrAfterCameraScan = 'off';
         }
       }
     );
-    this._storage.get("show-qr-after-image-scan").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.showQrAfterImageScan = value;
+    await Preferences.get({ key: this.KEY_SHOW_QR_AFTER_IMAGE_SCAN }).then(
+      async result => {
+        if (result.value != null) {
+          this.showQrAfterImageScan = result.value as OnOffType;
         } else {
           this.showQrAfterImageScan = 'off';
         }
       }
     );
-    this._storage.get("show-qr-after-create").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.showQrAfterCreate = value;
+    await Preferences.get({ key: this.KEY_SHOW_QR_AFTER_CREATE }).then(
+      async result => {
+        if (result.value != null) {
+          this.showQrAfterCreate = result.value as OnOffType;
         } else {
           this.showQrAfterCreate = 'on';
         }
       }
     );
-    this._storage.get("show-qr-after-log-view").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.showQrAfterLogView = value;
+    await Preferences.get({ key: this.KEY_SHOW_QR_AFTER_LOG_VIEW }).then(
+      async result => {
+        if (result.value != null) {
+          this.showQrAfterLogView = result.value as OnOffType;
         } else {
           this.showQrAfterLogView = 'on';
         }
       }
     );
-    this._storage.get("show-qr-after-bookmark-view").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.showQrAfterBookmarkView = value;
+    await Preferences.get({ key: this.KEY_SHOW_QR_AFTER_BOOKMARK_VIEW }).then(
+      async result => {
+        if (result.value != null) {
+          this.showQrAfterBookmarkView = result.value as OnOffType;
         } else {
           this.showQrAfterBookmarkView = 'on';
         }
       }
     );
-    this._storage.get("showSearchButton").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.showSearchButton = value;
+    await Preferences.get({ key: this.KEY_SHOW_SEARCH_BUTTON }).then(
+      async result => {
+        if (result.value != null) {
+          this.showSearchButton = result.value as OnOffType;
         } else {
           this.showSearchButton = 'on';
         }
       }
     );
-    this._storage.get("showCopyButton").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.showCopyButton = value;
+    await Preferences.get({ key: this.KEY_SHOW_COPY_BUTTON }).then(
+      async result => {
+        if (result.value != null) {
+          this.showCopyButton = result.value as OnOffType;
         } else {
           this.showCopyButton = 'on';
         }
       }
     );
-    this._storage.get("showBase64Button").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.showBase64Button = value;
+    await Preferences.get({ key: this.KEY_SHOW_BASE64_BUTTON }).then(
+      async result => {
+        if (result.value != null) {
+          this.showBase64Button = result.value as OnOffType;
         } else {
           this.showBase64Button = 'on';
         }
       }
     );
-    this._storage.get("showEnlargeButton").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.showEnlargeButton = value;
+    await Preferences.get({ key: this.KEY_SHOW_ENLARGE_BUTTON }).then(
+      async result => {
+        if (result.value != null) {
+          this.showEnlargeButton = result.value as OnOffType;
         } else {
           this.showEnlargeButton = 'on';
         }
       }
     );
-    this._storage.get("showBookmarkButton").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.showBookmarkButton = value;
+    await Preferences.get({ key: this.KEY_SHOW_BOOKMARK_BUTTON }).then(
+      async result => {
+        if (result.value != null) {
+          this.showBookmarkButton = result.value as OnOffType;
         } else {
           this.showBookmarkButton = 'on';
         }
       }
     );
-    this._storage.get("showOpenUrlButton").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.showOpenUrlButton = value;
+    await Preferences.get({ key: this.KEY_SHOW_OPEN_URL_BUTTON }).then(
+      async result => {
+        if (result.value != null) {
+          this.showOpenUrlButton = result.value as OnOffType;
         } else {
           this.showOpenUrlButton = 'on';
         }
       }
     );
-    this._storage.get("showBrowseButton").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.showBrowseButton = value;
+    await Preferences.get({ key: this.KEY_SHOW_BROWSE_BUTTON }).then(
+      async result => {
+        if (result.value != null) {
+          this.showBrowseButton = result.value as OnOffType;
         } else {
           this.showBrowseButton = 'on';
         }
       }
     );
-    this._storage.get("showAddContactButton").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.showAddContactButton = value;
+    await Preferences.get({ key: this.KEY_SHOW_ADD_CONTACT_BUTTON }).then(
+      async result => {
+        if (result.value != null) {
+          this.showAddContactButton = result.value as OnOffType;
         } else {
           this.showAddContactButton = 'on';
         }
       }
     );
-    this._storage.get("showCallButton").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.showCallButton = value;
+    await Preferences.get({ key: this.KEY_SHOW_CALL_BUTTON }).then(
+      async result => {
+        if (result.value != null) {
+          this.showCallButton = result.value as OnOffType;
         } else {
           this.showCallButton = 'on';
         }
       }
     );
-    this._storage.get("showSendMessageButton").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.showSendMessageButton = value;
+    await Preferences.get({ key: this.KEY_SHOW_SEND_MESSAGE_BUTTON }).then(
+      async result => {
+        if (result.value != null) {
+          this.showSendMessageButton = result.value as OnOffType;
         } else {
           this.showSendMessageButton = 'on';
         }
       }
     );
-    this._storage.get("showSendEmailButton").then(
-      value => {
-        if (value !== null && value !== undefined) {
-          this.showSendEmailButton = value;
+    await Preferences.get({ key: this.KEY_SHOW_SEND_EMAIL_BUTTON }).then(
+      async result => {
+        if (result.value != null) {
+          this.showSendEmailButton = result.value as OnOffType;
         } else {
           this.showSendEmailButton = 'on';
         }
       }
     );
-    this._storage.get("autoExitAppMin").then(
-      value => {
-        if (value != null) {
-          this.autoExitAppMin = value;
+    await Preferences.get({ key: this.KEY_AUTO_EXIT_MIN }).then(
+      async result => {
+        if (result.value != null) {
+          this.autoExitAppMin = JSON.parse(result.value);
         } else {
           this.autoExitAppMin = -1;
         }
       }
     );
-    if (this.platform.is('android')) this._storage.remove(this.AN_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
-    if (this.platform.is('ios')) this._storage.remove(this.IOS_PREV_PATCH_NOTE_STORAGE_KEY).catch(err => { });
-  }
-
-  public async storageSet(key: string, value: any) {
-    await this._storage?.set(key, value);
-  }
-
-  public async storageGet(key: string): Promise<any> {
-    const value = await this._storage?.get(key).then(
-      value => {
-        return value;
-      },
-      err => {
-        if (this.isDebugging) {
-          this.presentToast("Error when get item from storage: " + JSON.stringify(err), "long", "top");
-        }
-        return null;
-      }
-    );
-    return value;
   }
 
   public async resetAll() {
-    await this._storage.clear();
+    await Preferences.clear();
     this.startPage = '/tabs/scan';
     this.historyPageStartSegment = 'history';
     this.startPageHeader = 'on';
@@ -585,8 +1183,6 @@ export class EnvService {
     this.vibration = 'on';
     this.orientation = 'default';
     await this.toggleOrientationChange();
-    this.notShowHistoryTutorial = false;
-    this.notShowBookmarkTutorial = false;
     this.notShowUpdateNotes = false;
     this.searchEngine = 'google';
     this.resultPageButtons = 'detailed';
@@ -606,8 +1202,8 @@ export class EnvService {
     this.showCallButton = 'on';
     this.showSendMessageButton = 'on';
     this.showSendEmailButton = 'on';
-    this._scanRecords = [];
-    this._bookmarks = [];
+    this.scanRecords = [];
+    this.bookmarks = [];
     this.debugMode = 'off';
     this.autoExitAppMin = -1;
   }
@@ -619,187 +1215,156 @@ export class EnvService {
 
   public async resetSetting() {
     this.startPage = '/tabs/scan';
-    await this.storageSet("start-page", this.startPage);
+    await Preferences.set({ key: this.KEY_START_PAGE, value: this.startPage });
 
     this.historyPageStartSegment = 'history';
-    await this.storageSet("history-page-start-segment", this.historyPageStartSegment);
+    await Preferences.set({ key: this.KEY_HISTORY_PAGE_START_SEGMENT, value: this.historyPageStartSegment });
 
     this.startPageHeader = 'on';
-    await this.storageSet("start-page-header", this.startPageHeader);
+    await Preferences.set({ key: this.KEY_START_PAGE_HEADER, value: this.startPageHeader });
 
     this.selectedLanguage = 'default';
     this.toggleLanguageChange();
-    await this.storageSet("language", this.selectedLanguage);
+    await Preferences.set({ key: this.KEY_LANGUAGE, value: this.selectedLanguage });
 
     this.selectedColorTheme = 'default';
     await this.toggleColorTheme();
-    await this.storageSet("color", this.selectedColorTheme);
+    await Preferences.set({ key: this.KEY_COLOR, value: this.selectedColorTheme });
 
     this.scanRecordLogging = 'on';
-    await this.storageSet("scan-record-logging", this.scanRecordLogging);
+    await Preferences.set({ key: this.KEY_SCAN_RECORD_LOGGING, value: this.scanRecordLogging });
 
     this.recordsLimit = -1;
-    await this.storageSet("recordsLimit", this.recordsLimit);
+    await Preferences.set({ key: this.KEY_RECORDS_LIMIT, value: JSON.stringify(this.recordsLimit) });
 
     this.showNumberOfRecords = 'on';
-    await this.storageSet("showNumberOfRecords", this.showNumberOfRecords);
+    await Preferences.set({ key: this.KEY_SHOW_NUMBER_OF_RECORDS, value: this.showNumberOfRecords });
 
     this.autoMaxBrightness = 'on';
-    await this.storageSet("auto-max-brightness", this.autoMaxBrightness);
+    await Preferences.set({ key: this.KEY_AUTO_MAX_BRIGHTNESS, value: this.autoMaxBrightness });
 
     this.errorCorrectionLevel = 'M';
-    await this.storageSet("error-correction-level", this.errorCorrectionLevel);
+    await Preferences.set({ key: this.KEY_ERROR_CORRECTION_LEVEL, value: this.errorCorrectionLevel });
 
     this.qrCodeLightR = 255;
-    await this.storageSet("qrCodeLightR", this.qrCodeLightR);
+    await Preferences.set({ key: this.KEY_QR_CODE_LIGHT_R, value: JSON.stringify(this.qrCodeLightR) });
 
     this.qrCodeLightG = 255;
-    await this.storageSet("qrCodeLightG", this.qrCodeLightG);
+    await Preferences.set({ key: this.KEY_QR_CODE_LIGHT_G, value: JSON.stringify(this.qrCodeLightG) });
 
     this.qrCodeLightB = 255;
-    await this.storageSet("qrCodeLightB", this.qrCodeLightB);
+    await Preferences.set({ key: this.KEY_QR_CODE_LIGHT_B, value: JSON.stringify(this.qrCodeLightB) });
 
     this.qrCodeDarkR = 34;
-    await this.storageSet("qrCodeDarkR", this.qrCodeDarkR);
+    await Preferences.set({ key: this.KEY_QR_CODE_DARK_R, value: JSON.stringify(this.qrCodeDarkR) });
 
     this.qrCodeDarkG = 36;
-    await this.storageSet("qrCodeDarkG", this.qrCodeDarkG);
+    await Preferences.set({ key: this.KEY_QR_CODE_DARK_G, value: JSON.stringify(this.qrCodeDarkG) });
 
     this.qrCodeDarkB = 40;
-    await this.storageSet("qrCodeDarkB", this.qrCodeDarkB);
+    await Preferences.set({ key: this.KEY_QR_CODE_DARK_B, value: JSON.stringify(this.qrCodeDarkB) });
 
     this.qrCodeMargin = 3;
-    await this.storageSet("qrCodeMargin", this.qrCodeMargin);
-
+    await Preferences.set({ key: this.KEY_QR_CODE_MARGIN, value: JSON.stringify(this.qrCodeMargin) });
     this.vibration = 'on';
-    await this.storageSet("vibration", this.vibration);
+    await Preferences.set({ key: this.KEY_VIBRATION, value: this.vibration });
 
     this.orientation = 'default';
     await this.toggleOrientationChange();
-    await this.storageSet("orientation", this.orientation);
-
-    this.notShowHistoryTutorial = false;
-    await this.storageSet("not-show-history-tutorial", 'no');
-
-    this.notShowBookmarkTutorial = false;
-    await this.storageSet("not-show-bookmark-tutorial", 'no');
+    await Preferences.set({ key: this.KEY_ORIENTATION, value: this.orientation });
 
     this.notShowUpdateNotes = false;
     if (this.platform.is('ios')) {
-      await this.storageSet(this.IOS_PATCH_NOTE_STORAGE_KEY, 'no');
+      await Preferences.set({ key: this.KEY_IOS_NOT_SHOW_UPDATE_NOTES, value: 'no' });
     } else if (this.platform.is('android')) {
-      await this.storageSet(this.AN_PATCH_NOTE_STORAGE_KEY, 'no');
+      await Preferences.set({ key: this.KEY_ANDROID_NOT_SHOW_UPDATE_NOTES, value: 'no' });
     }
 
     this.searchEngine = 'google';
-    await this.storageSet("search-engine", this.searchEngine);
+    await Preferences.set({ key: this.KEY_SEARCH_ENGINE, value: this.searchEngine });
 
     this.resultPageButtons = 'detailed';
-    await this.storageSet("result-page-buttons", this.resultPageButtons);
+    await Preferences.set({ key: this.KEY_RESULT_PAGE_BUTTONS, value: this.resultPageButtons });
 
     this.showQrAfterCameraScan = 'off';
-    await this.storageSet("show-qr-after-camera-scan", this.showQrAfterCameraScan);
+    await Preferences.set({ key: this.KEY_SHOW_QR_AFTER_CAMERA_SCAN, value: this.showQrAfterCameraScan });
 
     this.showQrAfterImageScan = 'off';
-    await this.storageSet("show-qr-after-image-scan", this.showQrAfterImageScan);
+    await Preferences.set({ key: this.KEY_SHOW_QR_AFTER_IMAGE_SCAN, value: this.showQrAfterImageScan });
 
     this.showQrAfterCreate = 'on';
-    await this.storageSet("show-qr-after-create", this.showQrAfterCreate);
+    await Preferences.set({ key: this.KEY_SHOW_QR_AFTER_CREATE, value: this.showQrAfterCreate });
 
     this.showQrAfterLogView = 'on';
-    await this.storageSet("show-qr-after-log-view", this.showQrAfterLogView);
+    await Preferences.set({ key: this.KEY_SHOW_QR_AFTER_LOG_VIEW, value: this.showQrAfterLogView });
 
     this.showQrAfterBookmarkView = 'on';
-    await this.storageSet("show-qr-after-bookmark-view", this.showQrAfterBookmarkView);
+    await Preferences.set({ key: this.KEY_SHOW_QR_AFTER_BOOKMARK_VIEW, value: this.showQrAfterBookmarkView });
 
     this.showSearchButton = 'on';
-    await this.storageSet("showSearchButton", this.showSearchButton);
+    await Preferences.set({ key: this.KEY_SHOW_SEARCH_BUTTON, value: this.showSearchButton });
 
     this.showCopyButton = 'on';
-    await this.storageSet("showCopyButton", this.showCopyButton);
+    await Preferences.set({ key: this.KEY_SHOW_COPY_BUTTON, value: this.showCopyButton });
 
     this.showBase64Button = 'on';
-    await this.storageSet("showBase64Button", this.showBase64Button);
+    await Preferences.set({ key: this.KEY_SHOW_BASE64_BUTTON, value: this.showBase64Button });
 
     this.showEnlargeButton = 'on';
-    await this.storageSet("showEnlargeButton", this.showEnlargeButton);
+    await Preferences.set({ key: this.KEY_SHOW_ENLARGE_BUTTON, value: this.showEnlargeButton });
 
     this.showBookmarkButton = 'on';
-    await this.storageSet("showBookmarkButton", this.showBookmarkButton);
+    await Preferences.set({ key: this.KEY_SHOW_BOOKMARK_BUTTON, value: this.showBookmarkButton });
 
     this.showOpenUrlButton = 'on';
-    await this.storageSet("showOpenUrlButton", this.showOpenUrlButton);
+    await Preferences.set({ key: this.KEY_SHOW_OPEN_URL_BUTTON, value: this.showOpenUrlButton });
 
     this.showBrowseButton = 'on';
-    await this.storageSet("showBrowseButton", this.showBrowseButton);
+    await Preferences.set({ key: this.KEY_SHOW_BROWSE_BUTTON, value: this.showBrowseButton });
 
     this.showAddContactButton = 'on';
-    await this.storageSet("showAddContactButton", this.showAddContactButton);
+    await Preferences.set({ key: this.KEY_SHOW_ADD_CONTACT_BUTTON, value: this.showAddContactButton });
 
     this.showCallButton = 'on';
-    await this.storageSet("showCallButton", this.showCallButton);
+    await Preferences.set({ key: this.KEY_SHOW_CALL_BUTTON, value: this.showCallButton });
 
     this.showSendMessageButton = 'on';
-    await this.storageSet("showSendMessageButton", this.showSendMessageButton);
+    await Preferences.set({ key: this.KEY_SHOW_SEND_MESSAGE_BUTTON, value: this.showSendMessageButton });
 
     this.showSendEmailButton = 'on';
-    await this.storageSet("showSendEmailButton", this.showSendEmailButton);
+    await Preferences.set({ key: this.KEY_SHOW_SEND_EMAIL_BUTTON, value: this.showSendEmailButton });
 
     this.debugMode = 'off';
-    await this.storageSet("debug-mode-on", this.debugMode);
+    await Preferences.set({ key: this.KEY_DEBUG_MODE, value: this.debugMode });
 
     this.autoExitAppMin = -1;
-    await this.storageSet("autoExitAppMin", this.autoExitAppMin);
+    await Preferences.set({ key: this.KEY_AUTO_EXIT_MIN, value: JSON.stringify(this.autoExitAppMin) });
   }
 
   async resetQrCodeSettings() {
     this.errorCorrectionLevel = 'M';
-    await this.storageSet("error-correction-level", this.errorCorrectionLevel);
+    await Preferences.set({ key: this.KEY_ERROR_CORRECTION_LEVEL, value: this.errorCorrectionLevel });
 
     this.qrCodeLightR = 255;
-    await this.storageSet("qrCodeLightR", this.qrCodeLightR);
+    await Preferences.set({ key: this.KEY_QR_CODE_LIGHT_R, value: JSON.stringify(this.qrCodeLightR) });
 
     this.qrCodeLightG = 255;
-    await this.storageSet("qrCodeLightG", this.qrCodeLightG);
+    await Preferences.set({ key: this.KEY_QR_CODE_LIGHT_G, value: JSON.stringify(this.qrCodeLightG) });
 
     this.qrCodeLightB = 255;
-    await this.storageSet("qrCodeLightB", this.qrCodeLightB);
+    await Preferences.set({ key: this.KEY_QR_CODE_LIGHT_B, value: JSON.stringify(this.qrCodeLightB) });
 
     this.qrCodeDarkR = 34;
-    await this.storageSet("qrCodeDarkR", this.qrCodeDarkR);
+    await Preferences.set({ key: this.KEY_QR_CODE_DARK_R, value: JSON.stringify(this.qrCodeDarkR) });
 
     this.qrCodeDarkG = 36;
-    await this.storageSet("qrCodeDarkG", this.qrCodeDarkG);
+    await Preferences.set({ key: this.KEY_QR_CODE_DARK_G, value: JSON.stringify(this.qrCodeDarkG) });
 
     this.qrCodeDarkB = 40;
-    await this.storageSet("qrCodeDarkB", this.qrCodeDarkB);
+    await Preferences.set({ key: this.KEY_QR_CODE_DARK_B, value: JSON.stringify(this.qrCodeDarkB) });
 
     this.qrCodeMargin = 3;
-    await this.storageSet("qrCodeMargin", this.qrCodeMargin);
-  }
-
-  get result(): string {
-    return this._scannedData;
-  }
-
-  set result(value: string) {
-    this._scannedData = value;
-  }
-
-  get resultFormat(): string {
-    return this._scannedDataFormat;
-  }
-
-  set resultFormat(value: string) {
-    this._scannedDataFormat = value;
-  }
-
-  get scanRecords(): ScanRecord[] {
-    return this._scanRecords;
-  }
-
-  set scanRecords(value: ScanRecord[]) {
-    this._scanRecords = value;
+    await Preferences.set({ key: this.KEY_QR_CODE_MARGIN, value: JSON.stringify(this.qrCodeMargin) });
   }
 
   async saveScanRecord(value: string): Promise<void> {
@@ -811,43 +1376,62 @@ export class EnvService {
     if (this.recordSource != null) {
       record.source = this.recordSource;
       if (this.recordSource == 'scan') {
-        record.barcodeType = this._scannedDataFormat;
+        record.barcodeType = this.resultContentFormat;
       }
+    } else {
+      record.source = "view";
     }
-    this._scanRecords.unshift(record);
+    if (this.scanRecords == null) {
+      this.scanRecords = [];
+    }
+    this.scanRecords.unshift(record);
     if (this.recordsLimit != -1) {
-      if (this._scanRecords.length > this.recordsLimit) {
-        this._scanRecords = this._scanRecords.slice(0, this.recordsLimit);
+      if (this.scanRecords.length > this.recordsLimit) {
+        this.scanRecords = this.scanRecords.slice(0, this.recordsLimit);
       }
     }
-    await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
+    try {
+      const stringified = JSON.stringify(this.scanRecords);
+      await Preferences.set({ key: this.KEY_SCAN_RECORDS, value: stringified });
+    } catch (e) {
+      if (this.isDebugging) {
+        this.presentToast("Err when stringify scanRecords: " + JSON.stringify(e), "long", "top");
+      }
+    }
   }
 
   async saveRestoredScanRecords(records: ScanRecord[]): Promise<void> {
     records.forEach(
       r => {
-        this._scanRecords.unshift(r);
+        this.scanRecords.unshift(r);
       }
     );
-    this._scanRecords.forEach(
+    this.scanRecords.forEach(
       t => {
         const tCreatedAt = t.createdAt;
         t.createdAt = new Date(tCreatedAt);
       }
     );
-    this._scanRecords.sort((r1, r2) => {
+    this.scanRecords.sort((r1, r2) => {
       return r2.createdAt.getTime() - r1.createdAt.getTime();
     });
-    await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
+    try {
+      const stringified = JSON.stringify(this.scanRecords);
+      await Preferences.set({ key: this.KEY_SCAN_RECORDS, value: stringified });
+    } catch (e) {
+      if (this.isDebugging) {
+        this.presentToast("Err when stringify scanRecords: " + JSON.stringify(e), "long", "top");
+      }
+    }
   }
 
   async saveRestoredBookmarks(bookmarks: Bookmark[]): Promise<void> {
     bookmarks.forEach(
       b => {
-        this._bookmarks.unshift(b);
+        this.bookmarks.unshift(b);
       }
     );
-    this._bookmarks.forEach(
+    this.bookmarks.forEach(
       b => {
         if (b.id == null) {
           b.id = uuidv4();
@@ -856,39 +1440,63 @@ export class EnvService {
         b.createdAt = new Date(tCreatedAt);
       }
     );
-    this._bookmarks.sort((a, b) => {
+    this.bookmarks.sort((a, b) => {
       return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
     });
-    await this.storageSet(environment.storageBookmarkKey, JSON.stringify(this._bookmarks));
+    try {
+      const stringified = JSON.stringify(this.bookmarks);
+      await Preferences.set({ key: this.KEY_BOOKMARKS, value: stringified });
+    } catch (e) {
+      if (this.isDebugging) {
+        this.presentToast("Err when stringify bookmarks: " + JSON.stringify(e), "long", "top");
+      }
+    }
   }
 
   async undoScanRecordDeletion(record: ScanRecord): Promise<void> {
-    this._scanRecords.push(record);
-    this._scanRecords.sort((r1, r2) => {
+    this.scanRecords.push(record);
+    this.scanRecords.sort((r1, r2) => {
       return r2.createdAt.getTime() - r1.createdAt.getTime();
     });
-    await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
+    try {
+      const stringified = JSON.stringify(this.scanRecords);
+      await Preferences.set({ key: this.KEY_SCAN_RECORDS, value: stringified });
+    } catch (e) {
+      if (this.isDebugging) {
+        this.presentToast("Err when stringify scanRecords: " + JSON.stringify(e), "long", "top");
+      }
+    }
   }
 
   async deleteScanRecord(recordId: string): Promise<void> {
-    const index = this._scanRecords.findIndex(r => r.id === recordId);
+    const index = this.scanRecords.findIndex(r => r.id === recordId);
     if (index !== -1) {
-      this._scanRecords.splice(index, 1);
-      await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
+      this.scanRecords.splice(index, 1);
+      try {
+        const stringified = JSON.stringify(this.scanRecords);
+        await Preferences.set({ key: this.KEY_SCAN_RECORDS, value: stringified });
+      } catch (e) {
+        if (this.isDebugging) {
+          this.presentToast("Err when stringify scanRecords: " + JSON.stringify(e), "long", "top");
+        }
+      }
     }
   }
 
   async deleteAllScanRecords(): Promise<void> {
-    this._scanRecords = [];
-    await this.storageSet(environment.storageScanRecordKey, JSON.stringify(this._scanRecords));
-  }
-
-  get bookmarks(): Bookmark[] {
-    return this._bookmarks;
+    this.scanRecords = [];
+    try {
+      const stringified = JSON.stringify(this.scanRecords);
+      await Preferences.set({ key: this.KEY_SCAN_RECORDS, value: stringified });
+    } catch (e) {
+      if (this.isDebugging) {
+        this.presentToast("Err when stringify scanRecords: " + JSON.stringify(e), "long", "top");
+      }
+    }
   }
 
   async saveBookmark(value: string, tag: string): Promise<Bookmark> {
-    const index = this._bookmarks.findIndex(x => x.text === value);
+    const index = this.bookmarks.findIndex(x => x.text === value);
     if (index === -1) {
       const bookmark = new Bookmark();
       const date = new Date();
@@ -896,11 +1504,18 @@ export class EnvService {
       bookmark.text = value;
       bookmark.createdAt = date;
       bookmark.tag = tag;
-      this._bookmarks.unshift(bookmark);
-      this._bookmarks.sort((a, b) => {
+      this.bookmarks.unshift(bookmark);
+      this.bookmarks.sort((a, b) => {
         return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
       });
-      await this.storageSet(environment.storageBookmarkKey, JSON.stringify(this._bookmarks));
+      try {
+        const stringified = JSON.stringify(this.bookmarks);
+        await Preferences.set({ key: this.KEY_BOOKMARKS, value: stringified });
+      } catch (e) {
+        if (this.isDebugging) {
+          this.presentToast("Err when stringify bookmarks: " + JSON.stringify(e), "long", "top");
+        }
+      }
       return bookmark;
     } else {
       return null;
@@ -908,24 +1523,45 @@ export class EnvService {
   }
 
   async undoBookmarkDeletion(bookmark: Bookmark): Promise<void> {
-    this._bookmarks.push(bookmark);
-    this._bookmarks.sort((a, b) => {
+    this.bookmarks.push(bookmark);
+    this.bookmarks.sort((a, b) => {
       return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
     });
-    await this.storageSet(environment.storageBookmarkKey, JSON.stringify(this._bookmarks));
+    try {
+      const stringified = JSON.stringify(this.bookmarks);
+      await Preferences.set({ key: this.KEY_BOOKMARKS, value: stringified });
+    } catch (e) {
+      if (this.isDebugging) {
+        this.presentToast("Err when stringify bookmarks: " + JSON.stringify(e), "long", "top");
+      }
+    }
   }
 
   async deleteBookmark(text: string): Promise<void> {
-    const index = this._bookmarks.findIndex(t => t.text === text);
+    const index = this.bookmarks.findIndex(t => t.text === text);
     if (index !== -1) {
-      this._bookmarks.splice(index, 1);
-      await this.storageSet(environment.storageBookmarkKey, JSON.stringify(this._bookmarks));
+      this.bookmarks.splice(index, 1);
+      try {
+        const stringified = JSON.stringify(this.bookmarks);
+        await Preferences.set({ key: this.KEY_BOOKMARKS, value: stringified });
+      } catch (e) {
+        if (this.isDebugging) {
+          this.presentToast("Err when stringify bookmarks: " + JSON.stringify(e), "long", "top");
+        }
+      }
     }
   }
 
   async deleteAllBookmarks(): Promise<void> {
-    this._bookmarks = [];
-    await this.storageSet(environment.storageBookmarkKey, JSON.stringify(this._bookmarks));
+    this.bookmarks = [];
+    try {
+      const stringified = JSON.stringify(this.bookmarks);
+      await Preferences.set({ key: this.KEY_BOOKMARKS, value: stringified });
+    } catch (e) {
+      if (this.isDebugging) {
+        this.presentToast("Err when stringify bookmarks: " + JSON.stringify(e), "long", "top");
+      }
+    }
   }
 
   toggleLanguageChange() {
@@ -1044,7 +1680,6 @@ export class EnvService {
         this.screenOrientation.unlock();
         return;
       case 'portrait':
-        // this.screenOrientation.unlock();
         await this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT)
           .catch(err => {
             if (this.isDebugging) {
@@ -1053,7 +1688,6 @@ export class EnvService {
           });
         return;
       case 'landscape':
-        // this.screenOrientation.unlock();
         await this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE)
           .catch(err => {
             if (this.isDebugging) {

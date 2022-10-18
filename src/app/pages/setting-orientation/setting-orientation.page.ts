@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Preferences } from '@capacitor/preferences';
 import { EnvService } from 'src/app/services/env.service';
 
 @Component({
@@ -14,6 +15,6 @@ export class SettingOrientationPage {
 
   async saveOrientation() {
     await this.env.toggleOrientationChange();
-    await this.env.storageSet("orientation", this.env.orientation);
+    await Preferences.set({ key: this.env.KEY_ORIENTATION, value: this.env.orientation });
   }
 }

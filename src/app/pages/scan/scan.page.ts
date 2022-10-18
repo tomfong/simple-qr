@@ -109,7 +109,7 @@ export class ScanPage {
       async (result: ScanResult) => {
         if (result.hasContent) {
           const text = result.content;
-          if (text === undefined || text === null || (text && text.trim().length <= 0) || text === "") {
+          if (text == null || text?.trim()?.length <= 0 || text == "") {
             this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), "short", "center");
             this.scanQr();
             return;
@@ -137,8 +137,8 @@ export class ScanPage {
   }
 
   async processQrCode(scannedData: string, format: string, loading: HTMLIonLoadingElement): Promise<void> {
-    this.env.result = scannedData;
-    this.env.resultFormat = format;
+    this.env.resultContent = scannedData;
+    this.env.resultContentFormat = format;
     this.env.recordSource = "scan";
     this.env.detailedRecordSource = "scan-camera";
     this.env.viewResultFrom = "/tabs/scan";

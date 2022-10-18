@@ -103,11 +103,10 @@ You are welcomed to help translate the app into more languages (refer to this <a
     * <b>DO NOT</b> change the order.
 4. Email the JSON to me (tomfong.dev@gmail.com) after you finish.
 
-### Build the project (Android)
+### Build the project
 
 1. Run ```npm install``` to install all dependencies.
-2. Run ```npm run build:an``` or ```npm run build:ios``` (for first time).
-3. Run ```npm run sync``` and ```npm run copy:an``` or ```npm run copy:ios```.
+2. Run ```npm run build```
 
 ### Contributors
 
@@ -122,10 +121,10 @@ Thank you the following contributors who have made the app better!
 
 ```sh
     Ionic CLI                       : 6.20.1
-    Ionic Framework                 : @ionic/angular 6.2.8
-    @angular-devkit/build-angular   : 14.2.3
-    @angular-devkit/schematics      : 13.3.9
-    @angular/cli                    : 14.2.3
+    Ionic Framework                 : @ionic/angular 6.3.2
+    @angular-devkit/build-angular   : 14.2.6
+    @angular-devkit/schematics      : 14.2.6
+    @angular/cli                    : 14.2.6
     @ionic/angular-toolkit          : 6.1.0
 
     Capacitor CLI                   : 4.3.0
@@ -134,7 +133,7 @@ Thank you the following contributors who have made the app better!
     @capacitor/ios                  : 4.3.0
 
     NodeJS                          : v16.15.1
-    npm                             : 8.11.0
+    npm                             : 8.19.2
 ```
 
 ## Privacy Policy

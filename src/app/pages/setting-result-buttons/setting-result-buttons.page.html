@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'">
     <ion-buttons slot="start">
-      <ion-back-button text="">
+      <ion-back-button text="" defaultHref="tabs/setting">
       </ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'TASK_BUTTON_LAYOUT' | translate }}</ion-title>
@@ -71,6 +71,9 @@
     </ion-icon>
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" *ngIf="env.searchEngine === 'yandex'"
       src="assets/icon/yandex.svg">
+    </ion-icon>
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" *ngIf="env.searchEngine === 'ecosia'"
+      src="assets/icon/ecosia.svg">
     </ion-icon>
     <ion-label>
       <p class="ion-padding pre-line">

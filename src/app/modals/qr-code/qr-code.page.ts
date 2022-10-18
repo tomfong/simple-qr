@@ -10,6 +10,7 @@ import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels, QrcodeComponent 
 import { EnvService } from 'src/app/services/env.service';
 import { ScreenBrightness } from '@capacitor-community/screen-brightness';
 import { rgbToHex } from 'src/app/utils/helpers';
+import { Preferences } from '@capacitor/preferences';
 
 @Component({
   selector: 'app-qr-code',
@@ -149,7 +150,7 @@ export class QrCodePage {
 
   async onErrorCorrectionLevelChange() {
     this.setErrorCorrectionLevel();
-    await this.env.storageSet("error-correction-level", this.env.errorCorrectionLevel);
+    await Preferences.set({ key: this.env.KEY_ERROR_CORRECTION_LEVEL, value: this.env.errorCorrectionLevel });
     if (this.qrcodeElement != null) {
       this.qrcodeElement.errorCorrectionLevel = this.errorCorrectionLevel;
     } else {

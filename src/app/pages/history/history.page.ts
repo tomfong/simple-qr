@@ -7,10 +7,8 @@ import { de, enUS, fr, it, zhCN, zhHK } from 'date-fns/locale';
 import { ScanRecord } from 'src/app/models/scan-record';
 import { TranslateService } from '@ngx-translate/core';
 import { Bookmark } from 'src/app/models/bookmark';
-import { HistoryTutorialPage } from 'src/app/modals/history-tutorial/history-tutorial.page';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Toast } from '@capacitor/toast';
-import { BookmarkTutorialPage } from 'src/app/modals/bookmark-tutorial/bookmark-tutorial.page';
 import { fastFadeIn, flyOut } from 'src/app/utils/animations';
 import { SplashScreen } from '@capacitor/splash-screen';
 
@@ -100,19 +98,6 @@ export class HistoryPage {
   async ionViewDidEnter() {
     await SplashScreen.hide()
     this.segmentModel = this.env.historyPageStartSegment;
-    if (this.segmentModel == 'history') {
-      if (this.env.notShowHistoryTutorial === false) {
-        this.env.notShowHistoryTutorial = true;
-        this.env.storageSet("not-show-history-tutorial", 'yes');
-        await this.showHistoryTutorial();
-      }
-    } else if (this.segmentModel == 'bookmarks') {
-      if (this.env.notShowBookmarkTutorial === false) {
-        this.env.notShowBookmarkTutorial = true;
-        this.env.storageSet("not-show-bookmark-tutorial", 'yes');
-        await this.showBookmarkTutorial();
-      }
-    }
   }
 
   ionViewWillLeave() {
@@ -133,24 +118,6 @@ export class HistoryPage {
 
   bookmarksTrackByFn(index: number, bookmark: Bookmark): string {
     return bookmark.id;
-  }
-
-  async showHistoryTutorial() {
-    const modal = await this.modalController.create({
-      component: HistoryTutorialPage,
-      componentProps: {
-      }
-    });
-    modal.present();
-  }
-
-  async showBookmarkTutorial() {
-    const modal = await this.modalController.create({
-      component: BookmarkTutorialPage,
-      componentProps: {
-      }
-    });
-    modal.present();
   }
 
   maskDatetimeAndSource(date: Date, source: 'create' | 'view' | 'scan' | undefined): string {
@@ -231,7 +198,7 @@ export class HistoryPage {
       case "RSS_EXPANDED":
         return this.translate.instant("BARCODE_TYPE.RSS").trim();
       default:
-        return this.env.resultFormat;
+        return this.env.resultContentFormat;
     }
   }
 
@@ -243,8 +210,8 @@ export class HistoryPage {
     this.changeDetectorRef.detectChanges();
     this.changeDetectorRef.reattach();
     const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
-    this.env.result = data;
-    this.env.resultFormat = "";
+    this.env.resultContent = data;
+    this.env.resultContentFormat = "";
     this.env.recordSource = "view";
     this.env.detailedRecordSource = source;
     this.env.viewResultFrom = "/tabs/history";
@@ -256,19 +223,6 @@ export class HistoryPage {
   }
 
   async segmentChanged(ev: any) {
-    if (ev?.detail?.value == 'history') {
-      if (this.env.notShowHistoryTutorial === false) {
-        this.env.notShowHistoryTutorial = true;
-        this.env.storageSet("not-show-history-tutorial", 'yes');
-        await this.showHistoryTutorial();
-      }
-    } else if (ev?.detail?.value == 'bookmarks') {
-      if (this.env.notShowBookmarkTutorial === false) {
-        this.env.notShowBookmarkTutorial = true;
-        this.env.storageSet("not-show-bookmark-tutorial", 'yes');
-        await this.showBookmarkTutorial();
-      }
-    }
     this.firstLoadItems();
   }
 
