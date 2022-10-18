@@ -167,16 +167,15 @@ export class EnvService {
       async _ => {
         this.initObservable = new Observable<boolean>(subs => {
           new Promise(async _ => {
-            await this._transferStorage();
-            console.log(`env.service.ts - constructor - _transferStorage()`)
-            await this._loadStorage();
-            console.log(`env.service.ts - constructor - _loadStorage()`)
             await Device.getInfo().then(
               value => {
                 this._deviceInfo = value;
               }
             );
-            console.log(`env.service.ts - constructor - Device.getInfo()`)
+            await this._transferStorage();
+            console.log(`env.service.ts - constructor - _transferStorage()`)
+            await this._loadStorage();
+            console.log(`env.service.ts - constructor - _loadStorage()`)
             subs.next(true);
           });
         });
