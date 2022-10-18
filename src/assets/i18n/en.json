@@ -305,7 +305,7 @@
         "UPC": "Universal Product Code "
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "<p>This release brings you several updates and new features. Please check GitHub for details.</p>",
-        "UPDATE_NOTES_IOS": "This release brings you several updates and new features. Please check GitHub for details."
+        "UPDATE_NOTES_ANDROID": "<p>This release brings you several updates and new features. Please check GitHub for details.</p><p>Starting from this version, you can use Ecosia as search engine, export records to CSV and enjoy more reliable data logging.</p>",
+        "UPDATE_NOTES_IOS": "<p>This release brings you several updates and new features. Please check GitHub for details.</p><p>Starting from this version, you can use Ecosia as search engine, export records to CSV and enjoy more reliable data logging.</p>"
     }
 }
