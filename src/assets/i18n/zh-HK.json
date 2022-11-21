@@ -308,7 +308,7 @@
         "UPC": "通用產品代碼"
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "<p>此版本為您帶來多項更新和新功能，詳情請查看 GitHub。</p><p>Starting from this version, you can use Ecosia as search engine, export records to CSV and enjoy more reliable data logging.</p>",
-        "UPDATE_NOTES_IOS": "<p>此版本為您帶來多項更新和新功能，詳情請查看 GitHub。</p><p>Starting from this version, you can use Ecosia as search engine, export records to CSV and enjoy more reliable data logging.</p>"
+        "UPDATE_NOTES_ANDROID": "<p>此版本為您帶來多項更新和新功能，詳情請查看 GitHub。</p>",
+        "UPDATE_NOTES_IOS": "<p>此版本為您帶來多項更新和新功能，詳情請查看 GitHub。</p>"
     }
 }
