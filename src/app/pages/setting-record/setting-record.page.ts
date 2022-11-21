@@ -326,12 +326,17 @@ export class SettingRecordPage {
         rawCsvData = "ID,Content,Created at,Source,Barcode Type,Bookmarked?,Tag\r\n";
     }
     this.env.scanRecords.forEach(r => {
-      rawCsvData += `${r.id},"${r.text?.split('"').join('') ?? ""}","${this.maskDatetime(r.createdAt)}",${this.maskSource(r.source)},${r.barcodeType ?? ''},`
+      rawCsvData += `"${r.id}","${r.text?.split('"').join('') ?? ""}","${this.maskDatetime(r.createdAt)}","${this.maskSource(r.source)}","${r.barcodeType ?? ''}",`
       const bookmark = this.env.bookmarks.find(b => b.text == r.text);
       if (bookmark != null) {
-        rawCsvData += `TRUE,"${bookmark.tag?.split('"').join('') ?? ""}"\r\n`;
+        rawCsvData += `"TRUE","${bookmark.tag?.split('"').join('') ?? ""}"\r\n`;
       } else {
-        rawCsvData += "FALSE, \r\n";
+        rawCsvData += `"FALSE",""\r\n`;
+      }
+    });
+    this.env.bookmarks.forEach(b => {
+      if (this.env.scanRecords.findIndex(r => r.text == b.text) == -1) {
+        rawCsvData += `"-","${b.text?.split('"').join('') ?? ""}","${this.maskDatetime(b.createdAt)}","-","-","TRUE","${b.tag?.split('"').join('') ?? ""}"\r\n`
       }
     });
     await Filesystem.writeFile({
@@ -367,9 +372,86 @@ export class SettingRecordPage {
     );
   }
 
-  async onImportFromCsv() {
-    // TODO: Import from CSV
-  }
+  // async onImportFromCsv() {
+  //   // TODO: Import from CSV
+  //   const loading1 = await this.presentLoading(this.translate.instant("PLEASE_WAIT"));
+  //   await this.chooser.getFile().then(
+  //     async (value: ChooserResult) => {
+  //       if (value == null) {
+  //         loading1.dismiss();
+  //         return;
+  //       }
+  //       if (!value.name.toLowerCase().endsWith(".csv")) {
+  //         loading1.dismiss();
+  //         this.presentToast(`${this.translate.instant("MSG.INVALID_CSV_FILE")} (1)`, "short", "bottom");
+  //         return;
+  //       }
+  //       await Filesystem.readFile({
+  //         path: value.uri,
+  //         encoding: Encoding.UTF8
+  //       }).then(
+  //         async value => {
+  //           loading1.dismiss();
+  //           const loading2 = await this.presentLoading(this.translate.instant("DECODING"));
+  //           const data = value.data;
+  //           if (data.length == 0) {
+  //             loading2.dismiss();
+  //             this.presentToast(`${this.translate.instant("MSG.INVALID_CSV_FILE")} (2)`, "short", "bottom");
+  //             return;
+  //           }
+  //           const lines = data.split("\r\n");
+  //           if (lines.length <= 1) {
+  //             loading2.dismiss();
+  //             this.presentToast(`${this.translate.instant("MSG.INVALID_CSV_FILE")} (3)`, "short", "bottom");
+  //             return;
+  //           }
+  //           const scanRecords = [];
+  //           for (var i = 1; i < lines.length; i++) {
+  //             const line = lines[i];
+  //             if (line.length == 0) {
+  //               loading2.dismiss();
+  //               this.presentToast(`${this.translate.instant("MSG.INVALID_CSV_FILE")} (4)`, "short", "bottom");
+  //               return;
+  //             }
+  //             const items = line.split(`","`);
+  //             if (items.length != 7) {
+  //               loading2.dismiss();
+  //               this.presentToast(`${this.translate.instant("MSG.INVALID_CSV_FILE")} (5)`, "short", "bottom");
+  //               return;
+  //             }
+  //             const id = items[0].replace(`"`, "");
+  //             if (isNaN(parseInt(id))) {
+  //               loading2.dismiss();
+  //               this.presentToast(`${this.translate.instant("MSG.INVALID_CSV_FILE")} (6)`, "short", "bottom");
+  //               return;
+  //             }
+  //           }
+  //           if (scanRecords.length > 0) {
+  //             await this.env.saveRestoredScanRecords(scanRecords);
+  //           }
+  //         }
+  //       ).catch(
+  //         err => {
+  //           loading1.dismiss();
+  //           if (this.env.debugMode === 'on') {
+  //             this.presentToast('Failed to read file', "long", "bottom");
+  //           } else {
+  //             this.presentToast(this.translate.instant("MSG.IMPORT_FAILED"), "short", "bottom");
+  //           }
+  //         }
+  //       )
+  //     }
+  //   ).catch(
+  //     err => {
+  //       loading1.dismiss();
+  //       if (this.env.isDebugging) {
+  //         this.presentToast("Error when call Chooser.getFile: " + JSON.stringify(err), "long", "top");
+  //       } else {
+  //         this.presentToast(this.translate.instant("MSG.IMPORT_FAILED"), "short", "bottom");
+  //       }
+  //     }
+  //   )
+  // }
 
   maskDatetime(date: Date): string {
     if (!date) {
