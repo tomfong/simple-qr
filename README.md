@@ -75,10 +75,9 @@ You are welcomed to help translate the app into more languages (refer to this <a
 
 * Sponsor the project.
 
-  <div>
-      <a href="https://linktr.ee/tomfonghk"><img src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/Paypal-badge.png" width="170" alt="tomfong"/></a>
-      <a href="https://www.buymeacoffee.com/tomfong"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="180" alt="tomfong" /></a>
-  </div>
+    [![GitHub Sponsor](https://img.shields.io/badge/sponsor-30363D?style=flat&logo=GitHub-Sponsors&logoColor=#white)](https://github.com/sponsors/tomfong?frequency=one-time)
+   [![Buy me a Coffee](https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?style=flat&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/tomfong)
+   [![PayPal](https://img.shields.io/badge/PayPal-00457C?style=flat&logo=paypal&logoColor=white)](https://linktr.ee/tomfonghk)
 
 * Star the project.
 
