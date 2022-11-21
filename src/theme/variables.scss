@@ -45,20 +45,20 @@ $app-black-theme: mat.define-dark-theme(
 
 :root {
   /** primary **/
-  --ion-color-primary: #00acc1;
+  --ion-color-primary: #00a5aa;
   --ion-color-primary-rgb: 0, 172, 193;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #00acc1;
-  --ion-color-primary-tint: #00acc1;
+  --ion-color-primary-shade: #00a5aa;
+  --ion-color-primary-tint: #00a5aa;
 
   /** secondary **/
-  --ion-color-secondary: #00acc1;
+  --ion-color-secondary: #00a5aa;
   --ion-color-secondary-rgb: 0, 172, 193;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade: #00acc1;
-  --ion-color-secondary-tint: #00acc1;
+  --ion-color-secondary-shade: #00a5aa;
+  --ion-color-secondary-tint: #00a5aa;
 
   /** tertiary **/
   --ion-color-tertiary: #5260ff;
@@ -214,12 +214,12 @@ $app-black-theme: mat.define-dark-theme(
 }
 
 body.dark {
-  --ion-color-primary: #00acc1;
+  --ion-color-primary: #00a5aa;
   --ion-color-primary-rgb: 0, 172, 193;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #00acc1;
-  --ion-color-primary-tint: #00acc1;
+  --ion-color-primary-shade: #00a5aa;
+  --ion-color-primary-tint: #00a5aa;
 
   /** secondary **/
   --ion-color-secondary: #1b89cd;
