@@ -97,6 +97,7 @@
     "HOME_PHONE_NUMBER": "Numero di telefono di casa",
     "ICON_ONLY": "Disponibile solo icona",
     "IMPORT": "Importa",
+    "IMPORT_FROM_CSV": "Importa da CSV",
     "IMPORT_IMAGE": "Importa immagine",
     "INITIAL_SEGMENT": "Segmento iniziale",
     "JOB_TITLE": "Titolo di lavoro",
@@ -247,9 +248,11 @@
         "EXPORT_TO_CSV_EXPLAIN": "Puoi esportare tutti i record e i segnalibri in un file CSV.",
         "FAILED_SAVING_CONTACT": "Salvataggio dei dati fallito",
         "FAIL_PREPARE_SMS": "Impossibile inviare il messaggio",
+        "IMPORT_FAILED": "Impossibile importare",
         "IMPORT_FROM_CSV_EXPLAIN": "Puoi importare record e segnalibri da un file CSV con il formato definito da Simple QR. Se desideri trasferire dati tra Android e iOS, utilizza questa funzione.",
         "INPUT_TAG": "Si prega di dare un tag al segnalibro",
         "INVALID_BK_FILE": "Backup non valido.",
+        "INVALID_CSV_FILE": "CSV non valido.",
         "NOT_BASE64_DE": "I dati non possono essere decodificati in Base64",
         "NOT_BASE64_EN": "I dati non possono essere decodificati in Base64",
         "NOT_BASE64_EN_DE": "I dati non possono essere decodificati in Base64",
@@ -305,7 +308,7 @@
         "UPC": "Codice Prodotto Universale "
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "<p>Questa versione offre numerosi aggiornamenti e nuove funzionalità. Si prega di controllare GitHub per i dettagli.</p><p>Starting from this version, you can use Ecosia as search engine, export records to CSV and enjoy more reliable data logging.</p>",
-        "UPDATE_NOTES_IOS": "<p>Questa versione offre numerosi aggiornamenti e nuove funzionalità. Si prega di controllare GitHub per i dettagli.</p><p>Starting from this version, you can use Ecosia as search engine, export records to CSV and enjoy more reliable data logging.</p>"
+        "UPDATE_NOTES_ANDROID": "<p>Questa versione offre numerosi aggiornamenti e nuove funzionalità. Si prega di controllare GitHub per i dettagli.</p>",
+        "UPDATE_NOTES_IOS": "<p>Questa versione offre numerosi aggiornamenti e nuove funzionalità. Si prega di controllare GitHub per i dettagli.</p>"
     }
 }

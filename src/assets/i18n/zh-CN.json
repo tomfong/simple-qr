@@ -96,8 +96,9 @@
     "HOME_ADDRESS": "家居地址",
     "HOME_PHONE_NUMBER": "家居电话号码",
     "ICON_ONLY": "仅限图示",
-    "IMPORT": "汇入",
-    "IMPORT_IMAGE": "汇入图片",
+    "IMPORT": "导入",
+    "IMPORT_FROM_CSV": "从CSV导入",
+    "IMPORT_IMAGE": "导入图片",
     "INITIAL_SEGMENT": "起始分页",
     "JOB_TITLE": "职位名称",
     "LANGUAGE": "语言",
@@ -228,7 +229,7 @@
         "BACKUP_FAILED": "备份失败",
         "BACKUP_FAILED_2": "备份失败。请确保已允许「简易QR」存取储存空间",
         "BACKUP_SUCCESSFULLY": "<p>成功备份。请妥善保存备份档及以下密码</p><p>{secret}</p>",
-        "BARCODE_TYPE": "扫描<ul><li>QR 码</li><li>一维条码</li><li>Aztec 码</li><li>数据矩阵码</li><li>PDF417 条码</li></ul>汇入图片<ul><li>QR 码</li></ul>建立<ul><li>QR 码</li></ul>",
+        "BARCODE_TYPE": "扫描<ul><li>QR 码</li><li>一维条码</li><li>Aztec 码</li><li>数据矩阵码</li><li>PDF417 条码</li></ul>导入图片<ul><li>QR 码</li></ul>建立<ul><li>QR 码</li></ul>",
         "BOOKMARKED": "成功加入书签",
         "BUTTON_DISPLAY_EXPLAIN": "显示或隐藏行动按键。",
         "BUTTON_STYLE_EXPLAIN": "选择行动按键的样式。",
@@ -247,9 +248,11 @@
         "EXPORT_TO_CSV_EXPLAIN": "您可以将所有扫描记录及书签导出到CSV档案。",
         "FAILED_SAVING_CONTACT": "无法新增联络人",
         "FAIL_PREPARE_SMS": "无法传送信息",
+        "IMPORT_FAILED": "导入失敗",
         "IMPORT_FROM_CSV_EXPLAIN": "您可以从简易QR定义的CSV档案导入记录和书签。若您想在Android和iOS设备之间传输数据，请使用此功能。",
         "INPUT_TAG": "请为此书签输入一个标签",
         "INVALID_BK_FILE": "这不是有效的备份档",
+        "INVALID_CSV_FILE": "这不是有效的CSV档",
         "NOT_BASE64_DE": "内容不能被 Base64 解码",
         "NOT_BASE64_EN": "内容不能被 Base64 编码",
         "NOT_BASE64_EN_DE": "内容不能被 Base64 编码及解码",
@@ -275,7 +278,7 @@
         "SAVED_CONTACT": "已新增联络人",
         "SAVING_CONTACT": "正在新增联络人",
         "SCAN_QR_FROM_IMAGE": "简易 QR 使用「cozmo/jsQR」模组扫描图片里 QR 码。请注意，",
-        "SCAN_QR_FROM_IMAGE_R1": "汇入图片时您必须授权程序存取储存空间或相簿。",
+        "SCAN_QR_FROM_IMAGE_R1": "导入图片时您必须授权程序存取储存空间或相簿。",
         "SCAN_QR_FROM_IMAGE_R2": "请确保所选择的图片并非透明背景。建议选择非相机摄取的图片。",
         "SCAN_QR_FROM_IMAGE_R3": "若要扫描整张图片，请取消或略过相片编辑步骤。（如适用）",
         "SEARCH": "您想搜索哪一个内容?",
@@ -305,7 +308,7 @@
         "UPC": "通用产品代码"
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "<p>此版本为您带来多项更新和新功能，详情请查看 GitHub。</p><p>Starting from this version, you can use Ecosia as search engine, export records to CSV and enjoy more reliable data logging.</p>",
-        "UPDATE_NOTES_IOS": "<p>此版本为您带来多项更新和新功能，详情请查看 GitHub。</p><p>Starting from this version, you can use Ecosia as search engine, export records to CSV and enjoy more reliable data logging.</p>"
+        "UPDATE_NOTES_ANDROID": "<p>此版本为您带来多项更新和新功能，详情请查看 GitHub。</p>",
+        "UPDATE_NOTES_IOS": "<p>此版本为您带来多项更新和新功能，详情请查看 GitHub。</p>"
     }
 }

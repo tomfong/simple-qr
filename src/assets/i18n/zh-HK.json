@@ -97,6 +97,7 @@
     "HOME_PHONE_NUMBER": "家居電話號碼",
     "ICON_ONLY": "僅限圖示",
     "IMPORT": "匯入",
+    "IMPORT_FROM_CSV": "從CSV匯入",
     "IMPORT_IMAGE": "匯入圖片",
     "INITIAL_SEGMENT": "起始分頁",
     "JOB_TITLE": "職位名稱",
@@ -247,9 +248,11 @@
         "EXPORT_TO_CSV_EXPLAIN": "您可以將所有掃描記錄及書籤匯出至CSV檔案。",
         "FAILED_SAVING_CONTACT": "無法新增聯絡人",
         "FAIL_PREPARE_SMS": "無法傳送信息",
+        "IMPORT_FAILED": "匯入失敗",
         "IMPORT_FROM_CSV_EXPLAIN": "您可以從簡易QR定義的CSV檔案匯入記錄和書籤。若您想在Android和iOS設備之間傳輸數據，請使用此功能。",
         "INPUT_TAG": "請為此書籤輸入一個標籤",
         "INVALID_BK_FILE": "這不是有效的備份檔",
+        "INVALID_CSV_FILE": "這不是有效的CSV檔",
         "NOT_BASE64_DE": "內容不能被 Base64 解碼",
         "NOT_BASE64_EN": "內容不能被 Base64 編碼",
         "NOT_BASE64_EN_DE": "內容不能被 Base64 編碼及解碼",
@@ -305,7 +308,7 @@
         "UPC": "通用產品代碼"
     },
     "UPDATE": {
-        "UPDATE_NOTES_ANDROID": "<p>此版本為您帶來多項更新和新功能，詳情請查看 GitHub。</p><p>Starting from this version, you can use Ecosia as search engine, export records to CSV and enjoy more reliable data logging.</p>",
-        "UPDATE_NOTES_IOS": "<p>此版本為您帶來多項更新和新功能，詳情請查看 GitHub。</p><p>Starting from this version, you can use Ecosia as search engine, export records to CSV and enjoy more reliable data logging.</p>"
+        "UPDATE_NOTES_ANDROID": "<p>此版本為您帶來多項更新和新功能，詳情請查看 GitHub。</p>",
+        "UPDATE_NOTES_IOS": "<p>此版本為您帶來多項更新和新功能，詳情請查看 GitHub。</p>"
     }
 }

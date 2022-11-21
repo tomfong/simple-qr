@@ -85,6 +85,12 @@ export class SettingResultButtonsPage {
     await this.tapHaptic();
   }
 
+  async onOpenFoodFactsButtonChange(ev: any) {
+    this.env.showOpenFoodFactsButton = ev ? 'on' : 'off';
+    await Preferences.set({ key: this.env.KEY_SHOW_OPEN_FOOD_FACTS_BUTTON, value: this.env.showOpenFoodFactsButton });
+    await this.tapHaptic();
+  }
+
   async tapHaptic() {
     if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
       await Haptics.impact({ style: ImpactStyle.Light })

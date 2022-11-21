@@ -31,7 +31,7 @@ export declare type ResultPageButtonsType = 'detailed' | 'icon-only';
 })
 export class EnvService {
 
-  public appVersionNumber: string = '3.1.0';
+  public appVersionNumber: string = '3.2.0';
 
   public startPage: TabPageType = "/tabs/scan";
   public historyPageStartSegment: HistoryPageSegmentType = 'history';
@@ -74,6 +74,7 @@ export class EnvService {
   public showCallButton: OnOffType = 'on';
   public showSendMessageButton: OnOffType = 'on';
   public showSendEmailButton: OnOffType = 'on';
+  public showOpenFoodFactsButton: OnOffType = 'on';
   public debugMode: OnOffType = 'off';
   public autoExitAppMin: 1 | 3 | 5 | -1 = -1;
 
@@ -117,12 +118,13 @@ export class EnvService {
   public readonly KEY_SHOW_CALL_BUTTON = "showCallButton";
   public readonly KEY_SHOW_SEND_MESSAGE_BUTTON = "showSendMessageButton";
   public readonly KEY_SHOW_SEND_EMAIL_BUTTON = "showSendEmailButton";
+  public readonly KEY_SHOW_OPEN_FOOD_FACTS_BUTTON = "showOpenFoodFactsButton";
   public readonly KEY_AUTO_EXIT_MIN = "autoExitAppMin";
 
-  public readonly KEY_ANDROID_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30100";
-  public readonly KEY_IOS_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30100";
-  public readonly KEY_ANDROID_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30001";
-  public readonly KEY_IOS_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30001";
+  public readonly KEY_ANDROID_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30200";
+  public readonly KEY_IOS_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30200";
+  public readonly KEY_ANDROID_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30100";
+  public readonly KEY_IOS_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30100";
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
 
@@ -1148,6 +1150,15 @@ export class EnvService {
         }
       }
     );
+    await Preferences.get({ key: this.KEY_SHOW_OPEN_FOOD_FACTS_BUTTON }).then(
+      async result => {
+        if (result.value != null) {
+          this.showOpenFoodFactsButton = result.value as OnOffType;
+        } else {
+          this.showOpenFoodFactsButton = 'on';
+        }
+      }
+    );
     await Preferences.get({ key: this.KEY_AUTO_EXIT_MIN }).then(
       async result => {
         if (result.value != null) {
@@ -1202,6 +1213,7 @@ export class EnvService {
     this.showCallButton = 'on';
     this.showSendMessageButton = 'on';
     this.showSendEmailButton = 'on';
+    this.showOpenFoodFactsButton = 'on';
     this.scanRecords = [];
     this.bookmarks = [];
     this.debugMode = 'off';
@@ -1333,6 +1345,9 @@ export class EnvService {
 
     this.showSendEmailButton = 'on';
     await Preferences.set({ key: this.KEY_SHOW_SEND_EMAIL_BUTTON, value: this.showSendEmailButton });
+
+    this.showOpenFoodFactsButton = 'on';
+    await Preferences.set({ key: this.KEY_SHOW_OPEN_FOOD_FACTS_BUTTON, value: this.showOpenFoodFactsButton });
 
     this.debugMode = 'off';
     await Preferences.set({ key: this.KEY_DEBUG_MODE, value: this.debugMode });

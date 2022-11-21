@@ -106,6 +106,12 @@
   [ngStyle]="env.colorTheme === 'dark'?  {'background-color': '#222428'} : (env.colorTheme === 'black'? {'background-color': '#000000'} : {'background-color': '#F0F0F0'})">
 
   <ng-container *ngIf="env.resultPageButtons === 'icon-only'">
+    <ion-row *ngIf="contentType === 'freeText' && env.showOpenFoodFactsButton === 'on' && isValidEan" class="d-flex justify-content-center">
+      <ion-button (click)="tapHaptic(); searchOpenFoodFacts()" [color]="'primary'" fill="clear">
+        <ion-icon name="fast-food"></ion-icon>
+      </ion-button>
+    </ion-row>
+
     <ion-row *ngIf="contentType === 'url' && env.showBrowseButton === 'on' && isHttp" class="d-flex justify-content-center">
       <ion-button (click)="tapHaptic(); browseWebsite()" [color]="'primary'" fill="clear">
         <ion-icon name="globe"></ion-icon>
@@ -207,6 +213,12 @@
   <ng-container *ngIf="env.resultPageButtons === 'detailed'">
     <ion-row class="ion-padding-horizontal py-2">
       <div class="d-flex justify-content-between detailed-action-button-container">
+        <ion-button class="pr-1" *ngIf="contentType === 'freeText' && env.showOpenFoodFactsButton === 'on' && isValidEan"
+          (click)="tapHaptic(); searchOpenFoodFacts()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="outline"
+          shape="round" [@inAnimation]>
+          <ion-icon class="pr-2" name="fast-food"></ion-icon>
+          <ion-label>Facts</ion-label>
+        </ion-button>
         <ion-button class="pr-1" *ngIf="contentType === 'url' && env.showBrowseButton === 'on' && isHttp"
           (click)="tapHaptic(); browseWebsite()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="outline"
           shape="round" [@inAnimation]>

@@ -190,6 +190,10 @@ export class ResultPage {
     return "#ffffff";
   }
 
+  searchOpenFoodFacts() {
+    window.open(`https://world.openfoodfacts.org/product/${this.qrCodeContent}`, '_system', 'location=yes');
+  }
+
   browseWebsite() {
     window.open(this.qrCodeContent, '_system', 'location=yes');
   }
@@ -901,6 +905,32 @@ export class ResultPage {
       default:
         return this.env.resultContentFormat;
     }
+  }
+
+  get isValidEan(): boolean {
+    if (this.qrCodeContent == null) {
+      return false;
+    }
+    const isValidLength = this.qrCodeContent.length === 18 || this.qrCodeContent.length === 14 || this.qrCodeContent.length === 13 || this.qrCodeContent.length === 8 || this.qrCodeContent.length === 5;
+    return isValidLength && /^\d+$/.test(this.qrCodeContent) && this.testEanChecksum(this.qrCodeContent);
+  }
+
+  private testEanChecksum(text: string): boolean {
+    const digits = text.slice(0, -1);
+    const checkDigit = parseInt(text.slice(-1));
+    if (isNaN(checkDigit)) {
+      return false;
+    }
+    let sum = 0;
+    for (let i = digits.length - 1; i >= 0; i--) {
+      const digit = parseInt(digits.charAt(i));
+      if (isNaN(digit)) {
+        return false;
+      }
+      sum += (digit * (1 + (2 * (i % 2)))) | 0;
+    }
+    sum = (10 - (sum % 10)) % 10;
+    return sum === checkDigit;
   }
 
   get finalContactName(): string {
