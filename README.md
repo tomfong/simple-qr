@@ -63,7 +63,7 @@ By using the app, you can
 ### Languages Supported
 
 * English (en)
-* Traditional Chinese 正體中文 (zh)
+* Traditional Chinese (Hong Kong) 中文 (香港) (zh-HK)
 * Simplified Chinese 简体中文 (zh-CN)
 * German Deutsch (de)
 * French Français (fr)
