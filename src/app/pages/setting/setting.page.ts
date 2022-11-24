@@ -28,8 +28,20 @@ export class SettingPage {
     await SplashScreen.hide()
   }
 
+  get isIos(): boolean {
+    return this.platform.is('ios');
+  }
+
   get isAndroid(): boolean {
     return this.platform.is('android');
+  }
+
+  rateAndroidApp() {
+    window.open(this.env.GOOGLE_PLAY_URL, '_system');
+  }
+
+  rateIosApp() {
+    window.open(this.env.APP_STORE_URL, '_system');
   }
 
   setLanguage() {
