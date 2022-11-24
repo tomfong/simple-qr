@@ -75,6 +75,7 @@ export class EnvService {
   public showSendMessageButton: OnOffType = 'on';
   public showSendEmailButton: OnOffType = 'on';
   public showOpenFoodFactsButton: OnOffType = 'on';
+  public showExitAppAlert: OnOffType = "on";
   public debugMode: OnOffType = 'off';
   public autoExitAppMin: 1 | 3 | 5 | -1 = -1;
 
@@ -86,6 +87,7 @@ export class EnvService {
   public readonly KEY_LANGUAGE = "language";
   public readonly KEY_COLOR = "color";
   public readonly KEY_DEBUG_MODE = "debug-mode-on";
+  public readonly KEY_SHOW_EXIT_APP_ALERT = "showExitAppAlert";
   public readonly KEY_ORIENTATION = "orientation";
   public readonly KEY_SCAN_RECORD_LOGGING = "scan-record-logging";
   public readonly KEY_RECORDS_LIMIT = "recordsLimit";
@@ -852,6 +854,15 @@ export class EnvService {
         await this.toggleColorTheme();
       }
     );
+    await Preferences.get({ key: this.KEY_SHOW_EXIT_APP_ALERT }).then(
+      async result => {
+        if (result.value != null) {
+          this.showExitAppAlert = result.value as OnOffType;
+        } else {
+          this.showExitAppAlert = 'on';
+        }
+      }
+    );
     await Preferences.get({ key: this.KEY_DEBUG_MODE }).then(
       async result => {
         if (result.value != null) {
@@ -1216,6 +1227,7 @@ export class EnvService {
     this.showOpenFoodFactsButton = 'on';
     this.scanRecords = [];
     this.bookmarks = [];
+    this.showExitAppAlert = 'on';
     this.debugMode = 'off';
     this.autoExitAppMin = -1;
   }
@@ -1348,6 +1360,9 @@ export class EnvService {
 
     this.showOpenFoodFactsButton = 'on';
     await Preferences.set({ key: this.KEY_SHOW_OPEN_FOOD_FACTS_BUTTON, value: this.showOpenFoodFactsButton });
+
+    this.showExitAppAlert = 'on';
+    await Preferences.set({ key: this.KEY_SHOW_EXIT_APP_ALERT, value: this.showExitAppAlert });
 
     this.debugMode = 'off';
     await Preferences.set({ key: this.KEY_DEBUG_MODE, value: this.debugMode });

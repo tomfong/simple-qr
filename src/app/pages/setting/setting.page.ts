@@ -127,27 +127,8 @@ export class SettingPage {
     alert.present();
   }
 
-  async confirmExitApp(): Promise<void> {
-    const alert = await this.alertController.create({
-      header: this.translate.instant('EXIT_APP'),
-      message: this.translate.instant('MSG.EXIT_APP'),
-      cssClass: ['alert-bg'],
-      buttons: [
-        {
-          text: this.translate.instant('EXIT'),
-          handler: () => {
-            navigator['app'].exitApp();
-          }
-        },
-        {
-          text: this.translate.instant('RATE_THE_APP'),
-          handler: () => {
-            this.openGooglePlay();
-          }
-        }
-      ]
-    });
-    await alert.present();
+  exitApp() {
+    navigator['app'].exitApp();
   }
 
   openGooglePlay(): void {

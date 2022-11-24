@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Preferences } from '@capacitor/preferences';
 import { AlertController, IonRouterOutlet, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
@@ -50,26 +51,45 @@ export class LandingPage {
   }
 
   async confirmExitApp(): Promise<void> {
-    const alert = await this.alertController.create({
-      header: this.translate.instant('EXIT_APP'),
-      message: this.translate.instant('MSG.EXIT_APP'),
-      cssClass: ['alert-bg'],
-      buttons: [
-        {
-          text: this.translate.instant('EXIT'),
-          handler: () => {
-            navigator['app'].exitApp();
+    if (this.env.showExitAppAlert == "on") {
+      const alert = await this.alertController.create({
+        header: this.translate.instant('EXIT_APP'),
+        message: this.translate.instant('MSG.EXIT_APP'),
+        inputs: [
+          {
+            type: "checkbox",
+            label: this.translate.instant("MSG.TUTORIAL_NOT_SHOW_AGAIN"),
+            checked: false,
+            handler: async (result) => {
+              if (result.checked) {
+                this.env.showExitAppAlert = "off";
+              } else {
+                this.env.showExitAppAlert = "on";
+              }
+              await Preferences.set({ key: this.env.KEY_SHOW_EXIT_APP_ALERT, value: this.env.showExitAppAlert });
+            }
           }
-        },
-        {
-          text: this.translate.instant('RATE_THE_APP'),
-          handler: () => {
-            this.openGooglePlay();
+        ],
+        cssClass: ['alert-bg', 'alert-input-no-border'],
+        buttons: [
+          {
+            text: this.translate.instant('EXIT'),
+            handler: () => {
+              navigator['app'].exitApp();
+            }
+          },
+          {
+            text: this.translate.instant('RATE_THE_APP'),
+            handler: () => {
+              this.openGooglePlay();
+            }
           }
-        }
-      ]
-    });
-    await alert.present();
+        ]
+      });
+      await alert.present();
+    } else {
+      navigator['app'].exitApp();
+    }
   }
 
 }
