@@ -1,0 +1,3 @@
+* Support Ecosia
+* Support CSV export
+* Bug fix
