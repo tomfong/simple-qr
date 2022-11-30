@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Preferences } from '@capacitor/preferences';
 import { Observable } from 'rxjs';
 
-export declare type LanguageType = 'de' | 'en' | 'fr' | 'it' | 'zh-CN' | 'zh-HK';
+export declare type LanguageType = 'de' | 'en' | 'fr' | 'it' | 'ru' | 'zh-CN' | 'zh-HK';
 export declare type TabPageType = "/tabs/scan" | "/tabs/generate" | "/tabs/import-image" | "/tabs/history" | "/tabs/setting";
 export declare type HistoryPageSegmentType = 'history' | 'bookmarks';
 export declare type OnOffType = "on" | "off";
@@ -1614,6 +1614,9 @@ export class EnvService {
             break;
           case "it":
             language = "it"
+            break;
+          case "ru":
+            language = "ru"
             break;
           case "zh":
             if (browserCultureLang == 'zh-CN' || browserCultureLang == 'zh-SG') {
