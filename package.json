@@ -52,7 +52,7 @@
     "@capacitor/splash-screen": "^4.1.2",
     "@capacitor/status-bar": "^4.1.0",
     "@capacitor/toast": "^4.1.0",
-    "@ionic/angular": "^6.3.8",
+    "@ionic/angular": "^6.3.9",
     "@ionic/storage": "^3.0.6",
     "@ionic/storage-angular": "^3.0.6",
     "@ng-bootstrap/ng-bootstrap": "^13.1.1",

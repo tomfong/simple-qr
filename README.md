@@ -122,7 +122,7 @@ Thank you the following contributors who have made the app better!
 
 ```sh
     Ionic CLI                       : 6.20.4
-    Ionic Framework                 : @ionic/angular 6.3.7
+    Ionic Framework                 : @ionic/angular 6.3.9
     @angular-devkit/build-angular   : 14.2.10
     @angular-devkit/schematics      : 14.2.10
     @angular/cli                    : 14.2.10
