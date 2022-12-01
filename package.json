@@ -1,8 +1,7 @@
 {
   "name": "simple-qr",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "author": "Tom Fong",
-  "homepage": "https://tomfong.github.io",
   "scripts": {
     "ng": "ng",
     "build:an": "ionic cap build android --prod --no-open",
