@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Preferences } from '@capacitor/preferences';
 import { Observable } from 'rxjs';
 
-export declare type LanguageType = 'de' | 'en' | 'fr' | 'it' | 'zh-CN' | 'zh-HK';
+export declare type LanguageType = 'de' | 'en' | 'fr' | 'it' | 'ru' | 'zh-CN' | 'zh-HK';
 export declare type TabPageType = "/tabs/scan" | "/tabs/generate" | "/tabs/import-image" | "/tabs/history" | "/tabs/setting";
 export declare type HistoryPageSegmentType = 'history' | 'bookmarks';
 export declare type OnOffType = "on" | "off";
@@ -31,7 +31,7 @@ export declare type ResultPageButtonsType = 'detailed' | 'icon-only';
 })
 export class EnvService {
 
-  public appVersionNumber: string = '3.2.0';
+  public appVersionNumber: string = '3.3.0';
 
   public startPage: TabPageType = "/tabs/scan";
   public historyPageStartSegment: HistoryPageSegmentType = 'history';
@@ -75,6 +75,7 @@ export class EnvService {
   public showSendMessageButton: OnOffType = 'on';
   public showSendEmailButton: OnOffType = 'on';
   public showOpenFoodFactsButton: OnOffType = 'on';
+  public showExitAppAlert: OnOffType = "on";
   public debugMode: OnOffType = 'off';
   public autoExitAppMin: 1 | 3 | 5 | -1 = -1;
 
@@ -86,6 +87,7 @@ export class EnvService {
   public readonly KEY_LANGUAGE = "language";
   public readonly KEY_COLOR = "color";
   public readonly KEY_DEBUG_MODE = "debug-mode-on";
+  public readonly KEY_SHOW_EXIT_APP_ALERT = "showExitAppAlert";
   public readonly KEY_ORIENTATION = "orientation";
   public readonly KEY_SCAN_RECORD_LOGGING = "scan-record-logging";
   public readonly KEY_RECORDS_LIMIT = "recordsLimit";
@@ -121,10 +123,10 @@ export class EnvService {
   public readonly KEY_SHOW_OPEN_FOOD_FACTS_BUTTON = "showOpenFoodFactsButton";
   public readonly KEY_AUTO_EXIT_MIN = "autoExitAppMin";
 
-  public readonly KEY_ANDROID_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30200";
-  public readonly KEY_IOS_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30200";
-  public readonly KEY_ANDROID_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30100";
-  public readonly KEY_IOS_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30100";
+  public readonly KEY_ANDROID_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30300";
+  public readonly KEY_IOS_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30300";
+  public readonly KEY_ANDROID_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30200";
+  public readonly KEY_IOS_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30200";
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
 
@@ -852,6 +854,15 @@ export class EnvService {
         await this.toggleColorTheme();
       }
     );
+    await Preferences.get({ key: this.KEY_SHOW_EXIT_APP_ALERT }).then(
+      async result => {
+        if (result.value != null) {
+          this.showExitAppAlert = result.value as OnOffType;
+        } else {
+          this.showExitAppAlert = 'on';
+        }
+      }
+    );
     await Preferences.get({ key: this.KEY_DEBUG_MODE }).then(
       async result => {
         if (result.value != null) {
@@ -1216,6 +1227,7 @@ export class EnvService {
     this.showOpenFoodFactsButton = 'on';
     this.scanRecords = [];
     this.bookmarks = [];
+    this.showExitAppAlert = 'on';
     this.debugMode = 'off';
     this.autoExitAppMin = -1;
   }
@@ -1348,6 +1360,9 @@ export class EnvService {
 
     this.showOpenFoodFactsButton = 'on';
     await Preferences.set({ key: this.KEY_SHOW_OPEN_FOOD_FACTS_BUTTON, value: this.showOpenFoodFactsButton });
+
+    this.showExitAppAlert = 'on';
+    await Preferences.set({ key: this.KEY_SHOW_EXIT_APP_ALERT, value: this.showExitAppAlert });
 
     this.debugMode = 'off';
     await Preferences.set({ key: this.KEY_DEBUG_MODE, value: this.debugMode });
@@ -1599,6 +1614,9 @@ export class EnvService {
             break;
           case "it":
             language = "it"
+            break;
+          case "ru":
+            language = "ru"
             break;
           case "zh":
             if (browserCultureLang == 'zh-CN' || browserCultureLang == 'zh-SG') {

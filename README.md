@@ -68,6 +68,7 @@ By using the app, you can
 * German Deutsch (de)
 * French Français (fr)
 * Italian Italiano (it)
+* Russian Русский (ru)
 
 You are welcomed to help translate the app into more languages (refer to this <a href="#how-to-help-translate">section</a>)
 
@@ -115,12 +116,13 @@ Thank you the following contributors who have made the app better!
 |:-:|:-:|:-:|
 | mondstern | [mondlicht-und-sterne](https://github.com/mondlicht-und-sterne) | German language translation |
 | Valentino Bocchetti | [luftmensch-luftmensch](https://github.com/luftmensch-luftmensch) | Italian language translation |
+| Smooth-E | [Smooth-E](https://github.com/Smooth-E) | Russian language translation |
 
 ## Framework
 
 ```sh
     Ionic CLI                       : 6.20.4
-    Ionic Framework                 : @ionic/angular 6.3.7
+    Ionic Framework                 : @ionic/angular 6.3.9
     @angular-devkit/build-angular   : 14.2.10
     @angular-devkit/schematics      : 14.2.10
     @angular/cli                    : 14.2.10

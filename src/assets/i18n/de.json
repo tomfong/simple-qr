@@ -165,6 +165,8 @@
     "RESET_DEFAULT": "Standard zurücksetzen",
     "RESTORE": "Wiederherstellen",
     "RESULT": "Ergebnis",
+    "SAVE": "Speichern",
+    "SAVED": "Gespeichert",
     "SCAN": "Scannen",
     "SCANNED": "Gescannt",
     "SCANNING_FEEDBACK_ONLY": "Nur Feedback scannen",

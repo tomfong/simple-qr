@@ -106,19 +106,22 @@
   [ngStyle]="env.colorTheme === 'dark'?  {'background-color': '#222428'} : (env.colorTheme === 'black'? {'background-color': '#000000'} : {'background-color': '#F0F0F0'})">
 
   <ng-container *ngIf="env.resultPageButtons === 'icon-only'">
-    <ion-row *ngIf="contentType === 'freeText' && env.showOpenFoodFactsButton === 'on' && isValidEan" class="d-flex justify-content-center">
+    <ion-row *ngIf="contentType === 'freeText' && env.showOpenFoodFactsButton === 'on' && isValidEan"
+      class="d-flex justify-content-center">
       <ion-button (click)="tapHaptic(); searchOpenFoodFacts()" [color]="'primary'" fill="clear">
         <ion-icon name="fast-food"></ion-icon>
       </ion-button>
     </ion-row>
 
-    <ion-row *ngIf="contentType === 'url' && env.showBrowseButton === 'on' && isHttp" class="d-flex justify-content-center">
+    <ion-row *ngIf="contentType === 'url' && env.showBrowseButton === 'on' && isHttp"
+      class="d-flex justify-content-center">
       <ion-button (click)="tapHaptic(); browseWebsite()" [color]="'primary'" fill="clear">
         <ion-icon name="globe"></ion-icon>
       </ion-button>
     </ion-row>
 
-    <ion-row *ngIf="contentType === 'url' && env.showOpenUrlButton === 'on' && !isHttp" class="d-flex justify-content-center">
+    <ion-row *ngIf="contentType === 'url' && env.showOpenUrlButton === 'on' && !isHttp"
+      class="d-flex justify-content-center">
       <ion-button (click)="tapHaptic(); openLink()" [color]="'primary'" fill="clear">
         <ion-icon name="open"></ion-icon>
       </ion-button>
@@ -170,52 +173,68 @@
       </ion-button>
     </ion-row>
 
-    <ion-row class="ion-padding-horizontal justify-content-around">
-      <ion-button *ngIf="env.showSearchButton === 'on'" (click)="tapHaptic(); webSearch()"
-        [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
-        [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
-        <ion-icon *ngIf="env.searchEngine === 'google'" slot="icon-only" name="logo-google">
-        </ion-icon>
-        <ion-icon *ngIf="env.searchEngine === 'bing'" slot="icon-only" src="assets/icon/microsoft-bing.svg">
-        </ion-icon>
-        <ion-icon *ngIf="env.searchEngine === 'yahoo'" slot="icon-only" src="assets/icon/yahoo.svg">
-        </ion-icon>
-        <ion-icon *ngIf="env.searchEngine === 'duckduckgo'" slot="icon-only" src="assets/icon/duck-duck-go.svg">
-        </ion-icon>
-        <ion-icon *ngIf="env.searchEngine === 'yandex'" slot="icon-only" src="assets/icon/yandex.svg">
-        </ion-icon>
-        <ion-icon *ngIf="env.searchEngine === 'ecosia'" slot="icon-only" src="assets/icon/ecosia.svg">
-        </ion-icon>
-      </ion-button>
-      <ion-button *ngIf="env.showCopyButton === 'on'" (click)="tapHaptic(); copyText()"
-        [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
-        [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
-        <ion-icon slot="icon-only" name="copy"></ion-icon>
-      </ion-button>
-      <ion-button *ngIf="env.showBase64Button === 'on'" (click)="tapHaptic(); base64()"
-        [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
-        [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
-        <ion-icon slot="icon-only" name="code-working"></ion-icon>
-      </ion-button>
-      <ion-button *ngIf="env.showEnlargeButton === 'on'" (click)="tapHaptic(); enlarge()"
-        [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
-        [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
-        <ion-icon slot="icon-only" name="qr-code-sharp"></ion-icon>
-      </ion-button>
-      <ion-button *ngIf="env.showBookmarkButton === 'on'" (click)="tapHaptic(); handleBookmark()"
-        [color]="!bookmarked? (env.colorTheme === 'light'? 'dark' : 'light') : 'warning'" fill="clear"
-        [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
-        <ion-icon slot="icon-only" name="bookmark"></ion-icon>
-      </ion-button>
+    <ion-row class="ion-padding-horizontal">
+      <div class="d-flex justify-content-between detailed-action-button-container">
+        <ion-button
+          *ngIf="!resultSaved && this.env.scanRecordLogging == 'off' && this.qrCodeContent != null && this.qrCodeContent != '' "
+          (click)="tapHaptic(); saveRecord()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear">
+          <ion-icon slot="icon-only" src="assets/icon/history.svg"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="env.showSearchButton === 'on'" (click)="tapHaptic(); webSearch()"
+          [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
+          [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+          <ion-icon *ngIf="env.searchEngine === 'google'" slot="icon-only" name="logo-google">
+          </ion-icon>
+          <ion-icon *ngIf="env.searchEngine === 'bing'" slot="icon-only" src="assets/icon/microsoft-bing.svg">
+          </ion-icon>
+          <ion-icon *ngIf="env.searchEngine === 'yahoo'" slot="icon-only" src="assets/icon/yahoo.svg">
+          </ion-icon>
+          <ion-icon *ngIf="env.searchEngine === 'duckduckgo'" slot="icon-only" src="assets/icon/duck-duck-go.svg">
+          </ion-icon>
+          <ion-icon *ngIf="env.searchEngine === 'yandex'" slot="icon-only" src="assets/icon/yandex.svg">
+          </ion-icon>
+          <ion-icon *ngIf="env.searchEngine === 'ecosia'" slot="icon-only" src="assets/icon/ecosia.svg">
+          </ion-icon>
+        </ion-button>
+        <ion-button *ngIf="env.showCopyButton === 'on'" (click)="tapHaptic(); copyText()"
+          [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
+          [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+          <ion-icon slot="icon-only" name="copy"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="env.showBase64Button === 'on'" (click)="tapHaptic(); base64()"
+          [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
+          [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+          <ion-icon slot="icon-only" name="code-working"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="env.showEnlargeButton === 'on'" (click)="tapHaptic(); enlarge()"
+          [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
+          [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+          <ion-icon slot="icon-only" name="qr-code-sharp"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="env.showBookmarkButton === 'on'" (click)="tapHaptic(); handleBookmark()"
+          [color]="!bookmarked? (env.colorTheme === 'light'? 'dark' : 'light') : 'warning'" fill="clear"
+          [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
+          <ion-icon slot="icon-only" name="bookmark"></ion-icon>
+        </ion-button>
+      </div>
+
     </ion-row>
   </ng-container>
 
   <ng-container *ngIf="env.resultPageButtons === 'detailed'">
     <ion-row class="ion-padding-horizontal py-2">
       <div class="d-flex justify-content-between detailed-action-button-container">
-        <ion-button class="pr-1" *ngIf="contentType === 'freeText' && env.showOpenFoodFactsButton === 'on' && isValidEan"
-          (click)="tapHaptic(); searchOpenFoodFacts()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="outline"
+        <ion-button class="pr-1"
+          *ngIf="!resultSaved && this.env.scanRecordLogging == 'off' && this.qrCodeContent != null && this.qrCodeContent != '' "
+          (click)="tapHaptic(); saveRecord()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="outline"
           shape="round" [@inAnimation]>
+          <ion-icon class="pr-2" src="assets/icon/history.svg"></ion-icon>
+          <ion-label>{{ 'SAVE' | translate }}</ion-label>
+        </ion-button>
+        <ion-button class="pr-1"
+          *ngIf="contentType === 'freeText' && env.showOpenFoodFactsButton === 'on' && isValidEan"
+          (click)="tapHaptic(); searchOpenFoodFacts()" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
+          fill="outline" shape="round" [@inAnimation]>
           <ion-icon class="pr-2" name="fast-food"></ion-icon>
           <ion-label>Facts</ion-label>
         </ion-button>

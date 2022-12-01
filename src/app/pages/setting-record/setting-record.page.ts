@@ -13,7 +13,7 @@ import { Bookmark } from 'src/app/models/bookmark';
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Preferences } from '@capacitor/preferences';
-import { de, enUS, fr, it, zhCN, zhHK } from 'date-fns/locale';
+import { de, enUS, fr, it, ru, zhCN, zhHK } from 'date-fns/locale';
 
 @Component({
   selector: 'app-setting-record',
@@ -316,6 +316,9 @@ export class SettingRecordPage {
       case "it":
         rawCsvData = "ID,Contenuto,Creato a,Fonte,Tipo di codice a barre,Aggiunto ai preferiti?,Etichetta\r\n";
         break;
+      case "ru":
+        rawCsvData = "ID,Содержание,Создано в,Источник,Тип штрих-кода,В закладках?,Ярлык\r\n";
+        break;
       case "zh-CN":
         rawCsvData = "ID,内容,建立于,来源,条码类型,已书签?,标签\r\n";
         break;
@@ -471,6 +474,9 @@ export class SettingRecordPage {
       case "it":
         locale = it;
         break;
+      case "ru":
+        locale = ru;
+        break;
       case "zh-CN":
         locale = zhCN;
         break;
@@ -500,6 +506,9 @@ export class SettingRecordPage {
         break;
       case "it":
         locale = it;
+        break;
+      case "ru":
+        locale = ru;
         break;
       case "zh-CN":
         locale = zhCN;

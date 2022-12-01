@@ -28,8 +28,20 @@ export class SettingPage {
     await SplashScreen.hide()
   }
 
+  get isIos(): boolean {
+    return this.platform.is('ios');
+  }
+
   get isAndroid(): boolean {
     return this.platform.is('android');
+  }
+
+  rateAndroidApp() {
+    window.open(this.env.GOOGLE_PLAY_URL, '_system');
+  }
+
+  rateIosApp() {
+    window.open(this.env.APP_STORE_URL, '_system');
   }
 
   setLanguage() {
@@ -127,27 +139,8 @@ export class SettingPage {
     alert.present();
   }
 
-  async confirmExitApp(): Promise<void> {
-    const alert = await this.alertController.create({
-      header: this.translate.instant('EXIT_APP'),
-      message: this.translate.instant('MSG.EXIT_APP'),
-      cssClass: ['alert-bg'],
-      buttons: [
-        {
-          text: this.translate.instant('EXIT'),
-          handler: () => {
-            navigator['app'].exitApp();
-          }
-        },
-        {
-          text: this.translate.instant('RATE_THE_APP'),
-          handler: () => {
-            this.openGooglePlay();
-          }
-        }
-      ]
-    });
-    await alert.present();
+  exitApp() {
+    navigator['app'].exitApp();
   }
 
   openGooglePlay(): void {

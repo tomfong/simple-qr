@@ -109,6 +109,15 @@ ion-tab-button:not(.tab-selected)::part(native):hover {
     opacity: 0.5;
 }
 
+.alert-input-no-border .alert-checkbox-group {
+    border: 0px !important;
+}
+
+.alert-input-no-border .alert-checkbox-label {
+    overflow: auto !important;
+    white-space: pre-line !important;
+}
+
 .alert-can-copy {
     user-select: text !important;
 }
