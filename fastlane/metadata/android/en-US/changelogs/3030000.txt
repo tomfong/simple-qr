@@ -1,0 +1,3 @@
+* Support Russian language
+* Allow user to manually save a record if auto logging is off
+* Minor update on UI
