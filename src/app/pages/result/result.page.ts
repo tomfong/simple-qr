@@ -54,6 +54,8 @@ export class ResultPage {
 
   showQrFirst: boolean = false;
 
+  resultSaved: boolean = false;
+
   @ViewChildren(MatFormField) formFields: QueryList<MatFormField>;
 
   constructor(
@@ -104,6 +106,14 @@ export class ResultPage {
     this.reset();
   }
 
+  async saveRecord() {
+    if (this.qrCodeContent != null && this.qrCodeContent != "") {
+      await this.env.saveScanRecord(this.qrCodeContent);
+    }
+    this.resultSaved = true;
+    this.presentToast(this.translate.instant("SAVED"), "short", "bottom");
+  }
+
   reset() {
     this.contentType = "freeText";
     delete this.qrCodeContent;
@@ -125,6 +135,7 @@ export class ResultPage {
     this.base64DecodedText = "";
     this.bookmarked = false;
     this.showQrFirst = false;
+    this.resultSaved = false;
     delete this.env.recordSource;
     delete this.env.detailedRecordSource;
     delete this.env.viewResultFrom;

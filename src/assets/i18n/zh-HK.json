@@ -165,6 +165,8 @@
     "RESET_DEFAULT": "還原預設值",
     "RESTORE": "還原",
     "RESULT": "結果",
+    "SAVE": "儲存",
+    "SAVED": "已儲存",
     "SCAN": "掃描",
     "SCANNED": "掃描",
     "SCANNING_FEEDBACK_ONLY": "僅掃描反饋",
