@@ -18,8 +18,7 @@
     <ion-col>
       <ion-badge class="p-2" color="primary">
         <div class="d-flex align-items-center">
-          <mat-icon *ngIf="contentTypeIcon != ''" style="margin-right: 16px;">
-            {{ contentTypeIcon }}
+          <mat-icon class="me-3" *ngIf="contentTypeIcon != ''" [fontIcon]="contentTypeIcon">
           </mat-icon>
           <span>{{ contentTypeText }}</span>
         </div>
@@ -224,99 +223,99 @@
   <ng-container *ngIf="env.resultPageButtons === 'detailed'">
     <ion-row class="ion-padding-horizontal py-2">
       <div class="d-flex justify-content-between detailed-action-button-container">
-        <ion-button class="pr-1"
+        <ion-button class="pe-1"
           *ngIf="!resultSaved && this.env.scanRecordLogging == 'off' && this.qrCodeContent != null && this.qrCodeContent != '' "
           (click)="tapHaptic(); saveRecord()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="outline"
           shape="round" [@inAnimation]>
-          <ion-icon class="pr-2" src="assets/icon/history.svg"></ion-icon>
+          <ion-icon class="pe-2" src="assets/icon/history.svg"></ion-icon>
           <ion-label>{{ 'SAVE' | translate }}</ion-label>
         </ion-button>
-        <ion-button class="pr-1"
+        <ion-button class="pe-1"
           *ngIf="contentType === 'freeText' && env.showOpenFoodFactsButton === 'on' && isValidEan"
           (click)="tapHaptic(); searchOpenFoodFacts()" [color]="env.colorTheme === 'light'? 'dark' : 'light'"
           fill="outline" shape="round" [@inAnimation]>
-          <ion-icon class="pr-2" name="fast-food"></ion-icon>
+          <ion-icon class="pe-2" name="fast-food"></ion-icon>
           <ion-label>Facts</ion-label>
         </ion-button>
-        <ion-button class="pr-1" *ngIf="contentType === 'url' && env.showBrowseButton === 'on' && isHttp"
+        <ion-button class="pe-1" *ngIf="contentType === 'url' && env.showBrowseButton === 'on' && isHttp"
           (click)="tapHaptic(); browseWebsite()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="outline"
           shape="round" [@inAnimation]>
-          <ion-icon class="pr-2" name="globe"></ion-icon>
+          <ion-icon class="pe-2" name="globe"></ion-icon>
           <ion-label>{{ 'BROWSE' | translate}}</ion-label>
         </ion-button>
-        <ion-button class="pr-1" *ngIf="contentType === 'url' && env.showOpenUrlButton === 'on' && !isHttp"
+        <ion-button class="pe-1" *ngIf="contentType === 'url' && env.showOpenUrlButton === 'on' && !isHttp"
           (click)="tapHaptic(); openLink()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="outline"
           shape="round" [@inAnimation]>
-          <ion-icon class="pr-2" name="open"></ion-icon>
+          <ion-icon class="pe-2" name="open"></ion-icon>
           <ion-label>{{ 'OPEN' | translate}}</ion-label>
         </ion-button>
-        <ion-button class="pr-1"
+        <ion-button class="pe-1"
           *ngIf="(contentType === 'contact' || contentType === 'phone' || contentType === 'sms') && env.showAddContactButton === 'on'"
           (click)="tapHaptic(); addContact()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="outline"
           shape="round" [@inAnimation]>
-          <ion-icon class="pr-2" name="person-add-sharp"></ion-icon>
+          <ion-icon class="pe-2" name="person-add-sharp"></ion-icon>
           <ion-label>{{ 'ADD' | translate}}</ion-label>
         </ion-button>
-        <ion-button class="pr-1" *ngIf="contentType === 'phone' && env.showCallButton === 'on'"
+        <ion-button class="pe-1" *ngIf="contentType === 'phone' && env.showCallButton === 'on'"
           (click)="tapHaptic(); callPhone()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="outline"
           shape="round" [@inAnimation]>
-          <ion-icon class="pr-2" name="call"></ion-icon>
+          <ion-icon class="pe-2" name="call"></ion-icon>
           <ion-label>{{ 'CALL' | translate}}</ion-label>
         </ion-button>
-        <ion-button class="pr-1" *ngIf="contentType === 'sms' && smsContent && env.showSendMessageButton === 'on'"
+        <ion-button class="pe-1" *ngIf="contentType === 'sms' && smsContent && env.showSendMessageButton === 'on'"
           (click)="tapHaptic(); sendSms()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="outline"
           shape="round" [@inAnimation]>
-          <ion-icon class="pr-2" name="send"></ion-icon>
+          <ion-icon class="pe-2" name="send"></ion-icon>
           <ion-label>{{ 'SEND' | translate}}</ion-label>
         </ion-button>
-        <ion-button class="pr-1"
+        <ion-button class="pe-1"
           *ngIf="(contentType === 'emailW3C' || contentType === 'emailDocomo') && env.showSendEmailButton === 'on'"
           (click)="tapHaptic(); sendEmail()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="outline"
           shape="round" [@inAnimation]>
-          <ion-icon class="pr-2" name="mail"></ion-icon>
+          <ion-icon class="pe-2" name="mail"></ion-icon>
           <ion-label>{{ 'SEND' | translate}}</ion-label>
         </ion-button>
-        <ion-button class="pr-1" *ngIf="env.showSearchButton === 'on'" (click)="tapHaptic(); webSearch()"
+        <ion-button class="pe-1" *ngIf="env.showSearchButton === 'on'" (click)="tapHaptic(); webSearch()"
           [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="outline" shape="round" [@inAnimation]
           [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
-          <ion-icon class="pr-2" *ngIf="env.searchEngine === 'google'" slot="icon-only" name="logo-google">
+          <ion-icon class="pe-2" *ngIf="env.searchEngine === 'google'" slot="icon-only" name="logo-google">
           </ion-icon>
-          <ion-icon class="pr-2" *ngIf="env.searchEngine === 'bing'" slot="icon-only"
+          <ion-icon class="pe-2" *ngIf="env.searchEngine === 'bing'" slot="icon-only"
             src="assets/icon/microsoft-bing.svg">
           </ion-icon>
-          <ion-icon class="pr-2" *ngIf="env.searchEngine === 'yahoo'" slot="icon-only" src="assets/icon/yahoo.svg">
+          <ion-icon class="pe-2" *ngIf="env.searchEngine === 'yahoo'" slot="icon-only" src="assets/icon/yahoo.svg">
           </ion-icon>
-          <ion-icon class="pr-2" *ngIf="env.searchEngine === 'duckduckgo'" slot="icon-only"
+          <ion-icon class="pe-2" *ngIf="env.searchEngine === 'duckduckgo'" slot="icon-only"
             src="assets/icon/duck-duck-go.svg">
           </ion-icon>
-          <ion-icon class="pr-2" *ngIf="env.searchEngine === 'yandex'" slot="icon-only" src="assets/icon/yandex.svg">
+          <ion-icon class="pe-2" *ngIf="env.searchEngine === 'yandex'" slot="icon-only" src="assets/icon/yandex.svg">
           </ion-icon>
-          <ion-icon class="pr-2" *ngIf="env.searchEngine === 'ecosia'" slot="icon-only" src="assets/icon/ecosia.svg">
+          <ion-icon class="pe-2" *ngIf="env.searchEngine === 'ecosia'" slot="icon-only" src="assets/icon/ecosia.svg">
           </ion-icon>
           <ion-label>{{ 'SEARCH' | translate}}</ion-label>
         </ion-button>
-        <ion-button class="pr-1" *ngIf="env.showCopyButton === 'on'" (click)="tapHaptic(); copyText()"
+        <ion-button class="pe-1" *ngIf="env.showCopyButton === 'on'" (click)="tapHaptic(); copyText()"
           [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="outline" shape="round" [@inAnimation]
           [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
-          <ion-icon class="pr-2" slot="icon-only" name="copy"></ion-icon>
+          <ion-icon class="pe-2" slot="icon-only" name="copy"></ion-icon>
           <ion-label>{{ 'COPY' | translate}}</ion-label>
         </ion-button>
-        <ion-button class="pr-1" *ngIf="env.showBase64Button === 'on'" (click)="tapHaptic(); base64()"
+        <ion-button class="pe-1" *ngIf="env.showBase64Button === 'on'" (click)="tapHaptic(); base64()"
           [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="outline" shape="round" [@inAnimation]
           [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
-          <ion-icon class="pr-2" slot="icon-only" name="code-working"></ion-icon>
+          <ion-icon class="pe-2" slot="icon-only" name="code-working"></ion-icon>
           <ion-label>{{ 'BASE64' | translate}}</ion-label>
         </ion-button>
-        <ion-button class="pr-1" *ngIf="env.showEnlargeButton === 'on'" (click)="tapHaptic(); enlarge()"
+        <ion-button class="pe-1" *ngIf="env.showEnlargeButton === 'on'" (click)="tapHaptic(); enlarge()"
           [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="outline" shape="round" [@inAnimation]
           [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
-          <ion-icon class="pr-2" slot="icon-only" name="qr-code-sharp"></ion-icon>
+          <ion-icon class="pe-2" slot="icon-only" name="qr-code-sharp"></ion-icon>
           <ion-label>{{ 'SHOW' | translate}}</ion-label>
         </ion-button>
         <ion-button *ngIf="env.showBookmarkButton === 'on'" (click)="tapHaptic(); handleBookmark()"
           [color]="!bookmarked? (env.colorTheme === 'light'? 'dark' : 'light') : 'warning'" fill="outline" shape="round"
           [@inAnimation] [disabled]="!qrCodeContent || (qrCodeContent && qrCodeContent.trim().length <= 0)">
-          <ion-icon class="pr-2" slot="icon-only" name="bookmark"></ion-icon>
+          <ion-icon class="pe-2" slot="icon-only" name="bookmark"></ion-icon>
           <ion-label *ngIf="!bookmarked">{{ 'BOOKMARK' | translate}}</ion-label>
           <ion-label *ngIf="bookmarked">{{ 'BOOKMARKED' | translate}}</ion-label>
         </ion-button>

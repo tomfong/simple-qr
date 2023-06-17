@@ -6,11 +6,11 @@ import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Toast } from '@capacitor/toast';
 import { LoadingController, ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels, QrcodeComponent } from '@techiediaries/ngx-qrcode';
 import { EnvService } from 'src/app/services/env.service';
 import { ScreenBrightness } from '@capacitor-community/screen-brightness';
 import { rgbToHex } from 'src/app/utils/helpers';
 import { Preferences } from '@capacitor/preferences';
+import { QRCodeComponent, QRCodeElementType } from 'angularx-qrcode';
 
 @Component({
   selector: 'app-qr-code',
@@ -21,11 +21,11 @@ export class QrCodePage {
 
   modal: HTMLIonModalElement;
 
-  @ViewChild('qrcode') qrcodeElement: QrcodeComponent;
+  @ViewChild('qrcode') qrcodeElement: QRCodeComponent;
 
   @Input() qrCodeContent: string;
-  qrElementType: NgxQrcodeElementTypes = NgxQrcodeElementTypes.CANVAS;
-  errorCorrectionLevel: NgxQrcodeErrorCorrectionLevels;
+  qrElementType: QRCodeElementType = "canvas";
+  errorCorrectionLevel: 'low' | 'medium' | 'quartile' | 'high' | 'L' | 'M' | 'Q' | 'H';
   scale: number = 0.8;
   readonly MAX_WIDTH = 350;
   defaultWidth: number = window.innerHeight * 0.32 > this.MAX_WIDTH ? this.MAX_WIDTH : window.innerHeight * 0.32;
@@ -64,7 +64,6 @@ export class QrCodePage {
               if (this.qrcodeElement.width > this.MAX_WIDTH) {
                 this.qrcodeElement.width = this.MAX_WIDTH;
               }
-              this.qrcodeElement.createQRCode();
             }, 500)
           }
         }
@@ -99,7 +98,6 @@ export class QrCodePage {
               if (this.qrcodeElement.width > this.MAX_WIDTH) {
                 this.qrcodeElement.width = this.MAX_WIDTH;
               }
-              this.qrcodeElement.createQRCode();
             }
           })
           this.modal.onDidDismiss().then(
@@ -132,19 +130,19 @@ export class QrCodePage {
   setErrorCorrectionLevel() {
     switch (this.env.errorCorrectionLevel) {
       case 'L':
-        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.LOW;
+        this.errorCorrectionLevel = 'low';
         break;
       case 'M':
-        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.MEDIUM;
+        this.errorCorrectionLevel = 'medium';
         break;
       case 'Q':
-        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.QUARTILE;
+        this.errorCorrectionLevel = 'quartile';
         break;
       case 'H':
-        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
+        this.errorCorrectionLevel = 'high';
         break;
       default:
-        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.MEDIUM;
+        this.errorCorrectionLevel = 'medium';
     }
   }
 
@@ -170,7 +168,6 @@ export class QrCodePage {
     this.isSharing = true;
     const currentWidth = this.qrcodeElement.width;
     this.qrcodeElement.width = 1000;
-    this.qrcodeElement.createQRCode();
     setTimeout(async () => {
       const canvases = document.querySelectorAll("canvas") as NodeListOf<HTMLCanvasElement>;
       const canvas = canvases[canvases.length - 1];
@@ -183,7 +180,6 @@ export class QrCodePage {
       await this.socialSharing.share(this.translate.instant('MSG.SHARE_QR'), this.translate.instant('SIMPLE_QR'), this.qrImageDataUrl, null).then(
         _ => {
           this.qrcodeElement.width = currentWidth;
-          this.qrcodeElement.createQRCode();
           delete this.qrImageDataUrl;
           this.isSharing = false;
           loading2.dismiss();
@@ -194,7 +190,6 @@ export class QrCodePage {
             this.presentToast("Error when call SocialSharing.share: " + JSON.stringify(err), "long", "top");
           }
           this.qrcodeElement.width = currentWidth;
-          this.qrcodeElement.createQRCode();
           delete this.qrImageDataUrl;
           this.isSharing = false;
           loading2.dismiss();

@@ -4,7 +4,7 @@ import { Preferences } from '@capacitor/preferences';
 import { Toast } from '@capacitor/toast';
 import { AlertController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
+import { QRCodeElementType } from 'angularx-qrcode';
 import { EnvService } from 'src/app/services/env.service';
 import { rgbToHex } from 'src/app/utils/helpers';
 
@@ -16,8 +16,8 @@ import { rgbToHex } from 'src/app/utils/helpers';
 export class SettingQrPage {
 
   qrCodeContent: string = 'https://github.com/tomfong/simple-qr';
-  qrElementType: NgxQrcodeElementTypes = NgxQrcodeElementTypes.CANVAS;
-  errorCorrectionLevel: NgxQrcodeErrorCorrectionLevels;
+  qrElementType: QRCodeElementType = "canvas";
+  errorCorrectionLevel: 'low' | 'medium' | 'quartile' | 'high' | 'L' | 'M' | 'Q' | 'H';
   readonly MAX_WIDTH = 300;
   defaultWidth: number = window.innerWidth * 0.4 > this.MAX_WIDTH ? this.MAX_WIDTH : window.innerWidth * 0.4;
 
@@ -51,19 +51,19 @@ export class SettingQrPage {
   setErrorCorrectionLevel() {
     switch (this.env.errorCorrectionLevel) {
       case 'L':
-        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.LOW;
+        this.errorCorrectionLevel = 'low';
         break;
       case 'M':
-        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.MEDIUM;
+        this.errorCorrectionLevel = 'medium';
         break;
       case 'Q':
-        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.QUARTILE;
+        this.errorCorrectionLevel = 'quartile';
         break;
       case 'H':
-        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
+        this.errorCorrectionLevel = 'high';
         break;
       default:
-        this.errorCorrectionLevel = NgxQrcodeErrorCorrectionLevels.MEDIUM;
+        this.errorCorrectionLevel = 'medium';
     }
   }
 

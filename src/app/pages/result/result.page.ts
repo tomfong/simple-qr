@@ -5,7 +5,6 @@ import { SMS } from '@awesome-cordova-plugins/sms/ngx';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { AlertController, LoadingController, ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from '@techiediaries/ngx-qrcode';
 import { VCardContact } from 'src/app/models/v-card-contact';
 import { EnvService } from 'src/app/services/env.service';
 import { Toast } from '@capacitor/toast';
@@ -14,6 +13,7 @@ import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { QrCodePage } from 'src/app/modals/qr-code/qr-code.page';
 import { fadeIn } from 'src/app/utils/animations';
 import { Router } from '@angular/router';
+import { QRCodeElementType } from 'angularx-qrcode';
 
 @Component({
   selector: 'app-result',
@@ -26,8 +26,8 @@ export class ResultPage {
   contentType: "freeText" | "url" | "contact" | "phone" | "sms" | "emailW3C" | "emailDocomo" | "wifi" = "freeText";
 
   qrCodeContent: string;
-  qrElementType: NgxQrcodeElementTypes = NgxQrcodeElementTypes.CANVAS;
-  errorCorrectionLevel: NgxQrcodeErrorCorrectionLevels = NgxQrcodeErrorCorrectionLevels.LOW;
+  qrElementType: QRCodeElementType = "canvas";
+  errorCorrectionLevel: 'low' | 'medium' | 'quartile' | 'high' | 'L' | 'M' | 'Q' | 'H' = 'low';
   qrMargin: number = 3;
 
   phoneNumber: string;
@@ -596,7 +596,7 @@ export class ResultPage {
     } else if (!failEncoded && failDecoded) {
       await this.presentToast(this.translate.instant('MSG.NOT_BASE64_DE'), "short", "center");
     }
-    setTimeout(() => this.formFields?.forEach(ff => ff.updateOutlineGap()), 100);
+    // setTimeout(() => this.formFields?.forEach(ff => ff.updateOutlineGap()), 100);
   }
 
   generateVCardContact(): void {

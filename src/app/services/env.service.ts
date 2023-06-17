@@ -44,7 +44,7 @@ export class EnvService {
   public scanRecordLogging: OnOffType = 'on';
   public recordsLimit: 30 | 50 | 100 | -1 = -1;
   public showNumberOfRecords: OnOffType = 'on';
-  public autoMaxBrightness: OnOffType = 'on';
+  public autoMaxBrightness: OnOffType = 'off';
   public errorCorrectionLevel: ErrorCorrectionLevelType = 'M';
   public qrCodeLightR: number = 255;
   public qrCodeLightG: number = 255;
@@ -500,7 +500,7 @@ export class EnvService {
           if (value != null) {
             this.autoMaxBrightness = value;
           } else {
-            this.autoMaxBrightness = 'on';
+            this.autoMaxBrightness = 'off';
           }
           await Preferences.set({
             key: this.KEY_AUTO_MAX_BRIGHTNESS,
@@ -995,7 +995,7 @@ export class EnvService {
         if (result.value != null) {
           this.autoMaxBrightness = result.value as OnOffType;
         } else {
-          this.autoMaxBrightness = 'on';
+          this.autoMaxBrightness = 'off';
         }
       }
     );
@@ -1193,7 +1193,7 @@ export class EnvService {
     this.scanRecordLogging = 'on';
     this.recordsLimit = -1;
     this.showNumberOfRecords = 'on';
-    this.autoMaxBrightness = 'on';
+    this.autoMaxBrightness = 'off';
     this.errorCorrectionLevel = 'M';
     this.qrCodeLightR = 255;
     this.qrCodeLightG = 255;
@@ -1264,7 +1264,7 @@ export class EnvService {
     this.showNumberOfRecords = 'on';
     await Preferences.set({ key: this.KEY_SHOW_NUMBER_OF_RECORDS, value: this.showNumberOfRecords });
 
-    this.autoMaxBrightness = 'on';
+    this.autoMaxBrightness = 'off';
     await Preferences.set({ key: this.KEY_AUTO_MAX_BRIGHTNESS, value: this.autoMaxBrightness });
 
     this.errorCorrectionLevel = 'M';

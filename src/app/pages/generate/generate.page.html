@@ -25,20 +25,22 @@
 
   <ion-row class="ion-padding-horizontal">
     <ion-col>
-      <mat-form-field [class]="ngMatThemeClass" color="accent" appearance="legacy">
+      <mat-form-field [class]="ngMatThemeClass" color="accent" appearance="outline" [floatLabel]="'always'">
         <mat-label>{{ 'CONTENT_TYPE' | translate}}</mat-label>
         <mat-select [(ngModel)]="contentType">
           <mat-select-trigger>
-            <div style="display: flex; align-items: center;">
-              <mat-icon style="margin-right: 16px; vertical-align: middle;">
-                {{ getIcon(contentType) }}
+            <div class="d-flex">
+              <mat-icon class="me-3" [fontIcon]="getIcon(contentType)">
               </mat-icon>
               <span>{{ getText(contentType) }}</span>
             </div>
           </mat-select-trigger>
           <mat-option [value]="type.value" *ngFor="let type of contentTypes">
-            <mat-icon>{{ getIcon(type.value) }}</mat-icon>
-            <span>{{ type.text }}</span>
+            <div class="d-flex">
+              <mat-icon class="me-3" [fontIcon]="getIcon(type.value)">
+              </mat-icon>
+              <span>{{ type.text }}</span>
+            </div>
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -69,7 +71,7 @@
             <mat-label>{{ 'EMAIL_RECIPIENT' | translate}}</mat-label>
             <input matInput [(ngModel)]="toEmails[i]" type="email" maxlength="254" #emailToInput>
             <mat-hint align="end">{{ emailToInput.value?.length || 0 }}/254</mat-hint>
-            <mat-icon matSuffix color="accent">alternate_email</mat-icon>
+            <mat-icon matSuffix color="accent" fontIcon="alternate_email"></mat-icon>
             <mat-hint>{{'MSG.EMAIL_MAX_LENGTH' | translate}}</mat-hint>
           </mat-form-field>
         </ion-col>
@@ -98,7 +100,7 @@
             <mat-label>{{ 'CC' | translate}}</mat-label>
             <input matInput [(ngModel)]="ccEmails[i]" type="email" maxlength="254" #emailCcInput>
             <mat-hint align="end">{{ emailCcInput.value?.length || 0 }}/254</mat-hint>
-            <mat-icon matSuffix color="accent">alternate_email</mat-icon>
+            <mat-icon matSuffix color="accent" fontIcon="alternate_email"></mat-icon>
             <mat-hint>{{'MSG.EMAIL_MAX_LENGTH' | translate}}</mat-hint>
           </mat-form-field>
         </ion-col>
@@ -127,7 +129,7 @@
             <mat-label>{{ 'BCC' | translate}}</mat-label>
             <input matInput [(ngModel)]="bccEmails[i]" type="email" maxlength="254" #emailBccInput>
             <mat-hint align="end">{{ emailBccInput.value?.length || 0 }}/254</mat-hint>
-            <mat-icon matSuffix color="accent">alternate_email</mat-icon>
+            <mat-icon matSuffix color="accent" fontIcon="alternate_email"></mat-icon>
             <mat-hint>{{'MSG.EMAIL_MAX_LENGTH' | translate}}</mat-hint>
           </mat-form-field>
         </ion-col>
@@ -182,7 +184,7 @@
           <mat-label>{{ 'EMAIL_RECIPIENT' | translate}}</mat-label>
           <input matInput [(ngModel)]="toEmails[0]" type="email" maxlength="254" #emailToInput>
           <mat-hint align="end">{{ emailToInput.value?.length || 0 }}/254</mat-hint>
-          <mat-icon matSuffix color="accent">alternate_email</mat-icon>
+          <mat-icon matSuffix color="accent" fontIcon="alternate_email"></mat-icon>
           <mat-hint>{{'MSG.EMAIL_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>
       </ion-col>
@@ -219,7 +221,7 @@
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'PHONE_NUMBER' | translate}}</mat-label>
           <input matInput [(ngModel)]="phoneNumber" type="tel" #phoneNumberInput>
-          <mat-icon matSuffix color="accent">call</mat-icon>
+          <mat-icon matSuffix color="accent" fontIcon="call"></mat-icon>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -231,7 +233,7 @@
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'PHONE_NUMBER' | translate}}</mat-label>
           <input matInput [(ngModel)]="phoneNumber" type="tel" #phoneNumberInput>
-          <mat-icon matSuffix color="accent">call</mat-icon>
+          <mat-icon matSuffix color="accent" fontIcon="call"></mat-icon>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -254,7 +256,7 @@
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'URL' | translate}}</mat-label>
           <input matInput [(ngModel)]="url" type="url" #urlInput maxlength="1817">
-          <mat-icon matSuffix color="accent">link</mat-icon>
+          <mat-icon matSuffix color="accent" fontIcon="link"></mat-icon>
           <mat-hint align="end">{{ (urlInput.value?.length) || 0 }}/1817</mat-hint>
           <mat-hint>{{'MSG.CREATE_QRCODE_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>
@@ -278,7 +280,7 @@
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'FIRST_NAME' | translate}}</mat-label>
           <input matInput [(ngModel)]="firstName" #firstNameInput />
-          <mat-icon matSuffix color="accent">badge</mat-icon>
+          <mat-icon matSuffix color="accent" fontIcon="badge"></mat-icon>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -287,7 +289,7 @@
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'LAST_NAME' | translate}}</mat-label>
           <input matInput [(ngModel)]="lastName" #lastNameInput />
-          <mat-icon matSuffix color="accent">badge</mat-icon>
+          <mat-icon matSuffix color="accent" fontIcon="badge"></mat-icon>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -306,7 +308,7 @@
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'MOBILE_PHONE_NUMBER' | translate}}</mat-label>
           <input matInput [(ngModel)]="mobilePhoneNumber" #mobilePhoneInput type="tel" />
-          <mat-icon matSuffix color="accent">call</mat-icon>
+          <mat-icon matSuffix color="accent" fontIcon="call"></mat-icon>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -315,7 +317,7 @@
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'HOME_PHONE_NUMBER' | translate}}</mat-label>
           <input matInput [(ngModel)]="homePhoneNumber" #homePhoneInput type="tel" />
-          <mat-icon matSuffix color="accent">call</mat-icon>
+          <mat-icon matSuffix color="accent" fontIcon="call"></mat-icon>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -324,7 +326,7 @@
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'WORK_PHONE_NUMBER' | translate}}</mat-label>
           <input matInput [(ngModel)]="workPhoneNumber" #workPhoneInput type="tel" />
-          <mat-icon matSuffix color="accent">call</mat-icon>
+          <mat-icon matSuffix color="accent" fontIcon="call"></mat-icon>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -333,7 +335,7 @@
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'FAX_NUMBER' | translate}}</mat-label>
           <input matInput [(ngModel)]="faxNumber" #faxInput type="tel" />
-          <mat-icon matSuffix color="accent">print</mat-icon>
+          <mat-icon matSuffix color="accent" fontIcon="print"></mat-icon>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -342,7 +344,7 @@
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'EMAIL_ADDRESS' | translate}}</mat-label>
           <input matInput [(ngModel)]="email" #emailInput type="email" />
-          <mat-icon matSuffix color="accent">alternate_email</mat-icon>
+          <mat-icon matSuffix color="accent" fontIcon="alternate_email"></mat-icon>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -361,7 +363,7 @@
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'ORGANIZATION' | translate}}</mat-label>
           <input matInput [(ngModel)]="organization" #organizationInput type="text" />
-          <mat-icon matSuffix color="accent">business</mat-icon>
+          <mat-icon matSuffix color="accent" fontIcon="business"></mat-icon>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -370,7 +372,7 @@
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'JOB_TITLE' | translate}}</mat-label>
           <input matInput [(ngModel)]="jobTitle" #jobTitleInput type="text" />
-          <mat-icon matSuffix color="accent">business</mat-icon>
+          <mat-icon matSuffix color="accent" fontIcon="business"></mat-icon>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -389,7 +391,7 @@
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'STREET' | translate}}</mat-label>
           <input matInput [(ngModel)]="street" #streetInput type="text" />
-          <mat-icon matSuffix color="accent">home</mat-icon>
+          <mat-icon matSuffix color="accent" fontIcon="home"></mat-icon>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -398,7 +400,7 @@
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'CITY' | translate}}</mat-label>
           <input matInput [(ngModel)]="city" #cityInput type="text" />
-          <mat-icon matSuffix color="accent">home</mat-icon>
+          <mat-icon matSuffix color="accent" fontIcon="home"></mat-icon>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -407,7 +409,7 @@
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'STATE' | translate}}</mat-label>
           <input matInput [(ngModel)]="state" #stateInput type="text" />
-          <mat-icon matSuffix color="accent">home</mat-icon>
+          <mat-icon matSuffix color="accent" fontIcon="home"></mat-icon>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -416,7 +418,7 @@
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'POSTAL_CODE' | translate}}</mat-label>
           <input matInput [(ngModel)]="postalCode" #postalCodeInput type="text" />
-          <mat-icon matSuffix color="accent">home</mat-icon>
+          <mat-icon matSuffix color="accent" fontIcon="home"></mat-icon>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -425,7 +427,7 @@
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'COUNTRY' | translate}}</mat-label>
           <input matInput [(ngModel)]="country" #countryInput type="text" />
-          <mat-icon matSuffix color="accent">home</mat-icon>
+          <mat-icon matSuffix color="accent" fontIcon="home"></mat-icon>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -445,7 +447,7 @@
           <mat-label>{{ 'DATE_OF_BIRTH' | translate}}</mat-label>
           <input [ngModel]="birthday | date:'yyyy-MM-dd'" (ngModelChange)="birthday = $event" matInput type="date"
             [max]="today">
-          <mat-icon matSuffix color="accent">cake</mat-icon>
+          <mat-icon matSuffix color="accent" fontIcon="cake"></mat-icon>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -466,7 +468,7 @@
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'WEBSITE' | translate}}</mat-label>
           <input matInput [(ngModel)]="personalUrl" type="url" #personalUrlInput>
-          <mat-icon matSuffix color="accent">link</mat-icon>
+          <mat-icon matSuffix color="accent" fontIcon="link"></mat-icon>
         </mat-form-field>
       </ion-col>
     </ion-row>
@@ -478,7 +480,7 @@
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'WIFI_SSID' | translate}}</mat-label>
           <input matInput [(ngModel)]="ssid" #ssidInput maxlength="32">
-          <mat-icon matSuffix color="accent">wifi</mat-icon>
+          <mat-icon matSuffix color="accent" fontIcon="wifi"></mat-icon>
           <mat-hint align="end">{{ (ssidInput.value?.length) || 0 }}/32</mat-hint>
           <mat-hint>{{'MSG.SSID_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>
@@ -489,7 +491,7 @@
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'PASSWORD' | translate}}</mat-label>
           <input matInput [(ngModel)]="wifiPassword" #wifiPasswordInput type="password">
-          <mat-icon matSuffix color="accent">lock</mat-icon>
+          <mat-icon matSuffix color="accent" fontIcon="lock"></mat-icon>
         </mat-form-field>
       </ion-col>
     </ion-row>
