@@ -1,0 +1,112 @@
+PODS:
+  - Capacitor (5.0.5):
+    - CapacitorCordova
+  - CapacitorApp (5.0.3):
+    - Capacitor
+  - CapacitorCamera (5.0.4):
+    - Capacitor
+  - CapacitorClipboard (5.0.4):
+    - Capacitor
+  - CapacitorCommunityBarcodeScanner (3.0.3):
+    - Capacitor
+  - CapacitorCommunityContacts (2.0.0):
+    - Capacitor
+  - CapacitorCommunityScreenBrightness (4.0.0):
+    - Capacitor
+  - CapacitorCordova (5.0.5)
+  - CapacitorDevice (5.0.4):
+    - Capacitor
+  - CapacitorFilesystem (5.0.4):
+    - Capacitor
+  - CapacitorHaptics (5.0.4):
+    - Capacitor
+  - CapacitorKeyboard (5.0.4):
+    - Capacitor
+  - CapacitorPreferences (5.0.4):
+    - Capacitor
+  - CapacitorSplashScreen (5.0.4):
+    - Capacitor
+  - CapacitorStatusBar (5.0.4):
+    - Capacitor
+  - CapacitorToast (5.0.4):
+    - Capacitor
+  - CordovaPlugins (5.0.5):
+    - CapacitorCordova
+
+DEPENDENCIES:
+  - "Capacitor (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorApp (from `../../node_modules/@capacitor/app`)"
+  - "CapacitorCamera (from `../../node_modules/@capacitor/camera`)"
+  - "CapacitorClipboard (from `../../node_modules/@capacitor/clipboard`)"
+  - "CapacitorCommunityBarcodeScanner (from `../../node_modules/@capacitor-community/barcode-scanner`)"
+  - "CapacitorCommunityContacts (from `../../node_modules/@capacitor-community/contacts`)"
+  - "CapacitorCommunityScreenBrightness (from `../../node_modules/@capacitor-community/screen-brightness`)"
+  - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorDevice (from `../../node_modules/@capacitor/device`)"
+  - "CapacitorFilesystem (from `../../node_modules/@capacitor/filesystem`)"
+  - "CapacitorHaptics (from `../../node_modules/@capacitor/haptics`)"
+  - "CapacitorKeyboard (from `../../node_modules/@capacitor/keyboard`)"
+  - "CapacitorPreferences (from `../../node_modules/@capacitor/preferences`)"
+  - "CapacitorSplashScreen (from `../../node_modules/@capacitor/splash-screen`)"
+  - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
+  - "CapacitorToast (from `../../node_modules/@capacitor/toast`)"
+  - CordovaPlugins (from `../capacitor-cordova-ios-plugins`)
+
+EXTERNAL SOURCES:
+  Capacitor:
+    :path: "../../node_modules/@capacitor/ios"
+  CapacitorApp:
+    :path: "../../node_modules/@capacitor/app"
+  CapacitorCamera:
+    :path: "../../node_modules/@capacitor/camera"
+  CapacitorClipboard:
+    :path: "../../node_modules/@capacitor/clipboard"
+  CapacitorCommunityBarcodeScanner:
+    :path: "../../node_modules/@capacitor-community/barcode-scanner"
+  CapacitorCommunityContacts:
+    :path: "../../node_modules/@capacitor-community/contacts"
+  CapacitorCommunityScreenBrightness:
+    :path: "../../node_modules/@capacitor-community/screen-brightness"
+  CapacitorCordova:
+    :path: "../../node_modules/@capacitor/ios"
+  CapacitorDevice:
+    :path: "../../node_modules/@capacitor/device"
+  CapacitorFilesystem:
+    :path: "../../node_modules/@capacitor/filesystem"
+  CapacitorHaptics:
+    :path: "../../node_modules/@capacitor/haptics"
+  CapacitorKeyboard:
+    :path: "../../node_modules/@capacitor/keyboard"
+  CapacitorPreferences:
+    :path: "../../node_modules/@capacitor/preferences"
+  CapacitorSplashScreen:
+    :path: "../../node_modules/@capacitor/splash-screen"
+  CapacitorStatusBar:
+    :path: "../../node_modules/@capacitor/status-bar"
+  CapacitorToast:
+    :path: "../../node_modules/@capacitor/toast"
+  CordovaPlugins:
+    :path: "../capacitor-cordova-ios-plugins"
+
+SPEC CHECKSUMS:
+  Capacitor: b1248915663add1bd6567e2b67c1c1fa3abcf5e8
+  CapacitorApp: 7a5dec8b33573707164b293475d5c89ba684364a
+  CapacitorCamera: 9b5c8e809c1042f263994f97ba846aa37e974f12
+  CapacitorClipboard: 46f3959735fa0d96b9989dafcc4aed52e624d163
+  CapacitorCommunityBarcodeScanner: c61469507bb16f41ef2d3f6d92069974aeb7890d
+  CapacitorCommunityContacts: 07dc6241e29629e4eec0b0ec9726c6a498dd7b94
+  CapacitorCommunityScreenBrightness: 6a93c0c7c2792cc1b8db704f7a7774830bed50c1
+  CapacitorCordova: f8c06b897c74ee8f7701fe10e6443b40822bc83a
+  CapacitorDevice: eb4b5e3b42ac35d2527f20aad296b59e0785dc8d
+  CapacitorFilesystem: e1bdfab09b95b181c844c16abcfda45ec8e8ed6b
+  CapacitorHaptics: e36653b37326d71bb35ae42b944124037dbc3d97
+  CapacitorKeyboard: d1b25fde6f19744ad09c890862aefc6e2a7ded3d
+  CapacitorPreferences: 82a9ecf5355283a3b3cf7ac217d8c5534c4dee8a
+  CapacitorSplashScreen: 93a389d4f7673c08214ae25bb6f21d867d5305c5
+  CapacitorStatusBar: 190e0321b8734f4244d0c81baa183a00d5806ddf
+  CapacitorToast: fcc4329f01d06cf02f190f8f5ce7f16509a2263c
+  CordovaPlugins: aaa80cab37b212c593412c8c65be8f0733cd4d2f
+
+PODFILE CHECKSUM: dc80e3587547d0d302dad43090af30e2a96d6c5a
+
+COCOAPODS: 1.11.3
