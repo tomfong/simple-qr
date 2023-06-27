@@ -441,6 +441,9 @@ export class ResultPage {
       case 'ecosia':
         searchUrl = this.env.ECOSIA_SEARCH_URL;
         break;
+      case 'brave':
+        searchUrl = this.env.BRAVE_SEARCH_URL;
+        break;
       default:
         searchUrl = this.env.GOOGLE_SEARCH_URL;
         break;

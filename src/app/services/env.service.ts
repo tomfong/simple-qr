@@ -23,7 +23,7 @@ export declare type ColorThemeType = 'light' | 'dark' | 'black';
 export declare type ErrorCorrectionLevelType = 'L' | 'M' | 'Q' | 'H';
 export declare type VibrationType = "on" | "off" | 'on-haptic' | 'on-scanned';
 export declare type OrientationType = 'portrait' | 'landscape';
-export declare type SearchEngineType = 'google' | 'bing' | 'yahoo' | 'duckduckgo' | 'yandex' | 'ecosia';
+export declare type SearchEngineType = 'google' | 'bing' | 'yahoo' | 'duckduckgo' | 'yandex' | 'ecosia' | 'brave';
 export declare type ResultPageButtonsType = 'detailed' | 'icon-only';
 
 @Injectable({
@@ -136,6 +136,7 @@ export class EnvService {
   public readonly DUCK_DUCK_GO_SEARCH_URL: string = "https://duckduckgo.com/?q=";
   public readonly YANDEX_SEARCH_URL: string = "https://yandex.com/search/?text=";
   public readonly ECOSIA_SEARCH_URL: string = "https://www.ecosia.org/search?method=index&q=";
+  public readonly BRAVE_SEARCH_URL: string = "https://search.brave.com/search?q=";
 
   public readonly GITHUB_REPO_URL: string = "https://github.com/tomfong/simple-qr";
   public readonly GOOGLE_PLAY_URL: string = "https://play.google.com/store/apps/details?id=com.tomfong.simpleqr";

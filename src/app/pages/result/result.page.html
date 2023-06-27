@@ -194,6 +194,8 @@
           </ion-icon>
           <ion-icon *ngIf="env.searchEngine === 'ecosia'" slot="icon-only" src="assets/icon/ecosia.svg">
           </ion-icon>
+          <ion-icon *ngIf="env.searchEngine === 'brave'" slot="icon-only" src="assets/icon/brave-search.svg">
+          </ion-icon>
         </ion-button>
         <ion-button *ngIf="env.showCopyButton === 'on'" (click)="tapHaptic(); copyText()"
           [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="clear"
@@ -291,6 +293,8 @@
           <ion-icon class="pe-2" *ngIf="env.searchEngine === 'yandex'" slot="icon-only" src="assets/icon/yandex.svg">
           </ion-icon>
           <ion-icon class="pe-2" *ngIf="env.searchEngine === 'ecosia'" slot="icon-only" src="assets/icon/ecosia.svg">
+          </ion-icon>
+          <ion-icon class="pe-2" *ngIf="env.searchEngine === 'brave'" slot="icon-only" src="assets/icon/brave-search.svg">
           </ion-icon>
           <ion-label>{{ 'SEARCH' | translate}}</ion-label>
         </ion-button>
