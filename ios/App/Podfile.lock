@@ -7,11 +7,11 @@ PODS:
     - Capacitor
   - CapacitorClipboard (5.0.4):
     - Capacitor
-  - CapacitorCommunityBarcodeScanner (3.0.3):
+  - CapacitorCommunityBarcodeScanner (4.0.1):
     - Capacitor
-  - CapacitorCommunityContacts (2.0.0):
+  - CapacitorCommunityContacts (5.0.3):
     - Capacitor
-  - CapacitorCommunityScreenBrightness (4.0.0):
+  - CapacitorCommunityScreenBrightness (5.0.0):
     - Capacitor
   - CapacitorCordova (5.0.5)
   - CapacitorDevice (5.0.4):
@@ -93,9 +93,9 @@ SPEC CHECKSUMS:
   CapacitorApp: 7a5dec8b33573707164b293475d5c89ba684364a
   CapacitorCamera: 9b5c8e809c1042f263994f97ba846aa37e974f12
   CapacitorClipboard: 46f3959735fa0d96b9989dafcc4aed52e624d163
-  CapacitorCommunityBarcodeScanner: c61469507bb16f41ef2d3f6d92069974aeb7890d
-  CapacitorCommunityContacts: 07dc6241e29629e4eec0b0ec9726c6a498dd7b94
-  CapacitorCommunityScreenBrightness: 6a93c0c7c2792cc1b8db704f7a7774830bed50c1
+  CapacitorCommunityBarcodeScanner: 7feb206489c8555a8ca0c74c57ddf49ead774eb8
+  CapacitorCommunityContacts: fda3a2e951a1300869ccb6ca0763adf9b2b5b4ff
+  CapacitorCommunityScreenBrightness: b2d9c6fffee6b684994cd69f727f2090e2f05c6d
   CapacitorCordova: f8c06b897c74ee8f7701fe10e6443b40822bc83a
   CapacitorDevice: eb4b5e3b42ac35d2527f20aad296b59e0785dc8d
   CapacitorFilesystem: e1bdfab09b95b181c844c16abcfda45ec8e8ed6b

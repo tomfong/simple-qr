@@ -1,6 +1,6 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { Clipboard } from '@capacitor/clipboard';
-import { Contacts, ContactType, EmailAddress, NewContact, PhoneNumber } from '@capacitor-community/contacts'
+import { ContactInput, Contacts, EmailInput, EmailType, PhoneInput, PhoneType } from '@capacitor-community/contacts';
 import { SMS } from '@awesome-cordova-plugins/sms/ngx';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { AlertController, LoadingController, ModalController, Platform } from '@ionic/angular';
@@ -224,104 +224,130 @@ export class ResultPage {
   }
 
   async addContact(): Promise<void> {
-    let newContact = null;
+    let contactInput: ContactInput = {};
     if (this.contentType === "contact") {
-      const phoneNumbers = [];
+      const phoneNumbers: PhoneInput[] = [];
       if (this.vCardContact?.defaultPhoneNumber != null) {
-        const phoneNumber = { number: this.vCardContact?.defaultPhoneNumber } as PhoneNumber;
+        const phoneNumber: PhoneInput = {
+          type: PhoneType.Mobile,
+          label: 'mobile',
+          number: this.vCardContact?.defaultPhoneNumber,
+          isPrimary: true,
+        };
         phoneNumbers.push(phoneNumber);
       }
       if (this.vCardContact?.homePhoneNumber != null) {
-        const phoneNumber = { number: this.vCardContact?.homePhoneNumber } as PhoneNumber;
+        const phoneNumber: PhoneInput = {
+          type: PhoneType.Home,
+          label: 'home',
+          number: this.vCardContact?.homePhoneNumber,
+        };
         phoneNumbers.push(phoneNumber);
       }
       if (this.vCardContact?.workPhoneNumber != null) {
-        const phoneNumber = { number: this.vCardContact?.homePhoneNumber } as PhoneNumber;
+        const phoneNumber: PhoneInput = {
+          type: PhoneType.Work,
+          label: 'work',
+          number: this.vCardContact?.workPhoneNumber,
+        };
         phoneNumbers.push(phoneNumber);
       }
       if (this.vCardContact?.mobilePhoneNumber != null) {
-        const phoneNumber = { number: this.vCardContact?.mobilePhoneNumber } as PhoneNumber;
+        const phoneNumber: PhoneInput = {
+          type: PhoneType.Mobile,
+          label: 'mobile',
+          number: this.vCardContact?.mobilePhoneNumber,
+        };
         phoneNumbers.push(phoneNumber);
       }
-      const emails = [];
+      const emails: EmailInput[] = [];
       if (this.vCardContact?.defaultEmail != null) {
-        const address = { address: this.vCardContact?.defaultEmail } as EmailAddress;
-        emails.push(address);
+        const emailInput: EmailInput = {
+          type: EmailType.Home,
+          label: 'home',
+          isPrimary: true,
+          address: this.vCardContact?.defaultEmail,
+        };
+        emails.push(emailInput);
       }
       if (this.vCardContact?.homeEmail != null) {
-        const address = { address: this.vCardContact?.homeEmail } as EmailAddress;
-        emails.push(address);
+        const emailInput: EmailInput = {
+          type: EmailType.Home,
+          label: 'home',
+          address: this.vCardContact?.homeEmail,
+        };
+        emails.push(emailInput);
       }
       if (this.vCardContact?.workEmail != null) {
-        const address = { address: this.vCardContact?.workEmail } as EmailAddress;
-        emails.push(address);
+        const emailInput: EmailInput = {
+          type: EmailType.Work,
+          label: 'work',
+          address: this.vCardContact?.workEmail,
+        };
+        emails.push(emailInput);
       }
-      newContact = {
-        contactType: ContactType.Person,
-        givenName: this.vCardContact?.givenName ?? this.vCardContact?.fullName ?? '',
-        familyName: this.vCardContact?.familyName,
-        phoneNumbers: phoneNumbers,
-        emailAddresses: emails
-      } as NewContact;
+      contactInput.phones = phoneNumbers;
+      contactInput.emails = emails;
+      contactInput.name = {
+        given: this.vCardContact?.givenName ?? this.vCardContact?.fullName ?? '',
+        family: this.vCardContact?.familyName,
+      };
     } else if (this.contentType === "sms" || this.contentType === "phone") {
-      const phoneNumbers = [];
-      const phoneNumber = { number: this.phoneNumber } as PhoneNumber;
-      phoneNumbers.push(phoneNumber);
-      newContact = {
-        contactType: ContactType.Person,
-        phoneNumbers: phoneNumbers
-      } as NewContact;
+      const phones: PhoneInput[] = [
+        {
+          type: PhoneType.Mobile,
+          label: 'mobile',
+          number: this.phoneNumber,
+          isPrimary: true,
+        }
+      ];
+      contactInput.phones = phones;
     }
-    if (newContact != null) {
-      if (this.platform.is('ios')) {
-        await Contacts.getPermissions().then(
-          async permission => {
-            if (permission.granted) {
-              await this.saveContact(newContact);
-            } else {
-              const alert = await this.alertController.create({
-                header: this.translate.instant("PERMISSION_REQUIRED"),
-                message: this.translate.instant("MSG.CONTACT_PERMISSION"),
-                buttons: [
-                  {
-                    text: this.translate.instant("SETTING"),
-                    handler: () => {
-                      BarcodeScanner.openAppSettings();
-                      return true;
-                    }
-                  },
-                  {
-                    text: this.translate.instant("CLOSE"),
-                    handler: () => {
-                      return true;
-                    }
-                  }
-                ],
-                cssClass: ['alert-bg']
-              });
-              await alert.present();
-            }
-          }
-        );
-      } else {  // Android doesn't need to get permission
-        await this.saveContact(newContact);
-      }
+    if (this.platform.is('ios')) {
+      // TODO: iOS contact handling
+      // await Contacts.checkPermissions().then(
+      //   async permission => {
+      //     if (permission.contacts == 'granted') {
+      //       await this.saveContact(newContact);
+      //     } else {
+      //       const alert = await this.alertController.create({
+      //         header: this.translate.instant("PERMISSION_REQUIRED"),
+      //         message: this.translate.instant("MSG.CONTACT_PERMISSION"),
+      //         buttons: [
+      //           {
+      //             text: this.translate.instant("SETTING"),
+      //             handler: () => {
+      //               BarcodeScanner.openAppSettings();
+      //               return true;
+      //             }
+      //           },
+      //           {
+      //             text: this.translate.instant("CLOSE"),
+      //             handler: () => {
+      //               return true;
+      //             }
+      //           }
+      //         ],
+      //         cssClass: ['alert-bg']
+      //       });
+      //       await alert.present();
+      //     }
+      //   }
+      // );
+    } else {  // Android doesn't need to get permission
+      await this.saveContact(contactInput);
     }
   }
 
-  private async saveContact(newContact: any) {
-    await Contacts.saveContact(newContact).then(
+  private async saveContact(contactInput: ContactInput) {
+    await Contacts.createContact({ contact: contactInput }).then(
       _ => {
-        if (this.isIOS) {
-          this.presentToast(this.translate.instant('MSG.SAVED_CONTACT'), "short", "bottom");
-        } else {
-          this.presentToast(this.translate.instant('MSG.SAVING_CONTACT'), "short", "bottom");
-        }
+        this.presentToast(this.translate.instant('MSG.SAVED_CONTACT'), "short", "bottom");
       }
     ).catch(
       err => {
         if (this.env.isDebugging) {
-          this.presentToast("Error when call Contacts.saveContact: " + JSON.stringify(err), "long", "top");
+          this.presentToast("Error when call Contacts.createContact: " + JSON.stringify(err), "long", "top");
         } else {
           this.presentToast(this.translate.instant('MSG.FAILED_SAVING_CONTACT'), "short", "bottom");
         }

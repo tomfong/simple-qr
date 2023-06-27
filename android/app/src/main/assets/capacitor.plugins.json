@@ -5,7 +5,7 @@
 	},
 	{
 		"pkg": "@capacitor-community/contacts",
-		"classpath": "ch.byrds.capacitor.contacts.Contacts"
+		"classpath": "getcapacitor.community.contacts.ContactsPlugin"
 	},
 	{
 		"pkg": "@capacitor-community/screen-brightness",
