@@ -25,7 +25,7 @@ Simple QR is an open-source app to scan, create and store QR codes with a simple
 It's now available on the following platforms.
 
 | Google Play | GitHub | IzzyOnDroid |
-|:-:|:-:|:-:|:-:|
+|:-:|:-:|:-:|
 | [<img src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/google-play-badge.png" height="50">](https://play.google.com/store/apps/details?id=com.tomfong.simpleqr) | [<img src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/github-badge.png" height="50">](https://github.com/tomfong/simple-qr/releases/latest) | [<img src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/IzzyOnDroid-badge.png" height="50">](https://apt.izzysoft.de/fdroid/index/apk/com.tomfong.simpleqr) |
 
 ## Features
