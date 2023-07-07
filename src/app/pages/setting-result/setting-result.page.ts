@@ -22,6 +22,10 @@ export class SettingResultPage {
     this.router.navigate(['setting-auto-brightness']);
   }
 
+  setAutoOpenUrl() {
+    this.router.navigate(['setting-auto-open-url']);
+  }
+
   setQrStyle() {
     this.router.navigate(['setting-qr']);
   }

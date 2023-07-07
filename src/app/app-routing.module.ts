@@ -49,6 +49,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/setting-auto-brightness/setting-auto-brightness.module').then(m => m.SettingAutoBrightnessPageModule)
   },
   {
+    path: 'setting-auto-open-url',
+    loadChildren: () => import('./pages/setting-auto-open-url/setting-auto-open-url.module').then(m => m.SettingAutoOpenUrlPageModule)
+  },
+  {
     path: 'setting-start-page',
     loadChildren: () => import('./pages/setting-start-page/setting-start-page.module').then(m => m.SettingStartPagePageModule)
   },

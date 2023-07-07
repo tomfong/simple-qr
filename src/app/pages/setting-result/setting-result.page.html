@@ -44,6 +44,17 @@
       </p>
     </ion-label>
   </ion-item>
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setAutoOpenUrl()">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="open">
+    </ion-icon>
+    <ion-label>
+      <p class="ion-padding pre-line">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+          {{ 'AUTO_OPEN_URL' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+  </ion-item>
 
   <ion-list-header class="ion-margin-start ion-padding-horizontal mt-3">{{ 'TASK' | translate }}</ion-list-header>
   <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setResultPageButtons()">

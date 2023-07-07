@@ -88,7 +88,16 @@ export class ResultPage {
   }
 
   async ionViewDidEnter(): Promise<void> {
-    if (this.showQrFirst) {
+    if (this.contentType == 'url' && this.env.autoOpenUrl == 'on' && this.env.recordSource == 'scan') {
+      setTimeout(() => {
+        this.presentToast(this.translate.instant("AUTO_OPEN_URL"), "short", "bottom");
+        if (this.isHttp) {
+          this.browseWebsite();
+        } else {
+          this.openLink();
+        }
+      }, 300);
+    } else if (this.showQrFirst) {
       this.showQrFirst = false;
       if (this.qrCodeContent && this.qrCodeContent.trim().length > 0) {
         await this.enlarge();

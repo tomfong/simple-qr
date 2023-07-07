@@ -45,6 +45,7 @@ export class EnvService {
   public recordsLimit: 30 | 50 | 100 | -1 = -1;
   public showNumberOfRecords: OnOffType = 'on';
   public autoMaxBrightness: OnOffType = 'off';
+  public autoOpenUrl: OnOffType = 'on';
   public errorCorrectionLevel: ErrorCorrectionLevelType = 'M';
   public qrCodeLightR: number = 255;
   public qrCodeLightG: number = 255;
@@ -102,6 +103,7 @@ export class EnvService {
   public readonly KEY_QR_CODE_DARK_B = "qrCodeDarkB";
   public readonly KEY_QR_CODE_MARGIN = "qrCodeMargin";
   public readonly KEY_AUTO_MAX_BRIGHTNESS = "auto-max-brightness";
+  public readonly KEY_AUTO_OPEN_URL = "auto-open-url";
   public readonly KEY_SEARCH_ENGINE = "search-engine";
   public readonly KEY_RESULT_PAGE_BUTTONS = "result-page-buttons";
   public readonly KEY_SHOW_QR_AFTER_CAMERA_SCAN = "show-qr-after-camera-scan";
@@ -1000,6 +1002,15 @@ export class EnvService {
         }
       }
     );
+    await Preferences.get({ key: this.KEY_AUTO_OPEN_URL }).then(
+      async result => {
+        if (result.value != null) {
+          this.autoOpenUrl = result.value as OnOffType;
+        } else {
+          this.autoOpenUrl = 'on';
+        }
+      }
+    );
     await Preferences.get({ key: this.KEY_SEARCH_ENGINE }).then(
       async result => {
         if (result.value != null) {
@@ -1195,6 +1206,7 @@ export class EnvService {
     this.recordsLimit = -1;
     this.showNumberOfRecords = 'on';
     this.autoMaxBrightness = 'off';
+    this.autoOpenUrl = 'on';
     this.errorCorrectionLevel = 'M';
     this.qrCodeLightR = 255;
     this.qrCodeLightG = 255;
@@ -1267,6 +1279,9 @@ export class EnvService {
 
     this.autoMaxBrightness = 'off';
     await Preferences.set({ key: this.KEY_AUTO_MAX_BRIGHTNESS, value: this.autoMaxBrightness });
+
+    this.autoOpenUrl = 'on';
+    await Preferences.set({ key: this.KEY_AUTO_OPEN_URL, value: this.autoOpenUrl });
 
     this.errorCorrectionLevel = 'M';
     await Preferences.set({ key: this.KEY_ERROR_CORRECTION_LEVEL, value: this.errorCorrectionLevel });
