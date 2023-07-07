@@ -37,7 +37,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     ],
     imports: [
         BrowserModule,
-        IonicModule.forRoot(),
+        IonicModule.forRoot({ innerHTMLTemplatesEnabled: true }),
         AppRoutingModule,
         HttpClientModule,
         FormsModule,

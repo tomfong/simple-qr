@@ -106,6 +106,10 @@ export class GeneratePage {
 
   async ionViewDidEnter() {
     await SplashScreen.hide()
+    if (this.env.editingContent) {
+      this.qrCodeContent = this.env.resultContent;
+      this.env.editingContent = false;
+    }
     this.freeTxtText = this.translate.instant("FREE_TEXT");
     this.urlText = this.translate.instant("URL");
     this.contactText = this.translate.instant("VCARD_CONTACT");
@@ -443,7 +447,7 @@ export class GeneratePage {
 
   async tapHaptic() {
     if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
-      await Haptics.impact({ style: ImpactStyle.Medium })
+      await Haptics.impact({ style: ImpactStyle.Light })
         .catch(async err => {
           if (this.env.debugMode === 'on') {
             await Toast.show({ text: 'Err when Haptics.impact: ' + JSON.stringify(err), position: "top", duration: "long" })

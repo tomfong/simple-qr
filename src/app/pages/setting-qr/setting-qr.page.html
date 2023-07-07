@@ -20,10 +20,10 @@
       <div class="d-flex align-items-center justify-content-top flex-column ion-padding-bottom" slot="content">
         <ion-row class="ion-padding-vertical">
           <ion-col class="ion-text-center" style="max-width: 100% !important;">
-            <ngx-qrcode [elementType]="qrElementType" [value]="qrCodeContent" [width]="defaultWidth"
+            <qrcode [elementType]="qrElementType" [qrdata]="qrCodeContent" [width]="defaultWidth"
               [errorCorrectionLevel]="errorCorrectionLevel" [colorDark]="qrColorDark" [colorLight]="qrColorLight"
               [margin]="env.qrCodeMargin" #qrcode>
-            </ngx-qrcode>
+            </qrcode>
           </ion-col>
         </ion-row>
         <ion-row>

@@ -4,22 +4,18 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { QrCodePage } from './qr-code.page';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient } from '@angular/common/http';
-import { QRCodeModule } from 'angularx-qrcode';
+import { SettingAutoOpenUrlPageRoutingModule } from './setting-auto-open-url-routing.module';
 
-export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
+import { SettingAutoOpenUrlPage } from './setting-auto-open-url.page';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { HttpLoaderFactory } from 'src/app/utils/helpers';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    QRCodeModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
@@ -27,7 +23,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         deps: [HttpClient]
       }
     }),
+    SettingAutoOpenUrlPageRoutingModule
   ],
-  declarations: [QrCodePage]
+  declarations: [SettingAutoOpenUrlPage]
 })
-export class QrCodePageModule {}
+export class SettingAutoOpenUrlPageModule {}

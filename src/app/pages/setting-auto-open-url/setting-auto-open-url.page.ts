@@ -5,19 +5,19 @@ import { Toast } from '@capacitor/toast';
 import { EnvService } from 'src/app/services/env.service';
 
 @Component({
-  selector: 'app-setting-auto-brightness',
-  templateUrl: './setting-auto-brightness.page.html',
-  styleUrls: ['./setting-auto-brightness.page.scss'],
+  selector: 'app-setting-auto-open-url',
+  templateUrl: './setting-auto-open-url.page.html',
+  styleUrls: ['./setting-auto-open-url.page.scss'],
 })
-export class SettingAutoBrightnessPage {
+export class SettingAutoOpenUrlPage {
 
   constructor(
     public env: EnvService,
   ) { }
 
-  async onAutoMaxBrightnessChange(ev: any) {
-    this.env.autoMaxBrightness = ev ? 'on' : 'off';
-    await Preferences.set({ key: this.env.KEY_AUTO_MAX_BRIGHTNESS, value: this.env.autoMaxBrightness });
+  async onAutoOpenUrlChange(ev: any) {
+    this.env.autoOpenUrl = ev ? 'on' : 'off';
+    await Preferences.set({ key: this.env.KEY_AUTO_OPEN_URL, value: this.env.autoOpenUrl });
     await this.tapHaptic();
   }
 

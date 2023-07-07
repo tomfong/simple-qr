@@ -23,7 +23,7 @@ export declare type ColorThemeType = 'light' | 'dark' | 'black';
 export declare type ErrorCorrectionLevelType = 'L' | 'M' | 'Q' | 'H';
 export declare type VibrationType = "on" | "off" | 'on-haptic' | 'on-scanned';
 export declare type OrientationType = 'portrait' | 'landscape';
-export declare type SearchEngineType = 'google' | 'bing' | 'yahoo' | 'duckduckgo' | 'yandex' | 'ecosia';
+export declare type SearchEngineType = 'google' | 'bing' | 'yahoo' | 'duckduckgo' | 'yandex' | 'ecosia' | 'brave';
 export declare type ResultPageButtonsType = 'detailed' | 'icon-only';
 
 @Injectable({
@@ -31,7 +31,7 @@ export declare type ResultPageButtonsType = 'detailed' | 'icon-only';
 })
 export class EnvService {
 
-  public appVersionNumber: string = '3.3.0';
+  public appVersionNumber: string = '4.0.0';
 
   public startPage: TabPageType = "/tabs/scan";
   public historyPageStartSegment: HistoryPageSegmentType = 'history';
@@ -44,7 +44,8 @@ export class EnvService {
   public scanRecordLogging: OnOffType = 'on';
   public recordsLimit: 30 | 50 | 100 | -1 = -1;
   public showNumberOfRecords: OnOffType = 'on';
-  public autoMaxBrightness: OnOffType = 'on';
+  public autoMaxBrightness: OnOffType = 'off';
+  public autoOpenUrl: OnOffType = 'on';
   public errorCorrectionLevel: ErrorCorrectionLevelType = 'M';
   public qrCodeLightR: number = 255;
   public qrCodeLightG: number = 255;
@@ -102,6 +103,7 @@ export class EnvService {
   public readonly KEY_QR_CODE_DARK_B = "qrCodeDarkB";
   public readonly KEY_QR_CODE_MARGIN = "qrCodeMargin";
   public readonly KEY_AUTO_MAX_BRIGHTNESS = "auto-max-brightness";
+  public readonly KEY_AUTO_OPEN_URL = "auto-open-url";
   public readonly KEY_SEARCH_ENGINE = "search-engine";
   public readonly KEY_RESULT_PAGE_BUTTONS = "result-page-buttons";
   public readonly KEY_SHOW_QR_AFTER_CAMERA_SCAN = "show-qr-after-camera-scan";
@@ -123,10 +125,10 @@ export class EnvService {
   public readonly KEY_SHOW_OPEN_FOOD_FACTS_BUTTON = "showOpenFoodFactsButton";
   public readonly KEY_AUTO_EXIT_MIN = "autoExitAppMin";
 
-  public readonly KEY_ANDROID_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30300";
-  public readonly KEY_IOS_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30300";
-  public readonly KEY_ANDROID_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30200";
-  public readonly KEY_IOS_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30200";
+  public readonly KEY_ANDROID_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v40000";
+  public readonly KEY_IOS_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v40000";
+  public readonly KEY_ANDROID_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30300";
+  public readonly KEY_IOS_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v30300";
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
 
@@ -136,6 +138,7 @@ export class EnvService {
   public readonly DUCK_DUCK_GO_SEARCH_URL: string = "https://duckduckgo.com/?q=";
   public readonly YANDEX_SEARCH_URL: string = "https://yandex.com/search/?text=";
   public readonly ECOSIA_SEARCH_URL: string = "https://www.ecosia.org/search?method=index&q=";
+  public readonly BRAVE_SEARCH_URL: string = "https://search.brave.com/search?q=";
 
   public readonly GITHUB_REPO_URL: string = "https://github.com/tomfong/simple-qr";
   public readonly GOOGLE_PLAY_URL: string = "https://play.google.com/store/apps/details?id=com.tomfong.simpleqr";
@@ -144,6 +147,7 @@ export class EnvService {
   public readonly PRIVACY_POLICY: string = "https://www.privacypolicies.com/live/771b1123-99bb-4bfe-815e-1046c0437a0f";
 
   resultContent: string = '';
+  editingContent: boolean = false;
   resultContentFormat: string = '';
   scanRecords: ScanRecord[] = [];
   bookmarks: Bookmark[] = [];
@@ -500,7 +504,7 @@ export class EnvService {
           if (value != null) {
             this.autoMaxBrightness = value;
           } else {
-            this.autoMaxBrightness = 'on';
+            this.autoMaxBrightness = 'off';
           }
           await Preferences.set({
             key: this.KEY_AUTO_MAX_BRIGHTNESS,
@@ -995,7 +999,16 @@ export class EnvService {
         if (result.value != null) {
           this.autoMaxBrightness = result.value as OnOffType;
         } else {
-          this.autoMaxBrightness = 'on';
+          this.autoMaxBrightness = 'off';
+        }
+      }
+    );
+    await Preferences.get({ key: this.KEY_AUTO_OPEN_URL }).then(
+      async result => {
+        if (result.value != null) {
+          this.autoOpenUrl = result.value as OnOffType;
+        } else {
+          this.autoOpenUrl = 'on';
         }
       }
     );
@@ -1193,7 +1206,8 @@ export class EnvService {
     this.scanRecordLogging = 'on';
     this.recordsLimit = -1;
     this.showNumberOfRecords = 'on';
-    this.autoMaxBrightness = 'on';
+    this.autoMaxBrightness = 'off';
+    this.autoOpenUrl = 'on';
     this.errorCorrectionLevel = 'M';
     this.qrCodeLightR = 255;
     this.qrCodeLightG = 255;
@@ -1264,8 +1278,11 @@ export class EnvService {
     this.showNumberOfRecords = 'on';
     await Preferences.set({ key: this.KEY_SHOW_NUMBER_OF_RECORDS, value: this.showNumberOfRecords });
 
-    this.autoMaxBrightness = 'on';
+    this.autoMaxBrightness = 'off';
     await Preferences.set({ key: this.KEY_AUTO_MAX_BRIGHTNESS, value: this.autoMaxBrightness });
+
+    this.autoOpenUrl = 'on';
+    await Preferences.set({ key: this.KEY_AUTO_OPEN_URL, value: this.autoOpenUrl });
 
     this.errorCorrectionLevel = 'M';
     await Preferences.set({ key: this.KEY_ERROR_CORRECTION_LEVEL, value: this.errorCorrectionLevel });

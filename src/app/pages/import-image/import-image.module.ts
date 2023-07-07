@@ -9,7 +9,6 @@ import { ImportImagePageRoutingModule } from './import-image-routing.module';
 import { ImportImagePage } from './import-image.page';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { MatButtonModule } from '@angular/material/button';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -29,7 +28,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
       }
     }),
     ImportImagePageRoutingModule,
-    MatButtonModule,
   ],
   declarations: [ImportImagePage]
 })
