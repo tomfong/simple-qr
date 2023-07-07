@@ -27,7 +27,7 @@
   </ion-row>
 
   <ng-container *ngIf="qrCodeContent && qrCodeContent.trim().length > 0" [ngTemplateOutlet]="contentBlock"
-    [ngTemplateOutletContext]="{ label: barcodeFormat + ('CONTENT' | translate), content: qrCodeContent, hint: env.resultContentFormat }">
+    [ngTemplateOutletContext]="{ label: barcodeFormat + ('CONTENT' | translate), content: qrCodeContent, hint: env.resultContentFormat, showEdit: true }">
   </ng-container>
 
   <ng-container *ngIf="base64Encoded && qrCodeContent && qrCodeContent.trim().length > 0"
@@ -294,7 +294,8 @@
           </ion-icon>
           <ion-icon class="pe-2" *ngIf="env.searchEngine === 'ecosia'" slot="icon-only" src="assets/icon/ecosia.svg">
           </ion-icon>
-          <ion-icon class="pe-2" *ngIf="env.searchEngine === 'brave'" slot="icon-only" src="assets/icon/brave-search.svg">
+          <ion-icon class="pe-2" *ngIf="env.searchEngine === 'brave'" slot="icon-only"
+            src="assets/icon/brave-search.svg">
           </ion-icon>
           <ion-label>{{ 'SEARCH' | translate}}</ion-label>
         </ion-button>
@@ -329,7 +330,7 @@
 
 </ion-footer>
 
-<ng-template #contentBlock let-label="label" let-content="content" let-hint="hint">
+<ng-template #contentBlock let-label="label" let-content="content" let-hint="hint" let-showEdit="showEdit">
   <ion-row class="ion-padding-horizontal" [@inAnimation]>
     <ion-col>
       <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent" [floatLabel]="'always'"
@@ -339,6 +340,9 @@
           [cdkAutosizeMaxRows]="20" readonly>
         </textarea>
         <mat-hint *ngIf="hint && hint != ''" style="opacity: 0.5;">{{ hint }}</mat-hint>
+        <button mat-button color="primary" (click)="editContent()" *ngIf="showEdit" class="m-0 p-0 mt-3" style="background-color: transparent !important; color: var(--ion-color-primary) !important;">
+          {{ 'EDIT' | translate }}
+        </button>
       </mat-form-field>
     </ion-col>
   </ion-row>

@@ -106,6 +106,10 @@ export class GeneratePage {
 
   async ionViewDidEnter() {
     await SplashScreen.hide()
+    if (this.env.editingContent) {
+      this.qrCodeContent = this.env.resultContent;
+      this.env.editingContent = false;
+    }
     this.freeTxtText = this.translate.instant("FREE_TEXT");
     this.urlText = this.translate.instant("URL");
     this.contactText = this.translate.instant("VCARD_CONTACT");

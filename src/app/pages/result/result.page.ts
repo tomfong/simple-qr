@@ -210,6 +210,11 @@ export class ResultPage {
     return "#ffffff";
   }
 
+  editContent() {
+    this.env.editingContent = true;
+    this.router.navigate(['tabs/generate'], { replaceUrl: true });
+  }
+
   searchOpenFoodFacts() {
     window.open(`https://world.openfoodfacts.org/product/${this.qrCodeContent}`, '_system', 'location=yes');
   }

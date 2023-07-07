@@ -10,6 +10,8 @@
 //    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
 @include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());
 @include mat.legacy-core();
+@include mat.core();
+
 $app-primary: mat.define-palette(mat.$cyan-palette, 600);
 $app-warn: mat.define-palette(mat.$red-palette);
 $app-light-theme: mat.define-light-theme(

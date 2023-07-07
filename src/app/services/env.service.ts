@@ -147,6 +147,7 @@ export class EnvService {
   public readonly PRIVACY_POLICY: string = "https://www.privacypolicies.com/live/771b1123-99bb-4bfe-815e-1046c0437a0f";
 
   resultContent: string = '';
+  editingContent: boolean = false;
   resultContentFormat: string = '';
   scanRecords: ScanRecord[] = [];
   bookmarks: Bookmark[] = [];
