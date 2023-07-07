@@ -20,13 +20,13 @@
 
 ## About
 
-Simple QR is a FOSS app to scan, create and store QR codes with a simple UI and experience. No backend service connected. No data collected. No ads.
+Simple QR is an open-source app to scan, create and store QR codes with a simple UI and experience. No backend service connected. No data collected. No ads.
 
 It's now available on the following platforms.
 
-| App Store | Google Play | GitHub | IzzyOnDroid |
+| Google Play | GitHub | IzzyOnDroid |
 |:-:|:-:|:-:|:-:|
-| [<img src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/appstore-badge.png" height="50">](https://apps.apple.com/us/app/simple-qr-by-tom-fong/id1621121553) | [<img src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/google-play-badge.png" height="50">](https://play.google.com/store/apps/details?id=com.tomfong.simpleqr) | [<img src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/github-badge.png" height="50">](https://github.com/tomfong/simple-qr/releases/latest) | [<img src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/IzzyOnDroid-badge.png" height="50">](https://apt.izzysoft.de/fdroid/index/apk/com.tomfong.simpleqr) |
+| [<img src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/google-play-badge.png" height="50">](https://play.google.com/store/apps/details?id=com.tomfong.simpleqr) | [<img src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/github-badge.png" height="50">](https://github.com/tomfong/simple-qr/releases/latest) | [<img src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/IzzyOnDroid-badge.png" height="50">](https://apt.izzysoft.de/fdroid/index/apk/com.tomfong.simpleqr) |
 
 ## Features
 
@@ -121,20 +121,20 @@ Thank you the following contributors who have made the app better!
 ## Framework
 
 ```sh
-    Ionic CLI                       : 6.20.4
-    Ionic Framework                 : @ionic/angular 6.3.9
-    @angular-devkit/build-angular   : 14.2.10
-    @angular-devkit/schematics      : 14.2.10
-    @angular/cli                    : 14.2.10
-    @ionic/angular-toolkit          : 6.1.0
+    Ionic CLI                       : 7.1.1
+    Ionic Framework                 : @ionic/angular 7.1.1
+    @angular-devkit/build-angular   : 16.1.3
+    @angular-devkit/schematics      : 16.1.3
+    @angular/cli                    : 16.1.3
+    @ionic/angular-toolkit          : 9.0.0
 
-    Capacitor CLI                   : 4.5.0
-    @capacitor/android              : 4.5.0
-    @capacitor/core                 : 4.5.0
-    @capacitor/ios                  : 4.5.0
+    Capacitor CLI                   : 5.1.0
+    @capacitor/android              :  5.1.0
+    @capacitor/core                 : 5.1.0
+    @capacitor/ios                  : 5.1.0
 
-    NodeJS                          : v16.15.1
-    npm                             : 9.1.1
+    NodeJS                          : v18.16.1
+    npm                             : 9.5.1
 ```
 
 ## Privacy Policy

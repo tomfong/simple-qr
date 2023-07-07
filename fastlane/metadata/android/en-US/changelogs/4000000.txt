@@ -1,0 +1,4 @@
+* Upgrade framework, improve performance and fix known bugs
+* Support Brave Search
+* Support open URL automatically
+* Allow user to further edit QR code content
