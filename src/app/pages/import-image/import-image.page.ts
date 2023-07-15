@@ -96,6 +96,14 @@ export class ImportImagePage {
           });
           await alert.present();
         }
+      },
+      async err => {
+        getPictureLoading.dismiss();
+        if (this.env.debugMode === 'on') {
+          await Toast.show({ text: 'Err when Camera.requestPermissions: ' + JSON.stringify(err), position: "bottom", duration: "long" })
+        } else {
+          Toast.show({ text: 'Unknown Error', position: "bottom", duration: "short" })
+        }
       }
     );
   }
