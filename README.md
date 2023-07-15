@@ -122,16 +122,16 @@ Thank you the following contributors who have made the app better!
 
 ```sh
     Ionic CLI                       : 7.1.1
-    Ionic Framework                 : @ionic/angular 7.1.1
-    @angular-devkit/build-angular   : 16.1.3
-    @angular-devkit/schematics      : 16.1.3
-    @angular/cli                    : 16.1.3
+    Ionic Framework                 : @ionic/angular 7.1.3
+    @angular-devkit/build-angular   : 16.1.4
+    @angular-devkit/schematics      : 16.1.4
+    @angular/cli                    : 16.1.4
     @ionic/angular-toolkit          : 9.0.0
 
-    Capacitor CLI                   : 5.1.0
-    @capacitor/android              :  5.1.0
-    @capacitor/core                 : 5.1.0
-    @capacitor/ios                  : 5.1.0
+    Capacitor CLI                   : 5.2.1
+    @capacitor/android              : 5.2.1
+    @capacitor/core                 : 5.2.1
+    @capacitor/ios                  : 5.2.1
 
     NodeJS                          : v18.16.1
     npm                             : 9.5.1

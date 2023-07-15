@@ -169,7 +169,7 @@ export class SettingRecordPage {
         }
         const loading2 = await this.presentLoading(this.translate.instant("PLEASE_WAIT"));
         await Filesystem.readFile({
-          path: value.uri,
+          path: value['uri'],
           encoding: Encoding.UTF8
         }).then(
           async value => {
