@@ -13,7 +13,7 @@ import { Bookmark } from 'src/app/models/bookmark';
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Preferences } from '@capacitor/preferences';
-import { de, enUS, fr, it, ru, zhCN, zhHK } from 'date-fns/locale';
+import { de, enUS, fr, it, ptBR, ru, zhCN, zhHK } from 'date-fns/locale';
 
 @Component({
   selector: 'app-setting-record',
@@ -196,7 +196,11 @@ export class SettingRecordPage {
                     handler: async data => {
                       alert.dismiss();
                       if (data.secret != null && data.secret.trim().length == 49) {
-                        await this.restore(value.data, data.secret.trim());
+                        if ((typeof value.data) == 'string') {
+                          await this.restore(value.data as string, data.secret.trim());
+                        } else {
+                          this.presentToast(this.translate.instant("MSG.RESTORE_FAILED"), "short", "bottom");
+                        }
                       } else {
                         this.presentToast(this.translate.instant("MSG.PLEASE_INPUT_VALID_SECRET"), "short", "bottom");
                       }
@@ -315,6 +319,9 @@ export class SettingRecordPage {
         break;
       case "it":
         rawCsvData = "ID,Contenuto,Creato a,Fonte,Tipo di codice a barre,Aggiunto ai preferiti?,Etichetta\r\n";
+        break;
+      case "pt-BR":
+        rawCsvData = "ID,Conteúdo,Criado em,Origem,Tipo de código de barras,Marcado como favorito?,Tag\r\n";
         break;
       case "ru":
         rawCsvData = "ID,Содержание,Создано в,Источник,Тип штрих-кода,В закладках?,Ярлык\r\n";
@@ -474,6 +481,9 @@ export class SettingRecordPage {
       case "it":
         locale = it;
         break;
+      case "pt-BR":
+        locale = ptBR;
+        break;
       case "ru":
         locale = ru;
         break;
@@ -506,6 +516,9 @@ export class SettingRecordPage {
         break;
       case "it":
         locale = it;
+        break;
+      case "pt-BR":
+        locale = ptBR;
         break;
       case "ru":
         locale = ru;

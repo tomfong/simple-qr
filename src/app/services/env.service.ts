@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Preferences } from '@capacitor/preferences';
 import { Observable } from 'rxjs';
 
-export declare type LanguageType = 'de' | 'en' | 'fr' | 'it' | 'ru' | 'zh-CN' | 'zh-HK';
+export declare type LanguageType = 'de' | 'en' | 'fr' | 'it' | 'pt-BR' | 'ru' | 'zh-CN' | 'zh-HK';
 export declare type TabPageType = "/tabs/scan" | "/tabs/generate" | "/tabs/import-image" | "/tabs/history" | "/tabs/setting";
 export declare type HistoryPageSegmentType = 'history' | 'bookmarks';
 export declare type OnOffType = "on" | "off";
@@ -36,7 +36,7 @@ export class EnvService {
   public startPage: TabPageType = "/tabs/scan";
   public historyPageStartSegment: HistoryPageSegmentType = 'history';
   public startPageHeader: OnOffType = 'on';
-  public languages: LanguageType[] = ['en', 'zh-HK', 'zh-CN', 'de', 'fr', 'it'];
+  public languages: LanguageType[] = ['en', 'zh-HK', 'zh-CN', 'de', 'fr', 'it', 'pt-BR', 'ru'];
   public language: LanguageType = 'en';
   public selectedLanguage: 'default' | LanguageType = 'default';
   public colorTheme: ColorThemeType = 'light';
@@ -1631,6 +1631,9 @@ export class EnvService {
             break;
           case "it":
             language = "it"
+            break;
+          case "pt":
+            language = "pt-BR";
             break;
           case "ru":
             language = "ru"
