@@ -86,7 +86,6 @@ export class TabsPage {
         await Preferences.set({ key: storageKey, value: 'yes' });
         if (!this.env.notShowUpdateNotes) {
           this.env.notShowUpdateNotes = true;
-          await this.showUpdateNotes();
           const versionWording = this.translate.instant("VERSION_VERSION") as string;
           await this.presentToast(versionWording.replace("{version}", this.env.appVersionNumber), "short", 'bottom');
         }
