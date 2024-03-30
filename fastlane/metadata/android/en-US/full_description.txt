@@ -6,7 +6,7 @@ By using the app, you can:
 
 * Scan QR Code and other barcodes in a second, including UPC, EAN, Code 39/128, ITF, Codabar, Aztec, Data Matrix, PDF417, MaxiCode and GS1 DataBar.
 * Import image files and scan the QR Code on it.
-* Create QR code from templates, which includes Free Text, URL, vCard Contact, Phone Number, Message, Email and Wi-Fi.
+* Create QR code from templates, which includes Free Text, URL, vCard Contact, Phone Number, Message, Email, Wi-Fi and Geolocation.
 * Automatically log results that you scan, create or view again. These logged records can be bookmarked for quick access, and also backupable.
 * Do tasks on the result with a tap, including but not limited to
     * Use it as a keyword to do web search.
@@ -14,10 +14,11 @@ By using the app, you can:
     * Execute base64 encoding/decoding on it.
     * Generate a new shareable QR code by using it as the content.
     * Do corresponding tasks if it is a
-        * URL: Browse website
+        * URL: Browse website / Open application
         * vCard contact: Add contact
         * Phone number: Phone call, add contact
         * Message: Send message, add contact
         * Email: Send email
+        * Geolocation: Open map
 * Customize the generated QR code, e.g. error correction level, color, margin and screen brightness.
 * Customize the app, e.g. app initial page, language and color theme etc.
