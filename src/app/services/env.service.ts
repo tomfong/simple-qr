@@ -45,7 +45,7 @@ export class EnvService {
   public recordsLimit: 30 | 50 | 100 | -1 = -1;
   public showNumberOfRecords: OnOffType = 'on';
   public autoMaxBrightness: OnOffType = 'off';
-  public autoOpenUrl: OnOffType = 'on';
+  public autoOpenUrl: OnOffType = 'off';
   public errorCorrectionLevel: ErrorCorrectionLevelType = 'M';
   public qrCodeLightR: number = 255;
   public qrCodeLightG: number = 255;
@@ -1008,7 +1008,7 @@ export class EnvService {
         if (result.value != null) {
           this.autoOpenUrl = result.value as OnOffType;
         } else {
-          this.autoOpenUrl = 'on';
+          this.autoOpenUrl = 'off';
         }
       }
     );
@@ -1207,7 +1207,7 @@ export class EnvService {
     this.recordsLimit = -1;
     this.showNumberOfRecords = 'on';
     this.autoMaxBrightness = 'off';
-    this.autoOpenUrl = 'on';
+    this.autoOpenUrl = 'off';
     this.errorCorrectionLevel = 'M';
     this.qrCodeLightR = 255;
     this.qrCodeLightG = 255;
@@ -1281,7 +1281,7 @@ export class EnvService {
     this.autoMaxBrightness = 'off';
     await Preferences.set({ key: this.KEY_AUTO_MAX_BRIGHTNESS, value: this.autoMaxBrightness });
 
-    this.autoOpenUrl = 'on';
+    this.autoOpenUrl = 'off';
     await Preferences.set({ key: this.KEY_AUTO_OPEN_URL, value: this.autoOpenUrl });
 
     this.errorCorrectionLevel = 'M';
