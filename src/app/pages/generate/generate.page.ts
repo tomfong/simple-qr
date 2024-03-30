@@ -5,7 +5,7 @@ import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { format } from 'date-fns';
-import { EnvService } from 'src/app/services/env.service';
+import { EnvService, QrCreateContentTypeType } from 'src/app/services/env.service';
 import { Toast } from '@capacitor/toast';
 import { fadeIn } from 'src/app/utils/animations';
 import { SplashScreen } from '@capacitor/splash-screen';
@@ -23,6 +23,7 @@ export class GeneratePage {
   freeTxtText: string = "Free Text";
   urlText: string = "URL";
   contactText: string = "vCard Contact";
+  geolocationText: string = "Geolocation";
   phoneText: string = "Phone";
   smsText: string = "Message";
   emailW3CText: string = "Email (W3C Standard)";
@@ -36,6 +37,9 @@ export class GeneratePage {
   bccEmails: string[] = [];
   emailSubject: string = "";
   emailBody: string = "";
+
+  latitude: number = 0;
+  longitude: number = 0;
 
   phoneNumber: string = "";
 
@@ -84,17 +88,18 @@ export class GeneratePage {
     { text: this.wpaText, value: "WPA" },
   ]
 
-  contentTypes: { text: string, value: "freeText" | "url" | "contact" | "phone" | "sms" | "emailW3C" | "emailDocomo" | "wifi" }[] = [
+  contentTypes: { text: string, value: QrCreateContentTypeType }[] = [
     { text: this.freeTxtText, value: 'freeText' },
     { text: this.emailW3CText, value: 'emailW3C' },
     { text: this.emailDocomoText, value: 'emailDocomo' },
+    { text: this.geolocationText, value: 'geo' },
     { text: this.phoneText, value: 'phone' },
     { text: this.smsText, value: 'sms' },
     { text: this.urlText, value: 'url' },
     { text: this.contactText, value: 'contact' },
     { text: this.wifiText, value: 'wifi' },
   ];
-  contentType: "freeText" | "url" | "contact" | "phone" | "sms" | "emailW3C" | "emailDocomo" | "wifi" = "freeText";
+  contentType: QrCreateContentTypeType = "freeText";
 
   constructor(
     public translate: TranslateService,
@@ -113,6 +118,7 @@ export class GeneratePage {
     this.freeTxtText = this.translate.instant("FREE_TEXT");
     this.urlText = this.translate.instant("URL");
     this.contactText = this.translate.instant("VCARD_CONTACT");
+    this.geolocationText = this.translate.instant("GEOLOCATION");
     this.phoneText = this.translate.instant("PHONE_NO");
     this.smsText = this.translate.instant("MESSAGE");
     this.emailW3CText = this.translate.instant("EMAIL_W3C_STANDARD");
@@ -122,6 +128,7 @@ export class GeneratePage {
       { text: this.freeTxtText, value: 'freeText' },
       { text: this.emailW3CText, value: 'emailW3C' },
       { text: this.emailDocomoText, value: 'emailDocomo' },
+      { text: this.geolocationText, value: 'geo' },
       { text: this.phoneText, value: 'phone' },
       { text: this.smsText, value: 'sms' },
       { text: this.urlText, value: 'url' },
@@ -195,6 +202,9 @@ export class GeneratePage {
     this.emailSubject = "";
     this.emailBody = "";
 
+    this.latitude = 0;
+    this.longitude = 0;
+
     this.phoneNumber = "";
 
     this.smsMessage = "";
@@ -262,6 +272,9 @@ export class GeneratePage {
       case "emailDocomo":
         this.qrCodeContent = `MATMSG:TO:${this.toEmails[0]};SUB:${this.emailSubject};BODY:${this.emailBody};;`;
         this.qrCodeContent = encodeURI(this.qrCodeContent);
+        break;
+      case "geo":
+        this.qrCodeContent = `geo:${this.latitude},${this.longitude}`;
         break;
       case "phone":
         this.qrCodeContent = "tel:";
@@ -348,7 +361,7 @@ export class GeneratePage {
     return format(new Date(), "yyyy-MM-dd");
   }
 
-  getIcon(type: "freeText" | "url" | "contact" | "phone" | "sms" | "emailW3C" | "emailDocomo" | "wifi"): string {
+  getIcon(type: QrCreateContentTypeType): string {
     switch (type) {
       case "freeText":
         return "format_align_left";
@@ -356,6 +369,8 @@ export class GeneratePage {
         return "link";
       case "contact":
         return "contact_phone";
+      case "geo":
+        return "location_on";
       case "phone":
         return "call";
       case "sms":
@@ -371,7 +386,7 @@ export class GeneratePage {
     }
   }
 
-  getText(type: "freeText" | "url" | "contact" | "phone" | "sms" | "emailW3C" | "emailDocomo" | "wifi"): string {
+  getText(type: QrCreateContentTypeType): string {
     switch (type) {
       case "freeText":
         return this.freeTxtText;
@@ -379,6 +394,8 @@ export class GeneratePage {
         return this.urlText;
       case "contact":
         return this.contactText;
+      case "geo":
+        return this.geolocationText;
       case "phone":
         return this.phoneText;
       case "sms":

@@ -6,7 +6,7 @@ Mit der App ist das möglich
 
 * QR-Code und andere Barcodes in Sekundenschnelle zu scannen, einschließlich UPC, EAN, Code 39/128, ITF, Codabar, Aztec, Data Matrix, PDF417, MaxiCode und GS1 DataBar.
 * Bilddateien zu importieren und den darauf befindlichen QR-Code zu scannen.
-* QR-Codes aus Vorlagen,die Freitext, URL, vCard-Kontakt, Telefonnummer, Nachricht, E-Mail und WLAN enthalten, zu erstellen.
+* QR-Codes aus Vorlagen,die Freitext, URL, vCard-Kontakt, Telefonnummer, Nachricht, Geolokalisierung, E-Mail und WLAN enthalten, zu erstellen.
 * Gescannte Ergebnissen, die gescannt wurden, erstellt oder erneut angezeigt wurden zu protokollieren. Diese protokollierten Aufzeichnungen können für schnellen Zugriff mit einem Lesezeichen versehen und auch gesichert werden.
 * Aufgaben auf dem Ergebnis mit einem Fingertipp zu erledigen, einschließlich, aber nicht beschränkt auf
     * Verwenden als Schlüsselwort für die Websuche.
@@ -19,5 +19,6 @@ Mit der App ist das möglich
          * Telefonnummer: Telefonanruf, Kontakt hinzufügen
          * Nachricht: Nachricht senden, Kontakt hinzufügen
          * E-Mail: E-Mail senden
+         * Geolokalisierung: Karte öffnen
 * Passen Sie den generierten QR-Code an, z. Fehlerkorrekturstufe, Farbe, Rand und Bildschirmhelligkeit.
 * Die App anzupassen, z.B. App-Startseite, Sprache und Farbthema etc.

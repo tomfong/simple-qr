@@ -6,7 +6,7 @@ import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { AlertController, LoadingController, ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { VCardContact } from 'src/app/models/v-card-contact';
-import { EnvService } from 'src/app/services/env.service';
+import { EnvService, QrResultContentTypeType } from 'src/app/services/env.service';
 import { Toast } from '@capacitor/toast';
 import { MatFormField } from '@angular/material/form-field';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
@@ -23,7 +23,7 @@ import { QRCodeElementType } from 'angularx-qrcode';
 })
 export class ResultPage {
 
-  contentType: "freeText" | "url" | "contact" | "phone" | "sms" | "emailW3C" | "emailDocomo" | "wifi" = "freeText";
+  contentType: QrResultContentTypeType = "freeText";
 
   qrCodeContent: string;
   qrElementType: QRCodeElementType = "canvas";
@@ -44,6 +44,9 @@ export class ResultPage {
   wifiPassword: string;
   wifiEncryption: 'NONE' | 'WEP' | 'WPA';
   wifiHidden: boolean = false;
+
+  latitude: number;
+  longitude: number;
 
   base64Encoded: boolean = false;
   base64EncodedText: string = "";
@@ -138,6 +141,8 @@ export class ResultPage {
     delete this.wifiPassword
     delete this.wifiEncryption
     delete this.wifiHidden
+    delete this.latitude
+    delete this.longitude
     this.base64Encoded = false;
     this.base64EncodedText = "";
     this.base64Decoded = false;
@@ -157,6 +162,7 @@ export class ResultPage {
     const emailW3CPrefix = "MAILTO:";
     const emailDoconoPrefix = "MATMSG:";
     const wifiPrefix = "WIFI:";
+    const geoPrefix = "GEO:";
     const content0 = this.qrCodeContent.trim();
     const tContent = this.qrCodeContent.trim().toUpperCase();
     if (tContent.substr(0, contactPrefix.length) === contactPrefix) {
@@ -183,6 +189,10 @@ export class ResultPage {
     } else if (tContent.substr(0, wifiPrefix.length) === wifiPrefix) {
       this.contentType = "wifi";
       this.prepareWifi();
+    } else if (tContent.substring(0, geoPrefix.length) === geoPrefix) {
+      this.contentType = "geo";
+      this.latitude = +tContent.substring(geoPrefix.length, tContent.indexOf(","));
+      this.longitude = +tContent.substring(tContent.indexOf(",") + 1);
     } else if (this.isValidUrl(content0)) {
       this.contentType = "url";
     } else {
@@ -880,6 +890,8 @@ export class ResultPage {
         return this.translate.instant("EMAIL_W3C_STANDARD");
       case 'emailDocomo':
         return this.translate.instant("EMAIL_NTT_DOCOMO");
+      case 'geo':
+        return this.translate.instant("GEOLOCATION");
       case 'phone':
         return this.translate.instant("PHONE_NO");
       case 'sms':
@@ -901,6 +913,8 @@ export class ResultPage {
         return "link";
       case "contact":
         return "contact_phone";
+      case 'geo':
+        return "location_on";
       case "phone":
         return "call";
       case "sms":

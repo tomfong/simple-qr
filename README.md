@@ -36,7 +36,7 @@ By using the app, you can
 
 2. Import image files and scan the QR Code on it.
 
-3. Create QR code from templates, which includes Free Text, URL, vCard Contact, Phone Number, Message, Email and Wi-Fi.
+3. Create QR code from templates, which includes Free Text, URL, vCard Contact, Phone Number, Message, Email, Wi-Fi and Geolocation.
 
 4. Automatically log results that you scan, create or view again. These logged records can be bookmarked for quick access, and also backupable.
 
@@ -46,11 +46,12 @@ By using the app, you can
     * Execute base64 encoding/decoding on it.
     * Use it as a content to generate a new shareable QR code.
     * Do corresponding tasks if it is a
-      * URL: Browse website
+      * URL: Browse website / Open application
       * vCard contact: Add contact
       * Phone number: Phone call, add contact
       * Message: Send message, add contact
       * Email: Send email
+      * Geolocation: Open map
 
 6. Customize the generated QR code, e.g. error correction level, color, margin and screen brightness.
 
@@ -63,11 +64,12 @@ By using the app, you can
 ### Languages Supported
 
 * English (en)
-* Traditional Chinese (Hong Kong) 中文 (香港) (zh-HK)
-* Simplified Chinese 简体中文 (zh-CN)
+* Chinese (Hong Kong) 中文 (香港) (zh-HK)
+* Chinese (Simplified) 简体中文 (zh-CN)
 * German Deutsch (de)
 * French Français (fr)
 * Italian Italiano (it)
+* Portuguese (Brazil) (pt-BR)
 * Russian Русский (ru)
 
 You are welcomed to help translate the app into more languages (refer to this <a href="#how-to-help-translate">section</a>)
@@ -117,24 +119,22 @@ Thank you the following contributors who have made the app better!
 | mondstern | [mondlicht-und-sterne](https://github.com/mondlicht-und-sterne) | German language translation |
 | Valentino Bocchetti | [luftmensch-luftmensch](https://github.com/luftmensch-luftmensch) | Italian language translation |
 | Smooth-E | [Smooth-E](https://github.com/Smooth-E) | Russian language translation |
+| Daniel Ribeiro | [drcsj](https://github.com/drcsj) | Portuguese (Brazil) language translation |
 
 ## Framework
 
 ```sh
-    Ionic CLI                       : 7.1.1
-    Ionic Framework                 : @ionic/angular 7.1.3
-    @angular-devkit/build-angular   : 16.1.4
-    @angular-devkit/schematics      : 16.1.4
-    @angular/cli                    : 16.1.4
+    Ionic CLI                       : 7.2.0
+    Ionic Framework                 : @ionic/angular 7.8.2
+    @angular-devkit/build-angular   : 16.2.13
+    @angular-devkit/schematics      : 16.2.13
+    @angular/cli                    : 16.2.13
     @ionic/angular-toolkit          : 9.0.0
 
-    Capacitor CLI                   : 5.2.1
-    @capacitor/android              : 5.2.1
-    @capacitor/core                 : 5.2.1
-    @capacitor/ios                  : 5.2.1
-
-    NodeJS                          : v18.16.1
-    npm                             : 9.5.1
+    Capacitor CLI                   : 5.7.4
+    @capacitor/android              : 5.7.4
+    @capacitor/core                 : 5.7.4
+    @capacitor/ios                  : 5.7.4
 ```
 
 ## Privacy Policy

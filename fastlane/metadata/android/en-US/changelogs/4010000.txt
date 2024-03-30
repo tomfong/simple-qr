@@ -1,0 +1,3 @@
+* Support geolocation QR code
+* Support Portuguese (Brazil) language
+* Disable auto URL opening by default

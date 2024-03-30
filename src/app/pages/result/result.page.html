@@ -18,7 +18,7 @@
     <ion-col>
       <ion-badge class="p-2" color="primary">
         <div class="d-flex align-items-center">
-          <mat-icon class="me-3" *ngIf="contentTypeIcon != ''" [fontIcon]="contentTypeIcon">
+          <mat-icon class="me-2" *ngIf="contentTypeIcon != ''" [fontIcon]="contentTypeIcon">
           </mat-icon>
           <span>{{ contentTypeText }}</span>
         </div>
@@ -96,6 +96,15 @@
     [ngTemplateOutletContext]="{ label: 'HIDDEN_NETWORK_?' | translate, content: wifiHidden === true? ('YES' | translate) : ('NO' | translate) }">
   </ng-container>
 
+  <ng-container *ngIf="contentType === 'geo' && qrCodeContent && qrCodeContent.trim().length > 0 && latitude != null"
+    [ngTemplateOutlet]="contentBlock" [ngTemplateOutletContext]="{ label: 'LATITUDE' | translate, content: latitude }">
+  </ng-container>
+
+  <ng-container *ngIf="contentType === 'geo' && qrCodeContent && qrCodeContent.trim().length > 0 && longitude != null"
+    [ngTemplateOutlet]="contentBlock"
+    [ngTemplateOutletContext]="{ label: 'LONGITUDE' | translate, content: longitude }">
+  </ng-container>
+
   <div class="ion-padding-horizontal ion-margin-horizontal ion-padding-bottom">
   </div>
 
@@ -123,6 +132,13 @@
       class="d-flex justify-content-center">
       <ion-button (click)="tapHaptic(); openLink()" [color]="'primary'" fill="clear">
         <ion-icon name="open"></ion-icon>
+      </ion-button>
+    </ion-row>
+
+    <ion-row *ngIf="contentType === 'geo' && env.showOpenUrlButton === 'on'"
+      class="d-flex justify-content-center">
+      <ion-button (click)="tapHaptic(); openLink()" [color]="'primary'" fill="clear">
+        <ion-icon name="map"></ion-icon>
       </ion-button>
     </ion-row>
 
@@ -245,10 +261,11 @@
           <ion-icon class="pe-2" name="globe"></ion-icon>
           <ion-label>{{ 'BROWSE' | translate}}</ion-label>
         </ion-button>
-        <ion-button class="pe-1" *ngIf="contentType === 'url' && env.showOpenUrlButton === 'on' && !isHttp"
+        <ion-button class="pe-1"
+          *ngIf="(contentType === 'url' || contentType === 'geo') && env.showOpenUrlButton === 'on' && !isHttp"
           (click)="tapHaptic(); openLink()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="outline"
           shape="round" [@inAnimation]>
-          <ion-icon class="pe-2" name="open"></ion-icon>
+          <ion-icon class="pe-2" [name]="contentType === 'geo'? 'map' : 'open'"></ion-icon>
           <ion-label>{{ 'OPEN' | translate}}</ion-label>
         </ion-button>
         <ion-button class="pe-1"
@@ -340,7 +357,8 @@
           [cdkAutosizeMaxRows]="20" readonly>
         </textarea>
         <mat-hint *ngIf="hint && hint != ''" style="opacity: 0.5;">{{ hint }}</mat-hint>
-        <button mat-button color="primary" (click)="editContent()" *ngIf="showEdit" class="m-0 p-0 mt-3" style="background-color: transparent !important; color: var(--ion-color-primary) !important;">
+        <button mat-button color="primary" (click)="editContent()" *ngIf="showEdit" class="m-0 p-0 mt-3"
+          style="background-color: transparent !important; color: var(--ion-color-primary) !important;">
           {{ 'EDIT' | translate }}
         </button>
       </mat-form-field>

@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Preferences } from '@capacitor/preferences';
 import { Observable } from 'rxjs';
 
-export declare type LanguageType = 'de' | 'en' | 'fr' | 'it' | 'ru' | 'zh-CN' | 'zh-HK';
+export declare type LanguageType = 'de' | 'en' | 'fr' | 'it' | 'pt-BR' | 'ru' | 'zh-CN' | 'zh-HK';
 export declare type TabPageType = "/tabs/scan" | "/tabs/generate" | "/tabs/import-image" | "/tabs/history" | "/tabs/setting";
 export declare type HistoryPageSegmentType = 'history' | 'bookmarks';
 export declare type OnOffType = "on" | "off";
@@ -25,18 +25,20 @@ export declare type VibrationType = "on" | "off" | 'on-haptic' | 'on-scanned';
 export declare type OrientationType = 'portrait' | 'landscape';
 export declare type SearchEngineType = 'google' | 'bing' | 'yahoo' | 'duckduckgo' | 'yandex' | 'ecosia' | 'brave';
 export declare type ResultPageButtonsType = 'detailed' | 'icon-only';
+export declare type QrResultContentTypeType = "freeText" | "url" | "contact" | "phone" | "sms" | "emailW3C" | "emailDocomo" | "wifi" | "geo";
+export declare type QrCreateContentTypeType = "freeText" | "url" | "contact" | "phone" | "sms" | "emailW3C" | "emailDocomo" | "wifi" | "geo";
 
 @Injectable({
   providedIn: 'root'
 })
 export class EnvService {
 
-  public appVersionNumber: string = '4.0.1';
+  public appVersionNumber: string = '4.1.0';
 
   public startPage: TabPageType = "/tabs/scan";
   public historyPageStartSegment: HistoryPageSegmentType = 'history';
   public startPageHeader: OnOffType = 'on';
-  public languages: LanguageType[] = ['en', 'zh-HK', 'zh-CN', 'de', 'fr', 'it'];
+  public languages: LanguageType[] = ['en', 'zh-HK', 'zh-CN', 'de', 'fr', 'it', 'pt-BR', 'ru'];
   public language: LanguageType = 'en';
   public selectedLanguage: 'default' | LanguageType = 'default';
   public colorTheme: ColorThemeType = 'light';
@@ -45,7 +47,7 @@ export class EnvService {
   public recordsLimit: 30 | 50 | 100 | -1 = -1;
   public showNumberOfRecords: OnOffType = 'on';
   public autoMaxBrightness: OnOffType = 'off';
-  public autoOpenUrl: OnOffType = 'on';
+  public autoOpenUrl: OnOffType = 'off';
   public errorCorrectionLevel: ErrorCorrectionLevelType = 'M';
   public qrCodeLightR: number = 255;
   public qrCodeLightG: number = 255;
@@ -125,10 +127,10 @@ export class EnvService {
   public readonly KEY_SHOW_OPEN_FOOD_FACTS_BUTTON = "showOpenFoodFactsButton";
   public readonly KEY_AUTO_EXIT_MIN = "autoExitAppMin";
 
-  public readonly KEY_ANDROID_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v40001";
-  public readonly KEY_IOS_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v40001";
-  public readonly KEY_ANDROID_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v40000";
-  public readonly KEY_IOS_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v40000";
+  public readonly KEY_ANDROID_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v40100";
+  public readonly KEY_IOS_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v40100";
+  public readonly KEY_ANDROID_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v40001";
+  public readonly KEY_IOS_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v40001";
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
 
@@ -1008,7 +1010,7 @@ export class EnvService {
         if (result.value != null) {
           this.autoOpenUrl = result.value as OnOffType;
         } else {
-          this.autoOpenUrl = 'on';
+          this.autoOpenUrl = 'off';
         }
       }
     );
@@ -1207,7 +1209,7 @@ export class EnvService {
     this.recordsLimit = -1;
     this.showNumberOfRecords = 'on';
     this.autoMaxBrightness = 'off';
-    this.autoOpenUrl = 'on';
+    this.autoOpenUrl = 'off';
     this.errorCorrectionLevel = 'M';
     this.qrCodeLightR = 255;
     this.qrCodeLightG = 255;
@@ -1281,7 +1283,7 @@ export class EnvService {
     this.autoMaxBrightness = 'off';
     await Preferences.set({ key: this.KEY_AUTO_MAX_BRIGHTNESS, value: this.autoMaxBrightness });
 
-    this.autoOpenUrl = 'on';
+    this.autoOpenUrl = 'off';
     await Preferences.set({ key: this.KEY_AUTO_OPEN_URL, value: this.autoOpenUrl });
 
     this.errorCorrectionLevel = 'M';
@@ -1631,6 +1633,9 @@ export class EnvService {
             break;
           case "it":
             language = "it"
+            break;
+          case "pt":
+            language = "pt-BR";
             break;
           case "ru":
             language = "ru"
