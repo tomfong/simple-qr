@@ -215,6 +215,25 @@
 
   </ng-container>
 
+  <ng-container *ngIf="contentType === 'geo'">
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
+      <ion-col>
+        <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
+          <mat-label>{{ 'LATITUDE' | translate}}</mat-label>
+          <input matInput [(ngModel)]="latitude" type="number" #latitudeInput>
+        </mat-form-field>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-padding-horizontal" [@inAnimation]>
+      <ion-col>
+        <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
+          <mat-label>{{ 'LONGITUDE' | translate}}</mat-label>
+          <input matInput [(ngModel)]="longitude" type="number" #longitudeInput>
+        </mat-form-field>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+
   <ng-container *ngIf="contentType === 'phone'">
     <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>

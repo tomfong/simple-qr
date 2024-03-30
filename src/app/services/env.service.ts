@@ -25,6 +25,8 @@ export declare type VibrationType = "on" | "off" | 'on-haptic' | 'on-scanned';
 export declare type OrientationType = 'portrait' | 'landscape';
 export declare type SearchEngineType = 'google' | 'bing' | 'yahoo' | 'duckduckgo' | 'yandex' | 'ecosia' | 'brave';
 export declare type ResultPageButtonsType = 'detailed' | 'icon-only';
+export declare type QrResultContentTypeType = "freeText" | "url" | "contact" | "phone" | "sms" | "emailW3C" | "emailDocomo" | "wifi" | "geo";
+export declare type QrCreateContentTypeType = "freeText" | "url" | "contact" | "phone" | "sms" | "emailW3C" | "emailDocomo" | "wifi" | "geo";
 
 @Injectable({
   providedIn: 'root'
