@@ -28,13 +28,11 @@
       </ion-col>
     </ion-row>
     <ion-row class="pt-3 px-4" style="width: 100%;">
-      <ion-item class="ion-no-padding" lines="none" [color]="color">
+      <ion-item class="ion-no-padding" lines="none" [color]="color" style="width: 100%;">
         <ion-label>
           <p class="ion-padding-horizontal">
-            <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'"
-              style="white-space: normal; font-size: large;">
-              <div [innerHTML]="('ERROR_CORRECTION_LEVEL' | translate)">
-              </div>
+            <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+              {{ 'ERROR_CORRECTION_LEVEL' | translate }}
             </ion-text>
           </p>
         </ion-label>
