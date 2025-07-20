@@ -1,5 +1,4 @@
 @use "@angular/material" as mat;
-@import "@angular/material/theming";
 // TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
 //  The following line adds:
 //    1. Default typography styles for all components
@@ -8,8 +7,8 @@
 //  If you don't need the default component typographies but still want the hierarchy styles,
 //  you can delete this line and instead use:
 //    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
-@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());
-@include mat.legacy-core();
+//@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());
+//@include mat.legacy-core();
 @include mat.core();
 
 $app-primary: mat.define-palette(mat.$cyan-palette, 600);

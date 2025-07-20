@@ -58,26 +58,35 @@ const routes: Routes = [
   },
   {
     path: 'setting-result',
-    loadChildren: () => import('./pages/setting-result/setting-result.module').then( m => m.SettingResultPageModule)
+    loadChildren: () => import('./pages/setting-result/setting-result.module').then(m => m.SettingResultPageModule)
   },
   {
     path: 'setting-result-buttons',
-    loadChildren: () => import('./pages/setting-result-buttons/setting-result-buttons.module').then( m => m.SettingResultButtonsPageModule)
+    loadChildren: () => import('./pages/setting-result-buttons/setting-result-buttons.module').then(m => m.SettingResultButtonsPageModule)
   },
   {
     path: 'setting-auto-qr',
-    loadChildren: () => import('./pages/setting-auto-qr/setting-auto-qr.module').then( m => m.SettingAutoQrPageModule)
+    loadChildren: () => import('./pages/setting-auto-qr/setting-auto-qr.module').then(m => m.SettingAutoQrPageModule)
   },
   {
     path: 'setting-auto-exit',
-    loadChildren: () => import('./pages/setting-auto-exit/setting-auto-exit.module').then( m => m.SettingAutoExitPageModule)
+    loadChildren: () => import('./pages/setting-auto-exit/setting-auto-exit.module').then(m => m.SettingAutoExitPageModule)
   },
 
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: CustomPreloadingStrategyService })
+    RouterModule.forRoot(routes, {
+      preloadingStrategy: CustomPreloadingStrategyService,
+      enableTracing: false, // Disable tracing (or use withDebugTracing in provideRouter)
+      initialNavigation: 'enabledBlocking', // Enable blocking initial navigation (or use withEnabledBlockingInitialNavigation in provideRouter)
+      useHash: false, // Use hash-based routing (or use withHashLocation in provideRouter)
+      scrollPositionRestoration: 'enabled', // Enable in-memory scrolling (or use withInMemoryScrolling in provideRouter)
+      canceledNavigationResolution: 'replace', // Configure canceled navigation resolution
+      paramsInheritanceStrategy: 'always', // Configure parameter inheritance
+      urlUpdateStrategy: 'eager', // Configure URL update strategy
+    })
   ],
   exports: [RouterModule]
 })
