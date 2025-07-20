@@ -11,9 +11,10 @@ import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
-  selector: 'app-import-image',
-  templateUrl: './import-image.page.html',
-  styleUrls: ['./import-image.page.scss'],
+    selector: 'app-import-image',
+    templateUrl: './import-image.page.html',
+    styleUrls: ['./import-image.page.scss'],
+    standalone: false
 })
 export class ImportImagePage {
 

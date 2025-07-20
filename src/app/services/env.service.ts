@@ -291,7 +291,7 @@ export class EnvService {
                 }
               );
               this.bookmarks.sort((a, b) => {
-                return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
+                return ('' + a.tag).localeCompare(b.tag ?? '');
               });
             } catch (err) {
               console.error(err);
@@ -831,7 +831,7 @@ export class EnvService {
               }
             );
             this.bookmarks.sort((a, b) => {
-              return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
+              return ('' + a.tag).localeCompare(b.tag ?? '');
             });
           } catch (err) {
             console.error(err);
@@ -1490,7 +1490,7 @@ export class EnvService {
       }
     );
     this.bookmarks.sort((a, b) => {
-      return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
+      return ('' + a.tag).localeCompare(b.tag ?? '');
     });
     try {
       const stringified = JSON.stringify(this.bookmarks);
@@ -1555,7 +1555,7 @@ export class EnvService {
       bookmark.tag = tag;
       this.bookmarks.unshift(bookmark);
       this.bookmarks.sort((a, b) => {
-        return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
+        return ('' + a.tag).localeCompare(b.tag ?? '');
       });
       try {
         const stringified = JSON.stringify(this.bookmarks);
@@ -1574,7 +1574,7 @@ export class EnvService {
   async undoBookmarkDeletion(bookmark: Bookmark): Promise<void> {
     this.bookmarks.push(bookmark);
     this.bookmarks.sort((a, b) => {
-      return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
+      return ('' + a.tag).localeCompare(b.tag ?? '');
     });
     try {
       const stringified = JSON.stringify(this.bookmarks);

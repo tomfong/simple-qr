@@ -13,10 +13,11 @@ import { fastFadeIn, flyOut } from 'src/app/utils/animations';
 import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
-  selector: 'app-history',
-  templateUrl: './history.page.html',
-  styleUrls: ['./history.page.scss'],
-  animations: [fastFadeIn, flyOut]
+    selector: 'app-history',
+    templateUrl: './history.page.html',
+    styleUrls: ['./history.page.scss'],
+    animations: [fastFadeIn, flyOut],
+    standalone: false
 })
 export class HistoryPage {
 
@@ -269,7 +270,7 @@ export class HistoryPage {
               const bookmark = await this.env.saveBookmark(record.text, data.tag);
               this.env.viewingBookmarks.unshift(bookmark);
               this.env.viewingBookmarks.sort((a, b) => {
-                return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
+                return ('' + a.tag).localeCompare(b.tag ?? '');
               });
               if (bookmark != null) {
                 await this.presentToast(this.translate.instant("MSG.BOOKMARKED"), "short", "bottom");
@@ -359,7 +360,7 @@ export class HistoryPage {
               const newBookmark = await this.env.saveBookmark(bookmark.text, data.tag);
               this.env.viewingBookmarks.unshift(newBookmark);
               this.env.viewingBookmarks.sort((a, b) => {
-                return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
+                return ('' + a.tag).localeCompare(b.tag ?? '');
               });
               this.isLoading = false;
             }

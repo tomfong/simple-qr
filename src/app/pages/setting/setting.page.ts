@@ -7,9 +7,10 @@ import { EnvService } from 'src/app/services/env.service';
 import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
-  selector: 'app-setting',
-  templateUrl: './setting.page.html',
-  styleUrls: ['./setting.page.scss'],
+    selector: 'app-setting',
+    templateUrl: './setting.page.html',
+    styleUrls: ['./setting.page.scss'],
+    standalone: false
 })
 export class SettingPage {
 

@@ -9,9 +9,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 
 @Component({
-  selector: 'app-tabs',
-  templateUrl: 'tabs.page.html',
-  styleUrls: ['tabs.page.scss']
+    selector: 'app-tabs',
+    templateUrl: 'tabs.page.html',
+    styleUrls: ['tabs.page.scss'],
+    standalone: false
 })
 export class TabsPage {
 

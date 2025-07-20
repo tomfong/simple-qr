@@ -5,9 +5,10 @@ import { Toast } from '@capacitor/toast';
 import { EnvService } from 'src/app/services/env.service';
 
 @Component({
-  selector: 'app-setting-auto-open-url',
-  templateUrl: './setting-auto-open-url.page.html',
-  styleUrls: ['./setting-auto-open-url.page.scss'],
+    selector: 'app-setting-auto-open-url',
+    templateUrl: './setting-auto-open-url.page.html',
+    styleUrls: ['./setting-auto-open-url.page.scss'],
+    standalone: false
 })
 export class SettingAutoOpenUrlPage {
 

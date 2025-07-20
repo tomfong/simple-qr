@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { EnvService } from 'src/app/services/env.service';
 
 @Component({
-  selector: 'app-setting-result',
-  templateUrl: './setting-result.page.html',
-  styleUrls: ['./setting-result.page.scss'],
+    selector: 'app-setting-result',
+    templateUrl: './setting-result.page.html',
+    styleUrls: ['./setting-result.page.scss'],
+    standalone: false
 })
 export class SettingResultPage {
 

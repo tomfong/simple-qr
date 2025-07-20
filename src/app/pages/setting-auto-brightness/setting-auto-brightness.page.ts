@@ -5,9 +5,10 @@ import { Toast } from '@capacitor/toast';
 import { EnvService } from 'src/app/services/env.service';
 
 @Component({
-  selector: 'app-setting-auto-brightness',
-  templateUrl: './setting-auto-brightness.page.html',
-  styleUrls: ['./setting-auto-brightness.page.scss'],
+    selector: 'app-setting-auto-brightness',
+    templateUrl: './setting-auto-brightness.page.html',
+    styleUrls: ['./setting-auto-brightness.page.scss'],
+    standalone: false
 })
 export class SettingAutoBrightnessPage {
 

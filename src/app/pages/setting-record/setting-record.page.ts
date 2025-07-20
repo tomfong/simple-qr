@@ -16,9 +16,10 @@ import { Preferences } from '@capacitor/preferences';
 import { de, enUS, fr, it, ptBR, ru, zhCN, zhHK } from 'date-fns/locale';
 
 @Component({
-  selector: 'app-setting-record',
-  templateUrl: './setting-record.page.html',
-  styleUrls: ['./setting-record.page.scss'],
+    selector: 'app-setting-record',
+    templateUrl: './setting-record.page.html',
+    styleUrls: ['./setting-record.page.scss'],
+    standalone: false
 })
 export class SettingRecordPage {
 

@@ -16,10 +16,11 @@ import { Router } from '@angular/router';
 import { QRCodeElementType } from 'angularx-qrcode';
 
 @Component({
-  selector: 'app-result',
-  templateUrl: './result.page.html',
-  styleUrls: ['./result.page.scss'],
-  animations: [fadeIn]
+    selector: 'app-result',
+    templateUrl: './result.page.html',
+    styleUrls: ['./result.page.scss'],
+    animations: [fadeIn],
+    standalone: false
 })
 export class ResultPage {
 

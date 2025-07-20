@@ -4,9 +4,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 
 @Component({
-  selector: 'app-setting-search-engine',
-  templateUrl: './setting-search-engine.page.html',
-  styleUrls: ['./setting-search-engine.page.scss'],
+    selector: 'app-setting-search-engine',
+    templateUrl: './setting-search-engine.page.html',
+    styleUrls: ['./setting-search-engine.page.scss'],
+    standalone: false
 })
 export class SettingSearchEnginePage {
 

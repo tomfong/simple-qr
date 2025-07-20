@@ -6,9 +6,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 
 @Component({
-  selector: 'app-about',
-  templateUrl: './about.page.html',
-  styleUrls: ['./about.page.scss'],
+    selector: 'app-about',
+    templateUrl: './about.page.html',
+    styleUrls: ['./about.page.scss'],
+    standalone: false
 })
 export class AboutPage {
 

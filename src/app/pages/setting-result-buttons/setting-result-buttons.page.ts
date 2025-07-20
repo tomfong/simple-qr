@@ -5,9 +5,10 @@ import { Toast } from '@capacitor/toast';
 import { EnvService } from 'src/app/services/env.service';
 
 @Component({
-  selector: 'app-setting-result-buttons',
-  templateUrl: './setting-result-buttons.page.html',
-  styleUrls: ['./setting-result-buttons.page.scss'],
+    selector: 'app-setting-result-buttons',
+    templateUrl: './setting-result-buttons.page.html',
+    styleUrls: ['./setting-result-buttons.page.scss'],
+    standalone: false
 })
 export class SettingResultButtonsPage {
 

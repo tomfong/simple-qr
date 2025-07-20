@@ -14,9 +14,10 @@ enum CameraChoice {
 }
 
 @Component({
-  selector: 'app-scan',
-  templateUrl: './scan.page.html',
-  styleUrls: ['./scan.page.scss'],
+    selector: 'app-scan',
+    templateUrl: './scan.page.html',
+    styleUrls: ['./scan.page.scss'],
+    standalone: false
 })
 export class ScanPage {
 

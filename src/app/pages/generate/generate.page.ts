@@ -11,10 +11,11 @@ import { fadeIn } from 'src/app/utils/animations';
 import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
-  selector: 'app-generate',
-  templateUrl: './generate.page.html',
-  styleUrls: ['./generate.page.scss'],
-  animations: [fadeIn]
+    selector: 'app-generate',
+    templateUrl: './generate.page.html',
+    styleUrls: ['./generate.page.scss'],
+    animations: [fadeIn],
+    standalone: false
 })
 export class GeneratePage {
 
