@@ -1,6 +1,6 @@
 {
   "name": "simple-qr",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "author": "Tom Fong",
   "scripts": {
     "ng": "ng",
@@ -17,13 +17,13 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^20.1.2",
-    "@angular/cdk": "^19.2.19",
+    "@angular/cdk": "^20.1.2",
     "@angular/common": "^20.1.2",
     "@angular/core": "^20.1.2",
     "@angular/forms": "^20.1.2",
     "@angular/localize": "^20.1.2",
-    "@angular/material": "^19.2.19",
-    "@angular/material-moment-adapter": "^19.2.19",
+    "@angular/material": "^20.1.2",
+    "@angular/material-moment-adapter": "^20.1.2",
     "@angular/platform-browser": "^20.1.2",
     "@angular/platform-browser-dynamic": "^20.1.2",
     "@angular/router": "^20.1.2",
