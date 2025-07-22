@@ -11,7 +11,8 @@
 <ion-content>
 
   <div class="ion-padding-vertical">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'INITIAL_SEGMENT' | translate }}
+    <ion-list-header class="ion-margin-start ion-padding-horizontal"><ion-text
+        [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'INITIAL_SEGMENT' | translate }}</ion-text>
     </ion-list-header>
     <ion-radio-group [(ngModel)]="env.historyPageStartSegment" (ionChange)="saveHistoryPageStartSegment()">
       <ion-item class="ion-no-padding ripple-parent py-1 mt-2" detail="false" lines="none">
@@ -44,7 +45,8 @@
   </div>
 
   <div class="ion-padding-vertical">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'MANAGE_RECORDS' | translate }}
+    <ion-list-header class="ion-margin-start ion-padding-horizontal"><ion-text
+        [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'MANAGE_RECORDS' | translate }}</ion-text>
     </ion-list-header>
     <div class="ion-padding-horizontal pt-3 d-flex justify-content-center align-content-start flex-column">
       <ion-button id="open-tutorial-modal" class="ion-padding-horizontal" color="primary">
@@ -56,7 +58,9 @@
   <ion-modal #tutorialModal trigger="open-tutorial-modal" [initialBreakpoint]="0.8" [breakpoints]="[0, 0.8]">
     <ng-template>
       <ion-content [color]="color">
-        <ion-list-header class="mt-4 ms-3" style="font-size: x-large;">{{ 'TUTORIAL' | translate }}</ion-list-header>
+        <ion-list-header class="mt-4 ms-3" style="font-size: x-large;"><ion-text
+            [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'TUTORIAL' | translate
+            }}</ion-text></ion-list-header>
         <ion-item class="content-item ion-no-padding" lines="none" [color]="color">
           <ion-icon class="ion-padding-horizontal" src="assets/icon/swipe-left.svg" [color]="'primary'"></ion-icon>
           <ion-label>
@@ -82,7 +86,8 @@
   </ion-modal>
 
   <div class="ion-padding-vertical">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'AUTO_LOGGING' | translate }}
+    <ion-list-header class="ion-margin-start ion-padding-horizontal"><ion-text
+        [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'AUTO_LOGGING' | translate }}</ion-text>
     </ion-list-header>
     <ion-item class="ion-no-padding" lines="none">
       <ion-label class="ion-padding-start">
@@ -108,7 +113,8 @@
   </div>
 
   <div class="ion-padding-vertical">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'RECORDS_LIMIT' | translate }}
+    <ion-list-header class="ion-margin-start ion-padding-horizontal"><ion-text
+        [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'RECORDS_LIMIT' | translate }}</ion-text>
     </ion-list-header>
     <ion-item class="ion-no-padding" lines="none">
       <ion-label class="ion-padding-start">
@@ -180,7 +186,8 @@
   </div>
 
   <div class="ion-padding-vertical mb-2">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'BACKUP' | translate }}</ion-list-header>
+    <ion-list-header class="ion-margin-start ion-padding-horizontal"><ion-text
+        [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'BACKUP' | translate }}</ion-text></ion-list-header>
     <ion-item class="ion-no-padding" lines="none">
       <ion-label class="ion-padding-start">
         <p class="ion-padding-horizontal">
@@ -198,7 +205,8 @@
   </div>
 
   <div class="ion-padding-vertical mb-2">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'RESTORE' | translate }}</ion-list-header>
+    <ion-list-header class="ion-margin-start ion-padding-horizontal"><ion-text
+        [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'RESTORE' | translate }}</ion-text></ion-list-header>
     <ion-item class="ion-no-padding" lines="none">
       <ion-label class="ion-padding-start">
         <p class="ion-padding-horizontal">
@@ -216,7 +224,8 @@
   </div>
 
   <div class="ion-padding-vertical mb-1">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal">{{ 'EXPORT' | translate }}</ion-list-header>
+    <ion-list-header class="ion-margin-start ion-padding-horizontal"><ion-text
+        [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'EXPORT' | translate }}</ion-text></ion-list-header>
     <ion-item class="ion-no-padding" lines="none">
       <ion-label class="ion-padding-start">
         <p class="ion-padding-horizontal">
