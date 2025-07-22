@@ -69,7 +69,7 @@ export class TabsPage {
         if (value) {
           console.log(`tabs.page.ts - ionViewDidEnter() - env.startPage: ${this.env.startPage}`)
           await this.router.navigate([this.env.startPage], { replaceUrl: true });
-          await this.loadPatchNote();
+          //await this.loadPatchNote();
         }
       });
     }
