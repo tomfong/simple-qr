@@ -42,11 +42,6 @@ const routes: Routes = [
         data: { preload: true },
         loadChildren: () => import('../generate/generate.module').then(m => m.GeneratePageModule)
       },
-      {
-        path: 'import-image',
-        data: { preload: true },
-        loadChildren: () => import('../import-image/import-image.module').then(m => m.ImportImagePageModule)
-      }
     ]
   },
   {

@@ -271,7 +271,7 @@
         "PREPARE_SMS": "Preparing message",
         "PREVIOUS_RECORDS": "Previous records from scanning, creating or viewing",
         "QR_CODE_VALUE_NOT_EMPTY": "QR Code value cannot be empty",
-        "READ_IMAGE_PERMISSION": "You must grant Storage permission for scanning image.",
+        "READ_IMAGE_PERMISSION": "You must grant Photos permission for scanning image.",
         "RECORDS_LIMIT_EXPLAIN": "Limit the number of records that can be stored. The oldest record will be deleted when the limit is reached.",
         "REMOVE_ALL_BOOKMARKS": "Are you sure to remove all bookmarked texts? <b>This action cannot be undone.</b>",
         "REMOVE_ALL_RECORD": "Are you sure to remove all records? <b>This action cannot be undone.</b>",

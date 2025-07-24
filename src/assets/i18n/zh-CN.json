@@ -271,7 +271,7 @@
         "PREPARE_SMS": "准备信息中",
         "PREVIOUS_RECORDS": "过往扫描、建立或查看的记录",
         "QR_CODE_VALUE_NOT_EMPTY": "QR 码不能是空值",
-        "READ_IMAGE_PERMISSION": "要扫描图片，您必须授权「简易QR」存取储存空间。 ",
+        "READ_IMAGE_PERMISSION": "要扫描图片，您必须授权「简易QR」存取相片。 ",
         "RECORDS_LIMIT_EXPLAIN": "限制记录的数量，超过上限时旧记录会被删除。",
         "REMOVE_ALL_BOOKMARKS": "确定要删除所有书签? <b>此动作无法被撤回。</b>",
         "REMOVE_ALL_RECORD": "确定要删除全部记录? <b>此动作无法被撤回。</b>",

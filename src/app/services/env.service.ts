@@ -16,7 +16,7 @@ import { Preferences } from '@capacitor/preferences';
 import { Observable } from 'rxjs';
 
 export declare type LanguageType = 'de' | 'en' | 'fr' | 'it' | 'pt-BR' | 'ru' | 'zh-CN' | 'zh-HK';
-export declare type TabPageType = "/tabs/scan" | "/tabs/generate" | "/tabs/import-image" | "/tabs/history" | "/tabs/setting";
+export declare type TabPageType = "/tabs/scan" | "/tabs/generate" | "/tabs/history" | "/tabs/setting";
 export declare type HistoryPageSegmentType = 'history' | 'bookmarks';
 export declare type OnOffType = "on" | "off";
 export declare type ColorThemeType = 'light' | 'dark' | 'black';
@@ -153,7 +153,7 @@ export class EnvService {
 
   recordSource: 'create' | 'view' | 'scan';
   detailedRecordSource: 'create' | 'view-log' | 'view-bookmark' | 'scan-camera' | 'scan-image';
-  viewResultFrom: '/tabs/scan' | '/tabs/import-image' | '/tabs/generate' | '/tabs/history';
+  viewResultFrom: '/tabs/scan' | '/tabs/generate' | '/tabs/history';
 
   public firstAppLoad: boolean = true;  // once loaded, turn it false
 
@@ -189,7 +189,7 @@ export class EnvService {
     const loadPromise1 = Preferences.get({ key: this.KEY_START_PAGE }).then(
       async result => {
         if (result.value != null) {
-          this.startPage = result.value as TabPageType;
+          this.startPage = result.value == '/tabs/import-image' ? '/tabs/scan' : result.value as TabPageType;
         } else {
           this.startPage = '/tabs/scan';
         }

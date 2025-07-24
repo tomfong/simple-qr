@@ -271,7 +271,7 @@
         "PREPARE_SMS": "準備信息中",
         "PREVIOUS_RECORDS": "過往掃描、建立或查看的記錄",
         "QR_CODE_VALUE_NOT_EMPTY": "QR 碼不能是空值",
-        "READ_IMAGE_PERMISSION": "要掃描圖片，您必須授權「簡易QR」存取儲存空間。",
+        "READ_IMAGE_PERMISSION": "要掃描圖片，您必須授權「簡易QR」存取相片。",
         "RECORDS_LIMIT_EXPLAIN": "限制記錄的數量，超過上限時舊記錄會被刪除。",
         "REMOVE_ALL_BOOKMARKS": "確定要刪除所有書籤? <b>此動作無法被撤回。</b>",
         "REMOVE_ALL_RECORD": "確定要刪除全部記錄? <b>此動作無法被撤回。</b>",

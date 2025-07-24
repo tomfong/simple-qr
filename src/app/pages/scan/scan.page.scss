@@ -19,3 +19,7 @@ body {
     max-height: 50%;
     opacity: 0.7;
 }
+
+ion-fab {
+    margin-bottom: var(--ion-safe-area-bottom, 0);
+}
