@@ -58,7 +58,6 @@ export class EnvService {
   public qrCodeMargin: number = 3;
   public vibration: VibrationType = 'on';
   public orientation: 'default' | OrientationType = 'default';
-  public notShowUpdateNotes: boolean = false;
   public searchEngine: SearchEngineType = 'google';
   public resultPageButtons: ResultPageButtonsType = 'detailed';
   public showQrAfterCameraScan: OnOffType = 'off';
@@ -127,11 +126,6 @@ export class EnvService {
   public readonly KEY_SHOW_OPEN_FOOD_FACTS_BUTTON = "showOpenFoodFactsButton";
   public readonly KEY_AUTO_EXIT_MIN = "autoExitAppMin";
 
-  public readonly KEY_ANDROID_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v40100";
-  public readonly KEY_IOS_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v40100";
-  public readonly KEY_ANDROID_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v40001";
-  public readonly KEY_IOS_PREV_NOT_SHOW_UPDATE_NOTES = "not-show-update-notes-v40001";
-
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
 
   public readonly GOOGLE_SEARCH_URL: string = "https://www.google.com/search?q=";
@@ -182,8 +176,6 @@ export class EnvService {
                 this._deviceInfo = value;
               }
             );
-            await this._transferStorage();
-            console.log(`env.service.ts - constructor - _transferStorage()`)
             await this._loadStorage();
             console.log(`env.service.ts - constructor - _loadStorage()`)
             subs.next(true);
@@ -193,582 +185,8 @@ export class EnvService {
     )
   }
 
-  private async _transferStorage() {
-    const oldStorage = await this.ionicStorage.create();
-    const length = await oldStorage.length();
-    if (length > 0) {
-      await oldStorage.get(this.KEY_LANGUAGE).then(
-        async value => {
-          if (value != null) {
-            this.selectedLanguage = value;
-          } else {
-            this.selectedLanguage = 'default';
-          }
-          this.toggleLanguageChange();
-          await Preferences.set({
-            key: this.KEY_LANGUAGE,
-            value: this.selectedLanguage,
-          });
-        }
-      );
-      await this.presentToast(this.translate.instant("OPTIMIZING_DATA_..."), "short", "bottom");
-      await oldStorage.get(this.KEY_START_PAGE).then(
-        async value => {
-          if (value != null) {
-            this.startPage = value;
-          } else {
-            this.startPage = '/tabs/scan';
-          }
-          await Preferences.set({
-            key: this.KEY_START_PAGE,
-            value: this.startPage,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_HISTORY_PAGE_START_SEGMENT).then(
-        async value => {
-          if (value != null) {
-            this.historyPageStartSegment = value;
-          } else {
-            this.historyPageStartSegment = 'history';
-          }
-          await Preferences.set({
-            key: this.KEY_HISTORY_PAGE_START_SEGMENT,
-            value: this.historyPageStartSegment,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_START_PAGE_HEADER).then(
-        async value => {
-          if (value != null) {
-            this.startPageHeader = value;
-          } else {
-            this.startPageHeader = 'on';
-          }
-          await Preferences.set({
-            key: this.KEY_START_PAGE_HEADER,
-            value: this.startPageHeader,
-          });
-        }
-      );
-      await oldStorage.get("RZUeHwaYWGkiNhsb5nld7vdDYE7pzRyB").then(
-        async value => {
-          if (value != null) {
-            try {
-              this.scanRecords = JSON.parse(value);
-              this.scanRecords.forEach(
-                r => {
-                  const tCreatedAt = r.createdAt;
-                  r.createdAt = new Date(tCreatedAt);
-                }
-              );
-              this.scanRecords.sort((r1, r2) => {
-                return r2.createdAt.getTime() - r1.createdAt.getTime();
-              });
-            } catch (err) {
-              console.error(err);
-              this.scanRecords = [];
-            }
-          }
-          await Preferences.set({
-            key: this.KEY_SCAN_RECORDS,
-            value: JSON.stringify(this.scanRecords),
-          });
-        }
-      );
-      await oldStorage.get("lB9STlXHpk7G8STLcJZNreiIxeFWPxPS").then(
-        async value => {
-          if (value != null) {
-            try {
-              this.bookmarks = JSON.parse(value);
-              this.bookmarks.forEach(
-                b => {
-                  if (b.id == null) {
-                    b.id = uuidv4();
-                  }
-                  const tCreatedAt = b.createdAt;
-                  b.createdAt = new Date(tCreatedAt);
-                }
-              );
-              this.bookmarks.sort((a, b) => {
-                return ('' + a.tag).localeCompare(b.tag ?? '');
-              });
-            } catch (err) {
-              console.error(err);
-              this.bookmarks = [];
-            }
-          }
-          await Preferences.set({
-            key: this.KEY_BOOKMARKS,
-            value: JSON.stringify(this.bookmarks),
-          });
-        }
-      )
-      await oldStorage.get(this.KEY_COLOR).then(
-        async value => {
-          if (value != null) {
-            this.selectedColorTheme = value;
-          } else {
-            this.selectedColorTheme = 'default';
-          }
-          await this.toggleColorTheme();
-          await Preferences.set({
-            key: this.KEY_COLOR,
-            value: this.selectedColorTheme,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_DEBUG_MODE).then(
-        async value => {
-          if (value != null) {
-            this.debugMode = value;
-          } else {
-            this.debugMode = 'off';
-          }
-          await Preferences.set({
-            key: this.KEY_DEBUG_MODE,
-            value: this.debugMode,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_ORIENTATION).then(
-        async value => {
-          if (value != null) {
-            this.orientation = value;
-          } else {
-            this.orientation = 'default';
-          }
-          await this.toggleOrientationChange();
-          await Preferences.set({
-            key: this.KEY_ORIENTATION,
-            value: this.orientation,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_SCAN_RECORD_LOGGING).then(
-        async value => {
-          if (value != null) {
-            this.scanRecordLogging = value;
-          } else {
-            this.scanRecordLogging = 'on';
-          }
-          await Preferences.set({
-            key: this.KEY_SCAN_RECORD_LOGGING,
-            value: this.scanRecordLogging,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_RECORDS_LIMIT).then(
-        async value => {
-          if (value != null) {
-            this.recordsLimit = value;
-          } else {
-            this.recordsLimit = -1;
-          }
-          await Preferences.set({
-            key: this.KEY_RECORDS_LIMIT,
-            value: JSON.stringify(this.recordsLimit),
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_SHOW_NUMBER_OF_RECORDS).then(
-        async value => {
-          if (value != null) {
-            this.showNumberOfRecords = value;
-          } else {
-            this.showNumberOfRecords = 'on';
-          }
-          await Preferences.set({
-            key: this.KEY_SHOW_NUMBER_OF_RECORDS,
-            value: this.showNumberOfRecords,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_VIBRATION).then(
-        async value => {
-          if (value != null) {
-            this.vibration = value;
-          } else {
-            this.vibration = 'on';
-          }
-          await Preferences.set({
-            key: this.KEY_VIBRATION,
-            value: this.vibration,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_ERROR_CORRECTION_LEVEL).then(
-        async value => {
-          if (value != null) {
-            this.errorCorrectionLevel = value;
-          } else {
-            this.errorCorrectionLevel = 'M';
-          }
-          await Preferences.set({
-            key: this.KEY_ERROR_CORRECTION_LEVEL,
-            value: this.errorCorrectionLevel,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_QR_CODE_LIGHT_R).then(
-        async value => {
-          if (value != null) {
-            this.qrCodeLightR = value;
-          } else {
-            this.qrCodeLightR = 255;
-          }
-          await Preferences.set({
-            key: this.KEY_QR_CODE_LIGHT_R,
-            value: JSON.stringify(this.qrCodeLightR),
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_QR_CODE_LIGHT_G).then(
-        async value => {
-          if (value != null) {
-            this.qrCodeLightG = value;
-          } else {
-            this.qrCodeLightG = 255;
-          }
-          await Preferences.set({
-            key: this.KEY_QR_CODE_LIGHT_G,
-            value: JSON.stringify(this.qrCodeLightG),
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_QR_CODE_LIGHT_B).then(
-        async value => {
-          if (value != null) {
-            this.qrCodeLightB = value;
-          } else {
-            this.qrCodeLightB = 255;
-          }
-          await Preferences.set({
-            key: this.KEY_QR_CODE_LIGHT_B,
-            value: JSON.stringify(this.qrCodeLightB),
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_QR_CODE_DARK_R).then(
-        async value => {
-          if (value != null) {
-            this.qrCodeDarkR = value;
-          } else {
-            this.qrCodeDarkR = 34;
-          }
-          await Preferences.set({
-            key: this.KEY_QR_CODE_DARK_R,
-            value: JSON.stringify(this.qrCodeDarkR),
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_QR_CODE_DARK_G).then(
-        async value => {
-          if (value != null) {
-            this.qrCodeDarkG = value;
-          } else {
-            this.qrCodeDarkG = 36;
-          }
-          await Preferences.set({
-            key: this.KEY_QR_CODE_DARK_G,
-            value: JSON.stringify(this.qrCodeDarkG),
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_QR_CODE_DARK_B).then(
-        async value => {
-          if (value != null) {
-            this.qrCodeDarkB = value;
-          } else {
-            this.qrCodeDarkB = 40;
-          }
-          await Preferences.set({
-            key: this.KEY_QR_CODE_DARK_B,
-            value: JSON.stringify(this.qrCodeDarkB),
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_QR_CODE_MARGIN).then(
-        async value => {
-          if (value != null) {
-            this.qrCodeMargin = value;
-          } else {
-            this.qrCodeMargin = 3;
-          }
-          await Preferences.set({
-            key: this.KEY_QR_CODE_MARGIN,
-            value: JSON.stringify(this.qrCodeMargin),
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_AUTO_MAX_BRIGHTNESS).then(
-        async value => {
-          if (value != null) {
-            this.autoMaxBrightness = value;
-          } else {
-            this.autoMaxBrightness = 'off';
-          }
-          await Preferences.set({
-            key: this.KEY_AUTO_MAX_BRIGHTNESS,
-            value: this.autoMaxBrightness,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_SEARCH_ENGINE).then(
-        async value => {
-          if (value != null) {
-            this.searchEngine = value;
-          } else {
-            this.searchEngine = 'google';
-          }
-          await Preferences.set({
-            key: this.KEY_SEARCH_ENGINE,
-            value: this.searchEngine,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_RESULT_PAGE_BUTTONS).then(
-        async value => {
-          if (value != null) {
-            this.resultPageButtons = value;
-          } else {
-            this.resultPageButtons = 'detailed';
-          }
-          await Preferences.set({
-            key: this.KEY_RESULT_PAGE_BUTTONS,
-            value: this.resultPageButtons,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_SHOW_QR_AFTER_CAMERA_SCAN).then(
-        async value => {
-          if (value != null) {
-            this.showQrAfterCameraScan = value;
-          } else {
-            this.showQrAfterCameraScan = 'off';
-          }
-          await Preferences.set({
-            key: this.KEY_SHOW_QR_AFTER_CAMERA_SCAN,
-            value: this.showQrAfterCameraScan,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_SHOW_QR_AFTER_IMAGE_SCAN).then(
-        async value => {
-          if (value != null) {
-            this.showQrAfterImageScan = value;
-          } else {
-            this.showQrAfterImageScan = 'off';
-          }
-          await Preferences.set({
-            key: this.KEY_SHOW_QR_AFTER_IMAGE_SCAN,
-            value: this.showQrAfterImageScan,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_SHOW_QR_AFTER_CREATE).then(
-        async value => {
-          if (value != null) {
-            this.showQrAfterCreate = value;
-          } else {
-            this.showQrAfterCreate = 'on';
-          }
-          await Preferences.set({
-            key: this.KEY_SHOW_QR_AFTER_CREATE,
-            value: this.showQrAfterCreate,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_SHOW_QR_AFTER_LOG_VIEW).then(
-        async value => {
-          if (value != null) {
-            this.showQrAfterLogView = value;
-          } else {
-            this.showQrAfterLogView = 'on';
-          }
-          await Preferences.set({
-            key: this.KEY_SHOW_QR_AFTER_LOG_VIEW,
-            value: this.showQrAfterLogView,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_SHOW_QR_AFTER_BOOKMARK_VIEW).then(
-        async value => {
-          if (value != null) {
-            this.showQrAfterBookmarkView = value;
-          } else {
-            this.showQrAfterBookmarkView = 'on';
-          }
-          await Preferences.set({
-            key: this.KEY_SHOW_QR_AFTER_BOOKMARK_VIEW,
-            value: this.showQrAfterBookmarkView,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_SHOW_SEARCH_BUTTON).then(
-        async value => {
-          if (value != null) {
-            this.showSearchButton = value;
-          } else {
-            this.showSearchButton = 'on';
-          }
-          await Preferences.set({
-            key: this.KEY_SHOW_SEARCH_BUTTON,
-            value: this.showSearchButton,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_SHOW_COPY_BUTTON).then(
-        async value => {
-          if (value != null) {
-            this.showCopyButton = value;
-          } else {
-            this.showCopyButton = 'on';
-          }
-          await Preferences.set({
-            key: this.KEY_SHOW_COPY_BUTTON,
-            value: this.showCopyButton,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_SHOW_BASE64_BUTTON).then(
-        async value => {
-          if (value != null) {
-            this.showBase64Button = value;
-          } else {
-            this.showBase64Button = 'on';
-          }
-          await Preferences.set({
-            key: this.KEY_SHOW_BASE64_BUTTON,
-            value: this.showBase64Button,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_SHOW_ENLARGE_BUTTON).then(
-        async value => {
-          if (value != null) {
-            this.showEnlargeButton = value;
-          } else {
-            this.showEnlargeButton = 'on';
-          }
-          await Preferences.set({
-            key: this.KEY_SHOW_ENLARGE_BUTTON,
-            value: this.showEnlargeButton,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_SHOW_BOOKMARK_BUTTON).then(
-        async value => {
-          if (value != null) {
-            this.showBookmarkButton = value;
-          } else {
-            this.showBookmarkButton = 'on';
-          }
-          await Preferences.set({
-            key: this.KEY_SHOW_BOOKMARK_BUTTON,
-            value: this.showBookmarkButton,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_SHOW_OPEN_URL_BUTTON).then(
-        async value => {
-          if (value != null) {
-            this.showOpenUrlButton = value;
-          } else {
-            this.showOpenUrlButton = 'on';
-          }
-          await Preferences.set({
-            key: this.KEY_SHOW_OPEN_URL_BUTTON,
-            value: this.showOpenUrlButton,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_SHOW_BROWSE_BUTTON).then(
-        async value => {
-          if (value != null) {
-            this.showBrowseButton = value;
-          } else {
-            this.showBrowseButton = 'on';
-          }
-          await Preferences.set({
-            key: this.KEY_SHOW_BROWSE_BUTTON,
-            value: this.showBrowseButton,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_SHOW_ADD_CONTACT_BUTTON).then(
-        async value => {
-          if (value != null) {
-            this.showAddContactButton = value;
-          } else {
-            this.showAddContactButton = 'on';
-          }
-          await Preferences.set({
-            key: this.KEY_SHOW_ADD_CONTACT_BUTTON,
-            value: this.showAddContactButton,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_SHOW_CALL_BUTTON).then(
-        async value => {
-          if (value != null) {
-            this.showCallButton = value;
-          } else {
-            this.showCallButton = 'on';
-          }
-          await Preferences.set({
-            key: this.KEY_SHOW_CALL_BUTTON,
-            value: this.showCallButton,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_SHOW_SEND_MESSAGE_BUTTON).then(
-        async value => {
-          if (value != null) {
-            this.showSendMessageButton = value;
-          } else {
-            this.showSendMessageButton = 'on';
-          }
-          await Preferences.set({
-            key: this.KEY_SHOW_SEND_MESSAGE_BUTTON,
-            value: this.showSendMessageButton,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_SHOW_SEND_EMAIL_BUTTON).then(
-        async value => {
-          if (value != null) {
-            this.showSendEmailButton = value;
-          } else {
-            this.showSendEmailButton = 'on';
-          }
-          await Preferences.set({
-            key: this.KEY_SHOW_SEND_EMAIL_BUTTON,
-            value: this.showSendEmailButton,
-          });
-        }
-      );
-      await oldStorage.get(this.KEY_AUTO_EXIT_MIN).then(
-        async value => {
-          if (value != null) {
-            this.autoExitAppMin = value;
-          } else {
-            this.autoExitAppMin = -1;
-          }
-          await Preferences.set({
-            key: this.KEY_AUTO_EXIT_MIN,
-            value: JSON.stringify(this.autoExitAppMin),
-          });
-        }
-      );
-    }
-    await oldStorage.clear();
-  }
-
   private async _loadStorage() {
-    if (this.platform.is('android')) await Preferences.remove({ key: this.KEY_ANDROID_PREV_NOT_SHOW_UPDATE_NOTES });
-    if (this.platform.is('ios')) await Preferences.remove({ key: this.KEY_IOS_PREV_NOT_SHOW_UPDATE_NOTES });
-    await Preferences.get({ key: this.KEY_START_PAGE }).then(
+    const loadPromise1 = Preferences.get({ key: this.KEY_START_PAGE }).then(
       async result => {
         if (result.value != null) {
           this.startPage = result.value as TabPageType;
@@ -777,7 +195,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_HISTORY_PAGE_START_SEGMENT }).then(
+    const loadPromise2 = Preferences.get({ key: this.KEY_HISTORY_PAGE_START_SEGMENT }).then(
       async result => {
         if (result.value != null) {
           this.historyPageStartSegment = result.value as HistoryPageSegmentType;
@@ -786,7 +204,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_START_PAGE_HEADER }).then(
+    const loadPromise3 = Preferences.get({ key: this.KEY_START_PAGE_HEADER }).then(
       async result => {
         if (result.value != null) {
           this.startPageHeader = result.value as OnOffType;
@@ -795,7 +213,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_SCAN_RECORDS }).then(
+    const loadPromise4 = Preferences.get({ key: this.KEY_SCAN_RECORDS }).then(
       async result => {
         if (result.value != null) {
           try {
@@ -816,7 +234,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_BOOKMARKS }).then(
+    const loadPromise5 = Preferences.get({ key: this.KEY_BOOKMARKS }).then(
       async result => {
         if (result.value != null) {
           try {
@@ -840,7 +258,7 @@ export class EnvService {
         }
       }
     )
-    await Preferences.get({ key: this.KEY_LANGUAGE }).then(
+    const loadPromise6 = Preferences.get({ key: this.KEY_LANGUAGE }).then(
       async result => {
         if (result.value != null) {
           this.selectedLanguage = result.value as 'default' | LanguageType;
@@ -850,7 +268,7 @@ export class EnvService {
         this.toggleLanguageChange();
       }
     );
-    await Preferences.get({ key: this.KEY_COLOR }).then(
+    const loadPromise7 = Preferences.get({ key: this.KEY_COLOR }).then(
       async result => {
         if (result.value != null) {
           this.selectedColorTheme = result.value as 'default' | ColorThemeType;
@@ -860,7 +278,7 @@ export class EnvService {
         await this.toggleColorTheme();
       }
     );
-    await Preferences.get({ key: this.KEY_SHOW_EXIT_APP_ALERT }).then(
+    const loadPromise8 = Preferences.get({ key: this.KEY_SHOW_EXIT_APP_ALERT }).then(
       async result => {
         if (result.value != null) {
           this.showExitAppAlert = result.value as OnOffType;
@@ -869,7 +287,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_DEBUG_MODE }).then(
+    const loadPromise9 = Preferences.get({ key: this.KEY_DEBUG_MODE }).then(
       async result => {
         if (result.value != null) {
           this.debugMode = result.value as OnOffType;
@@ -878,7 +296,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_ORIENTATION }).then(
+    const loadPromise10 = Preferences.get({ key: this.KEY_ORIENTATION }).then(
       async result => {
         if (result.value != null) {
           this.orientation = result.value as 'default' | OrientationType;
@@ -888,7 +306,7 @@ export class EnvService {
         await this.toggleOrientationChange();
       }
     );
-    await Preferences.get({ key: this.KEY_SCAN_RECORD_LOGGING }).then(
+    const loadPromise11 = Preferences.get({ key: this.KEY_SCAN_RECORD_LOGGING }).then(
       async result => {
         if (result.value != null) {
           this.scanRecordLogging = result.value as OnOffType;
@@ -897,7 +315,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_RECORDS_LIMIT }).then(
+    const loadPromise12 = Preferences.get({ key: this.KEY_RECORDS_LIMIT }).then(
       async result => {
         if (result.value != null) {
           this.recordsLimit = JSON.parse(result.value);
@@ -906,7 +324,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_SHOW_NUMBER_OF_RECORDS }).then(
+    const loadPromise13 = Preferences.get({ key: this.KEY_SHOW_NUMBER_OF_RECORDS }).then(
       async result => {
         if (result.value != null) {
           this.showNumberOfRecords = result.value as OnOffType;
@@ -915,7 +333,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_VIBRATION }).then(
+    const loadPromise14 = Preferences.get({ key: this.KEY_VIBRATION }).then(
       async result => {
         if (result.value != null) {
           this.vibration = result.value as VibrationType;
@@ -924,7 +342,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_ERROR_CORRECTION_LEVEL }).then(
+    const loadPromise15 = Preferences.get({ key: this.KEY_ERROR_CORRECTION_LEVEL }).then(
       async result => {
         if (result.value != null) {
           this.errorCorrectionLevel = result.value as ErrorCorrectionLevelType;
@@ -933,7 +351,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_QR_CODE_LIGHT_R }).then(
+    const loadPromise16 = Preferences.get({ key: this.KEY_QR_CODE_LIGHT_R }).then(
       async result => {
         if (result.value != null) {
           this.qrCodeLightR = JSON.parse(result.value);
@@ -942,7 +360,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_QR_CODE_LIGHT_G }).then(
+    const loadPromise17 = Preferences.get({ key: this.KEY_QR_CODE_LIGHT_G }).then(
       async result => {
         if (result.value != null) {
           this.qrCodeLightG = JSON.parse(result.value);
@@ -951,7 +369,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_QR_CODE_LIGHT_B }).then(
+    const loadPromise18 = Preferences.get({ key: this.KEY_QR_CODE_LIGHT_B }).then(
       async result => {
         if (result.value != null) {
           this.qrCodeLightB = JSON.parse(result.value);
@@ -960,7 +378,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_QR_CODE_DARK_R }).then(
+    const loadPromise19 = Preferences.get({ key: this.KEY_QR_CODE_DARK_R }).then(
       async result => {
         if (result.value != null) {
           this.qrCodeDarkR = JSON.parse(result.value);
@@ -969,7 +387,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_QR_CODE_DARK_G }).then(
+    const loadPromise20 = Preferences.get({ key: this.KEY_QR_CODE_DARK_G }).then(
       async result => {
         if (result.value != null) {
           this.qrCodeDarkG = JSON.parse(result.value);
@@ -978,7 +396,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_QR_CODE_DARK_B }).then(
+    const loadPromise21 = Preferences.get({ key: this.KEY_QR_CODE_DARK_B }).then(
       async result => {
         if (result.value != null) {
           this.qrCodeDarkB = JSON.parse(result.value);
@@ -987,7 +405,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_QR_CODE_MARGIN }).then(
+    const loadPromise22 = Preferences.get({ key: this.KEY_QR_CODE_MARGIN }).then(
       async result => {
         if (result.value != null) {
           this.qrCodeMargin = JSON.parse(result.value);
@@ -996,7 +414,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_AUTO_MAX_BRIGHTNESS }).then(
+    const loadPromise23 = Preferences.get({ key: this.KEY_AUTO_MAX_BRIGHTNESS }).then(
       async result => {
         if (result.value != null) {
           this.autoMaxBrightness = result.value as OnOffType;
@@ -1005,7 +423,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_AUTO_OPEN_URL }).then(
+    const loadPromise24 = Preferences.get({ key: this.KEY_AUTO_OPEN_URL }).then(
       async result => {
         if (result.value != null) {
           this.autoOpenUrl = result.value as OnOffType;
@@ -1014,7 +432,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_SEARCH_ENGINE }).then(
+    const loadPromise25 = Preferences.get({ key: this.KEY_SEARCH_ENGINE }).then(
       async result => {
         if (result.value != null) {
           this.searchEngine = result.value as SearchEngineType;
@@ -1023,7 +441,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_RESULT_PAGE_BUTTONS }).then(
+    const loadPromise26 = Preferences.get({ key: this.KEY_RESULT_PAGE_BUTTONS }).then(
       async result => {
         if (result.value != null) {
           this.resultPageButtons = result.value as ResultPageButtonsType;
@@ -1032,7 +450,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_SHOW_QR_AFTER_CAMERA_SCAN }).then(
+    const loadPromise27 = Preferences.get({ key: this.KEY_SHOW_QR_AFTER_CAMERA_SCAN }).then(
       async result => {
         if (result.value != null) {
           this.showQrAfterCameraScan = result.value as OnOffType;
@@ -1041,7 +459,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_SHOW_QR_AFTER_IMAGE_SCAN }).then(
+    const loadPromise28 = Preferences.get({ key: this.KEY_SHOW_QR_AFTER_IMAGE_SCAN }).then(
       async result => {
         if (result.value != null) {
           this.showQrAfterImageScan = result.value as OnOffType;
@@ -1050,7 +468,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_SHOW_QR_AFTER_CREATE }).then(
+    const loadPromise29 = Preferences.get({ key: this.KEY_SHOW_QR_AFTER_CREATE }).then(
       async result => {
         if (result.value != null) {
           this.showQrAfterCreate = result.value as OnOffType;
@@ -1059,7 +477,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_SHOW_QR_AFTER_LOG_VIEW }).then(
+    const loadPromise30 = Preferences.get({ key: this.KEY_SHOW_QR_AFTER_LOG_VIEW }).then(
       async result => {
         if (result.value != null) {
           this.showQrAfterLogView = result.value as OnOffType;
@@ -1068,7 +486,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_SHOW_QR_AFTER_BOOKMARK_VIEW }).then(
+    const loadPromise31 = Preferences.get({ key: this.KEY_SHOW_QR_AFTER_BOOKMARK_VIEW }).then(
       async result => {
         if (result.value != null) {
           this.showQrAfterBookmarkView = result.value as OnOffType;
@@ -1077,7 +495,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_SHOW_SEARCH_BUTTON }).then(
+    const loadPromise32 = Preferences.get({ key: this.KEY_SHOW_SEARCH_BUTTON }).then(
       async result => {
         if (result.value != null) {
           this.showSearchButton = result.value as OnOffType;
@@ -1086,7 +504,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_SHOW_COPY_BUTTON }).then(
+    const loadPromise33 = Preferences.get({ key: this.KEY_SHOW_COPY_BUTTON }).then(
       async result => {
         if (result.value != null) {
           this.showCopyButton = result.value as OnOffType;
@@ -1095,7 +513,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_SHOW_BASE64_BUTTON }).then(
+    const loadPromise34 = Preferences.get({ key: this.KEY_SHOW_BASE64_BUTTON }).then(
       async result => {
         if (result.value != null) {
           this.showBase64Button = result.value as OnOffType;
@@ -1104,7 +522,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_SHOW_ENLARGE_BUTTON }).then(
+    const loadPromise35 = Preferences.get({ key: this.KEY_SHOW_ENLARGE_BUTTON }).then(
       async result => {
         if (result.value != null) {
           this.showEnlargeButton = result.value as OnOffType;
@@ -1113,7 +531,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_SHOW_BOOKMARK_BUTTON }).then(
+    const loadPromise36 = Preferences.get({ key: this.KEY_SHOW_BOOKMARK_BUTTON }).then(
       async result => {
         if (result.value != null) {
           this.showBookmarkButton = result.value as OnOffType;
@@ -1122,7 +540,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_SHOW_OPEN_URL_BUTTON }).then(
+    const loadPromise37 = Preferences.get({ key: this.KEY_SHOW_OPEN_URL_BUTTON }).then(
       async result => {
         if (result.value != null) {
           this.showOpenUrlButton = result.value as OnOffType;
@@ -1131,7 +549,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_SHOW_BROWSE_BUTTON }).then(
+    const loadPromise38 = Preferences.get({ key: this.KEY_SHOW_BROWSE_BUTTON }).then(
       async result => {
         if (result.value != null) {
           this.showBrowseButton = result.value as OnOffType;
@@ -1140,7 +558,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_SHOW_ADD_CONTACT_BUTTON }).then(
+    const loadPromise39 = Preferences.get({ key: this.KEY_SHOW_ADD_CONTACT_BUTTON }).then(
       async result => {
         if (result.value != null) {
           this.showAddContactButton = result.value as OnOffType;
@@ -1149,7 +567,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_SHOW_CALL_BUTTON }).then(
+    const loadPromise40 = Preferences.get({ key: this.KEY_SHOW_CALL_BUTTON }).then(
       async result => {
         if (result.value != null) {
           this.showCallButton = result.value as OnOffType;
@@ -1158,7 +576,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_SHOW_SEND_MESSAGE_BUTTON }).then(
+    const loadPromise41 = Preferences.get({ key: this.KEY_SHOW_SEND_MESSAGE_BUTTON }).then(
       async result => {
         if (result.value != null) {
           this.showSendMessageButton = result.value as OnOffType;
@@ -1167,7 +585,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_SHOW_SEND_EMAIL_BUTTON }).then(
+    const loadPromise42 = Preferences.get({ key: this.KEY_SHOW_SEND_EMAIL_BUTTON }).then(
       async result => {
         if (result.value != null) {
           this.showSendEmailButton = result.value as OnOffType;
@@ -1176,7 +594,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_SHOW_OPEN_FOOD_FACTS_BUTTON }).then(
+    const loadPromise43 = Preferences.get({ key: this.KEY_SHOW_OPEN_FOOD_FACTS_BUTTON }).then(
       async result => {
         if (result.value != null) {
           this.showOpenFoodFactsButton = result.value as OnOffType;
@@ -1185,7 +603,7 @@ export class EnvService {
         }
       }
     );
-    await Preferences.get({ key: this.KEY_AUTO_EXIT_MIN }).then(
+    const loadPromise44 = Preferences.get({ key: this.KEY_AUTO_EXIT_MIN }).then(
       async result => {
         if (result.value != null) {
           this.autoExitAppMin = JSON.parse(result.value);
@@ -1194,6 +612,52 @@ export class EnvService {
         }
       }
     );
+    await Promise.allSettled([
+      loadPromise1,
+      loadPromise2,
+      loadPromise3,
+      loadPromise4,
+      loadPromise5,
+      loadPromise6,
+      loadPromise7,
+      loadPromise8,
+      loadPromise9,
+      loadPromise10,
+      loadPromise11,
+      loadPromise12,
+      loadPromise13,
+      loadPromise14,
+      loadPromise15,
+      loadPromise16,
+      loadPromise17,
+      loadPromise18,
+      loadPromise19,
+      loadPromise20,
+      loadPromise21,
+      loadPromise22,
+      loadPromise23,
+      loadPromise24,
+      loadPromise25,
+      loadPromise26,
+      loadPromise27,
+      loadPromise28,
+      loadPromise29,
+      loadPromise30,
+      loadPromise31,
+      loadPromise32,
+      loadPromise33,
+      loadPromise34,
+      loadPromise35,
+      loadPromise36,
+      loadPromise37,
+      loadPromise38,
+      loadPromise39,
+      loadPromise40,
+      loadPromise41,
+      loadPromise42,
+      loadPromise43,
+      loadPromise44,
+    ]);
   }
 
   public async resetAll() {
@@ -1221,7 +685,6 @@ export class EnvService {
     this.vibration = 'on';
     this.orientation = 'default';
     await this.toggleOrientationChange();
-    this.notShowUpdateNotes = false;
     this.searchEngine = 'google';
     this.resultPageButtons = 'detailed';
     this.showQrAfterCameraScan = 'off';
@@ -1315,13 +778,6 @@ export class EnvService {
     this.orientation = 'default';
     await this.toggleOrientationChange();
     await Preferences.set({ key: this.KEY_ORIENTATION, value: this.orientation });
-
-    this.notShowUpdateNotes = false;
-    if (this.platform.is('ios')) {
-      await Preferences.set({ key: this.KEY_IOS_NOT_SHOW_UPDATE_NOTES, value: 'no' });
-    } else if (this.platform.is('android')) {
-      await Preferences.set({ key: this.KEY_ANDROID_NOT_SHOW_UPDATE_NOTES, value: 'no' });
-    }
 
     this.searchEngine = 'google';
     await Preferences.set({ key: this.KEY_SEARCH_ENGINE, value: this.searchEngine });
