@@ -14,10 +14,10 @@ enum CameraChoice {
 }
 
 @Component({
-    selector: 'app-scan',
-    templateUrl: './scan.page.html',
-    styleUrls: ['./scan.page.scss'],
-    standalone: false
+  selector: 'app-scan',
+  templateUrl: './scan.page.html',
+  styleUrls: ['./scan.page.scss'],
+  standalone: false
 })
 export class ScanPage {
 
@@ -46,20 +46,22 @@ export class ScanPage {
 
   async ionViewDidEnter(): Promise<void> {
     await SplashScreen.hide()
-    await BarcodeScanner.disableTorch().then(
-      _ => {
-        this.flashActive = false;
-      }
-    );
+    const torchState = await BarcodeScanner.getTorchState();
+    if (torchState.isEnabled) {
+      await BarcodeScanner.disableTorch().then(
+        _ => {
+          this.flashActive = false;
+        }
+      ).catch(_ => { });
+    }
     await this.prepareScanner();
   }
 
   async ionViewDidLeave(): Promise<void> {
-    await BarcodeScanner.disableTorch().then(
-      _ => {
-        this.flashActive = false;
-      }
-    );
+    const torchState = await BarcodeScanner.getTorchState();
+    if (torchState.isEnabled) {
+      await BarcodeScanner.disableTorch().catch(_ => { });
+    }
     await this.stopScanner();
   }
 
@@ -158,11 +160,14 @@ export class ScanPage {
         }
       )
     } else {
-      await BarcodeScanner.disableTorch().then(
-        _ => {
-          this.flashActive = false;
-        }
-      );
+      const torchState = await BarcodeScanner.getTorchState();
+      if (torchState.isEnabled) {
+        await BarcodeScanner.disableTorch().then(
+          _ => {
+            this.flashActive = false;
+          }
+        ).catch(_ => { });
+      }
     }
   }
 
