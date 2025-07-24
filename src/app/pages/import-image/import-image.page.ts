@@ -35,7 +35,7 @@ export class ImportImagePage {
     const getPictureLoading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
     const options = {
       quality: 50,
-      allowEditing: true,
+      allowEditing: false,
       resultType: CameraResultType.DataUrl,
       source: CameraSource.Photos
     } as ImageOptions;
@@ -51,8 +51,7 @@ export class ImportImagePage {
                   await this.getJsQr(imageData.imageData.data, imageData.width, imageData.height).then(
                     async qrValue => {
                       decodingLoading.dismiss();
-                      const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
-                      await this.processQrCode(qrValue, loading);
+                      this.processQrCode(qrValue);
                     },
                     async _ => {
                       decodingLoading.dismiss();
@@ -109,17 +108,13 @@ export class ImportImagePage {
     );
   }
 
-  async processQrCode(scannedData: string, loading: HTMLIonLoadingElement): Promise<void> {
+  processQrCode(scannedData: string) {
     this.env.resultContent = scannedData;
     this.env.resultContentFormat = "QR_CODE";
     this.env.recordSource = "scan";
     this.env.detailedRecordSource = "scan-image";
     this.env.viewResultFrom = "/tabs/import-image";
-    this.router.navigate(['tabs/result']).then(
-      () => {
-        loading.dismiss();
-      }
-    );
+    this.router.navigate(['tabs/result']);
   }
 
   async presentAlert(msg: string, head: string, buttonText: string, buttonless: boolean = false): Promise<HTMLIonAlertElement> {

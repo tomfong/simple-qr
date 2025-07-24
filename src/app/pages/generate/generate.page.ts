@@ -11,11 +11,11 @@ import { fadeIn } from 'src/app/utils/animations';
 import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
-    selector: 'app-generate',
-    templateUrl: './generate.page.html',
-    styleUrls: ['./generate.page.scss'],
-    animations: [fadeIn],
-    standalone: false
+  selector: 'app-generate',
+  templateUrl: './generate.page.html',
+  styleUrls: ['./generate.page.scss'],
+  animations: [fadeIn],
+  standalone: false
 })
 export class GeneratePage {
 
@@ -307,23 +307,18 @@ export class GeneratePage {
     } else if (this.qrCodeContent.length > 1817) {
       await this.presentToast(this.translate.instant('MSG.CREATE_QRCODE_MAX_LENGTH'), "short", "bottom");
     } else {
-      const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
-      await this.processQrCode(loading);
+      this.processQrCode();
     }
   }
 
-  async processQrCode(loading: HTMLIonLoadingElement): Promise<void> {
+  processQrCode() {
     this.env.resultContent = this.qrCodeContent;
     this.env.resultContentFormat = "";
     this.qrCodeContent = '';
     this.env.recordSource = "create";
     this.env.detailedRecordSource = "create";
     this.env.viewResultFrom = "/tabs/generate";
-    this.router.navigate(['tabs/result']).then(
-      () => {
-        loading.dismiss();
-      }
-    );
+    this.router.navigate(['tabs/result']);
   }
 
   getVCard(): string {

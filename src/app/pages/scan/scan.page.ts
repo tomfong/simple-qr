@@ -128,8 +128,7 @@ export class ScanPage {
                 }
               })
           }
-          const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
-          await this.processQrCode(text, result.format, loading);
+          this.processQrCode(text, result.format);
         } else {
           this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), "short", "center");
           this.scanQr();
@@ -139,17 +138,13 @@ export class ScanPage {
     );
   }
 
-  async processQrCode(scannedData: string, format: string, loading: HTMLIonLoadingElement): Promise<void> {
+  processQrCode(scannedData: string, format: string,) {
     this.env.resultContent = scannedData;
     this.env.resultContentFormat = format;
     this.env.recordSource = "scan";
     this.env.detailedRecordSource = "scan-camera";
     this.env.viewResultFrom = "/tabs/scan";
-    this.router.navigate(['tabs/result']).then(
-      () => {
-        loading.dismiss();
-      }
-    );
+    this.router.navigate(['tabs/result']);
   }
 
   async toggleFlash(): Promise<void> {

@@ -76,7 +76,7 @@ export class SettingRecordPage {
     const value = JSON.stringify(backup);
     const loading = await this.presentLoading(this.translate.instant("BACKING_UP"));
     const now = format(new Date(), "yyyyMMddHHmmss");
-    const filename = this.platform.is('ios') ? `i-simpleqr-backup-${now}.isqbk` : `simpleqr-backup-${now}.tfsqbk`;
+    const filename = `simpleqr-backup-${now}.txt`;
     await Filesystem.writeFile({
       path: `${filename}`,
       data: JSON.stringify(backup),
@@ -86,12 +86,12 @@ export class SettingRecordPage {
     }).then(
       async result => {
         loading.dismiss();
-        const msg = this.translate.instant("MSG.BACKUP_SUCCESSFULLY") as string;
+        // const msg = this.translate.instant("MSG.BACKUP_SUCCESSFULLY") as string;
         // const secret = `${value.secret1},${value.secret2}`;
         const alert = await this.alertController.create(
           {
             header: this.translate.instant('SUCCESS'),
-            message: msg.replace("{secret}", "(No Secret)"),
+            // message: msg.replace("{secret}", "(No Secret)"),
             cssClass: ['alert-bg', 'alert-can-copy'],
             buttons: [
               {
@@ -152,16 +152,9 @@ export class SettingRecordPage {
         if (value == null) {
           return;
         }
-        if (this.platform.is('ios')) {
-          if (!value.name.toLowerCase().endsWith(".isqbk")) {
-            this.presentToast(this.translate.instant("MSG.INVALID_BK_FILE"), "short", "bottom");
-            return;
-          }
-        } else {
-          if (!value.name.toLowerCase().endsWith(".tfsqbk")) {
-            this.presentToast(this.translate.instant("MSG.INVALID_BK_FILE"), "short", "bottom");
-            return;
-          }
+        if (!value.name.toLowerCase().endsWith(".txt")) {
+          this.presentToast(this.translate.instant("MSG.INVALID_BK_FILE"), "short", "bottom");
+          return;
         }
         const loading2 = await this.presentLoading(this.translate.instant("PLEASE_WAIT"));
         await Filesystem.readFile({
@@ -245,28 +238,6 @@ export class SettingRecordPage {
         this.presentToast(this.translate.instant("MSG.RESTORE_FAILED"), "short", "bottom");
       }
     }
-
-    // const secrets = secret.split(",");
-    // if (secrets.length != 2 || secrets[0].length != 32 || secrets[1].length != 16) {
-    //   this.presentToast(this.translate.instant("MSG.PLEASE_INPUT_VALID_SECRET"), "short", "bottom");
-    //   return;
-    // }
-    // const loading = await this.presentLoading(this.translate.instant("DECRYPTING"));
-    // await this.encryptService.decrypt(value, secrets[0], secrets[1])
-    //   .then(
-    //     async value => {
-    //       loading.dismiss();
-
-    //     }
-    //   )
-    //   .catch(err => {
-    //     loading.dismiss();
-    //     if (this.env.isDebugging) {
-    //       this.presentToast("Error when parsing: " + JSON.stringify(err), "long", "top");
-    //     } else {
-    //       this.presentToast(this.translate.instant("MSG.RESTORE_WRONG_SECRET"), "short", "bottom");
-    //     }
-    //   });
   }
 
   async onExportToCsv() {
@@ -348,87 +319,6 @@ export class SettingRecordPage {
       }
     );
   }
-
-  // async onImportFromCsv() {
-  //   // TODO: Import from CSV
-  //   const loading1 = await this.presentLoading(this.translate.instant("PLEASE_WAIT"));
-  //   await this.chooser.getFile().then(
-  //     async (value: ChooserResult) => {
-  //       if (value == null) {
-  //         loading1.dismiss();
-  //         return;
-  //       }
-  //       if (!value.name.toLowerCase().endsWith(".csv")) {
-  //         loading1.dismiss();
-  //         this.presentToast(`${this.translate.instant("MSG.INVALID_CSV_FILE")} (1)`, "short", "bottom");
-  //         return;
-  //       }
-  //       await Filesystem.readFile({
-  //         path: value.uri,
-  //         encoding: Encoding.UTF8
-  //       }).then(
-  //         async value => {
-  //           loading1.dismiss();
-  //           const loading2 = await this.presentLoading(this.translate.instant("DECODING"));
-  //           const data = value.data;
-  //           if (data.length == 0) {
-  //             loading2.dismiss();
-  //             this.presentToast(`${this.translate.instant("MSG.INVALID_CSV_FILE")} (2)`, "short", "bottom");
-  //             return;
-  //           }
-  //           const lines = data.split("\r\n");
-  //           if (lines.length <= 1) {
-  //             loading2.dismiss();
-  //             this.presentToast(`${this.translate.instant("MSG.INVALID_CSV_FILE")} (3)`, "short", "bottom");
-  //             return;
-  //           }
-  //           const scanRecords = [];
-  //           for (var i = 1; i < lines.length; i++) {
-  //             const line = lines[i];
-  //             if (line.length == 0) {
-  //               loading2.dismiss();
-  //               this.presentToast(`${this.translate.instant("MSG.INVALID_CSV_FILE")} (4)`, "short", "bottom");
-  //               return;
-  //             }
-  //             const items = line.split(`","`);
-  //             if (items.length != 7) {
-  //               loading2.dismiss();
-  //               this.presentToast(`${this.translate.instant("MSG.INVALID_CSV_FILE")} (5)`, "short", "bottom");
-  //               return;
-  //             }
-  //             const id = items[0].replace(`"`, "");
-  //             if (isNaN(parseInt(id))) {
-  //               loading2.dismiss();
-  //               this.presentToast(`${this.translate.instant("MSG.INVALID_CSV_FILE")} (6)`, "short", "bottom");
-  //               return;
-  //             }
-  //           }
-  //           if (scanRecords.length > 0) {
-  //             await this.env.saveRestoredScanRecords(scanRecords);
-  //           }
-  //         }
-  //       ).catch(
-  //         err => {
-  //           loading1.dismiss();
-  //           if (this.env.debugMode === 'on') {
-  //             this.presentToast('Failed to read file', "long", "bottom");
-  //           } else {
-  //             this.presentToast(this.translate.instant("MSG.IMPORT_FAILED"), "short", "bottom");
-  //           }
-  //         }
-  //       )
-  //     }
-  //   ).catch(
-  //     err => {
-  //       loading1.dismiss();
-  //       if (this.env.isDebugging) {
-  //         this.presentToast("Error when call Chooser.getFile: " + JSON.stringify(err), "long", "top");
-  //       } else {
-  //         this.presentToast(this.translate.instant("MSG.IMPORT_FAILED"), "short", "bottom");
-  //       }
-  //     }
-  //   )
-  // }
 
   maskDatetime(date: Date): string {
     if (!date) {

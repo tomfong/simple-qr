@@ -1,0 +1,2 @@
+* Improve performance and loading speed
+* Fix an issue where the camera could not be opened when the flash was not available
