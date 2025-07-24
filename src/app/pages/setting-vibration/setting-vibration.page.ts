@@ -3,9 +3,10 @@ import { Preferences } from '@capacitor/preferences';
 import { EnvService } from 'src/app/services/env.service';
 
 @Component({
-  selector: 'app-setting-vibration',
-  templateUrl: './setting-vibration.page.html',
-  styleUrls: ['./setting-vibration.page.scss'],
+    selector: 'app-setting-vibration',
+    templateUrl: './setting-vibration.page.html',
+    styleUrls: ['./setting-vibration.page.scss'],
+    standalone: false
 })
 export class SettingVibrationPage {
 

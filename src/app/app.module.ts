@@ -8,12 +8,11 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 import { SMS } from '@awesome-cordova-plugins/sms/ngx';
 import { ThemeDetection } from '@awesome-cordova-plugins/theme-detection/ngx';
-import { AES256 } from '@awesome-cordova-plugins/aes-256/ngx';
 import { Chooser } from '@awesome-cordova-plugins/chooser/ngx';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 
@@ -28,18 +27,18 @@ import { FormsModule } from '@angular/forms';
 import { QrCodePageModule } from './modals/qr-code/qr-code.module';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
     declarations: [
         AppComponent
     ],
+    bootstrap: [AppComponent],
     imports: [
         BrowserModule,
         IonicModule.forRoot({ innerHTMLTemplatesEnabled: true }),
         AppRoutingModule,
-        HttpClientModule,
         FormsModule,
         TranslateModule.forRoot({
             loader: {
@@ -55,18 +54,16 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         MatSlideToggleModule,
         MatButtonModule,
         NgbModule,
-    ],
-    providers: [
+    ], providers: [
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
         EnvService,
         DatePipe,
         SMS,
         SocialSharing,
         ThemeDetection,
-        AES256,
         Chooser,
-        ScreenOrientation
-    ],
-    bootstrap: [AppComponent]
+        ScreenOrientation,
+        provideHttpClient(withInterceptorsFromDi())
+    ]
 })
 export class AppModule { }

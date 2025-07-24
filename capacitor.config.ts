@@ -4,7 +4,6 @@ const config: CapacitorConfig = {
   appId: 'com.tomfong.simpleqr',
   appName: 'Simple QR',
   webDir: 'www',
-  bundledWebRuntime: false,
   android: {
     initialFocus: false
   },

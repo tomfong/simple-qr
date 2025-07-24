@@ -10,7 +10,8 @@
 
 <ion-content>
 
-  <ion-list-header class="ion-margin-start ion-padding-horizontal mt-3">{{ 'QR_CODE' | translate }}</ion-list-header>
+  <ion-list-header class="ion-margin-start ion-padding-horizontal mt-3"><ion-text
+      [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'QR_CODE' | translate }}</ion-text></ion-list-header>
   <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setQrStyle()">
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="qr-code-outline">
     </ion-icon>
@@ -56,7 +57,8 @@
     </ion-label>
   </ion-item>
 
-  <ion-list-header class="ion-margin-start ion-padding-horizontal mt-3">{{ 'TASK' | translate }}</ion-list-header>
+  <ion-list-header class="ion-margin-start ion-padding-horizontal mt-3"><ion-text
+      [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'TASK' | translate }}</ion-text></ion-list-header>
   <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setResultPageButtons()">
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/touch.svg">
     </ion-icon>

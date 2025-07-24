@@ -13,9 +13,10 @@ import { Preferences } from '@capacitor/preferences';
 import { QRCodeComponent, QRCodeElementType } from 'angularx-qrcode';
 
 @Component({
-  selector: 'app-qr-code',
-  templateUrl: './qr-code.page.html',
-  styleUrls: ['./qr-code.page.scss'],
+    selector: 'app-qr-code',
+    templateUrl: './qr-code.page.html',
+    styleUrls: ['./qr-code.page.scss'],
+    standalone: false
 })
 export class QrCodePage {
 

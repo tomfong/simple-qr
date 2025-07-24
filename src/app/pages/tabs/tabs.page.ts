@@ -9,9 +9,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 
 @Component({
-  selector: 'app-tabs',
-  templateUrl: 'tabs.page.html',
-  styleUrls: ['tabs.page.scss']
+    selector: 'app-tabs',
+    templateUrl: 'tabs.page.html',
+    styleUrls: ['tabs.page.scss'],
+    standalone: false
 })
 export class TabsPage {
 
@@ -68,29 +69,9 @@ export class TabsPage {
         if (value) {
           console.log(`tabs.page.ts - ionViewDidEnter() - env.startPage: ${this.env.startPage}`)
           await this.router.navigate([this.env.startPage], { replaceUrl: true });
-          await this.loadPatchNote();
         }
       });
     }
-  }
-
-  async loadPatchNote() {
-    const storageKey = this.platform.is('ios') ? this.env.KEY_IOS_NOT_SHOW_UPDATE_NOTES : this.env.KEY_ANDROID_NOT_SHOW_UPDATE_NOTES;
-    await Preferences.get({ key: storageKey }).then(
-      async result => {
-        if (result.value != null) {
-          this.env.notShowUpdateNotes = result.value == 'yes';
-        } else {
-          this.env.notShowUpdateNotes = false;
-        }
-        await Preferences.set({ key: storageKey, value: 'yes' });
-        if (!this.env.notShowUpdateNotes) {
-          this.env.notShowUpdateNotes = true;
-          const versionWording = this.translate.instant("VERSION_VERSION") as string;
-          await this.presentToast(versionWording.replace("{version}", this.env.appVersionNumber), "short", 'bottom');
-        }
-      }
-    )
   }
 
   async showUpdateNotes() {

@@ -5,9 +5,10 @@ import { Toast } from '@capacitor/toast';
 import { EnvService } from 'src/app/services/env.service';
 
 @Component({
-  selector: 'app-setting-auto-qr',
-  templateUrl: './setting-auto-qr.page.html',
-  styleUrls: ['./setting-auto-qr.page.scss'],
+    selector: 'app-setting-auto-qr',
+    templateUrl: './setting-auto-qr.page.html',
+    styleUrls: ['./setting-auto-qr.page.scss'],
+    standalone: false
 })
 export class SettingAutoQrPage {
 

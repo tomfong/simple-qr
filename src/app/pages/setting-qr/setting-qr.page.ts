@@ -9,9 +9,10 @@ import { EnvService } from 'src/app/services/env.service';
 import { rgbToHex } from 'src/app/utils/helpers';
 
 @Component({
-  selector: 'app-setting-qr',
-  templateUrl: './setting-qr.page.html',
-  styleUrls: ['./setting-qr.page.scss'],
+    selector: 'app-setting-qr',
+    templateUrl: './setting-qr.page.html',
+    styleUrls: ['./setting-qr.page.scss'],
+    standalone: false
 })
 export class SettingQrPage {
 

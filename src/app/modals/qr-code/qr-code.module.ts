@@ -8,7 +8,7 @@ import { QrCodePage } from './qr-code.page';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
-import { QRCodeModule } from 'angularx-qrcode';
+import { QRCodeComponent } from 'angularx-qrcode';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -16,10 +16,10 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 
 @NgModule({
   imports: [
+    QRCodeComponent,
     CommonModule,
     FormsModule,
     IonicModule,
-    QRCodeModule,
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,

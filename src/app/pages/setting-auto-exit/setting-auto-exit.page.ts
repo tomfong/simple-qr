@@ -3,9 +3,10 @@ import { Preferences } from '@capacitor/preferences';
 import { EnvService } from 'src/app/services/env.service';
 
 @Component({
-  selector: 'app-setting-auto-exit',
-  templateUrl: './setting-auto-exit.page.html',
-  styleUrls: ['./setting-auto-exit.page.scss'],
+    selector: 'app-setting-auto-exit',
+    templateUrl: './setting-auto-exit.page.html',
+    styleUrls: ['./setting-auto-exit.page.scss'],
+    standalone: false
 })
 export class SettingAutoExitPage{
 

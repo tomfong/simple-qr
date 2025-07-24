@@ -4,9 +4,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 
 @Component({
-  selector: 'app-setting-language',
-  templateUrl: './setting-language.page.html',
-  styleUrls: ['./setting-language.page.scss'],
+    selector: 'app-setting-language',
+    templateUrl: './setting-language.page.html',
+    styleUrls: ['./setting-language.page.scss'],
+    standalone: false
 })
 export class SettingLanguagePage {
 

@@ -6,9 +6,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 
 @Component({
-  selector: 'app-landing',
-  templateUrl: './landing.page.html',
-  styleUrls: ['./landing.page.scss'],
+    selector: 'app-landing',
+    templateUrl: './landing.page.html',
+    styleUrls: ['./landing.page.scss'],
+    standalone: false
 })
 export class LandingPage {
 

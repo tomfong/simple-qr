@@ -3,9 +3,10 @@ import { Preferences } from '@capacitor/preferences';
 import { EnvService } from 'src/app/services/env.service';
 
 @Component({
-  selector: 'app-setting-orientation',
-  templateUrl: './setting-orientation.page.html',
-  styleUrls: ['./setting-orientation.page.scss'],
+    selector: 'app-setting-orientation',
+    templateUrl: './setting-orientation.page.html',
+    styleUrls: ['./setting-orientation.page.scss'],
+    standalone: false
 })
 export class SettingOrientationPage {
 

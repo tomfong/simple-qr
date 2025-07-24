@@ -98,10 +98,14 @@
     <ion-list>
       <ion-list-header class="ion-padding-horizontal" lines="none" *ngIf="env.showNumberOfRecords == 'on'">
         <div class="ion-padding-horizontal" *ngIf="env.recordsLimit !== -1">
-          {{ 'NUMBER_OF_RECORDS' | translate }}: {{ env.scanRecords.length }} / {{ denominator }}
+          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'">
+            {{ 'NUMBER_OF_RECORDS' | translate }}: {{env.scanRecords.length }} / {{ denominator }}
+          </ion-text>
         </div>
         <div class="ion-padding-horizontal" *ngIf="env.recordsLimit === -1">
-          {{ 'NUMBER_OF_RECORDS' | translate }}: {{ env.scanRecords.length }}
+          <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'">
+            {{ 'NUMBER_OF_RECORDS' | translate }}: {{ env.scanRecords.length }}
+          </ion-text>
         </div>
       </ion-list-header>
       <ng-container *ngFor="let record of env.viewingScanRecords; trackBy: scanRecordsTrackByFn; index as i;">

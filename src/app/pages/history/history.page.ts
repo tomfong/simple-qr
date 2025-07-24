@@ -13,10 +13,11 @@ import { fastFadeIn, flyOut } from 'src/app/utils/animations';
 import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
-  selector: 'app-history',
-  templateUrl: './history.page.html',
-  styleUrls: ['./history.page.scss'],
-  animations: [fastFadeIn, flyOut]
+    selector: 'app-history',
+    templateUrl: './history.page.html',
+    styleUrls: ['./history.page.scss'],
+    animations: [fastFadeIn, flyOut],
+    standalone: false
 })
 export class HistoryPage {
 
@@ -208,24 +209,19 @@ export class HistoryPage {
     }
   }
 
-  async viewRecord(data: string, source: "view-log" | "view-bookmark"): Promise<void> {
+  viewRecord(data: string, source: "view-log" | "view-bookmark") {
     this.isLoading = true;
     this.changeDetectorRef.detach();
     this.env.viewingScanRecords = [];
     this.env.viewingBookmarks = [];
     this.changeDetectorRef.detectChanges();
     this.changeDetectorRef.reattach();
-    const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
     this.env.resultContent = data;
     this.env.resultContentFormat = "";
     this.env.recordSource = "view";
     this.env.detailedRecordSource = source;
     this.env.viewResultFrom = "/tabs/history";
-    this.router.navigate(['tabs/result']).then(
-      () => {
-        loading.dismiss();
-      }
-    );
+    this.router.navigate(['tabs/result']);
   }
 
   async segmentChanged(ev: any) {
@@ -269,7 +265,7 @@ export class HistoryPage {
               const bookmark = await this.env.saveBookmark(record.text, data.tag);
               this.env.viewingBookmarks.unshift(bookmark);
               this.env.viewingBookmarks.sort((a, b) => {
-                return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
+                return ('' + a.tag).localeCompare(b.tag ?? '');
               });
               if (bookmark != null) {
                 await this.presentToast(this.translate.instant("MSG.BOOKMARKED"), "short", "bottom");
@@ -359,7 +355,7 @@ export class HistoryPage {
               const newBookmark = await this.env.saveBookmark(bookmark.text, data.tag);
               this.env.viewingBookmarks.unshift(newBookmark);
               this.env.viewingBookmarks.sort((a, b) => {
-                return ('' + a.tag ?? '').localeCompare(b.tag ?? '');
+                return ('' + a.tag).localeCompare(b.tag ?? '');
               });
               this.isLoading = false;
             }

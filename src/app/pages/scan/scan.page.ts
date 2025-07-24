@@ -7,6 +7,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Toast } from '@capacitor/toast';
+import { Camera, CameraResultType, CameraSource, ImageOptions, Photo } from '@capacitor/camera';
+import jsQR from 'jsqr';
 
 enum CameraChoice {
   BACK,
@@ -17,6 +19,7 @@ enum CameraChoice {
   selector: 'app-scan',
   templateUrl: './scan.page.html',
   styleUrls: ['./scan.page.scss'],
+  standalone: false
 })
 export class ScanPage {
 
@@ -45,20 +48,22 @@ export class ScanPage {
 
   async ionViewDidEnter(): Promise<void> {
     await SplashScreen.hide()
-    await BarcodeScanner.disableTorch().then(
-      _ => {
-        this.flashActive = false;
-      }
-    );
+    const torchState = await BarcodeScanner.getTorchState();
+    if (torchState.isEnabled) {
+      await BarcodeScanner.disableTorch().then(
+        _ => {
+          this.flashActive = false;
+        }
+      ).catch(_ => { });
+    }
     await this.prepareScanner();
   }
 
   async ionViewDidLeave(): Promise<void> {
-    await BarcodeScanner.disableTorch().then(
-      _ => {
-        this.flashActive = false;
-      }
-    );
+    const torchState = await BarcodeScanner.getTorchState();
+    if (torchState.isEnabled) {
+      await BarcodeScanner.disableTorch().catch(_ => { });
+    }
     await this.stopScanner();
   }
 
@@ -125,8 +130,7 @@ export class ScanPage {
                 }
               })
           }
-          const loading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
-          await this.processQrCode(text, result.format, loading);
+          this.processQrCode(text, result.format);
         } else {
           this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), "short", "center");
           this.scanQr();
@@ -136,17 +140,133 @@ export class ScanPage {
     );
   }
 
-  async processQrCode(scannedData: string, format: string, loading: HTMLIonLoadingElement): Promise<void> {
-    this.env.resultContent = scannedData;
+  async scanFromImage() {
+    const getPictureLoading = await this.presentLoading(this.translate.instant('PLEASE_WAIT'));
+    const options = {
+      quality: 50,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Photos
+    } as ImageOptions;
+    await Camera.requestPermissions({ permissions: ['photos'] }).then(
+      async permissionResult => {
+        if (permissionResult.photos === 'granted' || permissionResult.photos === 'limited') {
+          await Camera.getPhoto(options).then(
+            async (photo: Photo) => {
+              getPictureLoading.dismiss();
+              const decodingLoading = await this.presentLoading(this.translate.instant('DECODING'));
+              await this.convertDataUrlToImageData(photo?.dataUrl ?? '').then(
+                async imageData => {
+                  await this.getJsQr(imageData.imageData.data, imageData.width, imageData.height).then(
+                    async qrValue => {
+                      decodingLoading.dismiss();
+                      this.processQrCode(qrValue, "QR_CODE");
+                    },
+                    async _ => {
+                      decodingLoading.dismiss();
+                      await this.presentToast(this.translate.instant("MSG.NO_QR_CODE"), "short", "center");
+                    }
+                  )
+                },
+                async _ => {
+                  decodingLoading.dismiss();
+                  await this.presentToast(this.translate.instant("MSG.NO_QR_CODE"), "short", "center");
+                }
+              );
+            },
+            async err => {
+              getPictureLoading.dismiss();
+              if (this.env.isDebugging) {
+                this.presentToast("Error when call Camera.getPhoto: " + JSON.stringify(err), "long", "top");
+              }
+            }
+          );
+        } else {
+          getPictureLoading.dismiss();
+          const alert = await this.alertController.create({
+            header: this.translate.instant("PERMISSION_REQUIRED"),
+            message: this.translate.instant("MSG.READ_IMAGE_PERMISSION"),
+            buttons: [
+              {
+                text: this.translate.instant("SETTING"),
+                handler: () => {
+                  BarcodeScanner.openAppSettings();
+                  return true;
+                }
+              },
+              {
+                text: this.translate.instant("CLOSE"),
+                handler: () => {
+                  return true;
+                }
+              }
+            ],
+            cssClass: ['alert-bg']
+          });
+          await alert.present();
+        }
+      },
+      async err => {
+        getPictureLoading.dismiss();
+        if (this.env.debugMode === 'on') {
+          await Toast.show({ text: 'Err when Camera.requestPermissions: ' + JSON.stringify(err), position: "bottom", duration: "long" })
+        } else {
+          Toast.show({ text: 'Unknown Error', position: "bottom", duration: "short" })
+        }
+      }
+    );
+  }
+
+  private async convertDataUrlToImageData(uri: string): Promise<{ imageData: ImageData, width: number, height: number }> {
+    return await new Promise((resolve, reject) => {
+      if (uri == null) return reject();
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      const image = new Image();
+      image.addEventListener('load', function () {
+        canvas.width = image.width;
+        canvas.height = image.height;
+        context.fillStyle = "white";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+        for (let i = 0; i < data.length; i += 4) {
+          const avg = (imageData.data[i] + imageData.data[i + 1] + imageData.data[i + 2]) / 3;
+          imageData.data[i] = avg;
+          imageData.data[i + 1] = avg;
+          imageData.data[i + 2] = avg;
+        }
+        const width = image.width;
+        const height = image.height;
+        resolve({ imageData: imageData, width: width, height: height });
+      }, false);
+      if (uri.startsWith("data")) {
+        image.src = uri;
+      } else {
+        image.src = "data:image/png;base64," + uri;
+      }
+    });
+  }
+
+  private async getJsQr(imageData: Uint8ClampedArray, width: number, height: number): Promise<string> {
+    return await new Promise((resolve, reject) => {
+      const qrcode = jsQR(imageData, width, height, { inversionAttempts: "attemptBoth" });
+      if (qrcode) {
+        return resolve(qrcode.data);
+      } else {
+        return reject();
+      }
+    });
+  }
+
+  processQrCode(scannedData: string, format: string,) {
+    this.env.resultContent = scannedData
     this.env.resultContentFormat = format;
     this.env.recordSource = "scan";
     this.env.detailedRecordSource = "scan-camera";
     this.env.viewResultFrom = "/tabs/scan";
-    this.router.navigate(['tabs/result']).then(
-      () => {
-        loading.dismiss();
-      }
-    );
+    this.router.navigate(['tabs/result']);
   }
 
   async toggleFlash(): Promise<void> {
@@ -157,11 +277,14 @@ export class ScanPage {
         }
       )
     } else {
-      await BarcodeScanner.disableTorch().then(
-        _ => {
-          this.flashActive = false;
-        }
-      );
+      const torchState = await BarcodeScanner.getTorchState();
+      if (torchState.isEnabled) {
+        await BarcodeScanner.disableTorch().then(
+          _ => {
+            this.flashActive = false;
+          }
+        ).catch(_ => { });
+      }
     }
   }
 
