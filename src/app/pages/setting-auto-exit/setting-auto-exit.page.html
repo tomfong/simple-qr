@@ -21,7 +21,7 @@
     </ion-label>
   </ion-item>
 
-  <ion-radio-group [(ngModel)]="env.autoExitAppMin" (ionChange)="saveAutoExitAppMin()">
+  <ion-radio-group [(ngModel)]="env.autoExitAppMin" (ionChange)="saveAutoExitAppMin()" style="margin-bottom: var(--ion-safe-area-bottom, 0);">
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-label class="ion-padding-start">
         <p class="ion-padding pre-line">

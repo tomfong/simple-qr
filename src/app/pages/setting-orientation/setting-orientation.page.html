@@ -10,7 +10,7 @@
 
 <ion-content>
 
-  <ion-radio-group [(ngModel)]="env.orientation" (ionChange)="saveOrientation()">
+  <ion-radio-group [(ngModel)]="env.orientation" (ionChange)="saveOrientation()" style="margin-bottom: var(--ion-safe-area-bottom, 0);">
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-label class="ion-padding-start">
         <p class="ion-padding pre-line">

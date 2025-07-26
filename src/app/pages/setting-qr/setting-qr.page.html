@@ -215,7 +215,8 @@
 </ion-content>
 
 <ion-footer
-  [ngStyle]="env.colorTheme === 'dark'?  {'background-color': '#222428'} : (env.colorTheme === 'black'? {'background-color': '#000000'} : {'background-color': '#F0F0F0'})">
+  [ngStyle]="env.colorTheme === 'dark'?  {'background-color': '#222428'} : (env.colorTheme === 'black'? {'background-color': '#000000'} : {'background-color': '#F0F0F0'})"
+  style="margin-bottom: var(--ion-safe-area-bottom, 0);">
   <ion-row class="d-flex justify-content-around">
     <ion-button (click)="tapHaptic(); resetDefault()" fill="clear">
       {{ 'RESET_DEFAULT' | translate }}
