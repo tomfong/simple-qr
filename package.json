@@ -1,6 +1,6 @@
 {
   "name": "simple-qr",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "author": "Tom Fong",
   "scripts": {
     "ng": "ng",

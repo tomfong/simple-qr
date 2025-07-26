@@ -21,7 +21,7 @@
     </ion-label>
   </ion-item>
 
-  <ion-radio-group [(ngModel)]="env.searchEngine" (ionChange)="saveSearchEngine()">
+  <ion-radio-group [(ngModel)]="env.searchEngine" (ionChange)="saveSearchEngine()" style="margin-bottom: var(--ion-safe-area-bottom, 0);">
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="logo-google"></ion-icon>
       <ion-label>

@@ -148,70 +148,74 @@ export class ScanPage {
       resultType: CameraResultType.DataUrl,
       source: CameraSource.Photos
     } as ImageOptions;
-    await Camera.requestPermissions({ permissions: ['photos'] }).then(
-      async permissionResult => {
-        if (permissionResult.photos === 'granted' || permissionResult.photos === 'limited') {
-          await Camera.getPhoto(options).then(
-            async (photo: Photo) => {
-              getPictureLoading.dismiss();
-              const decodingLoading = await this.presentLoading(this.translate.instant('DECODING'));
-              await this.convertDataUrlToImageData(photo?.dataUrl ?? '').then(
-                async imageData => {
-                  await this.getJsQr(imageData.imageData.data, imageData.width, imageData.height).then(
-                    async qrValue => {
-                      decodingLoading.dismiss();
-                      this.processQrCode(qrValue, "QR_CODE");
-                    },
-                    async _ => {
-                      decodingLoading.dismiss();
-                      await this.presentToast(this.translate.instant("MSG.NO_QR_CODE"), "short", "center");
-                    }
-                  )
+    const cameraPermissions = await Camera.checkPermissions();
+    if (!(cameraPermissions.photos == "granted" || cameraPermissions.photos == "limited")) {
+      await Camera.requestPermissions({ permissions: ['photos'] }).then(
+        async permissionResult => {
+          if (!(permissionResult.photos == "granted" || permissionResult.photos == "limited")) {
+            getPictureLoading.dismiss();
+            const alert = await this.alertController.create({
+              header: this.translate.instant("PERMISSION_REQUIRED"),
+              message: this.translate.instant("MSG.READ_IMAGE_PERMISSION"),
+              buttons: [
+                {
+                  text: this.translate.instant("SETTING"),
+                  handler: () => {
+                    BarcodeScanner.openAppSettings();
+                    return true;
+                  }
                 },
-                async _ => {
-                  decodingLoading.dismiss();
-                  await this.presentToast(this.translate.instant("MSG.NO_QR_CODE"), "short", "center");
+                {
+                  text: this.translate.instant("CLOSE"),
+                  handler: () => {
+                    return true;
+                  }
                 }
-              );
-            },
-            async err => {
-              getPictureLoading.dismiss();
-              if (this.env.isDebugging) {
-                this.presentToast("Error when call Camera.getPhoto: " + JSON.stringify(err), "long", "top");
-              }
-            }
-          );
-        } else {
+              ],
+              cssClass: ['alert-bg']
+            });
+            await alert.present();
+            return;
+            // TODO: return from scanFromImage()
+          }
+        },
+        async err => {
           getPictureLoading.dismiss();
-          const alert = await this.alertController.create({
-            header: this.translate.instant("PERMISSION_REQUIRED"),
-            message: this.translate.instant("MSG.READ_IMAGE_PERMISSION"),
-            buttons: [
-              {
-                text: this.translate.instant("SETTING"),
-                handler: () => {
-                  BarcodeScanner.openAppSettings();
-                  return true;
-                }
+          if (this.env.debugMode === 'on') {
+            await Toast.show({ text: 'Err when Camera.requestPermissions: ' + JSON.stringify(err), position: "bottom", duration: "long" })
+          } else {
+            Toast.show({ text: 'Unknown Error', position: "bottom", duration: "short" })
+          }
+          return;
+        });
+    }
+    await Camera.getPhoto(options).then(
+      async (photo: Photo) => {
+        getPictureLoading.dismiss();
+        const decodingLoading = await this.presentLoading(this.translate.instant('DECODING'));
+        await this.convertDataUrlToImageData(photo?.dataUrl ?? '').then(
+          async imageData => {
+            await this.getJsQr(imageData.imageData.data, imageData.width, imageData.height).then(
+              async qrValue => {
+                decodingLoading.dismiss();
+                this.processQrCode(qrValue, "QR_CODE");
               },
-              {
-                text: this.translate.instant("CLOSE"),
-                handler: () => {
-                  return true;
-                }
+              async _ => {
+                decodingLoading.dismiss();
+                await this.presentToast(this.translate.instant("MSG.NO_QR_CODE"), "short", "center");
               }
-            ],
-            cssClass: ['alert-bg']
-          });
-          await alert.present();
-        }
+            )
+          },
+          async _ => {
+            decodingLoading.dismiss();
+            await this.presentToast(this.translate.instant("MSG.NO_QR_CODE"), "short", "center");
+          }
+        );
       },
       async err => {
         getPictureLoading.dismiss();
-        if (this.env.debugMode === 'on') {
-          await Toast.show({ text: 'Err when Camera.requestPermissions: ' + JSON.stringify(err), position: "bottom", duration: "long" })
-        } else {
-          Toast.show({ text: 'Unknown Error', position: "bottom", duration: "short" })
+        if (this.env.isDebugging) {
+          this.presentToast("Error when call Camera.getPhoto: " + JSON.stringify(err), "long", "top");
         }
       }
     );

@@ -11,11 +11,11 @@
 <ion-content>
 
   <div class="ion-padding-vertical">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal"><ion-text
+    <h3 class="ion-margin-start ion-padding-horizontal my-1"><ion-text
         [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'INITIAL_SEGMENT' | translate }}</ion-text>
-    </ion-list-header>
+    </h3>
     <ion-radio-group [(ngModel)]="env.historyPageStartSegment" (ionChange)="saveHistoryPageStartSegment()">
-      <ion-item class="ion-no-padding ripple-parent py-1 mt-2" detail="false" lines="none">
+      <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
         <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/history.svg">
         </ion-icon>
         <ion-label>
@@ -28,7 +28,7 @@
         <ion-radio class="ion-margin-end" slot="end" [value]="'history'" [color]="'primary'">
         </ion-radio>
       </ion-item>
-      <ion-item class="ion-no-padding ripple-parent py-1" detail="false" lines="none">
+      <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
         <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="bookmark">
         </ion-icon>
         <ion-label>
@@ -44,7 +44,7 @@
     </ion-radio-group>
   </div>
 
-  <div class="ion-padding-vertical">
+  <!-- <div class="ion-padding-vertical">
     <ion-list-header class="ion-margin-start ion-padding-horizontal"><ion-text
         [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'MANAGE_RECORDS' | translate }}</ion-text>
     </ion-list-header>
@@ -53,9 +53,9 @@
         {{ 'VIEW_INSTRUCTIONS' | translate }}
       </ion-button>
     </div>
-  </div>
+  </div> -->
 
-  <ion-modal #tutorialModal trigger="open-tutorial-modal" [initialBreakpoint]="0.8" [breakpoints]="[0, 0.8]">
+  <!-- <ion-modal #tutorialModal trigger="open-tutorial-modal" [initialBreakpoint]="0.8" [breakpoints]="[0, 0.8]">
     <ng-template>
       <ion-content [color]="color">
         <ion-list-header class="mt-4 ms-3" style="font-size: x-large;"><ion-text
@@ -83,12 +83,12 @@
         </ion-item>
       </ion-content>
     </ng-template>
-  </ion-modal>
+  </ion-modal> -->
 
   <div class="ion-padding-vertical">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal"><ion-text
+    <h3 class="ion-margin-start ion-padding-horizontal my-0"><ion-text
         [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'AUTO_LOGGING' | translate }}</ion-text>
-    </ion-list-header>
+    </h3>
     <ion-item class="ion-no-padding" lines="none">
       <ion-label class="ion-padding-start">
         <p class="ion-padding-horizontal">
@@ -98,7 +98,7 @@
         </p>
       </ion-label>
     </ion-item>
-    <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+    <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" style="--inner-padding-top: 0; --padding-top: 0;">
       <ion-label class="ion-padding-start">
         <p class="ion-padding pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
@@ -113,9 +113,9 @@
   </div>
 
   <div class="ion-padding-vertical">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal"><ion-text
+    <h3 class="ion-margin-start ion-padding-horizontal my-0"><ion-text
         [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'RECORDS_LIMIT' | translate }}</ion-text>
-    </ion-list-header>
+    </h3>
     <ion-item class="ion-no-padding" lines="none">
       <ion-label class="ion-padding-start">
         <p class="ion-padding-horizontal">
@@ -126,7 +126,7 @@
       </ion-label>
     </ion-item>
     <ion-radio-group [(ngModel)]="env.recordsLimit" (ionChange)="saveRecordsLimit()">
-      <ion-item class="ion-no-padding ripple-parent py-1" detail="false" lines="none">
+      <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
         <ion-label class="ion-padding-start">
           <p class="ion-padding-horizontal pre-line">
             <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
@@ -137,7 +137,7 @@
         <ion-radio class="ion-margin-end" slot="end" [value]="30" [color]="'primary'">
         </ion-radio>
       </ion-item>
-      <ion-item class="ion-no-padding ripple-parent py-1" detail="false" lines="none">
+      <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
         <ion-label class="ion-padding-start">
           <p class="ion-padding-horizontal pre-line">
             <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
@@ -148,7 +148,7 @@
         <ion-radio class="ion-margin-end" slot="end" [value]="50" [color]="'primary'">
         </ion-radio>
       </ion-item>
-      <ion-item class="ion-no-padding ripple-parent py-1" detail="false" lines="none">
+      <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
         <ion-label class="ion-padding-start">
           <p class="ion-padding-horizontal pre-line">
             <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
@@ -159,7 +159,7 @@
         <ion-radio class="ion-margin-end" slot="end" [value]="100" [color]="'primary'">
         </ion-radio>
       </ion-item>
-      <ion-item class="ion-no-padding ripple-parent py-1" detail="false" lines="none">
+      <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
         <ion-label class="ion-padding-start">
           <p class="ion-padding-horizontal pre-line">
             <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
@@ -171,7 +171,7 @@
         </ion-radio>
       </ion-item>
     </ion-radio-group>
-    <ion-item class="ion-no-padding ripple-parent py-1 pt-2" detail="false" lines="none">
+    <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-label class="ion-padding-start">
         <p class="ion-padding-horizontal pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
@@ -186,8 +186,9 @@
   </div>
 
   <div class="ion-padding-vertical mb-2">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal"><ion-text
-        [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'BACKUP' | translate }}</ion-text></ion-list-header>
+    <h3 class="ion-margin-start ion-padding-horizontal my-0">
+      <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'BACKUP' | translate }}</ion-text>
+    </h3>
     <ion-item class="ion-no-padding" lines="none">
       <ion-label class="ion-padding-start">
         <p class="ion-padding-horizontal">
@@ -205,8 +206,9 @@
   </div>
 
   <div class="ion-padding-vertical mb-2">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal"><ion-text
-        [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'RESTORE' | translate }}</ion-text></ion-list-header>
+    <h3 class="ion-margin-start ion-padding-horizontal my-0">
+      <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'RESTORE' | translate }}</ion-text>
+    </h3>
     <ion-item class="ion-no-padding" lines="none">
       <ion-label class="ion-padding-start">
         <p class="ion-padding-horizontal">
@@ -216,16 +218,17 @@
         </p>
       </ion-label>
     </ion-item>
-    <div class="ion-padding-horizontal pt-2 d-flex justify-content-center align-content-start flex-column">
+    <div class="ion-padding-horizontal d-flex justify-content-center align-content-start flex-column">
       <ion-button class="ion-padding-horizontal" color="primary" (click)="onRestore()">
         {{ 'RESTORE' | translate }}
       </ion-button>
     </div>
   </div>
 
-  <div class="ion-padding-vertical mb-1">
-    <ion-list-header class="ion-margin-start ion-padding-horizontal"><ion-text
-        [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'EXPORT' | translate }}</ion-text></ion-list-header>
+  <div class="ion-padding-vertical" style="margin-bottom: var(--ion-safe-area-bottom, 0);">
+    <h3 class="ion-margin-start ion-padding-horizontal my-0">
+      <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'EXPORT' | translate }}</ion-text>
+    </h3>
     <ion-item class="ion-no-padding" lines="none">
       <ion-label class="ion-padding-start">
         <p class="ion-padding-horizontal">
@@ -235,7 +238,7 @@
         </p>
       </ion-label>
     </ion-item>
-    <div class="ion-padding-horizontal pt-2 d-flex justify-content-center align-content-start flex-column">
+    <div class="ion-padding-horizontal d-flex justify-content-center align-content-start flex-column">
       <ion-button class="ion-padding-horizontal" color="primary" (click)="onExportToCsv()">
         {{ 'EXPORT_TO_CSV' | translate }}
       </ion-button>
