@@ -146,7 +146,8 @@ export class ScanPage {
       quality: 50,
       allowEditing: false,
       resultType: CameraResultType.DataUrl,
-      source: CameraSource.Photos
+      source: CameraSource.Photos,
+      saveToGallery: false
     } as ImageOptions;
     const cameraPermissions = await Camera.checkPermissions();
     if (!(cameraPermissions.photos == "granted" || cameraPermissions.photos == "limited")) {
