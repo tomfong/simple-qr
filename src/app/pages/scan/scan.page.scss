@@ -1,25 +1,31 @@
-ion-content,
-body {
-    background: none transparent;
-    --background: none transparent;
+body.barcode-scanning-active {
+    visibility: hidden;
+    --background: transparent;
+    --ion-background-color: transparent;
 }
 
-.guide {
-    display: flex;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-    opacity: 1.0;
+ion-content {
+    visibility: visible;
+    --background: transparent;
 }
 
-.guide-frame {
-    width: 60%;
-    max-width: 400px;
-    margin-bottom: 6em;
-    max-height: 50%;
-    opacity: 0.7;
+.square {
+    visibility: visible;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 24px;
+    width: 250px;
+    height: 250px;
+    border: 10px solid rgba($color: #00a5aa, $alpha: 0.5);
+    box-shadow: 0 0 0 4000px rgba(0, 0, 0, 0.3);
 }
 
-// ion-fab {
-//     margin-bottom: var(--ion-safe-area-bottom, 0);
-// }
+.zoom-ratio-wrapper {
+    position: absolute;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%);
+    width: 50%;
+}

@@ -9,7 +9,6 @@ import { VCardContact } from 'src/app/models/v-card-contact';
 import { EnvService, QrResultContentTypeType } from 'src/app/services/env.service';
 import { Toast } from '@capacitor/toast';
 import { MatFormField } from '@angular/material/form-field';
-import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { QrCodePage } from 'src/app/modals/qr-code/qr-code.page';
 import { fadeIn } from 'src/app/utils/animations';
 import { Router } from '@angular/router';

@@ -13,18 +13,25 @@
   </ng-template>
 </ion-header>
 
-<ion-content color="darker" #content>
-  <div class="guide">
-    <img class="svg guide-frame" src="assets/img/guide-frame.svg">
+<ion-content #content>
+  <div #square class="square"></div>
+  @if (minZoomRatio !== undefined && maxZoomRatio !== undefined) {
+  <div class="zoom-ratio-wrapper">
+    <ion-range [min]="minZoomRatio" [max]="maxZoomRatio" [(ngModel)]="zoomRatio"
+      [disabled]="minZoomRatio === undefined || maxZoomRatio === undefined"
+      (ionInput)="setZoomRatio($any($event))"></ion-range>
   </div>
+  }
   <ion-fab vertical="bottom" horizontal="start" slot="fixed">
     <ion-fab-button [color]="'primary'" (click)="tapHaptic(); scanFromImage()">
       <ion-icon name="image"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+  @if (isTorchAvailable) {
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button [color]="flashActive? 'warning' : 'primary'" (click)="tapHaptic(); toggleFlash()">
       <ion-icon name="flashlight"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+  }
 </ion-content>

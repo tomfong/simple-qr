@@ -1,19 +1,20 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, NgZone, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { BarcodeScanner, ScanResult } from '@capacitor-community/barcode-scanner';
+import {
+  BarcodeScanner,
+  BarcodeFormat,
+  LensFacing,
+  StartScanOptions,
+} from '@capacitor-mlkit/barcode-scanning';
 import { SplashScreen } from '@capacitor/splash-screen';
-import { AlertController, IonRouterOutlet, LoadingController, Platform } from '@ionic/angular';
+import { AlertController, InputCustomEvent, IonRouterOutlet, LoadingController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Toast } from '@capacitor/toast';
 import { Camera, CameraResultType, CameraSource, ImageOptions, Photo } from '@capacitor/camera';
 import jsQR from 'jsqr';
-
-enum CameraChoice {
-  BACK,
-  FRONT
-}
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-scan',
@@ -25,11 +26,19 @@ export class ScanPage {
 
   @ViewChild('content') contentEl: HTMLIonContentElement;
 
-  cameraChoice: CameraChoice = CameraChoice.BACK;
   cameraActive: boolean = false;
   flashActive: boolean = false;
 
   permissionAlert: HTMLIonAlertElement;
+
+  isTorchAvailable: boolean = false;
+
+  minZoomRatio: number | undefined;
+  maxZoomRatio: number | undefined;
+  zoomRatio: number = 0;
+
+  @ViewChild('square')
+  public squareElement: ElementRef<HTMLDivElement> | undefined;
 
   constructor(
     public alertController: AlertController,
@@ -38,106 +47,223 @@ export class ScanPage {
     private router: Router,
     public env: EnvService,
     public translate: TranslateService,
+    private readonly ngZone: NgZone,
   ) { }
 
   ionViewWillEnter() {
-    if (this.contentEl != null) {
-      this.contentEl.color = "darker";
-    }
+    // if (this.contentEl != null) {
+    //   this.contentEl.color = "darker";
+    // }
   }
 
   async ionViewDidEnter(): Promise<void> {
     await SplashScreen.hide()
-    const torchState = await BarcodeScanner.getTorchState();
-    if (torchState.isEnabled) {
-      await BarcodeScanner.disableTorch().then(
-        _ => {
-          this.flashActive = false;
-        }
-      ).catch(_ => { });
-    }
     await this.prepareScanner();
   }
 
   async ionViewDidLeave(): Promise<void> {
-    const torchState = await BarcodeScanner.getTorchState();
-    if (torchState.isEnabled) {
-      await BarcodeScanner.disableTorch().catch(_ => { });
-    }
-    await this.stopScanner();
+    try {
+      const { available } = await BarcodeScanner.isTorchAvailable();
+      if (available) {
+        const { enabled } = await BarcodeScanner.isTorchEnabled();
+        if (enabled) {
+          await BarcodeScanner.disableTorch();
+        }
+        this.flashActive = false;
+      }
+    } catch { }
+    await this.stopScannerUsingMlkitModule();
   }
 
-  async stopScanner(): Promise<void> {
+  async stopScannerUsingMlkitModule(): Promise<void> {
+    document.querySelector('body')?.classList.remove('barcode-scanning-active');
     await BarcodeScanner.stopScan();
     this.cameraActive = false;
+    BarcodeScanner.isTorchAvailable().then(async result => {
+      this.isTorchAvailable = result.available;
+      if (this.isTorchAvailable) {
+        const { enabled } = await BarcodeScanner.isTorchEnabled();
+        if (enabled) {
+          await BarcodeScanner.disableTorch();
+        }
+        this.flashActive = false;
+      }
+    })
   }
 
   async prepareScanner(): Promise<void> {
-    const result = await BarcodeScanner.checkPermission({ force: true });
-    if (result.granted) {
-      await this.scanQr();
-    } else {
-      this.permissionAlert?.dismiss();
-      this.permissionAlert = await this.alertController.create({
-        header: this.translate.instant("PERMISSION_REQUIRED"),
-        message: this.translate.instant("MSG.CAMERA_PERMISSION"),
-        buttons: [
-          {
-            text: this.translate.instant("SETTING"),
-            handler: () => {
-              BarcodeScanner.openAppSettings();
-              return true;
-            }
-          },
-          {
-            text: this.translate.instant("CLOSE"),
-            handler: () => {
-              return true;
-            }
+    const cameraPermissions = await BarcodeScanner.checkPermissions();
+    if (cameraPermissions.camera === 'granted') {
+      BarcodeScanner.isTorchAvailable().then(async result => {
+        this.isTorchAvailable = result.available;
+        if (this.isTorchAvailable) {
+          const { enabled } = await BarcodeScanner.isTorchEnabled();
+          if (enabled) {
+            await BarcodeScanner.disableTorch();
           }
-        ],
-        cssClass: ['alert-bg']
-      });
-      await this.permissionAlert.present();
+          this.flashActive = false;
+        }
+      })
+      await this.scanQrUsingMlkitModule();
+    } else {
+      const cameraPermissions2 = await BarcodeScanner.requestPermissions();
+      if (cameraPermissions2.camera === 'granted' || cameraPermissions2.camera === "limited") {
+        BarcodeScanner.isTorchAvailable().then(async result => {
+          this.isTorchAvailable = result.available;
+          if (this.isTorchAvailable) {
+            const { enabled } = await BarcodeScanner.isTorchEnabled();
+            if (enabled) {
+              await BarcodeScanner.disableTorch();
+            }
+            this.flashActive = false;
+          }
+        })
+        await this.scanQrUsingMlkitModule();
+      } else {
+        this.permissionAlert = await this.alertController.create({
+          header: this.translate.instant("PERMISSION_REQUIRED"),
+          message: this.translate.instant("MSG.CAMERA_PERMISSION"),
+          buttons: [
+            {
+              text: this.translate.instant("SETTING"),
+              handler: () => {
+                BarcodeScanner.openSettings();
+                return true;
+              }
+            },
+            {
+              text: this.translate.instant("CLOSE"),
+              handler: () => {
+                return true;
+              }
+            }
+          ],
+          cssClass: ['alert-bg']
+        });
+        await this.permissionAlert.present();
+      }
     }
   }
 
-  async scanQr(): Promise<void> {
-    await this.stopScanner();
-    await BarcodeScanner.hideBackground();
-    this.cameraActive = true;
-    await BarcodeScanner.prepare();
-    if (this.contentEl != null) {
-      this.contentEl.color = "";
-    }
-    await BarcodeScanner.startScan().then(
-      async (result: ScanResult) => {
-        if (result.hasContent) {
-          const text = result.content;
-          if (text == null || text?.trim()?.length <= 0 || text == "") {
-            this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), "short", "center");
-            this.scanQr();
-            return;
-          }
-          if (this.contentEl != null) {
-            this.contentEl.color = "darker";
-          }
-          if (this.env.vibration === 'on' || this.env.vibration === 'on-scanned') {
-            await Haptics.vibrate({ duration: 100 })
-              .catch(async err => {
-                if (this.env.debugMode === 'on') {
-                  await Toast.show({ text: 'Err when Haptics.impact: ' + JSON.stringify(err), position: "top", duration: "long" })
-                }
-              })
-          }
-          this.processQrCode(text, result.format);
-        } else {
-          this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), "short", "center");
-          this.scanQr();
-          return;
-        }
+  async scanQrUsingMlkitModule(): Promise<void> {
+    await this.stopScannerUsingMlkitModule();
+    document.querySelector('body')?.classList.add('barcode-scanning-active');
+
+    const options: StartScanOptions = {
+      formats: [
+        BarcodeFormat.Aztec,
+        BarcodeFormat.Codabar,
+        BarcodeFormat.Code128,
+        BarcodeFormat.Code39,
+        BarcodeFormat.Code93,
+        BarcodeFormat.DataMatrix,
+        BarcodeFormat.Ean13,
+        BarcodeFormat.Ean8,
+        BarcodeFormat.Itf,
+        BarcodeFormat.Pdf417,
+        BarcodeFormat.QrCode,
+        BarcodeFormat.UpcA,
+        BarcodeFormat.UpcE
+      ],
+      lensFacing: LensFacing.Back
+    };
+
+    const squareElementBoundingClientRect =
+      this.squareElement?.nativeElement.getBoundingClientRect();
+    const scaledRect = squareElementBoundingClientRect
+      ? {
+        left: squareElementBoundingClientRect.left * window.devicePixelRatio,
+        right:
+          squareElementBoundingClientRect.right * window.devicePixelRatio,
+        top: squareElementBoundingClientRect.top * window.devicePixelRatio,
+        bottom:
+          squareElementBoundingClientRect.bottom * window.devicePixelRatio,
+        width:
+          squareElementBoundingClientRect.width * window.devicePixelRatio,
+        height:
+          squareElementBoundingClientRect.height * window.devicePixelRatio,
       }
+      : undefined;
+    const detectionCornerPoints = scaledRect
+      ? [
+        [scaledRect.left, scaledRect.top],
+        [scaledRect.left + scaledRect.width, scaledRect.top],
+        [
+          scaledRect.left + scaledRect.width,
+          scaledRect.top + scaledRect.height,
+        ],
+        [scaledRect.left, scaledRect.top + scaledRect.height],
+      ]
+      : undefined;
+
+    const listener = await BarcodeScanner.addListener(
+      'barcodesScanned',
+      async (event) => {
+        this.ngZone.run(
+          async () => {
+            const firstBarcode = event.barcodes[0];
+            if (!firstBarcode) {
+              return;
+            }
+            const cornerPoints = firstBarcode.cornerPoints;
+            if (
+              detectionCornerPoints &&
+              cornerPoints
+            ) {
+              if (
+                detectionCornerPoints[0][0] > cornerPoints[0][0] ||
+                detectionCornerPoints[0][1] > cornerPoints[0][1] ||
+                detectionCornerPoints[1][0] < cornerPoints[1][0] ||
+                detectionCornerPoints[1][1] > cornerPoints[1][1] ||
+                detectionCornerPoints[2][0] < cornerPoints[2][0] ||
+                detectionCornerPoints[2][1] < cornerPoints[2][1] ||
+                detectionCornerPoints[3][0] > cornerPoints[3][0] ||
+                detectionCornerPoints[3][1] < cornerPoints[3][1]
+              ) {
+                return;
+              }
+            }
+            listener.remove();
+            const text = firstBarcode.displayValue;
+            if (text == null || text?.trim()?.length <= 0 || text == "") {
+              this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), "short", "center");
+              this.scanQrUsingMlkitModule();
+              return;
+            }
+            if (this.env.vibration === 'on' || this.env.vibration === 'on-scanned') {
+              await Haptics.vibrate({ duration: 100 })
+                .catch(async err => {
+                  if (this.env.debugMode === 'on') {
+                    await Toast.show({ text: 'Err when Haptics.impact: ' + JSON.stringify(err), position: "top", duration: "long" })
+                  }
+                })
+            }
+            this.processQrCode(text, firstBarcode.format);
+          });
+      },
     );
+    await BarcodeScanner.startScan(options);
+    if (Capacitor.getPlatform() !== 'web') {
+      BarcodeScanner.getMinZoomRatio().then(async (result) => {
+        this.minZoomRatio = result.zoomRatio;
+        await BarcodeScanner.setZoomRatio({
+          zoomRatio: parseInt(this.minZoomRatio as any, 10),
+        });
+        this.zoomRatio = this.minZoomRatio;
+      });
+      BarcodeScanner.getMaxZoomRatio().then((result) => {
+        this.maxZoomRatio = result.zoomRatio;
+      });
+    }
+  }
+
+  async setZoomRatio(event: InputCustomEvent) {
+    if (!this.zoomRatio) {
+      return;
+    }
+    await BarcodeScanner.setZoomRatio({
+      zoomRatio: parseInt(this.zoomRatio as any, 10),
+    });
   }
 
   async scanFromImage() {
@@ -162,7 +288,7 @@ export class ScanPage {
                 {
                   text: this.translate.instant("SETTING"),
                   handler: () => {
-                    BarcodeScanner.openAppSettings();
+                    BarcodeScanner.openSettings();
                     return true;
                   }
                 },
@@ -275,22 +401,19 @@ export class ScanPage {
   }
 
   async toggleFlash(): Promise<void> {
-    if (!this.flashActive) {
-      await BarcodeScanner.enableTorch().then(
-        _ => {
+    try {
+      const { available } = await BarcodeScanner.isTorchAvailable();
+      if (available) {
+        const { enabled } = await BarcodeScanner.isTorchEnabled();
+        if (enabled) {
+          await BarcodeScanner.disableTorch();
+          this.flashActive = false;
+        } else {
+          await BarcodeScanner.enableTorch();
           this.flashActive = true;
         }
-      )
-    } else {
-      const torchState = await BarcodeScanner.getTorchState();
-      if (torchState.isEnabled) {
-        await BarcodeScanner.disableTorch().then(
-          _ => {
-            this.flashActive = false;
-          }
-        ).catch(_ => { });
       }
-    }
+    } catch { }
   }
 
   async presentAlert(msg: string, head: string, buttonText: string, buttonless: boolean = false): Promise<HTMLIonAlertElement> {
