@@ -1,0 +1,4 @@
+* Replace ZXing with ML Kit for scanning
+* Fix Android edge-to-edge issue
+* Update critical dependencies 
+* UI adjustment

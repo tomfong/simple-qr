@@ -1,5 +1,8 @@
 # Simple QR
 
+> **IMPORTANT NOTE**  
+Simple QR now uses `@capacitor-mlkit/barcode-scanning (ML Kit)` instead of `@capacitor-community/barcode-scanner (ZXing)`.
+
 <p align="center"><br><img src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/icon_round.png" width="100" height="100" /></p>
 <p align="center">
   <strong>
@@ -7,7 +10,7 @@
   </strong>
 </p>
 <p align="center">
-  Simple and lightweight app to scan, create and store QR codes
+  A simple app to scan, create and manage QR codes
 </p>
 <br>
 <p align="center">
@@ -20,7 +23,7 @@
 
 ## About
 
-Simple QR is an open-source app to scan, create and store QR codes with a simple UI and experience. No backend service connected. No data collected. No ads.
+Simple QR is an app to scan, create and manage QR codes with a simple UI and experience. No backend service connected. No data collected. No ads.
 
 It's now available on the following platforms.
 
@@ -78,8 +81,8 @@ You are welcomed to help translate the app into more languages (refer to this <a
 
 * Sponsor the project.
 
-    [![GitHub Sponsor](https://img.shields.io/badge/sponsor-30363D?style=flat&logo=GitHub-Sponsors&logoColor=#white)](https://github.com/sponsors/tomfong?frequency=one-time)
-   [![Buy me a Coffee](https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?style=flat&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/tomfong)
+  [![GitHub Sponsor](https://img.shields.io/badge/sponsor-30363D?style=flat&logo=GitHub-Sponsors&logoColor=#white)](https://github.com/sponsors/tomfong?frequency=one-time)
+  [![Buy me a Coffee](https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?style=flat&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/tomfong)
 
 * Star the project.
 
@@ -99,7 +102,6 @@ You are welcomed to help translate the app into more languages (refer to this <a
     * Try to stick to the meaning of the original wordings.
     * Preserve special characters, e.g. ```<p> <b> \n```.
     * Preserve wordings with { }, e.g. ```{secret}```.
-    * Preserve wordings with \" \", e.g. ```\"cozmo/jsQR\"```.
     * <b>DO NOT</b> change the key names.
     * <b>DO NOT</b> change the order.
 4. Email the JSON to me (tomfong.dev@gmail.com) after you finish.
@@ -124,18 +126,18 @@ Thank you the following contributors who have made the app better!
 
 ```sh
   Ionic:
-    Ionic CLI                     : 7.2.1
-    Ionic Framework               : @ionic/angular 8.6.5
-    @angular-devkit/build-angular : 20.1.1
-    @angular-devkit/schematics    : 20.1.1
-    @angular/cli                  : 20.1.1
+    Ionic CLI                     : 7.2.1 
+    Ionic Framework               : @ionic/angular 8.7.3
+    @angular-devkit/build-angular : 20.2.0
+    @angular-devkit/schematics    : 20.2.0
+    @angular/cli                  : 20.2.0
     @ionic/angular-toolkit        : 11.0.1
 
   Capacitor:
-    Capacitor CLI      : 5.7.8
-    @capacitor/android : 5.7.8
-    @capacitor/core    : 5.7.8
-    @capacitor/ios     : 5.7.8
+    Capacitor CLI      : 7.4.3
+    @capacitor/android : 7.4.3
+    @capacitor/core    : 7.4.3
+    @capacitor/ios     : 7.4.3
 ```
 
 ## Privacy Policy
