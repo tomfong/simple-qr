@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Device, DeviceInfo } from '@capacitor/device';
 import { ThemeDetection, ThemeDetectionResponse } from '@awesome-cordova-plugins/theme-detection/ngx';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
-import { LoadingController, Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { format } from 'date-fns';
@@ -14,6 +14,8 @@ import { Toast } from '@capacitor/toast';
 import { v4 as uuidv4 } from 'uuid';
 import { Preferences } from '@capacitor/preferences';
 import { Observable } from 'rxjs';
+import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
+import { StatusBar, Style } from '@capacitor/status-bar';
 
 export declare type LanguageType = 'de' | 'en' | 'fr' | 'it' | 'pt-BR' | 'ru' | 'zh-CN' | 'zh-HK';
 export declare type TabPageType = "/tabs/scan" | "/tabs/generate" | "/tabs/history" | "/tabs/setting";
@@ -33,7 +35,7 @@ export declare type QrCreateContentTypeType = "freeText" | "url" | "contact" | "
 })
 export class EnvService {
 
-  public appVersionNumber: string = '4.2.1';
+  public appVersionNumber: string = '5.0.0';
 
   public startPage: TabPageType = "/tabs/scan";
   public historyPageStartSegment: HistoryPageSegmentType = 'history';
@@ -1133,7 +1135,7 @@ export class EnvService {
         await this.themeDetection.isAvailable().then( // Android 10 or above, iOS
           async (res: ThemeDetectionResponse) => {
             if (res.value) {
-              await this.themeDetection.isDarkModeEnabled().then((res: ThemeDetectionResponse) => {
+              await this.themeDetection.isDarkModeEnabled().then(async (res: ThemeDetectionResponse) => {
                 if (res.value) {
                   this.colorTheme = 'dark';
                   document.body.classList.toggle('dark', true);
@@ -1141,6 +1143,10 @@ export class EnvService {
                   this.overlayContainer.getContainerElement().classList.remove('ng-mat-light');
                   this.overlayContainer.getContainerElement().classList.remove('ng-mat-black');
                   this.overlayContainer.getContainerElement().classList.add('ng-mat-dark');
+                  if (this.platform.is('android')) {
+                    await EdgeToEdge.setBackgroundColor({ color: '#1f1f1f' });
+                    await StatusBar.setStyle({ style: Style.Dark });
+                  }
                 } else {
                   this.colorTheme = 'light';
                   document.body.classList.toggle('dark', false);
@@ -1148,6 +1154,10 @@ export class EnvService {
                   this.overlayContainer.getContainerElement().classList.remove('ng-mat-dark');
                   this.overlayContainer.getContainerElement().classList.remove('ng-mat-black');
                   this.overlayContainer.getContainerElement().classList.add('ng-mat-light');
+                  if (this.platform.is('android')) {
+                    await EdgeToEdge.setBackgroundColor({ color: '#000000' });
+                    await StatusBar.setStyle({ style: Style.Dark });
+                  }
                 }
               }).catch((error: any) => console.error(error));
             } else {
@@ -1157,6 +1167,10 @@ export class EnvService {
               this.overlayContainer.getContainerElement().classList.remove('ng-mat-dark');
               this.overlayContainer.getContainerElement().classList.remove('ng-mat-black');
               this.overlayContainer.getContainerElement().classList.add('ng-mat-light');
+              if (this.platform.is('android')) {
+                await EdgeToEdge.setBackgroundColor({ color: '#000000' });
+                await StatusBar.setStyle({ style: Style.Dark });
+              }
             }
           }
         )
@@ -1168,6 +1182,10 @@ export class EnvService {
       this.overlayContainer.getContainerElement().classList.remove('ng-mat-dark');
       this.overlayContainer.getContainerElement().classList.remove('ng-mat-black');
       this.overlayContainer.getContainerElement().classList.add('ng-mat-light');
+      if (this.platform.is('android')) {
+        await EdgeToEdge.setBackgroundColor({ color: '#000000' });
+        await StatusBar.setStyle({ style: Style.Dark });
+      }
     } else if (this.selectedColorTheme === 'dark') {
       this.colorTheme = 'dark';
       document.body.classList.toggle('dark', true);
@@ -1175,6 +1193,10 @@ export class EnvService {
       this.overlayContainer.getContainerElement().classList.remove('ng-mat-light');
       this.overlayContainer.getContainerElement().classList.remove('ng-mat-black');
       this.overlayContainer.getContainerElement().classList.add('ng-mat-dark');
+      if (this.platform.is('android')) {
+        await EdgeToEdge.setBackgroundColor({ color: '#1f1f1f' });
+        await StatusBar.setStyle({ style: Style.Dark });
+      }
     } else if (this.selectedColorTheme === 'black') {
       this.colorTheme = 'black';
       document.body.classList.toggle('black', true);
@@ -1182,6 +1204,10 @@ export class EnvService {
       this.overlayContainer.getContainerElement().classList.remove('ng-mat-light');
       this.overlayContainer.getContainerElement().classList.remove('ng-mat-dark');
       this.overlayContainer.getContainerElement().classList.add('ng-mat-black');
+      if (this.platform.is('android')) {
+        await EdgeToEdge.setBackgroundColor({ color: '#000000' });
+        await StatusBar.setStyle({ style: Style.Dark });
+      }
     }
   }
 

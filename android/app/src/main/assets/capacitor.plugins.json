@@ -1,15 +1,15 @@
 [
 	{
-		"pkg": "@capacitor-community/barcode-scanner",
-		"classpath": "com.getcapacitor.community.barcodescanner.BarcodeScanner"
-	},
-	{
 		"pkg": "@capacitor-community/contacts",
 		"classpath": "getcapacitor.community.contacts.ContactsPlugin"
 	},
 	{
 		"pkg": "@capacitor-community/screen-brightness",
 		"classpath": "com.elylucas.capscreenbrightness.ScreenBrightnessPlugin"
+	},
+	{
+		"pkg": "@capacitor-mlkit/barcode-scanning",
+		"classpath": "io.capawesome.capacitorjs.plugins.mlkit.barcodescanning.BarcodeScannerPlugin"
 	},
 	{
 		"pkg": "@capacitor/app",
@@ -54,5 +54,13 @@
 	{
 		"pkg": "@capacitor/toast",
 		"classpath": "com.capacitorjs.plugins.toast.ToastPlugin"
+	},
+	{
+		"pkg": "@capawesome/capacitor-android-edge-to-edge-support",
+		"classpath": "io.capawesome.capacitorjs.plugins.androidedgetoedgesupport.EdgeToEdgePlugin"
+	},
+	{
+		"pkg": "@squareetlabs/capacitor-navigation-bar",
+		"classpath": "com.squareetlabs.capacitor.navigationbar.NavigationBarPlugin"
 	}
 ]
