@@ -15,6 +15,9 @@ import { Toast } from '@capacitor/toast';
 import { Camera, CameraResultType, CameraSource, ImageOptions, Photo } from '@capacitor/camera';
 import jsQR from 'jsqr';
 import { Capacitor } from '@capacitor/core';
+import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
+import { StatusBar } from '@capacitor/status-bar';
+import { NavigationBar } from '@squareetlabs/capacitor-navigation-bar';
 
 @Component({
   selector: 'app-scan',
@@ -48,6 +51,7 @@ export class ScanPage {
     public env: EnvService,
     public translate: TranslateService,
     private readonly ngZone: NgZone,
+    private platform: Platform,
   ) { }
 
   ionViewWillEnter() {
@@ -58,7 +62,17 @@ export class ScanPage {
 
   async ionViewDidEnter(): Promise<void> {
     await SplashScreen.hide()
+    if (this.platform.is('android')) {
+      await EdgeToEdge.setBackgroundColor({ color: '#000000' });
+      await StatusBar.setBackgroundColor({ color: '#000000' });
+    }
     await this.prepareScanner();
+  }
+
+  async ionViewWillLeave() {
+    if (this.platform.is('android')) {
+      await EdgeToEdge.enable();
+    }
   }
 
   async ionViewDidLeave(): Promise<void> {
@@ -224,7 +238,7 @@ export class ScanPage {
               }
             }
             listener.remove();
-            const text = firstBarcode.displayValue;
+            const text = firstBarcode.rawValue;
             if (text == null || text?.trim()?.length <= 0 || text == "") {
               this.presentToast(this.translate.instant('MSG.QR_CODE_VALUE_NOT_EMPTY'), "short", "center");
               this.scanQrUsingMlkitModule();
@@ -242,6 +256,8 @@ export class ScanPage {
           });
       },
     );
+    await NavigationBar.setTransparency({ isTransparent: false });
+    await NavigationBar.setColor({ color: '#000000', darkButtons: false });
     await BarcodeScanner.startScan(options);
     if (Capacitor.getPlatform() !== 'web') {
       BarcodeScanner.getMinZoomRatio().then(async (result) => {

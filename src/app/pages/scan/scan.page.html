@@ -1,19 +1,16 @@
-<ion-header>
-  <div *ngIf="env.startPage == '/tabs/scan' && env.startPageHeader == 'on'; then mainHeader else selfHeader">
-  </div>
-  <ng-template #mainHeader>
-    <ion-toolbar color="primary">
-      <ion-title>{{ 'SIMPLE_QR' | translate}}</ion-title>
-    </ion-toolbar>
-  </ng-template>
-  <ng-template #selfHeader>
-    <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'">
-      <ion-title>{{ 'SCAN' | translate }}</ion-title>
-    </ion-toolbar>
-  </ng-template>
+<ion-header class="ion-no-border">
+  @if (env.startPage == '/tabs/scan' && env.startPageHeader == 'on') {
+  <ion-toolbar>
+    <ion-title [color]="'white'">{{ 'SIMPLE_QR' | translate}}</ion-title>
+  </ion-toolbar>
+  } @else {
+  <ion-toolbar>
+    <ion-title [color]="'white'">{{ 'SCAN' | translate }}</ion-title>
+  </ion-toolbar>
+  }
 </ion-header>
 
-<ion-content #content>
+<ion-content #content class="ion-no-border">
   <div #square class="square"></div>
   @if (minZoomRatio !== undefined && maxZoomRatio !== undefined) {
   <div class="zoom-ratio-wrapper">
@@ -22,15 +19,15 @@
       (ionInput)="setZoomRatio($any($event))"></ion-range>
   </div>
   }
-  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
-    <ion-fab-button [color]="'primary'" (click)="tapHaptic(); scanFromImage()">
-      <ion-icon name="image"></ion-icon>
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed" class="ion-no-border">
+    <ion-fab-button (click)="tapHaptic(); scanFromImage()">
+      <ion-icon name="image" [color]="'white'"></ion-icon>
     </ion-fab-button>
   </ion-fab>
   @if (isTorchAvailable) {
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button [color]="flashActive? 'warning' : 'primary'" (click)="tapHaptic(); toggleFlash()">
-      <ion-icon name="flashlight"></ion-icon>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="ion-no-border">
+    <ion-fab-button (click)="tapHaptic(); toggleFlash()">
+      <ion-icon name="flashlight" [color]="flashActive? 'warning' : 'white'"></ion-icon>
     </ion-fab-button>
   </ion-fab>
   }

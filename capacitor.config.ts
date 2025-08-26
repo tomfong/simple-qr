@@ -18,7 +18,10 @@ const config: CapacitorConfig = {
       splashFullScreen: true,
       splashImmersive: true,
       layoutName: "launch_screen",
-    }
+    },
+    EdgeToEdge: {
+      backgroundColor: '#000000',  // Opaque black
+    },
   },
   cordova: {
     preferences: {

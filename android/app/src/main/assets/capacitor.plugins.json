@@ -54,5 +54,13 @@
 	{
 		"pkg": "@capacitor/toast",
 		"classpath": "com.capacitorjs.plugins.toast.ToastPlugin"
+	},
+	{
+		"pkg": "@capawesome/capacitor-android-edge-to-edge-support",
+		"classpath": "io.capawesome.capacitorjs.plugins.androidedgetoedgesupport.EdgeToEdgePlugin"
+	},
+	{
+		"pkg": "@squareetlabs/capacitor-navigation-bar",
+		"classpath": "com.squareetlabs.capacitor.navigationbar.NavigationBarPlugin"
 	}
 ]

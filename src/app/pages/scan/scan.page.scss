@@ -19,7 +19,7 @@ ion-content {
     width: 250px;
     height: 250px;
     border: 10px solid rgba($color: #00a5aa, $alpha: 0.5);
-    box-shadow: 0 0 0 4000px rgba(0, 0, 0, 0.3);
+    opacity: 0.7 !important;
 }
 
 .zoom-ratio-wrapper {
@@ -28,4 +28,22 @@ ion-content {
     bottom: 16px;
     transform: translateX(-50%);
     width: 50%;
+}
+
+ion-range {
+    opacity: 0.8 !important;
+}
+
+ion-toolbar {
+    --background: transparent !important;
+    --border-color: transparent !important;
+}
+
+ion-fab-button {
+    --background: transparent !important;
+    --box-shadow: none !important;
+}
+
+ion-fab {
+    z-index: 20; /* Above overlay and zoom slider */
 }
