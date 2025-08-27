@@ -13,13 +13,13 @@ ion-content {
     visibility: visible;
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: calc(45% + env(safe-area-inset-top, 0));
     transform: translate(-50%, -50%);
-    border-radius: 24px;
-    width: 250px;
-    height: 250px;
-    border: 10px solid rgba($color: #00a5aa, $alpha: 0.5);
-    opacity: 0.7 !important;
+    border-radius: 18px;
+    width: 225px;
+    height: 225px;
+    border: 8px solid rgba($color: #00a5aa, $alpha: 0.5);
+    opacity: 0.6 !important;
 }
 
 .zoom-ratio-wrapper {

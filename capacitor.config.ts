@@ -5,7 +5,8 @@ const config: CapacitorConfig = {
   appName: 'Simple QR',
   webDir: 'www',
   android: {
-    initialFocus: false
+    initialFocus: false,
+    adjustMarginsForEdgeToEdge: "force"
   },
   plugins: {
     SplashScreen: {

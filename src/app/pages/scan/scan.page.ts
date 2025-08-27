@@ -179,7 +179,7 @@ export class ScanPage {
         BarcodeFormat.UpcA,
         BarcodeFormat.UpcE
       ],
-      lensFacing: LensFacing.Back
+      lensFacing: LensFacing.Back,
     };
 
     const squareElementBoundingClientRect =
@@ -187,25 +187,19 @@ export class ScanPage {
     const scaledRect = squareElementBoundingClientRect
       ? {
         left: squareElementBoundingClientRect.left * window.devicePixelRatio,
-        right:
-          squareElementBoundingClientRect.right * window.devicePixelRatio,
+        right: squareElementBoundingClientRect.right * window.devicePixelRatio,
         top: squareElementBoundingClientRect.top * window.devicePixelRatio,
-        bottom:
-          squareElementBoundingClientRect.bottom * window.devicePixelRatio,
-        width:
-          squareElementBoundingClientRect.width * window.devicePixelRatio,
-        height:
-          squareElementBoundingClientRect.height * window.devicePixelRatio,
+        bottom: squareElementBoundingClientRect.bottom * window.devicePixelRatio,
+        width: squareElementBoundingClientRect.width * window.devicePixelRatio,
+        height: squareElementBoundingClientRect.height * window.devicePixelRatio,
       }
       : undefined;
+
     const detectionCornerPoints = scaledRect
       ? [
         [scaledRect.left, scaledRect.top],
         [scaledRect.left + scaledRect.width, scaledRect.top],
-        [
-          scaledRect.left + scaledRect.width,
-          scaledRect.top + scaledRect.height,
-        ],
+        [scaledRect.left + scaledRect.width, scaledRect.top + scaledRect.height],
         [scaledRect.left, scaledRect.top + scaledRect.height],
       ]
       : undefined;
