@@ -1,3 +1,4 @@
+* Remove internet and storage access
 * Replace ZXing with ML Kit for scanning
 * Support zooming in
 * Fix Android edge-to-edge issue
