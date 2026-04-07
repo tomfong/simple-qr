@@ -10,10 +10,15 @@
 
 <ion-content>
 
-  <ion-radio-group [(ngModel)]="env.orientation" (ionChange)="saveOrientation()" style="margin-bottom: var(--ion-safe-area-bottom, 0);">
+  <ion-list-header class="ion-margin-start ion-padding-horizontal mt-1">
+    <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'SCREEN_ORIENTATION' | translate }}</ion-text>
+  </ion-list-header>
+
+  <ion-radio-group [(ngModel)]="env.orientation" (ionChange)="saveOrientation()"
+    style="margin-bottom: var(--ion-safe-area-bottom, 0);">
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-label class="ion-padding-start">
-        <p class="ion-padding pre-line">
+        <p class="ion-padding-horizontal pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
             {{ 'SYSTEM_DEFAULT' | translate }}
           </ion-text>
@@ -24,7 +29,7 @@
     </ion-item>
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-label class="ion-padding-start">
-        <p class="ion-padding pre-line">
+        <p class="ion-padding-horizontal pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
             {{ 'LOCK_PORTRAIT' | translate }}
           </ion-text>
@@ -35,7 +40,7 @@
     </ion-item>
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-label class="ion-padding-start">
-        <p class="ion-padding pre-line">
+        <p class="ion-padding-horizontal pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
             {{ 'LOCK_LANDSCAPE' | translate }}
           </ion-text>

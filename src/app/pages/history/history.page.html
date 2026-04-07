@@ -50,7 +50,7 @@
       <ng-container *ngFor="let _ of dummyArr">
         <ion-item class="ion-no-padding ripple-parent" detail="false" [lines]="'full'">
           <ion-label class="ion-padding-start">
-            <div class="ion-padding">
+            <div class="ion-padding-horizontal">
               <p>
                 <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
                   <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
@@ -114,7 +114,7 @@
             [lines]="i === env.viewingScanRecords.length - 1? 'none' : 'full'"
             (click)="viewRecord(record.text, 'view-log')">
             <ion-label class="ion-padding-start">
-              <div class="ion-padding" style="overflow-x: clip; text-overflow: ellipsis;">
+              <div class="ion-padding-horizontal" style="overflow-x: clip; text-overflow: ellipsis;">
                 <p *ngIf="env.debugMode === 'on'">
                   <ion-text color="medium">
                     Index {{ i }}

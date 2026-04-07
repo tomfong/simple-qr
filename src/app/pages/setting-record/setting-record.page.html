@@ -90,8 +90,8 @@
         [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'AUTO_LOGGING' | translate }}</ion-text>
     </h3>
     <ion-item class="ion-no-padding" lines="none">
-      <ion-label class="ion-padding-start">
-        <p class="ion-padding-horizontal">
+      <ion-label class="ion-padding-start ion-margin-start">
+        <p>
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
             {{ 'MSG.AUTO_LOGGING_EXPLAIN' | translate }}
           </ion-text>
@@ -100,7 +100,7 @@
     </ion-item>
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" style="--inner-padding-top: 0; --padding-top: 0;">
       <ion-label class="ion-padding-start">
-        <p class="ion-padding pre-line">
+        <p class="ion-padding-horizontal pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
             {{ (env.scanRecordLogging == 'on'? 'TURNED_ON' : 'TURNED_OFF') | translate }}
           </ion-text>
@@ -117,8 +117,8 @@
         [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'RECORDS_LIMIT' | translate }}</ion-text>
     </h3>
     <ion-item class="ion-no-padding" lines="none">
-      <ion-label class="ion-padding-start">
-        <p class="ion-padding-horizontal">
+      <ion-label class="ion-padding-start ion-margin-start">
+        <p>
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
             {{ 'MSG.RECORDS_LIMIT_EXPLAIN' | translate }}
           </ion-text>
@@ -190,8 +190,8 @@
       <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'BACKUP' | translate }}</ion-text>
     </h3>
     <ion-item class="ion-no-padding" lines="none">
-      <ion-label class="ion-padding-start">
-        <p class="ion-padding-horizontal">
+      <ion-label class="ion-padding-start ion-margin-start">
+        <p>
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
             {{ 'MSG.BACKUP_EXPLAIN' | translate }}
           </ion-text>
@@ -210,8 +210,8 @@
       <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'RESTORE' | translate }}</ion-text>
     </h3>
     <ion-item class="ion-no-padding" lines="none">
-      <ion-label class="ion-padding-start">
-        <p class="ion-padding-horizontal">
+      <ion-label class="ion-padding-start ion-margin-start">
+        <p>
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
             {{ (isIOS? 'MSG.RESTORE_EXPLAIN_IOS' : 'MSG.RESTORE_EXPLAIN') | translate }}
           </ion-text>
@@ -230,8 +230,8 @@
       <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'EXPORT' | translate }}</ion-text>
     </h3>
     <ion-item class="ion-no-padding" lines="none">
-      <ion-label class="ion-padding-start">
-        <p class="ion-padding-horizontal">
+      <ion-label class="ion-padding-start ion-margin-start">
+        <p>
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
             {{ 'MSG.EXPORT_TO_CSV_EXPLAIN' | translate }}
           </ion-text>

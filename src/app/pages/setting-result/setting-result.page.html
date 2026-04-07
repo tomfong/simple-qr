@@ -10,13 +10,13 @@
 
 <ion-content>
 
-  <ion-list-header class="ion-margin-start ion-padding-horizontal mt-3"><ion-text
+  <ion-list-header class="ion-margin-start ion-padding-horizontal mt-1"><ion-text
       [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'QR_CODE' | translate }}</ion-text></ion-list-header>
   <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setQrStyle()">
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="qr-code-outline">
     </ion-icon>
     <ion-label>
-      <p class="ion-padding pre-line">
+      <p class="ion-padding-horizontal pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'QR_CODE_STYLE' | translate }}
         </ion-text>
@@ -27,7 +27,7 @@
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/popup.svg">
     </ion-icon>
     <ion-label>
-      <p class="ion-padding pre-line">
+      <p class="ion-padding-horizontal pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'AUTO_QR_CODE_POPUP' | translate }}
         </ion-text>
@@ -38,7 +38,7 @@
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="sunny">
     </ion-icon>
     <ion-label>
-      <p class="ion-padding pre-line">
+      <p class="ion-padding-horizontal pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'AUTO_MAX_BRIGHTNESS' | translate }}
         </ion-text>
@@ -49,7 +49,7 @@
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="open">
     </ion-icon>
     <ion-label>
-      <p class="ion-padding pre-line">
+      <p class="ion-padding-horizontal pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'AUTO_OPEN_URL' | translate }}
         </ion-text>
@@ -57,13 +57,13 @@
     </ion-label>
   </ion-item>
 
-  <ion-list-header class="ion-margin-start ion-padding-horizontal mt-3"><ion-text
+  <ion-list-header class="ion-margin-start ion-padding-horizontal mt-1"><ion-text
       [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'TASK' | translate }}</ion-text></ion-list-header>
   <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setResultPageButtons()">
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/touch.svg">
     </ion-icon>
     <ion-label>
-      <p class="ion-padding pre-line">
+      <p class="ion-padding-horizontal pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'TASK_BUTTON_LAYOUT' | translate }}
         </ion-text>
@@ -93,7 +93,7 @@
       src="assets/icon/brave-search.svg">
     </ion-icon>
     <ion-label>
-      <p class="ion-padding pre-line">
+      <p class="ion-padding-horizontal pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'SEARCH_ENGINE' | translate }}
         </ion-text>

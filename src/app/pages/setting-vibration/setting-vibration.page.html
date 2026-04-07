@@ -11,8 +11,8 @@
 <ion-content>
 
   <ion-item class="ion-no-padding" lines="none">
-    <ion-label class="ion-padding-start">
-      <p class="ion-padding-top ion-padding-horizontal">
+    <ion-label class="ion-padding-start ion-margin-start ion-margin-top">
+      <p>
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
           <div [innerHTML]="'MSG.VIBRATION_EXPLAIN' | translate">
           </div>
@@ -24,7 +24,7 @@
   <ion-radio-group [(ngModel)]="env.vibration" (ionChange)="saveVibration()" style="margin-bottom: var(--ion-safe-area-bottom, 0);">
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-label class="ion-padding-start">
-        <p class="ion-padding pre-line">
+        <p class="ion-padding-horizontal pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
             {{ 'TURN_ON' | translate }}
           </ion-text>
@@ -36,7 +36,7 @@
     </ion-item>
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-label class="ion-padding-start">
-        <p class="ion-padding pre-line">
+        <p class="ion-padding-horizontal pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
             {{ 'HAPTIC_FEEDBACK_ONLY' | translate }}
           </ion-text>
@@ -48,7 +48,7 @@
     </ion-item>
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-label class="ion-padding-start">
-        <p class="ion-padding pre-line">
+        <p class="ion-padding-horizontal pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
             {{ 'SCANNING_FEEDBACK_ONLY' | translate }}
           </ion-text>
@@ -60,7 +60,7 @@
     </ion-item>
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-label class="ion-padding-start">
-        <p class="ion-padding pre-line">
+        <p class="ion-padding-horizontal pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
             {{ 'TURN_OFF' | translate }}
           </ion-text>
