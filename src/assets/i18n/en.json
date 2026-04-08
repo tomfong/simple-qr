@@ -48,6 +48,7 @@
     "COLOR": "Color",
     "COLOR_THEME": "Color Theme",
     "COMING_SOON": "Coming soon",
+    "CONNECT_TO_WIFI": "Connect to Wi‑Fi",
     "CONTACT_METHOD": "Contact Method",
     "CONTACT_NAME": "Contact Name",
     "CONTENT": "Content",
@@ -84,6 +85,7 @@
     "EXPORT": "Export",
     "EXPORTING": "Exporting",
     "EXPORT_TO_CSV": "Export to CSV",
+    "EXTERNALLY_SHARED": "Shared from External",
     "FAX_NUMBER": "Fax Number",
     "FEMALE": "Female",
     "FIRST_NAME": "First Name",
@@ -303,6 +305,8 @@
         "TUTORIAL_SWIPE_RIGHT": "Swipe right to bookmark the text of corresponding record / edit the tag of corresponding bookmark.",
         "UNDO_DELETE": "You can undo the deletion",
         "VIBRATION_EXPLAIN": "Provide vibration or haptic feedback. Please note that not all devices support this feature."
+        ,
+        "WIFI_PASSWORD_COPIED": "Wi‑Fi password copied"
     },
     "BARCODE_TYPE": {
         "1D": "1D Barcode ",

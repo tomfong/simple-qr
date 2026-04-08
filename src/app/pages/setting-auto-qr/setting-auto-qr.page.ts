@@ -46,6 +46,15 @@ export class SettingAutoQrPage {
     await this.tapHaptic();
   }
 
+  async onShowQrAfterExternalShareChange(ev: any) {
+    this.env.showQrAfterExternalShare = ev ? 'on' : 'off';
+    await Preferences.set({
+      key: this.env.KEY_SHOW_QR_AFTER_EXTERNAL_SHARE,
+      value: this.env.showQrAfterExternalShare,
+    });
+    await this.tapHaptic();
+  }
+
   async tapHaptic() {
     if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
       await Haptics.impact({ style: ImpactStyle.Light })

@@ -35,7 +35,7 @@ export declare type QrCreateContentTypeType = "freeText" | "url" | "contact" | "
 })
 export class EnvService {
 
-  public appVersionNumber: string = '5.0.1';
+  public appVersionNumber: string = '5.1.0';
 
   public startPage: TabPageType = "/tabs/scan";
   public historyPageStartSegment: HistoryPageSegmentType = 'history';
@@ -67,6 +67,7 @@ export class EnvService {
   public showQrAfterCreate: OnOffType = 'on';
   public showQrAfterLogView: OnOffType = 'on';
   public showQrAfterBookmarkView: OnOffType = 'on';
+  public showQrAfterExternalShare: OnOffType = 'on';
   public showSearchButton: OnOffType = 'on';
   public showCopyButton: OnOffType = 'on';
   public showBase64Button: OnOffType = 'on';
@@ -79,6 +80,7 @@ export class EnvService {
   public showSendMessageButton: OnOffType = 'on';
   public showSendEmailButton: OnOffType = 'on';
   public showOpenFoodFactsButton: OnOffType = 'on';
+  public showConnectWifiButton: OnOffType = 'on';
   public showExitAppAlert: OnOffType = "on";
   public debugMode: OnOffType = 'off';
   public autoExitAppMin: 1 | 3 | 5 | -1 = -1;
@@ -114,6 +116,7 @@ export class EnvService {
   public readonly KEY_SHOW_QR_AFTER_CREATE = "show-qr-after-create";
   public readonly KEY_SHOW_QR_AFTER_LOG_VIEW = "show-qr-after-log-view";
   public readonly KEY_SHOW_QR_AFTER_BOOKMARK_VIEW = "show-qr-after-bookmark-view";
+  public readonly KEY_SHOW_QR_AFTER_EXTERNAL_SHARE = "show-qr-after-external-share";
   public readonly KEY_SHOW_SEARCH_BUTTON = "showSearchButton";
   public readonly KEY_SHOW_COPY_BUTTON = "showCopyButton";
   public readonly KEY_SHOW_BASE64_BUTTON = "showBase64Button";
@@ -126,6 +129,7 @@ export class EnvService {
   public readonly KEY_SHOW_SEND_MESSAGE_BUTTON = "showSendMessageButton";
   public readonly KEY_SHOW_SEND_EMAIL_BUTTON = "showSendEmailButton";
   public readonly KEY_SHOW_OPEN_FOOD_FACTS_BUTTON = "showOpenFoodFactsButton";
+  public readonly KEY_SHOW_CONNECT_WIFI_BUTTON = "showConnectWifiButton";
   public readonly KEY_AUTO_EXIT_MIN = "autoExitAppMin";
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
@@ -147,19 +151,25 @@ export class EnvService {
   resultContent: string = '';
   editingContent: boolean = false;
   resultContentFormat: string = '';
+  isSharedContent: boolean = false;
+  pendingLaunchUrlCheck: boolean = false; // Flag to track when we're checking for launch URL
+  pendingShareNavigation: boolean = false; // Flag to track if we're navigating due to shared content
   scanRecords: ScanRecord[] = [];
   bookmarks: Bookmark[] = [];
   viewingScanRecords: ScanRecord[] = [];
   viewingBookmarks: Bookmark[] = [];
   private _deviceInfo: DeviceInfo | undefined = undefined;
 
-  recordSource: 'create' | 'view' | 'scan';
-  detailedRecordSource: 'create' | 'view-log' | 'view-bookmark' | 'scan-camera' | 'scan-image';
-  viewResultFrom: '/tabs/scan' | '/tabs/generate' | '/tabs/history';
+  recordSource: 'create' | 'view' | 'scan' | 'external-share' | undefined;
+  detailedRecordSource: 'create' | 'view-log' | 'view-bookmark' | 'scan-camera' | 'scan-image' | 'external-share' | undefined;
+  viewResultFrom: '/tabs/scan' | '/tabs/generate' | '/tabs/history' | undefined;
 
   public firstAppLoad: boolean = true;  // once loaded, turn it false
 
-  initObservable: Observable<boolean>;
+  initObservable: Observable<boolean> | undefined;
+
+  private _criticalInitPromise: Promise<void> | undefined;
+  private _fullInitPromise: Promise<void> | undefined;
 
   constructor(
     private platform: Platform,
@@ -169,25 +179,53 @@ export class EnvService {
     private themeDetection: ThemeDetection,
     private screenOrientation: ScreenOrientation,
   ) {
-    this.platform.ready().then(
-      async _ => {
-        this.initObservable = new Observable<boolean>(subs => {
-          new Promise(async _ => {
-            await Device.getInfo().then(
-              value => {
-                this._deviceInfo = value;
-              }
-            );
-            await this._loadStorage();
-            console.log(`env.service.ts - constructor - _loadStorage()`)
-            subs.next(true);
-          });
+    // Keep the original contract: pages can subscribe and get a single `true`
+    // once the minimal startup preferences are ready (e.g. `startPage`).
+    // Defer non-critical preference loading (records/bookmarks, etc.) to avoid
+    // slowing down first render / initial navigation.
+    this.initObservable = new Observable<boolean>(subs => {
+      this.ensureCriticalInit()
+        .then(() => {
+          subs.next(true);
+          subs.complete();
+        })
+        .catch(() => {
+          // Don't block app start if preferences fail to load.
+          subs.next(true);
+          subs.complete();
         });
-      }
-    )
+    });
   }
 
-  private async _loadStorage() {
+  private ensureCriticalInit(): Promise<void> {
+    if (this._criticalInitPromise) return this._criticalInitPromise;
+    this._criticalInitPromise = (async () => {
+      await this.platform.ready();
+      try {
+        this._deviceInfo = await Device.getInfo();
+      } catch {
+        // Ignore
+      }
+      await this._loadStorageCritical();
+
+      // Kick off the remaining preference/data loading in the background.
+      // This keeps behavior the same, but moves work off the app's critical path.
+      this.ensureFullInit();
+    })();
+    return this._criticalInitPromise;
+  }
+
+  private ensureFullInit(): Promise<void> {
+    if (this._fullInitPromise) return this._fullInitPromise;
+    this._fullInitPromise = (async () => {
+      // Wait for critical init so we don't duplicate platform/device work.
+      await this.ensureCriticalInit();
+      await this._loadStorageDeferred();
+    })();
+    return this._fullInitPromise;
+  }
+
+  private async _loadStorageCritical(): Promise<void> {
     const loadPromise1 = Preferences.get({ key: this.KEY_START_PAGE }).then(
       async result => {
         if (result.value != null) {
@@ -215,6 +253,47 @@ export class EnvService {
         }
       }
     );
+    const loadPromise6 = Preferences.get({ key: this.KEY_LANGUAGE }).then(
+      async result => {
+        if (result.value != null) {
+          this.selectedLanguage = result.value as 'default' | LanguageType;
+        } else {
+          this.selectedLanguage = 'default';
+        }
+        this.toggleLanguageChange();
+      }
+    );
+    const loadPromise7 = Preferences.get({ key: this.KEY_COLOR }).then(
+      async result => {
+        if (result.value != null) {
+          this.selectedColorTheme = result.value as 'default' | ColorThemeType;
+        } else {
+          this.selectedColorTheme = 'default';
+        }
+        await this.toggleColorTheme();
+      }
+    );
+    const loadPromise10 = Preferences.get({ key: this.KEY_ORIENTATION }).then(
+      async result => {
+        if (result.value != null) {
+          this.orientation = result.value as 'default' | OrientationType;
+        } else {
+          this.orientation = 'default';
+        }
+        await this.toggleOrientationChange();
+      }
+    );
+    await Promise.allSettled([
+      loadPromise1,
+      loadPromise2,
+      loadPromise3,
+      loadPromise6,
+      loadPromise7,
+      loadPromise10,
+    ]);
+  }
+
+  private async _loadStorageDeferred(): Promise<void> {
     const loadPromise4 = Preferences.get({ key: this.KEY_SCAN_RECORDS }).then(
       async result => {
         if (result.value != null) {
@@ -260,26 +339,6 @@ export class EnvService {
         }
       }
     )
-    const loadPromise6 = Preferences.get({ key: this.KEY_LANGUAGE }).then(
-      async result => {
-        if (result.value != null) {
-          this.selectedLanguage = result.value as 'default' | LanguageType;
-        } else {
-          this.selectedLanguage = 'default';
-        }
-        this.toggleLanguageChange();
-      }
-    );
-    const loadPromise7 = Preferences.get({ key: this.KEY_COLOR }).then(
-      async result => {
-        if (result.value != null) {
-          this.selectedColorTheme = result.value as 'default' | ColorThemeType;
-        } else {
-          this.selectedColorTheme = 'default';
-        }
-        await this.toggleColorTheme();
-      }
-    );
     const loadPromise8 = Preferences.get({ key: this.KEY_SHOW_EXIT_APP_ALERT }).then(
       async result => {
         if (result.value != null) {
@@ -296,16 +355,6 @@ export class EnvService {
         } else {
           this.debugMode = 'off';
         }
-      }
-    );
-    const loadPromise10 = Preferences.get({ key: this.KEY_ORIENTATION }).then(
-      async result => {
-        if (result.value != null) {
-          this.orientation = result.value as 'default' | OrientationType;
-        } else {
-          this.orientation = 'default';
-        }
-        await this.toggleOrientationChange();
       }
     );
     const loadPromise11 = Preferences.get({ key: this.KEY_SCAN_RECORD_LOGGING }).then(
@@ -497,6 +546,15 @@ export class EnvService {
         }
       }
     );
+    const loadPromise31b = Preferences.get({ key: this.KEY_SHOW_QR_AFTER_EXTERNAL_SHARE }).then(
+      async result => {
+        if (result.value != null) {
+          this.showQrAfterExternalShare = result.value as OnOffType;
+        } else {
+          this.showQrAfterExternalShare = 'on';
+        }
+      }
+    );
     const loadPromise32 = Preferences.get({ key: this.KEY_SHOW_SEARCH_BUTTON }).then(
       async result => {
         if (result.value != null) {
@@ -605,6 +663,15 @@ export class EnvService {
         }
       }
     );
+    const loadPromise43b = Preferences.get({ key: this.KEY_SHOW_CONNECT_WIFI_BUTTON }).then(
+      async result => {
+        if (result.value != null) {
+          this.showConnectWifiButton = result.value as OnOffType;
+        } else {
+          this.showConnectWifiButton = 'on';
+        }
+      }
+    );
     const loadPromise44 = Preferences.get({ key: this.KEY_AUTO_EXIT_MIN }).then(
       async result => {
         if (result.value != null) {
@@ -615,16 +682,10 @@ export class EnvService {
       }
     );
     await Promise.allSettled([
-      loadPromise1,
-      loadPromise2,
-      loadPromise3,
       loadPromise4,
       loadPromise5,
-      loadPromise6,
-      loadPromise7,
       loadPromise8,
       loadPromise9,
-      loadPromise10,
       loadPromise11,
       loadPromise12,
       loadPromise13,
@@ -646,6 +707,7 @@ export class EnvService {
       loadPromise29,
       loadPromise30,
       loadPromise31,
+      loadPromise31b,
       loadPromise32,
       loadPromise33,
       loadPromise34,
@@ -658,6 +720,7 @@ export class EnvService {
       loadPromise41,
       loadPromise42,
       loadPromise43,
+      loadPromise43b,
       loadPromise44,
     ]);
   }
@@ -694,6 +757,7 @@ export class EnvService {
     this.showQrAfterCreate = 'on';
     this.showQrAfterLogView = 'on';
     this.showQrAfterBookmarkView = 'on';
+    this.showQrAfterExternalShare = 'on';
     this.showSearchButton = 'on';
     this.showCopyButton = 'on';
     this.showBase64Button = 'on';
@@ -706,6 +770,7 @@ export class EnvService {
     this.showSendMessageButton = 'on';
     this.showSendEmailButton = 'on';
     this.showOpenFoodFactsButton = 'on';
+    this.showConnectWifiButton = 'on';
     this.scanRecords = [];
     this.bookmarks = [];
     this.showExitAppAlert = 'on';
@@ -802,6 +867,9 @@ export class EnvService {
     this.showQrAfterBookmarkView = 'on';
     await Preferences.set({ key: this.KEY_SHOW_QR_AFTER_BOOKMARK_VIEW, value: this.showQrAfterBookmarkView });
 
+    this.showQrAfterExternalShare = 'on';
+    await Preferences.set({ key: this.KEY_SHOW_QR_AFTER_EXTERNAL_SHARE, value: this.showQrAfterExternalShare });
+
     this.showSearchButton = 'on';
     await Preferences.set({ key: this.KEY_SHOW_SEARCH_BUTTON, value: this.showSearchButton });
 
@@ -837,6 +905,9 @@ export class EnvService {
 
     this.showOpenFoodFactsButton = 'on';
     await Preferences.set({ key: this.KEY_SHOW_OPEN_FOOD_FACTS_BUTTON, value: this.showOpenFoodFactsButton });
+
+    this.showConnectWifiButton = 'on';
+    await Preferences.set({ key: this.KEY_SHOW_CONNECT_WIFI_BUTTON, value: this.showConnectWifiButton });
 
     this.showExitAppAlert = 'on';
     await Preferences.set({ key: this.KEY_SHOW_EXIT_APP_ALERT, value: this.showExitAppAlert });
@@ -920,7 +991,7 @@ export class EnvService {
       }
     );
     this.scanRecords.sort((r1, r2) => {
-      return r2.createdAt.getTime() - r1.createdAt.getTime();
+      return r2.createdAt!.getTime() - r1.createdAt!.getTime();
     });
     try {
       const stringified = JSON.stringify(this.scanRecords);
@@ -1002,7 +1073,7 @@ export class EnvService {
     }
   }
 
-  async saveBookmark(value: string, tag: string): Promise<Bookmark> {
+  async saveBookmark(value: string, tag: string): Promise<Bookmark | null> {
     const index = this.bookmarks.findIndex(x => x.text === value);
     if (index === -1) {
       const bookmark = new Bookmark();

@@ -14,11 +14,13 @@
     <div>by</div>
     <div>Tom Fong</div>
   </div>
+  <div class="py-2">
+  </div>
   <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="showBarcodeType()">
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="barcode-sharp">
     </ion-icon>
     <ion-label>
-      <p class="ion-padding pre-line">
+      <p class="ion-padding-horizontal pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'SUPPORTED_BARCODE_TYPE' | translate }}
         </ion-text>
@@ -29,7 +31,7 @@
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/patch-update.svg">
     </ion-icon>
     <ion-label>
-      <p class="ion-padding pre-line">
+      <p class="ion-padding-horizontal pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'PATCH_NOTES' | translate }}
         </ion-text>
@@ -41,7 +43,7 @@
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="logo-google-playstore">
     </ion-icon>
     <ion-label>
-      <p class="ion-padding pre-line">
+      <p class="ion-padding-horizontal pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'VIEW_STORE_AND_SOURCE_CODE' | translate }}
         </ion-text>
@@ -52,7 +54,7 @@
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="logo-apple-appstore">
     </ion-icon>
     <ion-label>
-      <p class="ion-padding pre-line">
+      <p class="ion-padding-horizontal pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'VIEW_STORE_AND_SOURCE_CODE' | translate }}
         </ion-text>
@@ -63,7 +65,7 @@
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="bug">
     </ion-icon>
     <ion-label>
-      <p class="ion-padding pre-line">
+      <p class="ion-padding-horizontal pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'REPORT_ISSUE' | translate }}
         </ion-text>
@@ -74,7 +76,7 @@
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="document-text-sharp">
     </ion-icon>
     <ion-label>
-      <p class="ion-padding pre-line">
+      <p class="ion-padding-horizontal pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ 'PRIVACY_POLICY' | translate }}
         </ion-text>

@@ -48,6 +48,7 @@
     "COLOR": "顏色",
     "COLOR_THEME": "顏色主題",
     "COMING_SOON": "即將推出",
+    "CONNECT_TO_WIFI": "連接到 Wi‑Fi",
     "CONTACT_METHOD": "聯絡方法",
     "CONTACT_NAME": "聯絡人名稱",
     "CONTENT": "内容",
@@ -84,6 +85,7 @@
     "EXPORT": "匯出",
     "EXPORTING": "匯出中",
     "EXPORT_TO_CSV": "匯出至CSV",
+    "EXTERNALLY_SHARED": "外部分享",
     "FAX_NUMBER": "傳真號碼",
     "FEMALE": "女性",
     "FIRST_NAME": "名字",
@@ -302,7 +304,8 @@
         "TUTORIAL_SWIPE_LEFT": "向左劃項目可刪除相關記錄",
         "TUTORIAL_SWIPE_RIGHT": "向右劃項目可將相關記錄的文字加入書籤 / 修改標籤",
         "UNDO_DELETE": "您可在數秒內還原記錄",
-        "VIBRATION_EXPLAIN": "提供震動或觸感反饋。請注意，並非所有設備皆支援此功能。"
+        "VIBRATION_EXPLAIN": "提供震動或觸感反饋。請注意，並非所有設備皆支援此功能。",
+        "WIFI_PASSWORD_COPIED": "已複製 Wi‑Fi 密碼"
     },
     "BARCODE_TYPE": {
         "1D": "一維條碼",

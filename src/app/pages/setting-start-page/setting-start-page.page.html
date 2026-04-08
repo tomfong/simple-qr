@@ -11,8 +11,8 @@
 <ion-content>
 
   <ion-item class="ion-no-padding" lines="none">
-    <ion-label class="ion-padding-start">
-      <p class="ion-padding-top ion-padding-horizontal">
+    <ion-label class="ion-padding-start ion-margin-start ion-margin-top">
+      <p>
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
           <div [innerHTML]="'MSG.START_PAGE_EXPLAIN' | translate">
           </div>
@@ -26,7 +26,7 @@
       <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/qrscan.svg">
       </ion-icon>
       <ion-label>
-        <p class="ion-padding pre-line">
+        <p class="ion-padding-horizontal pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
             {{ 'SCAN' | translate }}
           </ion-text>
@@ -40,7 +40,7 @@
         <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" src="assets/icon/history.svg">
         </ion-icon>
         <ion-label>
-          <p class="ion-padding pre-line">
+          <p class="ion-padding-horizontal pre-line">
             <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
               {{ 'LOG' | translate }}
             </ion-text>
@@ -51,7 +51,7 @@
         <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="bookmark">
         </ion-icon>
         <ion-label>
-          <p class="ion-padding pre-line">
+          <p class="ion-padding-horizontal pre-line">
             <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
               {{ 'BOOKMARK' | translate }}
             </ion-text>
@@ -64,7 +64,7 @@
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="create"></ion-icon>
       <ion-label>
-        <p class="ion-padding pre-line">
+        <p class="ion-padding-horizontal pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
             {{ 'CREATE' | translate }}
           </ion-text>
@@ -76,7 +76,7 @@
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
       <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="settings"></ion-icon>
       <ion-label>
-        <p class="ion-padding pre-line">
+        <p class="ion-padding-horizontal pre-line">
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
             {{ 'SETTING' | translate }}
           </ion-text>
@@ -87,9 +87,9 @@
     </ion-item>
   </ion-radio-group>
 
-  <ion-item class="ion-no-padding pt-3" lines="none">
-    <ion-label class="ion-padding-start">
-      <p class="ion-padding-top ion-padding-horizontal">
+  <ion-item class="ion-no-padding pt-1" lines="none">
+    <ion-label class="ion-padding-start ion-margin-start ion-margin-top">
+      <p>
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
           <div [innerHTML]="'MSG.START_PAGE_HEADER_EXPLAIN' | translate">
           </div>
@@ -100,7 +100,7 @@
 
   <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" style="margin-bottom: var(--ion-safe-area-bottom, 0);">
     <ion-label class="ion-padding-start">
-      <p class="ion-padding pre-line">
+      <p class="ion-padding-horizontal pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ (env.startPageHeader == 'on'? 'TURNED_ON' : 'TURNED_OFF') | translate }}
         </ion-text>

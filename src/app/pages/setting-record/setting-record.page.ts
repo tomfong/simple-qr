@@ -356,7 +356,7 @@ export class SettingRecordPage {
     return format(date, "PP pp", { locale: locale });
   }
 
-  maskSource(source: 'create' | 'view' | 'scan' | undefined): string {
+  maskSource(source: 'create' | 'view' | 'scan' | 'external-share' | undefined): string {
     if (source == null) {
       return "-";
     }
@@ -396,6 +396,8 @@ export class SettingRecordPage {
         return `${this.translate.instant("VIEWED")}`;
       case 'scan':
         return `${this.translate.instant("SCANNED")}`;
+      case 'external-share':
+        return `${this.translate.instant("EXTERNALLY_SHARED")}`;
     }
   }
 

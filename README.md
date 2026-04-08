@@ -1,5 +1,8 @@
 # Simple QR
 
+[![License](https://img.shields.io/github/license/tomfong/simple-qr?style=flat)](https://github.com/tomfong/simple-qr/blob/main/LICENSE)
+[![Last Updated](https://img.shields.io/badge/Last%20Updated-2026--04--09-brightgreen.svg)](https://github.com/tomfong/simple-qr)
+
 > **IMPORTANT NOTE**  
 Simple QR now uses `@capacitor-mlkit/barcode-scanning (ML Kit)` instead of `@capacitor-community/barcode-scanner (ZXing)`.
 
@@ -9,56 +12,61 @@ Simple QR now uses `@capacitor-mlkit/barcode-scanning (ML Kit)` instead of `@cap
     Simple QR  
   </strong>
 </p>
-<p align="center">
-  A simple app to scan, create and manage QR codes
-</p>
 <br>
 <p align="center">
-  <img height="300" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/screenshot_1.png">
-  <img height="300" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/screenshot_2.png">
-  <img height="300" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/screenshot_3.png">
-  <img height="300" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/screenshot_4.png">
-  <img height="300" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/screenshot_5.png">
+  <img height="300" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/00.png">
+  <img height="300" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/01.png">
+  <img height="300" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/02.png">
+  <img height="300" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/03.png">
+  <img height="300" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/04.png">
+  <img height="300" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/05.png">
+  <img height="300" src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/06.png">
 </p>
 
 ## About
 
-Simple QR is an app to scan, create and manage QR codes with a simple UI and experience. No backend service connected. No data collected. No ads.
+Simple QR is a lightweight, privacy-first QR and barcode app. It’s designed to be fast and easy to use for everyday scanning and QR creation, with a clean UI and **no backend**, **no ads**, and **no data collection**. It works offline (except for actions you explicitly trigger, like opening a link or searching the web).
 
 It's now available on the following platforms.
 
-| Google Play | GitHub | IzzyOnDroid |
-|:-:|:-:|:-:|
-| [<img src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/google-play-badge.png" height="50">](https://play.google.com/store/apps/details?id=com.tomfong.simpleqr) | [<img src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/github-badge.png" height="50">](https://github.com/tomfong/simple-qr/releases/latest) | [<img src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/IzzyOnDroid-badge.png" height="50">](https://apt.izzysoft.de/fdroid/index/apk/com.tomfong.simpleqr) |
+| Google Play | GitHub | 
+|:-:|:-:|
+| [<img src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/google-play-badge.png" height="50">](https://play.google.com/store/apps/details?id=com.tomfong.simpleqr) | [<img src="https://raw.githubusercontent.com/tomfong/simple-qr/main/.github/images/github-badge.png" height="50">](https://github.com/tomfong/simple-qr/releases/latest) | 
+
+Author: Tom FONG
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)](https://github.com/tomfong)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/tom-lh-fong/)
 
 ## Features
 
-By using the app, you can
+### Scan
 
-1. Scan QR Code and other barcodes in a second, including UPC, EAN, Code 39/128, ITF, Codabar, Aztec, Data Matrix, PDF417, MaxiCode and GS1 DataBar.
+- Scan **QR codes and many common barcode formats** quickly (e.g. UPC/EAN, Code 39/93/128, ITF, Codabar, Aztec, Data Matrix, PDF417, etc.)
+- Scan from your **camera** or **import an image** and decode the code from it
+- (Android) Start scanning quickly from the **Quick Settings tile**
 
-2. Import image files and scan the QR Code on it.
+### Create
 
-3. Create QR code from templates, which includes Free Text, URL, vCard Contact, Phone Number, Message, Email, Wi-Fi and Geolocation.
+- Create QR codes using templates:
+  - Free Text, URL, vCard Contact, Phone Number, Message, Email, Wi‑Fi, Geolocation
+- Generate a shareable QR code from any result content
+- Create QR codes from content **shared to Simple QR** from other apps (Android share sheet)
 
-4. Automatically log results that you scan, create or view again. These logged records can be bookmarked for quick access, and also backupable.
+### Organize
 
-5. Do tasks on the result content with a tap, including but not limited to
-    * Use it as a keyword to do web search.
-    * Quickly copy it to the clipboard.
-    * Execute base64 encoding/decoding on it.
-    * Use it as a content to generate a new shareable QR code.
-    * Do corresponding tasks if it is a
-      * URL: Browse website / Open application
-      * vCard contact: Add contact
-      * Phone number: Phone call, add contact
-      * Message: Send message, add contact
-      * Email: Send email
-      * Geolocation: Open map
+- Automatically keep a **history** of what you scan/create/view
+- **Bookmark** frequently used items for quick access
+- **Backup/restore** your records
 
-6. Customize the generated QR code, e.g. error correction level, color, margin and screen brightness.
+### Actions & utilities
 
-7. Customize the app, e.g. app initial page, language and color theme etc.
+- One-tap actions based on content type (open URLs/apps, add contacts from vCards, call phone numbers, send SMS/email, open locations in maps)
+- Quick tools like **copy to clipboard**, **web search**, and **Base64 encode/decode**
+
+### Personalize
+
+- Customize generated QR codes (e.g. error correction, colors, margin) and adjust **screen brightness**
+- Customize the app (e.g. start page, language, theme)
 
 ### Demo
 
@@ -147,3 +155,7 @@ Please read the [Privacy Policy](https://www.privacypolicies.com/live/771b1123-9
 ## License
 
 [![License](https://img.shields.io/github/license/tomfong/simple-qr?style=flat)](https://github.com/tomfong/simple-qr/blob/main/LICENSE)
+
+---
+
+_SIMPLE DEV ． SIMPLER WORLD_

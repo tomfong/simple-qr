@@ -114,6 +114,14 @@
   [ngStyle]="env.colorTheme === 'dark'?  {'background-color': '#222428'} : (env.colorTheme === 'black'? {'background-color': '#000000'} : {'background-color': '#F0F0F0'})">
 
   <ng-container *ngIf="env.resultPageButtons === 'icon-only'">
+    <!-- <ion-row
+      *ngIf="contentType === 'wifi' && env.showConnectWifiButton === 'on' && wifiSSID && wifiSSID.length > 0"
+      class="d-flex justify-content-center">
+      <ion-button (click)="tapHaptic(); connectToWifi()" [color]="'primary'" fill="clear">
+        <ion-icon name="wifi"></ion-icon>
+      </ion-button>
+    </ion-row> -->
+
     <ion-row *ngIf="contentType === 'freeText' && env.showOpenFoodFactsButton === 'on' && isValidEan"
       class="d-flex justify-content-center">
       <ion-button (click)="tapHaptic(); searchOpenFoodFacts()" [color]="'primary'" fill="clear">
@@ -240,6 +248,13 @@
   <ng-container *ngIf="env.resultPageButtons === 'detailed'">
     <ion-row class="ion-padding-horizontal py-2">
       <div class="d-flex justify-content-between detailed-action-button-container">
+        <!-- <ion-button class="pe-1"
+          *ngIf="contentType === 'wifi' && env.showConnectWifiButton === 'on' && wifiSSID && wifiSSID.length > 0"
+          (click)="tapHaptic(); connectToWifi()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="outline"
+          shape="round" [@inAnimation]>
+          <ion-icon class="pe-2" name="wifi" slot="start"></ion-icon>
+          <ion-label class="ion-text-nowrap">{{ 'CONNECT_TO_WIFI' | translate }}</ion-label>
+        </ion-button> -->
         <ion-button class="pe-1"
           *ngIf="!resultSaved && this.env.scanRecordLogging == 'off' && this.qrCodeContent != null && this.qrCodeContent != '' "
           (click)="tapHaptic(); saveRecord()" [color]="env.colorTheme === 'light'? 'dark' : 'light'" fill="outline"

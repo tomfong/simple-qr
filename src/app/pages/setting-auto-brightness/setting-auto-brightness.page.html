@@ -11,8 +11,8 @@
 <ion-content>
 
   <ion-item class="ion-no-padding" lines="none">
-    <ion-label class="ion-padding-start">
-      <p class="ion-padding-top ion-padding-horizontal">
+    <ion-label class="ion-padding-start ion-margin-start ion-margin-top">
+      <p>
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="white-space: normal;">
           <div [innerHTML]="'MSG.AUTO_MAX_BRIGHTNESS_EXPLAIN' | translate">
           </div>
@@ -23,7 +23,7 @@
 
   <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" style="margin-bottom: var(--ion-safe-area-bottom, 0);">
     <ion-label class="ion-padding-start">
-      <p class="ion-padding pre-line">
+      <p class="ion-padding-horizontal pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
           {{ (env.autoMaxBrightness == 'on'? 'TURNED_ON' : 'TURNED_OFF') | translate }}
         </ion-text>
