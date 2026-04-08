@@ -67,6 +67,7 @@ export class EnvService {
   public showQrAfterCreate: OnOffType = 'on';
   public showQrAfterLogView: OnOffType = 'on';
   public showQrAfterBookmarkView: OnOffType = 'on';
+  public showQrAfterExternalShare: OnOffType = 'on';
   public showSearchButton: OnOffType = 'on';
   public showCopyButton: OnOffType = 'on';
   public showBase64Button: OnOffType = 'on';
@@ -114,6 +115,7 @@ export class EnvService {
   public readonly KEY_SHOW_QR_AFTER_CREATE = "show-qr-after-create";
   public readonly KEY_SHOW_QR_AFTER_LOG_VIEW = "show-qr-after-log-view";
   public readonly KEY_SHOW_QR_AFTER_BOOKMARK_VIEW = "show-qr-after-bookmark-view";
+  public readonly KEY_SHOW_QR_AFTER_EXTERNAL_SHARE = "show-qr-after-external-share";
   public readonly KEY_SHOW_SEARCH_BUTTON = "showSearchButton";
   public readonly KEY_SHOW_COPY_BUTTON = "showCopyButton";
   public readonly KEY_SHOW_BASE64_BUTTON = "showBase64Button";
@@ -500,6 +502,15 @@ export class EnvService {
         }
       }
     );
+    const loadPromise31b = Preferences.get({ key: this.KEY_SHOW_QR_AFTER_EXTERNAL_SHARE }).then(
+      async result => {
+        if (result.value != null) {
+          this.showQrAfterExternalShare = result.value as OnOffType;
+        } else {
+          this.showQrAfterExternalShare = 'on';
+        }
+      }
+    );
     const loadPromise32 = Preferences.get({ key: this.KEY_SHOW_SEARCH_BUTTON }).then(
       async result => {
         if (result.value != null) {
@@ -649,6 +660,7 @@ export class EnvService {
       loadPromise29,
       loadPromise30,
       loadPromise31,
+      loadPromise31b,
       loadPromise32,
       loadPromise33,
       loadPromise34,
@@ -697,6 +709,7 @@ export class EnvService {
     this.showQrAfterCreate = 'on';
     this.showQrAfterLogView = 'on';
     this.showQrAfterBookmarkView = 'on';
+    this.showQrAfterExternalShare = 'on';
     this.showSearchButton = 'on';
     this.showCopyButton = 'on';
     this.showBase64Button = 'on';
@@ -804,6 +817,9 @@ export class EnvService {
 
     this.showQrAfterBookmarkView = 'on';
     await Preferences.set({ key: this.KEY_SHOW_QR_AFTER_BOOKMARK_VIEW, value: this.showQrAfterBookmarkView });
+
+    this.showQrAfterExternalShare = 'on';
+    await Preferences.set({ key: this.KEY_SHOW_QR_AFTER_EXTERNAL_SHARE, value: this.showQrAfterExternalShare });
 
     this.showSearchButton = 'on';
     await Preferences.set({ key: this.KEY_SHOW_SEARCH_BUTTON, value: this.showSearchButton });

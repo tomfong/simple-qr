@@ -79,6 +79,20 @@
     </ion-toggle>
   </ion-item>
 
+  <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
+    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="share-social"></ion-icon>
+    <ion-label>
+      <p class="ion-padding-horizontal pre-line">
+        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+          {{ 'EXTERNALLY_SHARED' | translate }}
+        </ion-text>
+      </p>
+    </ion-label>
+    <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.showQrAfterExternalShare == 'on'? true : false"
+      (ngModelChange)="onShowQrAfterExternalShareChange($event)">
+    </ion-toggle>
+  </ion-item>
+
   <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" style="margin-bottom: var(--ion-safe-area-bottom, 0);"> 
     <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="image"></ion-icon>
     <ion-label>

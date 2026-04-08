@@ -162,7 +162,7 @@ export class HistoryPage {
       case 'scan':
         return `${this.translate.instant("SCANNED")} ${this.translate.instant("AT")} ${format(date, "PP pp", { locale: locale })}`;
       case 'external-share':
-        return `${this.translate.instant("EXTERNAL_SHARED")} ${this.translate.instant("AT")} ${format(date, "PP pp", { locale: locale })}`;
+        return `${this.translate.instant("EXTERNALLY_SHARED")} ${this.translate.instant("AT")} ${format(date, "PP pp", { locale: locale })}`;
     }
   }
 

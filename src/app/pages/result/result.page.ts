@@ -122,6 +122,11 @@ export class ResultPage {
         this.env.showQrAfterImageScan == 'on'
       ) {
         this.showQrFirst = true;
+      } else if (
+        this.env.detailedRecordSource == 'external-share' &&
+        this.env.showQrAfterExternalShare == 'on'
+      ) {
+        this.showQrFirst = true;
       }
     }
     this.qrCodeContent = this.env.resultContent;
@@ -210,11 +215,8 @@ export class ResultPage {
   }
 
   setContentType(): void {
-    // If content was shared from external app, always use freeText type
     if (this.env.isSharedContent) {
-      this.contentType = 'freeText';
-      this.env.isSharedContent = false; // Reset for next use
-      return;
+      this.env.isSharedContent = false;
     }
 
     const contactPrefix = 'BEGIN:VCARD';

@@ -397,7 +397,7 @@ export class SettingRecordPage {
       case 'scan':
         return `${this.translate.instant("SCANNED")}`;
       case 'external-share':
-        return `${this.translate.instant("EXTERNAL_SHARED")}`;
+        return `${this.translate.instant("EXTERNALLY_SHARED")}`;
     }
   }
 
