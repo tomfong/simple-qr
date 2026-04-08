@@ -147,19 +147,22 @@ export class EnvService {
   resultContent: string = '';
   editingContent: boolean = false;
   resultContentFormat: string = '';
+  isSharedContent: boolean = false;
+  pendingLaunchUrlCheck: boolean = false; // Flag to track when we're checking for launch URL
+  pendingShareNavigation: boolean = false; // Flag to track if we're navigating due to shared content
   scanRecords: ScanRecord[] = [];
   bookmarks: Bookmark[] = [];
   viewingScanRecords: ScanRecord[] = [];
   viewingBookmarks: Bookmark[] = [];
   private _deviceInfo: DeviceInfo | undefined = undefined;
 
-  recordSource: 'create' | 'view' | 'scan';
-  detailedRecordSource: 'create' | 'view-log' | 'view-bookmark' | 'scan-camera' | 'scan-image';
-  viewResultFrom: '/tabs/scan' | '/tabs/generate' | '/tabs/history';
+  recordSource: 'create' | 'view' | 'scan' | 'external-share' | undefined;
+  detailedRecordSource: 'create' | 'view-log' | 'view-bookmark' | 'scan-camera' | 'scan-image' | 'external-share' | undefined;
+  viewResultFrom: '/tabs/scan' | '/tabs/generate' | '/tabs/history' | undefined;
 
   public firstAppLoad: boolean = true;  // once loaded, turn it false
 
-  initObservable: Observable<boolean>;
+  initObservable: Observable<boolean> | undefined;
 
   constructor(
     private platform: Platform,
@@ -920,7 +923,7 @@ export class EnvService {
       }
     );
     this.scanRecords.sort((r1, r2) => {
-      return r2.createdAt.getTime() - r1.createdAt.getTime();
+      return r2.createdAt!.getTime() - r1.createdAt!.getTime();
     });
     try {
       const stringified = JSON.stringify(this.scanRecords);
@@ -1002,7 +1005,7 @@ export class EnvService {
     }
   }
 
-  async saveBookmark(value: string, tag: string): Promise<Bookmark> {
+  async saveBookmark(value: string, tag: string): Promise<Bookmark | null> {
     const index = this.bookmarks.findIndex(x => x.text === value);
     if (index === -1) {
       const bookmark = new Bookmark();

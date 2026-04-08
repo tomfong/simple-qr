@@ -16,7 +16,7 @@ import { EnvService } from 'src/app/services/env.service';
 })
 export class TabsPage {
 
-  exitAppTimeout: NodeJS.Timeout;
+  exitAppTimeout: any;
 
   constructor(
     private translate: TranslateService,
@@ -34,7 +34,7 @@ export class TabsPage {
                 if (this.env.isDebugging) {
                   this.presentToast("App will be killed!", "short", "bottom");
                 }
-                navigator['app'].exitApp();
+                (navigator as any)['app'].exitApp();
               }, this.env.autoExitAppMin * 60 * 1000
             )
             if (this.env.isDebugging) {
@@ -64,9 +64,15 @@ export class TabsPage {
   async ionViewDidEnter() {
     if (this.env.firstAppLoad) {
       this.env.firstAppLoad = false;
-      this.env.initObservable.subscribe(async value => {
+      this.env.initObservable?.subscribe(async value => {
         console.log(`tabs.page.ts - ionViewDidEnter() - initObservable value: ${value}`)
         if (value) {
+          // Skip start page navigation if there's shared content to handle
+          // Check both resultContent and isSharedContent for reliability
+          if (this.env.resultContent || this.env.isSharedContent || this.env.pendingShareNavigation) {
+            console.log(`tabs.page.ts - ionViewDidEnter() - skipping start page, shared content detected`);
+            return;
+          }
           console.log(`tabs.page.ts - ionViewDidEnter() - env.startPage: ${this.env.startPage}`)
           await this.router.navigate([this.env.startPage], { replaceUrl: true });
         }

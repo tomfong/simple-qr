@@ -55,5 +55,16 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>simpleqr</string>
+			</array>
+			<key>CFBundleURLName</key>
+			<string>com.tomfong.simpleqr</string>
+		</dict>
+	</array>
 </dict>
 </plist>
