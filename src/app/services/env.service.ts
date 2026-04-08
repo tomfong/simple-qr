@@ -166,6 +166,9 @@ export class EnvService {
 
   initObservable: Observable<boolean> | undefined;
 
+  private _criticalInitPromise: Promise<void> | undefined;
+  private _fullInitPromise: Promise<void> | undefined;
+
   constructor(
     private platform: Platform,
     private ionicStorage: Storage,
@@ -174,25 +177,53 @@ export class EnvService {
     private themeDetection: ThemeDetection,
     private screenOrientation: ScreenOrientation,
   ) {
-    this.platform.ready().then(
-      async _ => {
-        this.initObservable = new Observable<boolean>(subs => {
-          new Promise(async _ => {
-            await Device.getInfo().then(
-              value => {
-                this._deviceInfo = value;
-              }
-            );
-            await this._loadStorage();
-            console.log(`env.service.ts - constructor - _loadStorage()`)
-            subs.next(true);
-          });
+    // Keep the original contract: pages can subscribe and get a single `true`
+    // once the minimal startup preferences are ready (e.g. `startPage`).
+    // Defer non-critical preference loading (records/bookmarks, etc.) to avoid
+    // slowing down first render / initial navigation.
+    this.initObservable = new Observable<boolean>(subs => {
+      this.ensureCriticalInit()
+        .then(() => {
+          subs.next(true);
+          subs.complete();
+        })
+        .catch(() => {
+          // Don't block app start if preferences fail to load.
+          subs.next(true);
+          subs.complete();
         });
-      }
-    )
+    });
   }
 
-  private async _loadStorage() {
+  private ensureCriticalInit(): Promise<void> {
+    if (this._criticalInitPromise) return this._criticalInitPromise;
+    this._criticalInitPromise = (async () => {
+      await this.platform.ready();
+      try {
+        this._deviceInfo = await Device.getInfo();
+      } catch {
+        // Ignore
+      }
+      await this._loadStorageCritical();
+
+      // Kick off the remaining preference/data loading in the background.
+      // This keeps behavior the same, but moves work off the app's critical path.
+      this.ensureFullInit();
+    })();
+    return this._criticalInitPromise;
+  }
+
+  private ensureFullInit(): Promise<void> {
+    if (this._fullInitPromise) return this._fullInitPromise;
+    this._fullInitPromise = (async () => {
+      // Wait for critical init so we don't duplicate platform/device work.
+      await this.ensureCriticalInit();
+      await this._loadStorageDeferred();
+    })();
+    return this._fullInitPromise;
+  }
+
+  private async _loadStorageCritical(): Promise<void> {
     const loadPromise1 = Preferences.get({ key: this.KEY_START_PAGE }).then(
       async result => {
         if (result.value != null) {
@@ -220,6 +251,47 @@ export class EnvService {
         }
       }
     );
+    const loadPromise6 = Preferences.get({ key: this.KEY_LANGUAGE }).then(
+      async result => {
+        if (result.value != null) {
+          this.selectedLanguage = result.value as 'default' | LanguageType;
+        } else {
+          this.selectedLanguage = 'default';
+        }
+        this.toggleLanguageChange();
+      }
+    );
+    const loadPromise7 = Preferences.get({ key: this.KEY_COLOR }).then(
+      async result => {
+        if (result.value != null) {
+          this.selectedColorTheme = result.value as 'default' | ColorThemeType;
+        } else {
+          this.selectedColorTheme = 'default';
+        }
+        await this.toggleColorTheme();
+      }
+    );
+    const loadPromise10 = Preferences.get({ key: this.KEY_ORIENTATION }).then(
+      async result => {
+        if (result.value != null) {
+          this.orientation = result.value as 'default' | OrientationType;
+        } else {
+          this.orientation = 'default';
+        }
+        await this.toggleOrientationChange();
+      }
+    );
+    await Promise.allSettled([
+      loadPromise1,
+      loadPromise2,
+      loadPromise3,
+      loadPromise6,
+      loadPromise7,
+      loadPromise10,
+    ]);
+  }
+
+  private async _loadStorageDeferred(): Promise<void> {
     const loadPromise4 = Preferences.get({ key: this.KEY_SCAN_RECORDS }).then(
       async result => {
         if (result.value != null) {
@@ -265,26 +337,6 @@ export class EnvService {
         }
       }
     )
-    const loadPromise6 = Preferences.get({ key: this.KEY_LANGUAGE }).then(
-      async result => {
-        if (result.value != null) {
-          this.selectedLanguage = result.value as 'default' | LanguageType;
-        } else {
-          this.selectedLanguage = 'default';
-        }
-        this.toggleLanguageChange();
-      }
-    );
-    const loadPromise7 = Preferences.get({ key: this.KEY_COLOR }).then(
-      async result => {
-        if (result.value != null) {
-          this.selectedColorTheme = result.value as 'default' | ColorThemeType;
-        } else {
-          this.selectedColorTheme = 'default';
-        }
-        await this.toggleColorTheme();
-      }
-    );
     const loadPromise8 = Preferences.get({ key: this.KEY_SHOW_EXIT_APP_ALERT }).then(
       async result => {
         if (result.value != null) {
@@ -301,16 +353,6 @@ export class EnvService {
         } else {
           this.debugMode = 'off';
         }
-      }
-    );
-    const loadPromise10 = Preferences.get({ key: this.KEY_ORIENTATION }).then(
-      async result => {
-        if (result.value != null) {
-          this.orientation = result.value as 'default' | OrientationType;
-        } else {
-          this.orientation = 'default';
-        }
-        await this.toggleOrientationChange();
       }
     );
     const loadPromise11 = Preferences.get({ key: this.KEY_SCAN_RECORD_LOGGING }).then(
@@ -629,16 +671,10 @@ export class EnvService {
       }
     );
     await Promise.allSettled([
-      loadPromise1,
-      loadPromise2,
-      loadPromise3,
       loadPromise4,
       loadPromise5,
-      loadPromise6,
-      loadPromise7,
       loadPromise8,
       loadPromise9,
-      loadPromise10,
       loadPromise11,
       loadPromise12,
       loadPromise13,
