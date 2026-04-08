@@ -81,9 +81,9 @@ export class ScanPage {
   }
 
   async ionViewWillLeave() {
-    // if (this.platform.is('android')) {
-    //   await EdgeToEdge.enable();
-    // }
+    if (this.platform.is('android')) {
+      await EdgeToEdge.enable();
+    }
   }
 
   async ionViewDidLeave(): Promise<void> {
@@ -334,13 +334,6 @@ export class ScanPage {
         });
       },
     );
-    if (this.platform.is('android')) {
-      // When the webview is made transparent for the camera preview, Android can also
-      // render the system navigation bar transparently unless edge-to-edge is disabled.
-      await EdgeToEdge.disable();
-      await EdgeToEdge.setBackgroundColor({ color: '#000000' });
-      await StatusBar.setBackgroundColor({ color: '#000000' });
-    }
     await NavigationBar.setTransparency({ isTransparent: false });
     await NavigationBar.setColor({ color: '#000000', darkButtons: false });
     await BarcodeScanner.startScan(options);
