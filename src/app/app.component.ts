@@ -14,15 +14,17 @@ import { Router } from '@angular/router';
   standalone: false,
 })
 export class AppComponent {
+  private static readonly MAX_SHARED_TEXT_LEN = 1817;
+
   constructor(
-    translate: TranslateService,
+    private translate: TranslateService,
     public env: EnvService,
     private platform: Platform,
     private router: Router,
     private ngZone: NgZone,
   ) {
-    translate.addLangs(this.env.languages);
-    translate.setDefaultLang('en');
+    this.translate.addLangs(this.env.languages);
+    this.translate.setDefaultLang('en');
 
     // Initialize app listeners after platform is ready
     this.platform.ready().then(() => {
@@ -108,9 +110,10 @@ export class AppComponent {
   }
 
   private handleSharedText(text: string): void {
-    if (text && text.trim().length > 0) {
+    const sanitized = this.sanitizeExternalSharedText(text);
+    if (sanitized && sanitized.trim().length > 0) {
       // Set result content and navigate to result page as freeText type
-      this.env.resultContent = text.trim();
+      this.env.resultContent = sanitized;
       this.env.isSharedContent = true; // Mark as shared to force freeText type
       this.env.pendingShareNavigation = true;
       this.env.recordSource = 'external-share';
@@ -129,6 +132,36 @@ export class AppComponent {
           });
       }, 100);
     }
+  }
+
+  /**
+   * External share text should be treated as plain text.
+   * - Strip control chars (except \t, \n, \r) to avoid odd rendering/issues
+   * - Trim
+   * - Enforce QR max content length (1817 chars) to avoid generating invalid/huge payloads
+   */
+  private sanitizeExternalSharedText(text: string): string {
+    if (!text) return '';
+
+    // Remove ASCII control chars except TAB(0x09), LF(0x0A), CR(0x0D)
+    const withoutControlChars = text.replace(
+      /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g,
+      '',
+    );
+
+    const trimmed = withoutControlChars.trim();
+    if (trimmed.length <= AppComponent.MAX_SHARED_TEXT_LEN) {
+      return trimmed;
+    }
+
+    // Truncate and notify user
+    const truncated = trimmed.slice(0, AppComponent.MAX_SHARED_TEXT_LEN);
+    this.presentToast(
+      this.translate.instant('MSG.CREATE_QRCODE_MAX_LENGTH'),
+      'short',
+      'bottom',
+    );
+    return truncated;
   }
 
   async presentToast(
