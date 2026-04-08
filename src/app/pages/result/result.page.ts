@@ -29,6 +29,7 @@ import { fadeIn } from 'src/app/utils/animations';
 import { Router } from '@angular/router';
 import { QRCodeElementType } from 'angularx-qrcode';
 import { SplashScreen } from '@capacitor/splash-screen';
+import { CapacitorWifi } from '@capgo/capacitor-wifi';
 
 @Component({
   selector: 'app-result',
@@ -311,6 +312,68 @@ export class ResultPage {
 
   async openLink(): Promise<void> {
     window.open(this.qrCodeContent);
+  }
+
+  async connectToWifi(): Promise<void> {
+    if (
+      this.contentType !== 'wifi' ||
+      !this.wifiSSID ||
+      this.wifiSSID.trim().length === 0
+    ) {
+      return;
+    }
+
+    const ssid = this.wifiSSID.trim();
+    const password =
+      this.wifiEncryption !== 'NONE' &&
+      this.wifiPassword != null &&
+      this.wifiPassword.trim().length > 0
+        ? this.wifiPassword
+        : undefined;
+
+    try {
+      await CapacitorWifi.addNetwork({
+        ssid,
+        ...(password ? { password } : {}),
+        isHiddenSsid: this.wifiHidden === true,
+      });
+
+      await CapacitorWifi.connect({
+        ssid,
+        ...(password ? { password } : {}),
+        isHiddenSsid: this.wifiHidden === true,
+      });
+
+      await this.presentToast(
+        this.translate.instant('SUCCESS'),
+        'short',
+        'bottom',
+      );
+    } catch {
+      await this.openWifiSettings();
+    }
+  }
+
+  private async openWifiSettings(): Promise<void> {
+    try {
+      if (this.platform.is('android')) {
+        // Use intent URL to jump into Wi‑Fi settings on Android.
+        window.open(
+          'intent:#Intent;action=android.settings.WIFI_SETTINGS;end',
+          '_system',
+        );
+        return;
+      }
+      if (this.platform.is('ios')) {
+        // iOS may block deep-links to Settings depending on OS version/policy.
+        window.open('App-Prefs:root=WIFI', '_system');
+        return;
+      }
+    } catch {
+      // Ignore and fall back
+    }
+    // Fallback: open app settings (better than doing nothing).
+    window.open('app-settings:', '_system');
   }
 
   get isHttp(): boolean {

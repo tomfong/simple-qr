@@ -3,7 +3,8 @@
 	"appName": "Simple QR",
 	"webDir": "www",
 	"android": {
-		"initialFocus": false
+		"initialFocus": false,
+		"adjustMarginsForEdgeToEdge": "force"
 	},
 	"plugins": {
 		"SplashScreen": {
@@ -16,6 +17,9 @@
 			"splashFullScreen": true,
 			"splashImmersive": true,
 			"layoutName": "launch_screen"
+		},
+		"EdgeToEdge": {
+			"backgroundColor": "#000000"
 		}
 	},
 	"cordova": {
@@ -27,5 +31,24 @@
 	},
 	"server": {
 		"iosScheme": "ionic"
-	}
+	},
+	"packageClassList": [
+		"ContactsPlugin",
+		"ScreenBrightnessPlugin",
+		"BarcodeScannerPlugin",
+		"AppPlugin",
+		"CAPCameraPlugin",
+		"ClipboardPlugin",
+		"DevicePlugin",
+		"FilesystemPlugin",
+		"HapticsPlugin",
+		"KeyboardPlugin",
+		"PreferencesPlugin",
+		"SplashScreenPlugin",
+		"StatusBarPlugin",
+		"ToastPlugin",
+		"CapacitorWifiPlugin",
+		"NavigationBarPlugin",
+		"CDVPlugin"
+	]
 }

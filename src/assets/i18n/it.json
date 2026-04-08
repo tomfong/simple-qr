@@ -48,6 +48,7 @@
     "COLOR": "Colore",
     "COLOR_THEME": "Tema colore",
     "COMING_SOON": "Prossimamente",
+    "CONNECT_TO_WIFI": "Connetti al Wi‑Fi",
     "CONTACT_METHOD": "Metodi di contatto",
     "CONTACT_NAME": "Nome",
     "CONTENT": "Contenuto",
@@ -303,7 +304,8 @@
         "TUTORIAL_SWIPE_LEFT": "Scorri verso sinistra per eliminare il record corrispondente.",
         "TUTORIAL_SWIPE_RIGHT": "Scorri verso destra per aggiungere ai segnalibri il testo del record / modificare il tag del segnalibro corrispondente.",
         "UNDO_DELETE": "È possibile annullare l'eliminazione",
-        "VIBRATION_EXPLAIN": "Fornire vibrazioni o feedback tattile. Tieni presente che non tutti i dispositivi supportano questa funzione."
+        "VIBRATION_EXPLAIN": "Fornire vibrazioni o feedback tattile. Tieni presente che non tutti i dispositivi supportano questa funzione.",
+        "WIFI_PASSWORD_COPIED": "Password Wi‑Fi copiata"
     },
     "BARCODE_TYPE": {
         "1D": "Codice a barre 1D ",

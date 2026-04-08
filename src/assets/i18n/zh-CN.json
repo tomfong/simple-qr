@@ -48,6 +48,7 @@
     "COLOR": "颜色",
     "COLOR_THEME": "颜色主题",
     "COMING_SOON": "即将推出",
+    "CONNECT_TO_WIFI": "连接到 Wi‑Fi",
     "CONTACT_METHOD": "联络方法",
     "CONTACT_NAME": "联络人名称",
     "CONTENT": "内容",
@@ -303,7 +304,8 @@
         "TUTORIAL_SWIPE_LEFT": "向左划项目可删除相关记录",
         "TUTORIAL_SWIPE_RIGHT": "向右划项目可将相关记录的文字加入书签 / 修改标签",
         "UNDO_DELETE": "您可在数秒内复原记录",
-        "VIBRATION_EXPLAIN": "提供震动或触感反馈。请注意，并非所有设备皆支援此功能。"
+        "VIBRATION_EXPLAIN": "提供震动或触感反馈。请注意，并非所有设备皆支援此功能。",
+        "WIFI_PASSWORD_COPIED": "已复制 Wi‑Fi 密码"
     },
     "BARCODE_TYPE": {
         "1D": "一维条码",

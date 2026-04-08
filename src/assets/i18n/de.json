@@ -48,6 +48,7 @@
     "COLOR": "Farbe",
     "COLOR_THEME": "Farbthema",
     "COMING_SOON": "Bald verfügbar",
+    "CONNECT_TO_WIFI": "Mit WLAN verbinden",
     "CONTACT_METHOD": "Kontakt Methode",
     "CONTACT_NAME": "Kontakt Name",
     "CONTENT": "Inhalt",
@@ -303,7 +304,8 @@
         "TUTORIAL_SWIPE_LEFT": "Wische nach links, um den entsprechenden Datensatz zu löschen.",
         "TUTORIAL_SWIPE_RIGHT": "Wische nach rechts, um den Text des entsprechenden Datensatzes mit einem Lesezeichen zu versehen / Bearbeiten Sie das Label des entsprechenden Lesezeichens.",
         "UNDO_DELETE": "Du kannst die Löschung rückgängig machen",
-        "VIBRATION_EXPLAIN": "Vibration oder haptisches Feedback geben. Bitte beachte, dass nicht alle Geräte diese Funktion unterstützen."
+        "VIBRATION_EXPLAIN": "Vibration oder haptisches Feedback geben. Bitte beachte, dass nicht alle Geräte diese Funktion unterstützen.",
+        "WIFI_PASSWORD_COPIED": "WLAN-Passwort kopiert"
     },
     "BARCODE_TYPE": {
         "1D": "1D Barcode ",

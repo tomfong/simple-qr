@@ -48,6 +48,7 @@
     "COLOR": "Couleur",
     "COLOR_THEME": "Thème de couleur",
     "COMING_SOON": "Bientôt disponible",
+    "CONNECT_TO_WIFI": "Se connecter au Wi‑Fi",
     "CONTACT_METHOD": "Méthode de contact",
     "CONTACT_NAME": "Nom du contact",
     "CONTENT": "Le contenu",
@@ -303,7 +304,8 @@
         "TUTORIAL_SWIPE_LEFT": "Balayez vers la gauche pour supprimer l'enregistrement correspondant.",
         "TUTORIAL_SWIPE_RIGHT": "Balayez vers la droite pour mettre en signet le texte de l'enregistrement / modifier la balise du signet correspondant.",
         "UNDO_DELETE": "Vous pouvez annuler la suppression",
-        "VIBRATION_EXPLAIN": "Fournir des vibrations ou un retour haptique. Veuillez noter que tous les appareils ne prennent pas en charge cette fonctionnalité."
+        "VIBRATION_EXPLAIN": "Fournir des vibrations ou un retour haptique. Veuillez noter que tous les appareils ne prennent pas en charge cette fonctionnalité.",
+        "WIFI_PASSWORD_COPIED": "Mot de passe Wi‑Fi copié"
     },
     "BARCODE_TYPE": {
         "1D": "Code-barres 1D",

@@ -35,7 +35,7 @@ export declare type QrCreateContentTypeType = "freeText" | "url" | "contact" | "
 })
 export class EnvService {
 
-  public appVersionNumber: string = '5.0.1';
+  public appVersionNumber: string = '5.1.0';
 
   public startPage: TabPageType = "/tabs/scan";
   public historyPageStartSegment: HistoryPageSegmentType = 'history';
@@ -80,6 +80,7 @@ export class EnvService {
   public showSendMessageButton: OnOffType = 'on';
   public showSendEmailButton: OnOffType = 'on';
   public showOpenFoodFactsButton: OnOffType = 'on';
+  public showConnectWifiButton: OnOffType = 'on';
   public showExitAppAlert: OnOffType = "on";
   public debugMode: OnOffType = 'off';
   public autoExitAppMin: 1 | 3 | 5 | -1 = -1;
@@ -128,6 +129,7 @@ export class EnvService {
   public readonly KEY_SHOW_SEND_MESSAGE_BUTTON = "showSendMessageButton";
   public readonly KEY_SHOW_SEND_EMAIL_BUTTON = "showSendEmailButton";
   public readonly KEY_SHOW_OPEN_FOOD_FACTS_BUTTON = "showOpenFoodFactsButton";
+  public readonly KEY_SHOW_CONNECT_WIFI_BUTTON = "showConnectWifiButton";
   public readonly KEY_AUTO_EXIT_MIN = "autoExitAppMin";
 
   public readonly APP_FOLDER_NAME: string = 'SimpleQR';
@@ -661,6 +663,15 @@ export class EnvService {
         }
       }
     );
+    const loadPromise43b = Preferences.get({ key: this.KEY_SHOW_CONNECT_WIFI_BUTTON }).then(
+      async result => {
+        if (result.value != null) {
+          this.showConnectWifiButton = result.value as OnOffType;
+        } else {
+          this.showConnectWifiButton = 'on';
+        }
+      }
+    );
     const loadPromise44 = Preferences.get({ key: this.KEY_AUTO_EXIT_MIN }).then(
       async result => {
         if (result.value != null) {
@@ -709,6 +720,7 @@ export class EnvService {
       loadPromise41,
       loadPromise42,
       loadPromise43,
+      loadPromise43b,
       loadPromise44,
     ]);
   }
@@ -758,6 +770,7 @@ export class EnvService {
     this.showSendMessageButton = 'on';
     this.showSendEmailButton = 'on';
     this.showOpenFoodFactsButton = 'on';
+    this.showConnectWifiButton = 'on';
     this.scanRecords = [];
     this.bookmarks = [];
     this.showExitAppAlert = 'on';
@@ -892,6 +905,9 @@ export class EnvService {
 
     this.showOpenFoodFactsButton = 'on';
     await Preferences.set({ key: this.KEY_SHOW_OPEN_FOOD_FACTS_BUTTON, value: this.showOpenFoodFactsButton });
+
+    this.showConnectWifiButton = 'on';
+    await Preferences.set({ key: this.KEY_SHOW_CONNECT_WIFI_BUTTON, value: this.showConnectWifiButton });
 
     this.showExitAppAlert = 'on';
     await Preferences.set({ key: this.KEY_SHOW_EXIT_APP_ALERT, value: this.showExitAppAlert });

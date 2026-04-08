@@ -92,6 +92,15 @@ export class SettingResultButtonsPage {
     await this.tapHaptic();
   }
 
+  async onConnectWifiButtonChange(ev: any) {
+    this.env.showConnectWifiButton = ev ? 'on' : 'off';
+    await Preferences.set({
+      key: this.env.KEY_SHOW_CONNECT_WIFI_BUTTON,
+      value: this.env.showConnectWifiButton,
+    });
+    await this.tapHaptic();
+  }
+
   async tapHaptic() {
     if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
       await Haptics.impact({ style: ImpactStyle.Light })

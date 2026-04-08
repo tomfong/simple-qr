@@ -60,6 +60,14 @@
 		"classpath": "io.capawesome.capacitorjs.plugins.androidedgetoedgesupport.EdgeToEdgePlugin"
 	},
 	{
+		"pkg": "@capgo/capacitor-wifi",
+		"classpath": "ee.forgr.plugin.capacitor_wifi.CapacitorWifiPlugin"
+	},
+	{
+		"pkg": "@capgo/capacitor-wifi",
+		"classpath": "app.capgo.capacitorwifi.CapacitorWifiPlugin"
+	},
+	{
 		"pkg": "@squareetlabs/capacitor-navigation-bar",
 		"classpath": "com.squareetlabs.capacitor.navigationbar.NavigationBarPlugin"
 	}

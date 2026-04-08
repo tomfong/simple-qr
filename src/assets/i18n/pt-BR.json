@@ -48,6 +48,7 @@
     "COLOR": "Cor",
     "COLOR_THEME": "Tema de Cores",
     "COMING_SOON": "Em Breve",
+    "CONNECT_TO_WIFI": "Conectar ao Wi‑Fi",
     "CONTACT_METHOD": "Método de Contato",
     "CONTACT_NAME": "Nome do Contato",
     "CONTENT": "Conteúdo",
@@ -303,7 +304,8 @@
     	"TUTORIAL_SWIPE_LEFT": "Deslize para a esquerda para excluir o registro correspondente.",
     	"TUTORIAL_SWIPE_RIGHT": "Deslize para a direita para marcar o texto do registro correspondente / editar a etiqueta do marcador correspondente.",
     	"UNDO_DELETE": "Você pode desfazer a exclusão",
-    	"VIBRATION_EXPLAIN": "Forneça vibração ou feedback tátil. Observe que nem todos os dispositivos suportam essa funcionalidade."
+    	"VIBRATION_EXPLAIN": "Forneça vibração ou feedback tátil. Observe que nem todos os dispositivos suportam essa funcionalidade.",
+        "WIFI_PASSWORD_COPIED": "Senha do Wi‑Fi copiada"
 	},
 	"BARCODE_TYPE": {
         "1D": "Código de Barras 1D ",
