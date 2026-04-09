@@ -15,10 +15,10 @@
       </SelectionState>
       <SelectionState runConfigName="simple-qr.android.app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-04-08T16:42:07.078727Z">
+        <DropdownSelection timestamp="2026-04-08T23:54:24.642712Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=/Users/tomfong/.android/avd/Pixel_7_Pro_API_36.avd" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=QV7706YDJ4" />
             </handle>
           </Target>
         </DropdownSelection>

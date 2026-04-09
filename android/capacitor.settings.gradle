@@ -47,8 +47,5 @@ project(':capacitor-toast').projectDir = new File('../node_modules/@capacitor/to
 include ':capawesome-capacitor-android-edge-to-edge-support'
 project(':capawesome-capacitor-android-edge-to-edge-support').projectDir = new File('../node_modules/@capawesome/capacitor-android-edge-to-edge-support/android')
 
-include ':capgo-capacitor-wifi'
-project(':capgo-capacitor-wifi').projectDir = new File('../node_modules/@capgo/capacitor-wifi/android')
-
 include ':squareetlabs-capacitor-navigation-bar'
 project(':squareetlabs-capacitor-navigation-bar').projectDir = new File('../node_modules/@squareetlabs/capacitor-navigation-bar/android')
