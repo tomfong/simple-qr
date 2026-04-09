@@ -32,8 +32,6 @@ PODS:
     - Capacitor
   - CapacitorToast (7.0.2):
     - Capacitor
-  - CapgoCapacitorWifi (7.0.3):
-    - Capacitor
   - CordovaPlugins (7.4.3):
     - CapacitorCordova
   - GoogleDataTransport (10.1.0):
@@ -103,7 +101,6 @@ DEPENDENCIES:
   - "CapacitorSplashScreen (from `../../node_modules/@capacitor/splash-screen`)"
   - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
   - "CapacitorToast (from `../../node_modules/@capacitor/toast`)"
-  - "CapgoCapacitorWifi (from `../../node_modules/@capgo/capacitor-wifi`)"
   - CordovaPlugins (from `../capacitor-cordova-ios-plugins`)
   - "SquareetlabsCapacitorNavigationBar (from `../../node_modules/@squareetlabs/capacitor-navigation-bar`)"
 
@@ -155,8 +152,6 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/status-bar"
   CapacitorToast:
     :path: "../../node_modules/@capacitor/toast"
-  CapgoCapacitorWifi:
-    :path: "../../node_modules/@capgo/capacitor-wifi"
   CordovaPlugins:
     :path: "../capacitor-cordova-ios-plugins"
   SquareetlabsCapacitorNavigationBar:
@@ -179,7 +174,6 @@ SPEC CHECKSUMS:
   CapacitorSplashScreen: 157947576b59d913792063a8d442a79e6d283ee5
   CapacitorStatusBar: e04d05e121d5a5979c29eb4249186a4e4a84cacb
   CapacitorToast: 166611aea815418fc08894b77a915773e3d059d5
-  CapgoCapacitorWifi: a1cc6d1e10a542bb0a0235f0d495eb1a0c728d6a
   CordovaPlugins: 26bb31cd90315e8942a691fe4803116ae0017038
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
   GoogleMLKit: eff9e23ec1d90ea4157a1ee2e32a4f610c5b3318
@@ -195,6 +189,6 @@ SPEC CHECKSUMS:
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   SquareetlabsCapacitorNavigationBar: fd191c658abe8e5033e7091587f939f71347fd72
 
-PODFILE CHECKSUM: d3ab0130161c7a4033c93a5ddb8ae1b2b3179e28
+PODFILE CHECKSUM: e1adbaef395405aff7d0286247929553e26f841f
 
 COCOAPODS: 1.16.2

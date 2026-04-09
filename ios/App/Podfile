@@ -25,7 +25,6 @@ def capacitor_pods
   pod 'CapacitorSplashScreen', :path => '../../node_modules/@capacitor/splash-screen'
   pod 'CapacitorStatusBar', :path => '../../node_modules/@capacitor/status-bar'
   pod 'CapacitorToast', :path => '../../node_modules/@capacitor/toast'
-  pod 'CapgoCapacitorWifi', :path => '../../node_modules/@capgo/capacitor-wifi'
   pod 'SquareetlabsCapacitorNavigationBar', :path => '../../node_modules/@squareetlabs/capacitor-navigation-bar'
   pod 'CordovaPlugins', :path => '../capacitor-cordova-ios-plugins'
 end

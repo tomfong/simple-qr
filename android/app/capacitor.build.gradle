@@ -24,7 +24,6 @@ dependencies {
     implementation project(':capacitor-status-bar')
     implementation project(':capacitor-toast')
     implementation project(':capawesome-capacitor-android-edge-to-edge-support')
-    implementation project(':capgo-capacitor-wifi')
     implementation project(':squareetlabs-capacitor-navigation-bar')
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
 }

@@ -4,6 +4,12 @@ ext {
     targetSdkVersion = 36
     androidxActivityVersion = '1.9.2'
     androidxAppCompatVersion = '1.7.0'
+    // CameraX 1.4+ is required for Android 15+ 16KB page-size compatibility for some transitive native libs
+    // pulled in by ML Kit (e.g. libimage_processing_util_jni.so).
+    androidxCameraCamera2Version = '1.4.2'
+    androidxCameraCoreVersion = '1.4.2'
+    androidxCameraLifecycleVersion = '1.4.2'
+    androidxCameraViewVersion = '1.4.2'
     androidxCoordinatorLayoutVersion = '1.2.0'
     androidxCoreVersion = '1.15.0'
     androidxFragmentVersion = '1.8.4'

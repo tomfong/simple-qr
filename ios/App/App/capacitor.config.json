@@ -47,7 +47,6 @@
 		"SplashScreenPlugin",
 		"StatusBarPlugin",
 		"ToastPlugin",
-		"CapacitorWifiPlugin",
 		"NavigationBarPlugin",
 		"CDVPlugin"
 	]
