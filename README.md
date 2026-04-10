@@ -70,7 +70,7 @@ Author: Tom FONG
 
 ### Demo
 
-[![Simple QR Demo](https://img.youtube.com/vi/TIC6ZAkWoXY/0.jpg)](https://www.youtube.com/watch?v=TIC6ZAkWoXY)
+[![Simple QR Demo on YouTube](https://img.youtube.com/vi/qGg3F91j90A/0.jpg)](https://www.youtube.com/watch?v=qGg3F91j90A)
 
 ### Languages Supported
 
