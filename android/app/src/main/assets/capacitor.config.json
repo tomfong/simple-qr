@@ -3,8 +3,7 @@
 	"appName": "Simple QR",
 	"webDir": "www",
 	"android": {
-		"initialFocus": false,
-		"adjustMarginsForEdgeToEdge": "force"
+		"initialFocus": false
 	},
 	"plugins": {
 		"SplashScreen": {
@@ -18,8 +17,10 @@
 			"splashImmersive": true,
 			"layoutName": "launch_screen"
 		},
-		"EdgeToEdge": {
-			"backgroundColor": "#000000"
+		"SystemBars": {
+			"insetsHandling": "css",
+			"style": "DEFAULT",
+			"hidden": false
 		}
 	},
 	"cordova": {

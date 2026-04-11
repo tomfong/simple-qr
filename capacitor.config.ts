@@ -5,8 +5,7 @@ const config: CapacitorConfig = {
   appName: 'Simple QR',
   webDir: 'www',
   android: {
-    initialFocus: false,
-    adjustMarginsForEdgeToEdge: "force"
+    initialFocus: false
   },
   plugins: {
     SplashScreen: {
@@ -20,9 +19,11 @@ const config: CapacitorConfig = {
       splashImmersive: true,
       layoutName: "launch_screen",
     },
-    EdgeToEdge: {
-      backgroundColor: '#000000',  // Opaque black
-    },
+    SystemBars: {
+      insetsHandling: "css",
+      style: "DEFAULT",
+      hidden: false
+    }
   },
   cordova: {
     preferences: {

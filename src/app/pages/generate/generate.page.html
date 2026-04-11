@@ -1,16 +1,13 @@
 <ion-header>
-  <div *ngIf="env.startPage == '/tabs/generate' && env.startPageHeader == 'on'; then mainHeader else selfHeader">
-  </div>
-  <ng-template #mainHeader>
+  @if (env.startPage == '/tabs/generate' && env.startPageHeader == 'on') {
     <ion-toolbar color="primary">
       <ion-title>{{ 'SIMPLE_QR' | translate}}</ion-title>
     </ion-toolbar>
-  </ng-template>
-  <ng-template #selfHeader>
+  } @else {
     <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'">
       <ion-title>{{ 'CREATE_QR_CODE' | translate }}</ion-title>
     </ion-toolbar>
-  </ng-template>
+  }
 </ion-header>
 
 <ion-content #content>
@@ -35,36 +32,37 @@
               <span>{{ getText(contentType) }}</span>
             </div>
           </mat-select-trigger>
-          <mat-option [value]="type.value" *ngFor="let type of contentTypes">
-            <div class="d-flex">
-              <mat-icon class="me-3" [fontIcon]="getIcon(type.value)">
-              </mat-icon>
-              <span>{{ type.text }}</span>
-            </div>
-          </mat-option>
+          @for (type of contentTypes; track type) {
+            <mat-option [value]="type.value">
+              <div class="d-flex">
+                <mat-icon class="me-3" [fontIcon]="getIcon(type.value)">
+                </mat-icon>
+                <span>{{ type.text }}</span>
+              </div>
+            </mat-option>
+          }
         </mat-select>
       </mat-form-field>
     </ion-col>
   </ion-row>
 
-  <ng-container *ngIf="contentType === 'freeText'">
+  @if (contentType === 'freeText') {
     <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent" [floatLabel]="'always'">
           <mat-label>{{ 'QR_CODE_CONTENT' | translate }} </mat-label>
           <textarea matInput [(ngModel)]="qrCodeContent" [cdkTextareaAutosize]="true" [cdkAutosizeMinRows]="7"
-            [cdkAutosizeMaxRows]="20" [maxLength]="1817" #freeTxtInput></textarea>
+          [cdkAutosizeMaxRows]="20" [maxLength]="1817" #freeTxtInput></textarea>
           <mat-hint align="end">{{ freeTxtInput.value?.length || 0 }}/1817</mat-hint>
           <mat-hint>{{'MSG.CREATE_QRCODE_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>
       </ion-col>
     </ion-row>
-  </ng-container>
+  }
 
-  <ng-container *ngIf="contentType === 'emailW3C'">
-
+  @if (contentType === 'emailW3C') {
     <!-- Recipients -->
-    <ng-container *ngFor="let email of toEmails; index as i; trackBy: trackByIndex;">
+    @for (email of toEmails; track trackByIndex(i, email); let i = $index) {
       <ion-row class="ion-padding-horizontal" [@inAnimation]>
         <ion-col>
           <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
@@ -76,7 +74,7 @@
           </mat-form-field>
         </ion-col>
       </ion-row>
-    </ng-container>
+    }
     <ion-row [@inAnimation] style="padding-left: 5px; padding-right: 5px;">
       <ion-col>
         <ion-button fill="clear" [color]="'primary'" (click)="addEmailField()">
@@ -84,16 +82,17 @@
           {{ 'ADD_RECIPIENT' | translate }}
         </ion-button>
       </ion-col>
-      <ion-col class="ion-text-end" *ngIf="toEmails && toEmails.length > 1">
-        <ion-button fill="clear" color="danger" (click)="removeEmailField()">
-          <ion-icon slot="start" name="remove" size="small"></ion-icon>
-          {{ 'REMOVE_RECIPIENT' | translate }}
-        </ion-button>
-      </ion-col>
+      @if (toEmails && toEmails.length > 1) {
+        <ion-col class="ion-text-end">
+          <ion-button fill="clear" color="danger" (click)="removeEmailField()">
+            <ion-icon slot="start" name="remove" size="small"></ion-icon>
+            {{ 'REMOVE_RECIPIENT' | translate }}
+          </ion-button>
+        </ion-col>
+      }
     </ion-row>
-
     <!-- CCs -->
-    <ng-container *ngFor="let cc of ccEmails; index as i; trackBy: trackByIndex;">
+    @for (cc of ccEmails; track trackByIndex(i, cc); let i = $index) {
       <ion-row class="ion-padding-horizontal" [@inAnimation]>
         <ion-col>
           <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
@@ -105,7 +104,7 @@
           </mat-form-field>
         </ion-col>
       </ion-row>
-    </ng-container>
+    }
     <ion-row [@inAnimation] style="padding-left: 5px; padding-right: 5px;">
       <ion-col>
         <ion-button fill="clear" [color]="'primary'" (click)="addCcField()">
@@ -113,16 +112,17 @@
           {{ 'ADD_CC' | translate }}
         </ion-button>
       </ion-col>
-      <ion-col class="ion-text-end" *ngIf="ccEmails && ccEmails.length > 0">
-        <ion-button fill="clear" color="danger" (click)="removeCcField()">
-          <ion-icon slot="start" name="remove" size="small"></ion-icon>
-          {{ 'REMOVE_CC' | translate }}
-        </ion-button>
-      </ion-col>
+      @if (ccEmails && ccEmails.length > 0) {
+        <ion-col class="ion-text-end">
+          <ion-button fill="clear" color="danger" (click)="removeCcField()">
+            <ion-icon slot="start" name="remove" size="small"></ion-icon>
+            {{ 'REMOVE_CC' | translate }}
+          </ion-button>
+        </ion-col>
+      }
     </ion-row>
-
     <!-- BCCs -->
-    <ng-container *ngFor="let bcc of bccEmails; index as i; trackBy: trackByIndex;">
+    @for (bcc of bccEmails; track trackByIndex(i, bcc); let i = $index) {
       <ion-row class="ion-padding-horizontal" [@inAnimation]>
         <ion-col>
           <mat-form-field [class]="ngMatThemeClass " appearance="outline" color="accent">
@@ -134,7 +134,7 @@
           </mat-form-field>
         </ion-col>
       </ion-row>
-    </ng-container>
+    }
     <ion-row [@inAnimation] style="padding-left: 5px; padding-right: 5px;">
       <ion-col>
         <ion-button fill="clear" [color]="'primary'" (click)="addBccField()">
@@ -142,14 +142,15 @@
           {{ 'ADD_BCC' | translate }}
         </ion-button>
       </ion-col>
-      <ion-col class="ion-text-end" *ngIf="bccEmails && bccEmails.length > 0">
-        <ion-button fill="clear" color="danger" (click)="removeBccField()">
-          <ion-icon slot="start" name="remove" size="small"></ion-icon>
-          {{ 'REMOVE_BCC' | translate }}
-        </ion-button>
-      </ion-col>
+      @if (bccEmails && bccEmails.length > 0) {
+        <ion-col class="ion-text-end">
+          <ion-button fill="clear" color="danger" (click)="removeBccField()">
+            <ion-icon slot="start" name="remove" size="small"></ion-icon>
+            {{ 'REMOVE_BCC' | translate }}
+          </ion-button>
+        </ion-col>
+      }
     </ion-row>
-
     <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
@@ -160,23 +161,20 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-
     <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent" [floatLabel]="'always'">
           <mat-label>{{ 'EMAIL_BODY' | translate}}</mat-label>
           <textarea matInput [(ngModel)]="emailBody" [cdkTextareaAutosize]="true" [cdkAutosizeMinRows]="5"
-            [cdkAutosizeMaxRows]="10" [maxLength]="1817" #emailBodyInput></textarea>
+          [cdkAutosizeMaxRows]="10" [maxLength]="1817" #emailBodyInput></textarea>
           <mat-hint align="end">{{ emailBodyInput.value?.length || 0 }}/1817</mat-hint>
           <mat-hint>{{'MSG.CREATE_QRCODE_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>
       </ion-col>
     </ion-row>
+  }
 
-  </ng-container>
-
-  <ng-container *ngIf="contentType === 'emailDocomo'">
-
+  @if (contentType === 'emailDocomo') {
     <!-- Recipient -->
     <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
@@ -189,7 +187,6 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-
     <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
@@ -200,22 +197,20 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-
     <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent" [floatLabel]="'always'">
           <mat-label>{{ 'EMAIL_BODY' | translate}}</mat-label>
           <textarea matInput [(ngModel)]="emailBody" [cdkTextareaAutosize]="true" [cdkAutosizeMinRows]="5"
-            [cdkAutosizeMaxRows]="10" [maxLength]="1817" #emailBodyInput></textarea>
+          [cdkAutosizeMaxRows]="10" [maxLength]="1817" #emailBodyInput></textarea>
           <mat-hint align="end">{{ emailBodyInput.value?.length || 0 }}/1817</mat-hint>
           <mat-hint>{{'MSG.CREATE_QRCODE_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>
       </ion-col>
     </ion-row>
+  }
 
-  </ng-container>
-
-  <ng-container *ngIf="contentType === 'geo'">
+  @if (contentType === 'geo') {
     <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
@@ -232,9 +227,9 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-  </ng-container>
+  }
 
-  <ng-container *ngIf="contentType === 'phone'">
+  @if (contentType === 'phone') {
     <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
@@ -244,9 +239,9 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-  </ng-container>
+  }
 
-  <ng-container *ngIf="contentType === 'sms'">
+  @if (contentType === 'sms') {
     <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
@@ -261,15 +256,15 @@
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent" [floatLabel]="'always'">
           <mat-label>{{ 'MESSAGE' | translate}}</mat-label>
           <textarea matInput [(ngModel)]="smsMessage" [cdkTextareaAutosize]="true" [cdkAutosizeMinRows]="5"
-            [cdkAutosizeMaxRows]="10" [maxLength]="160" #smsInput></textarea>
+          [cdkAutosizeMaxRows]="10" [maxLength]="160" #smsInput></textarea>
           <mat-hint align="end">{{ smsInput.value?.length || 0 }}/160</mat-hint>
           <mat-hint>{{'MSG.SMS_MAX_LENGTH' | translate}}</mat-hint>
         </mat-form-field>
       </ion-col>
     </ion-row>
-  </ng-container>
+  }
 
-  <ng-container *ngIf="contentType === 'url'">
+  @if (contentType === 'url') {
     <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
@@ -281,10 +276,9 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-  </ng-container>
+  }
 
-  <ng-container *ngIf="contentType === 'contact'">
-
+  @if (contentType === 'contact') {
     <!-- Name -->
     <ion-row class="ion-padding-horizontal ion-padding">
       <ion-col>
@@ -312,7 +306,6 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-
     <!-- Contact Method -->
     <ion-row class="ion-padding-horizontal ion-padding">
       <ion-col>
@@ -367,7 +360,6 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-
     <!-- Work -->
     <ion-row class="ion-padding-horizontal ion-padding">
       <ion-col>
@@ -395,7 +387,6 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-
     <!-- Home Address -->
     <ion-row class="ion-padding-horizontal ion-padding">
       <ion-col>
@@ -450,7 +441,6 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-
     <!-- Personal -->
     <ion-row class="ion-padding-horizontal ion-padding">
       <ion-col>
@@ -475,9 +465,11 @@
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'GENDER' | translate}}</mat-label>
           <mat-select [(ngModel)]="gender">
-            <mat-option [value]="gender.value" *ngFor="let gender of genders">
-              {{ gender.text }}
-            </mat-option>
+            @for (gender of genders; track gender) {
+              <mat-option [value]="gender.value">
+                {{ gender.text }}
+              </mat-option>
+            }
           </mat-select>
         </mat-form-field>
       </ion-col>
@@ -491,9 +483,9 @@
         </mat-form-field>
       </ion-col>
     </ion-row>
-  </ng-container>
+  }
 
-  <ng-container *ngIf="contentType === 'wifi'">
+  @if (contentType === 'wifi') {
     <ion-row class="ion-padding-horizontal" [@inAnimation]>
       <ion-col>
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
@@ -519,9 +511,11 @@
         <mat-form-field [class]="ngMatThemeClass" appearance="outline" color="accent">
           <mat-label>{{ 'WIFI_ENCRYPTION' | translate}}</mat-label>
           <mat-select [(ngModel)]="wifiEncryption">
-            <mat-option [value]="enc.value" *ngFor="let enc of wifiEncryptions">
-              {{ enc.text }}
-            </mat-option>
+            @for (enc of wifiEncryptions; track enc) {
+              <mat-option [value]="enc.value">
+                {{ enc.text }}
+              </mat-option>
+            }
           </mat-select>
         </mat-form-field>
       </ion-col>
@@ -534,7 +528,7 @@
         </ion-item>
       </ion-col>
     </ion-row>
-  </ng-container>
+  }
 </ion-content>
 <ion-footer
   [ngStyle]="env.colorTheme === 'dark'?  {'background-color': '#222428'} : (env.colorTheme === 'black'? {'background-color': '#000000'} : {'background-color': '#F0F0F0'})">

@@ -10,12 +10,12 @@
     </ion-tab-button>
 
     <ion-tab-button tab="history" (click)="tapHaptic()" layout="label-hide">
-      <ng-container *ngIf="env.historyPageStartSegment == 'history'">
+      @if (env.historyPageStartSegment == 'history') {
         <ion-icon src="assets/icon/history.svg"></ion-icon>
-      </ng-container>
-      <ng-container *ngIf="env.historyPageStartSegment == 'bookmarks'">
+      }
+      @if (env.historyPageStartSegment == 'bookmarks') {
         <ion-icon name="bookmark"></ion-icon>
-      </ng-container>
+      }
     </ion-tab-button>
 
     <ion-tab-button tab="setting" (click)="tapHaptic()" layout="label-hide">

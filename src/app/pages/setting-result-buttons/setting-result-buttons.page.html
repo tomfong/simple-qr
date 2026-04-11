@@ -57,27 +57,41 @@
   </ion-item>
 
   <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none">
-    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" *ngIf="env.searchEngine === 'google'"
-      name="logo-google">
-    </ion-icon>
-    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" *ngIf="env.searchEngine === 'bing'"
-      src="assets/icon/microsoft-bing.svg">
-    </ion-icon>
-    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" *ngIf="env.searchEngine === 'yahoo'"
-      src="assets/icon/yahoo.svg">
-    </ion-icon>
-    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'"
-      *ngIf="env.searchEngine === 'duckduckgo'" src="assets/icon/duck-duck-go.svg">
-    </ion-icon>
-    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" *ngIf="env.searchEngine === 'yandex'"
-      src="assets/icon/yandex.svg">
-    </ion-icon>
-    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" *ngIf="env.searchEngine === 'ecosia'"
-      src="assets/icon/ecosia.svg">
-    </ion-icon>
-    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" *ngIf="env.searchEngine === 'brave'"
-      src="assets/icon/brave-search.svg">
-    </ion-icon>
+    @if (env.searchEngine === 'google') {
+      <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'"
+        name="logo-google">
+      </ion-icon>
+    }
+    @if (env.searchEngine === 'bing') {
+      <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'"
+        src="assets/icon/microsoft-bing.svg">
+      </ion-icon>
+    }
+    @if (env.searchEngine === 'yahoo') {
+      <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'"
+        src="assets/icon/yahoo.svg">
+      </ion-icon>
+    }
+    @if (env.searchEngine === 'duckduckgo') {
+      <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'"
+        src="assets/icon/duck-duck-go.svg">
+      </ion-icon>
+    }
+    @if (env.searchEngine === 'yandex') {
+      <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'"
+        src="assets/icon/yandex.svg">
+      </ion-icon>
+    }
+    @if (env.searchEngine === 'ecosia') {
+      <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'"
+        src="assets/icon/ecosia.svg">
+      </ion-icon>
+    }
+    @if (env.searchEngine === 'brave') {
+      <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'"
+        src="assets/icon/brave-search.svg">
+      </ion-icon>
+    }
     <ion-label>
       <p class="ion-padding-horizontal pre-line">
         <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
@@ -256,18 +270,18 @@
   </ion-item>
 
   <!-- <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" style="margin-bottom: var(--ion-safe-area-bottom, 0);">
-    <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="wifi">
-    </ion-icon>
-    <ion-label>
-      <p class="ion-padding-horizontal pre-line">
-        <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
-          {{ 'CONNECT_TO_WIFI' | translate }}
-        </ion-text>
-      </p>
-    </ion-label>
-    <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.showConnectWifiButton == 'on'? true : false"
-      (ngModelChange)="onConnectWifiButtonChange($event)">
-    </ion-toggle>
-  </ion-item> -->
+  <ion-icon class="ion-margin-start ion-padding-horizontal" [color]="'primary'" name="wifi">
+  </ion-icon>
+  <ion-label>
+    <p class="ion-padding-horizontal pre-line">
+      <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'" style="font-size: large;">
+        {{ 'CONNECT_TO_WIFI' | translate }}
+      </ion-text>
+    </p>
+  </ion-label>
+  <ion-toggle class="ion-padding-end" slot="end" [ngModel]="env.showConnectWifiButton == 'on'? true : false"
+    (ngModelChange)="onConnectWifiButtonChange($event)">
+  </ion-toggle>
+</ion-item> -->
 
 </ion-content>

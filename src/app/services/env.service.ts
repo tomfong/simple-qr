@@ -14,7 +14,7 @@ import { Toast } from '@capacitor/toast';
 import { v4 as uuidv4 } from 'uuid';
 import { Preferences } from '@capacitor/preferences';
 import { Observable } from 'rxjs';
-import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
+import { SystemBars, SystemBarsStyle, SystemBarType } from '@capacitor/core';
 import { StatusBar, Style } from '@capacitor/status-bar';
 
 export declare type LanguageType = 'de' | 'en' | 'fr' | 'it' | 'pt-BR' | 'ru' | 'zh-CN' | 'zh-HK';
@@ -1215,7 +1215,7 @@ export class EnvService {
                   this.overlayContainer.getContainerElement().classList.remove('ng-mat-black');
                   this.overlayContainer.getContainerElement().classList.add('ng-mat-dark');
                   if (this.platform.is('android')) {
-                    await EdgeToEdge.setBackgroundColor({ color: '#1f1f1f' });
+                    await SystemBars.setStyle({ style: SystemBarsStyle.Dark, bar: SystemBarType.NavigationBar });
                     await StatusBar.setStyle({ style: Style.Dark });
                   }
                 } else {
@@ -1226,7 +1226,7 @@ export class EnvService {
                   this.overlayContainer.getContainerElement().classList.remove('ng-mat-black');
                   this.overlayContainer.getContainerElement().classList.add('ng-mat-light');
                   if (this.platform.is('android')) {
-                    await EdgeToEdge.setBackgroundColor({ color: '#000000' });
+                    await SystemBars.setStyle({ style: SystemBarsStyle.Light, bar: SystemBarType.NavigationBar });
                     await StatusBar.setStyle({ style: Style.Dark });
                   }
                 }
@@ -1239,7 +1239,7 @@ export class EnvService {
               this.overlayContainer.getContainerElement().classList.remove('ng-mat-black');
               this.overlayContainer.getContainerElement().classList.add('ng-mat-light');
               if (this.platform.is('android')) {
-                await EdgeToEdge.setBackgroundColor({ color: '#000000' });
+                await SystemBars.setStyle({ style: SystemBarsStyle.Light, bar: SystemBarType.NavigationBar });
                 await StatusBar.setStyle({ style: Style.Dark });
               }
             }
@@ -1254,7 +1254,7 @@ export class EnvService {
       this.overlayContainer.getContainerElement().classList.remove('ng-mat-black');
       this.overlayContainer.getContainerElement().classList.add('ng-mat-light');
       if (this.platform.is('android')) {
-        await EdgeToEdge.setBackgroundColor({ color: '#000000' });
+        await SystemBars.setStyle({ style: SystemBarsStyle.Light, bar: SystemBarType.NavigationBar });
         await StatusBar.setStyle({ style: Style.Dark });
       }
     } else if (this.selectedColorTheme === 'dark') {
@@ -1265,7 +1265,7 @@ export class EnvService {
       this.overlayContainer.getContainerElement().classList.remove('ng-mat-black');
       this.overlayContainer.getContainerElement().classList.add('ng-mat-dark');
       if (this.platform.is('android')) {
-        await EdgeToEdge.setBackgroundColor({ color: '#1f1f1f' });
+        await SystemBars.setStyle({ style: SystemBarsStyle.Dark, bar: SystemBarType.NavigationBar });
         await StatusBar.setStyle({ style: Style.Dark });
       }
     } else if (this.selectedColorTheme === 'black') {
@@ -1276,7 +1276,7 @@ export class EnvService {
       this.overlayContainer.getContainerElement().classList.remove('ng-mat-dark');
       this.overlayContainer.getContainerElement().classList.add('ng-mat-black');
       if (this.platform.is('android')) {
-        await EdgeToEdge.setBackgroundColor({ color: '#000000' });
+        await SystemBars.setStyle({ style: SystemBarsStyle.Dark, bar: SystemBarType.NavigationBar });
         await StatusBar.setStyle({ style: Style.Dark });
       }
     }

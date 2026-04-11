@@ -48,7 +48,7 @@
           slot="header" style="--ripple-color: transparent;">
           <ion-list-header class="ion-padding-start ion-margin-start align-items-center" style="font-size: large;">
             <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'"> {{ 'ERROR_CORRECTION_LEVEL' | translate
-              }}</ion-text>
+            }}</ion-text>
 
           </ion-list-header>
         </ion-item>
@@ -120,10 +120,14 @@
         <span>
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'"> {{ 'COLOR' | translate }}</ion-text>
         </span>
-        <ion-icon *ngIf="colorLocked" name="lock-closed" [color]="env.colorTheme === 'light'? 'dark' : 'light'">
-        </ion-icon>
-        <ion-icon *ngIf="!colorLocked" name="lock-open" [color]="env.colorTheme === 'light'? 'dark' : 'light'">
-        </ion-icon>
+        @if (colorLocked) {
+          <ion-icon name="lock-closed" [color]="env.colorTheme === 'light'? 'dark' : 'light'">
+          </ion-icon>
+        }
+        @if (!colorLocked) {
+          <ion-icon name="lock-open" [color]="env.colorTheme === 'light'? 'dark' : 'light'">
+          </ion-icon>
+        }
       </div>
     </ion-list-header>
     <ion-item class="ion-no-padding" lines="none">
@@ -156,14 +160,18 @@
         style="width: 100%;">
         <span>
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'BACKGROUND_COLOR' | translate
-            }}</ion-text>
+          }}</ion-text>
         </span>
-        <ion-icon *ngIf="backgroundColorLocked" name="lock-closed"
-          [color]="env.colorTheme === 'light'? 'dark' : 'light'">
-        </ion-icon>
-        <ion-icon *ngIf="!backgroundColorLocked" name="lock-open"
-          [color]="env.colorTheme === 'light'? 'dark' : 'light'">
-        </ion-icon>
+        @if (backgroundColorLocked) {
+          <ion-icon name="lock-closed"
+            [color]="env.colorTheme === 'light'? 'dark' : 'light'">
+          </ion-icon>
+        }
+        @if (!backgroundColorLocked) {
+          <ion-icon name="lock-open"
+            [color]="env.colorTheme === 'light'? 'dark' : 'light'">
+          </ion-icon>
+        }
       </div>
     </ion-list-header>
     <ion-item class="ion-no-padding" lines="none">
@@ -197,10 +205,14 @@
         <span>
           <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'MARGIN' | translate }}</ion-text>
         </span>
-        <ion-icon *ngIf="marginLocked" name="lock-closed" [color]="env.colorTheme === 'light'? 'dark' : 'light'">
-        </ion-icon>
-        <ion-icon *ngIf="!marginLocked" name="lock-open" [color]="env.colorTheme === 'light'? 'dark' : 'light'">
-        </ion-icon>
+        @if (marginLocked) {
+          <ion-icon name="lock-closed" [color]="env.colorTheme === 'light'? 'dark' : 'light'">
+          </ion-icon>
+        }
+        @if (!marginLocked) {
+          <ion-icon name="lock-open" [color]="env.colorTheme === 'light'? 'dark' : 'light'">
+          </ion-icon>
+        }
       </div>
     </ion-list-header>
     <ion-item class="ion-no-padding" lines="none">
