@@ -41,6 +41,16 @@ $app-black-theme: mat.m2-define-dark-theme((color: (primary: $app-primary,
   @include mat.core-theme($app-dark-theme);
   @include mat.button-theme($app-dark-theme);
 
+  .mat-mdc-select-panel {
+    background-color: #1e1e1e !important;
+  }
+
+  mat-option {
+    --mat-option-label-text-color: #ffffff !important;
+    --mat-option-background: #1e1e1e !important;
+    color: #ffffff !important;
+  }
+
   --mat-select-enabled-trigger-text-color: var(--ion-color-white, #fff) !important;
 }
 
@@ -48,6 +58,16 @@ html[theme="dark"] {
   @include mat.all-component-themes($app-dark-theme);
   @include mat.core-theme($app-dark-theme);
   @include mat.button-theme($app-dark-theme);
+
+  .mat-mdc-select-panel {
+    background-color: #1e1e1e !important;
+  }
+
+  mat-option {
+    --mat-option-label-text-color: #ffffff !important;
+    --mat-option-background: #1e1e1e !important;
+    color: #ffffff !important;
+  }
 
   --mat-select-enabled-trigger-text-color: var(--ion-color-white, #fff) !important;
 }
@@ -57,12 +77,14 @@ html[theme="dark"] {
   @include mat.core-theme($app-black-theme);
   @include mat.button-theme($app-black-theme);
 
-  .mat-mdc-menu-panel {
+  .mat-mdc-select-panel {
     background-color: #0f0f0f !important;
   }
 
   mat-option {
+    --mat-option-label-text-color: #ffffff !important;
     --mat-option-background: #0f0f0f !important;
+    color: #ffffff !important;
   }
 
   --mat-select-enabled-trigger-text-color: var(--ion-color-white, #fff) !important;
@@ -73,12 +95,14 @@ html[theme="black"] {
   @include mat.core-theme($app-black-theme);
   @include mat.button-theme($app-black-theme);
 
-  .mat-mdc-menu-panel {
+  .mat-mdc-select-panel {
     background-color: #0f0f0f !important;
   }
 
   mat-option {
+    --mat-option-label-text-color: #ffffff !important;
     --mat-option-background: #0f0f0f !important;
+    color: #ffffff !important;
   }
 
   --mat-select-enabled-trigger-text-color: var(--ion-color-white, #fff) !important;
