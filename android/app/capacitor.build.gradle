@@ -23,6 +23,7 @@ dependencies {
     implementation project(':capacitor-splash-screen')
     implementation project(':capacitor-status-bar')
     implementation project(':capacitor-toast')
+    implementation project(':capawesome-capacitor-android-edge-to-edge-support')
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
 }
 

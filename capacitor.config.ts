@@ -20,7 +20,7 @@ const config: CapacitorConfig = {
       layoutName: "launch_screen",
     },
     SystemBars: {
-      insetsHandling: "css",
+      insetsHandling: "disable",
       style: "DEFAULT",
       hidden: false
     }
