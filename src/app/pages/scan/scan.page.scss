@@ -22,6 +22,12 @@ ion-content {
     opacity: 0.6 !important;
 }
 
+.ios {
+    .square {
+        top: calc(50% - env(safe-area-inset-top, 0px) / 2) !important;
+    }
+}
+
 .zoom-ratio-wrapper {
     position: absolute;
     left: 50%;
@@ -39,11 +45,16 @@ ion-toolbar {
     --border-color: transparent !important;
 }
 
+ion-title {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
 ion-fab-button {
     --background: transparent !important;
     --box-shadow: none !important;
 }
 
 ion-fab {
-    z-index: 20; /* Above overlay and zoom slider */
+    z-index: 20;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
 }

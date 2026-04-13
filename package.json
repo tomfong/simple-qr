@@ -10,6 +10,7 @@
     "sync": "ionic cap sync --prod --no-build",
     "copy:an": "ionic cap copy android --prod",
     "copy:ios": "ionic cap copy ios --prod",
+    "copy": "ionic cap copy --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

@@ -1,4 +1,11 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
@@ -13,23 +20,33 @@ import { Preferences } from '@capacitor/preferences';
 import { QRCodeComponent, QRCodeElementType } from 'angularx-qrcode';
 
 @Component({
-    selector: 'app-qr-code',
-    templateUrl: './qr-code.page.html',
-    styleUrls: ['./qr-code.page.scss'],
-    standalone: false
+  selector: 'app-qr-code',
+  templateUrl: './qr-code.page.html',
+  styleUrls: ['./qr-code.page.scss'],
+  standalone: false,
 })
 export class QrCodePage {
-
   modal: HTMLIonModalElement;
 
   @ViewChild('qrcode') qrcodeElement: QRCodeComponent;
 
   @Input() qrCodeContent: string;
-  qrElementType: QRCodeElementType = "canvas";
-  errorCorrectionLevel: 'low' | 'medium' | 'quartile' | 'high' | 'L' | 'M' | 'Q' | 'H';
-  scale: number = 0.8;
-  readonly MAX_WIDTH = 350;
-  defaultWidth: number = window.innerHeight * 0.32 > this.MAX_WIDTH ? this.MAX_WIDTH : window.innerHeight * 0.32;
+  qrElementType: QRCodeElementType = 'canvas';
+  errorCorrectionLevel:
+    | 'low'
+    | 'medium'
+    | 'quartile'
+    | 'high'
+    | 'L'
+    | 'M'
+    | 'Q'
+    | 'H';
+  scale: number = 0.7;
+  readonly MAX_WIDTH = 320;
+  qrWidth: number =
+    window.innerHeight * this.scale * 0.35 > this.MAX_WIDTH
+      ? this.MAX_WIDTH
+      : window.innerHeight * this.scale * 0.35;
 
   qrImageDataUrl: string;
 
@@ -38,6 +55,7 @@ export class QrCodePage {
   isSharing: boolean = false;
 
   constructor(
+    private cdr: ChangeDetectorRef,
     private translate: TranslateService,
     public env: EnvService,
     private loadingController: LoadingController,
@@ -53,78 +71,99 @@ export class QrCodePage {
   async ionViewDidEnter(): Promise<void> {
     this.isSharing = false;
     this.platform.ready().then(async () => {
-      if (this.screenOrientation.type.startsWith(this.screenOrientation.ORIENTATIONS.LANDSCAPE)) {
-        this.presentToast(this.translate.instant("MSG.PORTRAIT_ONLY"), "short", "bottom");
+      if (
+        this.screenOrientation.type.startsWith(
+          this.screenOrientation.ORIENTATIONS.LANDSCAPE,
+        )
+      ) {
+        this.presentToast(
+          this.translate.instant('MSG.PORTRAIT_ONLY'),
+          'short',
+          'bottom',
+        );
         this.screenOrientation.unlock();
       }
-      await this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT).then(
-        _ => {
+      await this.screenOrientation
+        .lock(this.screenOrientation.ORIENTATIONS.PORTRAIT)
+        .then((_) => {
           if (this.qrcodeElement != null) {
             setTimeout(() => {
-              this.qrcodeElement.width = this.platform.height() * this.scale * 0.4;
-              if (this.qrcodeElement.width > this.MAX_WIDTH) {
-                this.qrcodeElement.width = this.MAX_WIDTH;
+              this.qrWidth = this.platform.height() * this.scale * 0.35;
+              if (this.qrWidth > this.MAX_WIDTH) {
+                this.qrWidth = this.MAX_WIDTH;
               }
-            }, 500)
+              this.cdr.detectChanges();
+            }, 500);
           }
-        }
-      )
-      await ScreenBrightness.getBrightness().then(
-        value => {
-          this.currentBrightness = value.brightness
-        }
-      )
+        });
+      await ScreenBrightness.getBrightness().then((value) => {
+        this.currentBrightness = value.brightness;
+      });
       if (this.env.autoMaxBrightness === 'on') {
         await ScreenBrightness.setBrightness({ brightness: 1.0 }).catch(
-          err => {
+          (err) => {
             if (this.env.isDebugging) {
-              this.presentToast("Err when ScreenBrightness.setBrightness 1.0: " + JSON.stringify(err), "long", "top");
+              this.presentToast(
+                'Err when ScreenBrightness.setBrightness 1.0: ' +
+                  JSON.stringify(err),
+                'long',
+                'top',
+              );
             }
-          }
-        )
+          },
+        );
       }
-      await this.modalController.getTop().then(
-        async (modal: HTMLIonModalElement) => {
+      await this.modalController
+        .getTop()
+        .then(async (modal: HTMLIonModalElement) => {
           this.modal = modal;
-          this.modal.addEventListener("ionBreakpointDidChange", (ev: any) => {
+          this.modal.addEventListener('ionBreakpointDidChange', (ev: any) => {
             if (this.qrcodeElement != null) {
               switch (ev.detail.breakpoint) {
                 case 1:
-                  this.qrcodeElement.width = this.platform.width() * this.scale;
+                  this.qrWidth = this.platform.width() * this.scale;
                   break;
                 case 0.5:
-                  this.qrcodeElement.width = this.platform.height() * this.scale * 0.4;
-                  break
+                  this.qrWidth = this.platform.height() * this.scale * 0.35;
+                  break;
               }
-              if (this.qrcodeElement.width > this.MAX_WIDTH) {
-                this.qrcodeElement.width = this.MAX_WIDTH;
+              if (this.qrWidth > this.MAX_WIDTH) {
+                this.qrWidth = this.MAX_WIDTH;
               }
+              this.cdr.detectChanges();
             }
-          })
-          this.modal.onDidDismiss().then(
-            async _ => {
-              if (this.platform.is('android')) {
-                await ScreenBrightness.setBrightness({ brightness: -1 }).catch(
-                  err => {
-                    if (this.env.isDebugging) {
-                      this.presentToast("Err when ScreenBrightness.setBrightness -1: " + JSON.stringify(err), "long", "top");
-                    }
+          });
+          this.modal.onDidDismiss().then(async (_) => {
+            if (this.platform.is('android')) {
+              await ScreenBrightness.setBrightness({ brightness: -1 }).catch(
+                (err) => {
+                  if (this.env.isDebugging) {
+                    this.presentToast(
+                      'Err when ScreenBrightness.setBrightness -1: ' +
+                        JSON.stringify(err),
+                      'long',
+                      'top',
+                    );
                   }
-                )
-              } else if (this.platform.is('ios')) {
-                await ScreenBrightness.setBrightness({ brightness: this.currentBrightness }).catch(
-                  err => {
-                    if (this.env.isDebugging) {
-                      this.presentToast(`Err when ScreenBrightness.setBrightness ${this.currentBrightness}: ` + JSON.stringify(err), "long", "top");
-                    }
-                  }
-                )
-              }
-              await this.env.toggleOrientationChange();
+                },
+              );
+            } else if (this.platform.is('ios')) {
+              await ScreenBrightness.setBrightness({
+                brightness: this.currentBrightness,
+              }).catch((err) => {
+                if (this.env.isDebugging) {
+                  this.presentToast(
+                    `Err when ScreenBrightness.setBrightness ${this.currentBrightness}: ` +
+                      JSON.stringify(err),
+                    'long',
+                    'top',
+                  );
+                }
+              });
             }
-          );
-        }
-      )
+            await this.env.toggleOrientationChange();
+          });
+        });
     });
   }
 
@@ -149,12 +188,15 @@ export class QrCodePage {
 
   async onErrorCorrectionLevelChange() {
     this.setErrorCorrectionLevel();
-    await Preferences.set({ key: this.env.KEY_ERROR_CORRECTION_LEVEL, value: this.env.errorCorrectionLevel });
+    await Preferences.set({
+      key: this.env.KEY_ERROR_CORRECTION_LEVEL,
+      value: this.env.errorCorrectionLevel,
+    });
     if (this.qrcodeElement != null) {
       this.qrcodeElement.errorCorrectionLevel = this.errorCorrectionLevel;
     } else {
       if (this.env.isDebugging) {
-        this.presentToast("Cannot ref qrcodeElement!", "long", "top");
+        this.presentToast('Cannot ref qrcodeElement!', 'long', 'top');
       }
     }
   }
@@ -165,51 +207,73 @@ export class QrCodePage {
   }
 
   async shareQrCode(): Promise<void> {
-    const loading = await this.presentLoading(this.translate.instant('PREPARING'));
+    const loading = await this.presentLoading(
+      this.translate.instant('PREPARING'),
+    );
     this.isSharing = true;
     const currentWidth = this.qrcodeElement.width;
     this.qrcodeElement.width = 1000;
     setTimeout(async () => {
-      const canvases = document.querySelectorAll("canvas") as NodeListOf<HTMLCanvasElement>;
+      const canvases = document.querySelectorAll(
+        'canvas',
+      ) as NodeListOf<HTMLCanvasElement>;
       const canvas = canvases[canvases.length - 1];
       if (this.qrImageDataUrl) {
         delete this.qrImageDataUrl;
       }
-      this.qrImageDataUrl = canvas.toDataURL("image/png", 1);
+      this.qrImageDataUrl = canvas.toDataURL('image/png', 1);
       loading.dismiss();
-      const loading2 = await this.presentLoading(this.translate.instant('SHARING'));
-      await this.socialSharing.share(this.translate.instant('MSG.SHARE_QR'), this.translate.instant('SIMPLE_QR'), this.qrImageDataUrl, null).then(
-        _ => {
+      const loading2 = await this.presentLoading(
+        this.translate.instant('SHARING'),
+      );
+      await this.socialSharing
+        .share(
+          this.translate.instant('MSG.SHARE_QR'),
+          this.translate.instant('SIMPLE_QR'),
+          this.qrImageDataUrl,
+          null,
+        )
+        .then((_) => {
           this.qrcodeElement.width = currentWidth;
           delete this.qrImageDataUrl;
           this.isSharing = false;
           loading2.dismiss();
-        }
-      ).catch(
-        err => {
+        })
+        .catch((err) => {
           if (this.env.isDebugging) {
-            this.presentToast("Error when call SocialSharing.share: " + JSON.stringify(err), "long", "top");
+            this.presentToast(
+              'Error when call SocialSharing.share: ' + JSON.stringify(err),
+              'long',
+              'top',
+            );
           }
           this.qrcodeElement.width = currentWidth;
           delete this.qrImageDataUrl;
           this.isSharing = false;
           loading2.dismiss();
-        }
-      );
-    }, 500)
+        });
+    }, 500);
   }
 
   get qrColorDark(): string {
-    return rgbToHex(this.env.qrCodeDarkR, this.env.qrCodeDarkG, this.env.qrCodeDarkB);
+    return rgbToHex(
+      this.env.qrCodeDarkR,
+      this.env.qrCodeDarkG,
+      this.env.qrCodeDarkB,
+    );
   }
 
   get qrColorLight(): string {
-    return rgbToHex(this.env.qrCodeLightR, this.env.qrCodeLightG, this.env.qrCodeLightB);
+    return rgbToHex(
+      this.env.qrCodeLightR,
+      this.env.qrCodeLightG,
+      this.env.qrCodeLightB,
+    );
   }
 
   async presentLoading(msg: string): Promise<HTMLIonLoadingElement> {
     const loading = await this.loadingController.create({
-      message: msg
+      message: msg,
     });
     await loading.present();
     return loading;
@@ -228,22 +292,29 @@ export class QrCodePage {
     }
   }
 
-  async presentToast(msg: string, duration: "short" | "long", pos: "top" | "center" | "bottom") {
+  async presentToast(
+    msg: string,
+    duration: 'short' | 'long',
+    pos: 'top' | 'center' | 'bottom',
+  ) {
     await Toast.show({
       text: msg,
       duration: duration,
-      position: pos
+      position: pos,
     });
   }
 
   async tapHaptic() {
     if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
-      await Haptics.impact({ style: ImpactStyle.Light })
-        .catch(async err => {
-          if (this.env.debugMode === 'on') {
-            await Toast.show({ text: 'Err when Haptics.impact: ' + JSON.stringify(err), position: "top", duration: "long" })
-          }
-        })
+      await Haptics.impact({ style: ImpactStyle.Light }).catch(async (err) => {
+        if (this.env.debugMode === 'on') {
+          await Toast.show({
+            text: 'Err when Haptics.impact: ' + JSON.stringify(err),
+            position: 'top',
+            duration: 'long',
+          });
+        }
+      });
     }
   }
 }

@@ -1,8 +1,8 @@
-<ion-header>
-  <ion-toolbar mode="ios" [color]="color">
+<ion-header mode="ios">
+  <ion-toolbar class="ion-padding-top" mode="ios" [color]="color">
     <ion-buttons slot="end">
       <ion-button (click)="tapHaptic(); shareQrCode()" fill="clear" [color]="'primary'">
-        {{ 'SHARE' | translate }}
+        <ion-icon slot="icon-only" name="share-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -11,7 +11,7 @@
   <div class="d-flex align-items-center justify-content-top flex-column" style="height: 100%;">
     <ion-row>
       <ion-col class="ion-text-center ion-padding" style="max-width: 100% !important;">
-        <qrcode [elementType]="qrElementType" [qrdata]="qrCodeContent" [width]="defaultWidth"
+        <qrcode [elementType]="qrElementType" [qrdata]="qrCodeContent" [width]="qrWidth"
           [errorCorrectionLevel]="errorCorrectionLevel" [colorDark]="qrColorDark" [colorLight]="qrColorLight"
           [margin]="env.qrCodeMargin" #qrcode [hidden]="isSharing">
         </qrcode>

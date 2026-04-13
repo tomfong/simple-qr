@@ -9,3 +9,7 @@
 ion-toolbar:first-of-type {
     --border-width: 0 !important;
 }
+
+:host qrcode::ng-deep .qrcode {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+}

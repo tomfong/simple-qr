@@ -98,7 +98,7 @@
   @if (segmentModel === 'history' && env.viewingScanRecords && env.viewingScanRecords.length > 0 && !isLoading) {
     <ion-list>
       @if (env.showNumberOfRecords == 'on') {
-        <ion-list-header class="ion-padding-horizontal" lines="none">
+        <ion-list-header mode="md" class="ion-padding-horizontal" lines="none">
           @if (env.recordsLimit !== -1) {
             <div class="ion-padding-horizontal">
               <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'">

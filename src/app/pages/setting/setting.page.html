@@ -11,7 +11,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-list-header class="ion-margin-start ion-padding-horizontal mt-1">
+  <ion-list-header mode="md" class="ion-margin-start ion-padding-horizontal mt-1">
     <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'ABOUT' | translate }}</ion-text>
   </ion-list-header>
   <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="navigateAbout()">
@@ -29,7 +29,7 @@
     </div>
   </ion-item>
 
-  <ion-list-header class="ion-margin-start ion-padding-horizontal mt-1">
+  <ion-list-header mode="md" class="ion-margin-start ion-padding-horizontal mt-1">
     <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'FUNCTIONS' | translate }}</ion-text>
   </ion-list-header>
   <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setResult()">
@@ -55,7 +55,7 @@
     </ion-label>
   </ion-item>
 
-  <ion-list-header class="ion-margin-start ion-padding-horizontal mt-1">
+  <ion-list-header mode="md" class="ion-margin-start ion-padding-horizontal mt-1">
     <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'APPEARANCE_AND_EFFECTS' |
     translate}}</ion-text>
   </ion-list-header>
@@ -103,7 +103,7 @@
     </ion-label>
   </ion-item>
 
-  <ion-list-header class="ion-margin-start ion-padding-horizontal mt-1">
+  <ion-list-header mode="md" class="ion-margin-start ion-padding-horizontal mt-1">
     <ion-text [color]="env.colorTheme === 'light'? 'dark' : 'light'">{{ 'OTHERS' | translate
     }}</ion-text></ion-list-header>
     <ion-item class="ion-no-padding ripple-parent" detail="false" lines="none" (click)="setStartPage()">

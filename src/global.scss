@@ -13,11 +13,14 @@
 @import "@ionic/angular/css/core.css";
 
 /* Safe area insets for Capacitor 8 edge-to-edge */
+/* Only --safe-area-inset-* (set by SystemBars plugin on Android) is used. */
+/* On iOS, these custom properties are not set, so padding defaults to 0px */
+/* and Ionic handles safe areas internally via --ion-safe-area-* from env(). */
 html {
-  padding-top: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
-  padding-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
-  padding-left: var(--safe-area-inset-left, env(safe-area-inset-left, 0px));
-  padding-right: var(--safe-area-inset-right, env(safe-area-inset-right, 0px));
+  padding-top: var(--safe-area-inset-top, 0px);
+  padding-bottom: var(--safe-area-inset-bottom, 0px);
+  padding-left: var(--safe-area-inset-left, 0px);
+  padding-right: var(--safe-area-inset-right, 0px);
 }
 
 /* Basic CSS for apps built with Ionic */
