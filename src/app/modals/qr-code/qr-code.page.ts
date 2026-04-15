@@ -26,11 +26,11 @@ import { QRCodeComponent, QRCodeElementType } from 'angularx-qrcode';
   standalone: false,
 })
 export class QrCodePage {
-  modal: HTMLIonModalElement;
+  modal!: HTMLIonModalElement;
 
-  @ViewChild('qrcode') qrcodeElement: QRCodeComponent;
+  @ViewChild('qrcode') qrcodeElement!: QRCodeComponent;
 
-  @Input() qrCodeContent: string;
+  @Input() qrCodeContent!: string;
   qrElementType: QRCodeElementType = 'canvas';
   errorCorrectionLevel:
     | 'low'
@@ -40,7 +40,7 @@ export class QrCodePage {
     | 'L'
     | 'M'
     | 'Q'
-    | 'H';
+    | 'H' = 'medium';
   scale: number = 0.7;
   readonly MAX_WIDTH = 320;
   qrWidth: number =
@@ -48,7 +48,7 @@ export class QrCodePage {
       ? this.MAX_WIDTH
       : window.innerHeight * this.scale * 0.35;
 
-  qrImageDataUrl: string;
+  qrImageDataUrl: string | undefined;
 
   currentBrightness: number = 0;
 
@@ -115,7 +115,10 @@ export class QrCodePage {
       }
       await this.modalController
         .getTop()
-        .then(async (modal: HTMLIonModalElement) => {
+        .then(async (modal: HTMLIonModalElement | undefined) => {
+          if (!modal) {
+            return;
+          }
           this.modal = modal;
           this.modal.addEventListener('ionBreakpointDidChange', (ev: any) => {
             if (this.qrcodeElement != null) {
@@ -231,7 +234,7 @@ export class QrCodePage {
           this.translate.instant('MSG.SHARE_QR'),
           this.translate.instant('SIMPLE_QR'),
           this.qrImageDataUrl,
-          null,
+          undefined,
         )
         .then((_) => {
           this.qrcodeElement.width = currentWidth;

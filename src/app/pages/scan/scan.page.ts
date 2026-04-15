@@ -37,12 +37,12 @@ import { StatusBar } from '@capacitor/status-bar';
   standalone: false,
 })
 export class ScanPage {
-  @ViewChild('content') contentEl: HTMLIonContentElement;
+  @ViewChild('content') contentEl!: HTMLIonContentElement;
 
   cameraActive: boolean = false;
   flashActive: boolean = false;
 
-  permissionAlert: HTMLIonAlertElement;
+  permissionAlert?: HTMLIonAlertElement;
 
   isTorchAvailable: boolean = false;
 
@@ -493,6 +493,9 @@ export class ScanPage {
         function () {
           canvas.width = image.width;
           canvas.height = image.height;
+          if (!context) {
+            return reject();
+          }
           context.fillStyle = 'white';
           context.fillRect(0, 0, canvas.width, canvas.height);
           context.drawImage(image, 0, 0, canvas.width, canvas.height);

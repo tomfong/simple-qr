@@ -326,7 +326,7 @@ export class EnvService {
                   b.id = uuidv4();
                 }
                 const tCreatedAt = b.createdAt;
-                b.createdAt = new Date(tCreatedAt);
+                b.createdAt = tCreatedAt ? new Date(tCreatedAt) : undefined;
               }
             );
             this.bookmarks.sort((a, b) => {
@@ -1015,7 +1015,7 @@ export class EnvService {
           b.id = uuidv4();
         }
         const tCreatedAt = b.createdAt;
-        b.createdAt = new Date(tCreatedAt);
+        b.createdAt = tCreatedAt ? new Date(tCreatedAt) : undefined;
       }
     );
     this.bookmarks.sort((a, b) => {

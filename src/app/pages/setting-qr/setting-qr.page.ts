@@ -18,7 +18,7 @@ export class SettingQrPage {
 
   qrCodeContent: string = 'https://github.com/tomfong/simple-qr';
   qrElementType: QRCodeElementType = "canvas";
-  errorCorrectionLevel: 'low' | 'medium' | 'quartile' | 'high' | 'L' | 'M' | 'Q' | 'H';
+  errorCorrectionLevel: 'low' | 'medium' | 'quartile' | 'high' | 'L' | 'M' | 'Q' | 'H' = 'medium';
   readonly MAX_WIDTH = 300;
   defaultWidth: number = window.innerWidth * 0.4 > this.MAX_WIDTH ? this.MAX_WIDTH : window.innerWidth * 0.4;
 

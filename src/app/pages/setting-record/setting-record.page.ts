@@ -98,7 +98,7 @@ export class SettingRecordPage {
                 text: this.translate.instant('COPY_SECRET_AND_SAVE_BACKUP'),
                 handler: async () => {
                   const loading3 = await this.presentLoading(this.translate.instant("PLEASE_WAIT"));
-                  await this.socialSharing.share(null, filename, result.uri, null).then(
+                  await this.socialSharing.share(undefined, filename, result.uri, undefined).then(
                     _ => {
                       loading3.dismiss();
                     }
@@ -147,7 +147,7 @@ export class SettingRecordPage {
   async onRestore() {
     const loading1 = await this.presentLoading(this.translate.instant("PLEASE_WAIT"));
     await this.chooser.getFile().then(
-      async (value: ChooserResult) => {
+      async (value: ChooserResult | undefined) => {
         loading1.dismiss();
         if (value == null) {
           return;
@@ -158,7 +158,7 @@ export class SettingRecordPage {
         }
         const loading2 = await this.presentLoading(this.translate.instant("PLEASE_WAIT"));
         await Filesystem.readFile({
-          path: value['uri'],
+          path: (value as any)['uri'],
           encoding: Encoding.UTF8
         }).then(
           async value => {
@@ -274,6 +274,7 @@ export class SettingRecordPage {
         rawCsvData = "ID,Content,Created at,Source,Barcode Type,Bookmarked?,Tag\r\n";
     }
     this.env.scanRecords.forEach(r => {
+      r.text = r.text.replaceAll('\r', ' ').replaceAll('\n', ' ');
       rawCsvData += `"${r.id}","${r.text?.split('"').join('') ?? ""}","${this.maskDatetime(r.createdAt)}","${this.maskSource(r.source)}","${r.barcodeType ?? ''}",`
       const bookmark = this.env.bookmarks.find(b => b.text == r.text);
       if (bookmark != null) {
@@ -284,6 +285,7 @@ export class SettingRecordPage {
     });
     this.env.bookmarks.forEach(b => {
       if (this.env.scanRecords.findIndex(r => r.text == b.text) == -1) {
+        b.text = b.text.replaceAll('\r', ' ').replaceAll('\n', ' ');
         rawCsvData += `"-","${b.text?.split('"').join('') ?? ""}","${this.maskDatetime(b.createdAt)}","-","-","TRUE","${b.tag?.split('"').join('') ?? ""}"\r\n`
       }
     });
@@ -297,7 +299,12 @@ export class SettingRecordPage {
       async result => {
         loading.dismiss();
         const loading2 = await this.presentLoading(this.translate.instant("PLEASE_WAIT"));
-        await this.socialSharing.share(null, filename, result.uri, null).then(() => {
+        await this.socialSharing.share(
+          undefined,
+          filename,
+          result.uri,
+          undefined
+        ).then(() => {
           loading2.dismiss();
         }).catch(
           err => {
@@ -320,7 +327,7 @@ export class SettingRecordPage {
     );
   }
 
-  maskDatetime(date: Date): string {
+  maskDatetime(date?: Date): string {
     if (!date) {
       return "-";
     }

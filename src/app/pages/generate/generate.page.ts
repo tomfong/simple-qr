@@ -19,7 +19,7 @@ import { SplashScreen } from '@capacitor/splash-screen';
 })
 export class GeneratePage {
 
-  @ViewChild('content') contentEl: HTMLIonContentElement;
+  @ViewChild('content') contentEl!: HTMLIonContentElement;
 
   freeTxtText: string = "Free Text";
   urlText: string = "URL";
@@ -62,7 +62,7 @@ export class GeneratePage {
   state: string = "";
   postalCode: string = "";
   country: string = "";
-  birthday: string;
+  birthday?: string;
   gender: "M" | "F" | "O" = "O";
   personalUrl: string = "";
 
@@ -347,7 +347,7 @@ export class GeneratePage {
   get disableGenerateBtn(): boolean {
     switch (this.contentType) {
       case "freeText":
-        return (!this.qrCodeContent || (this.qrCodeContent && this.qrCodeContent.trim().length <= 0));
+        return (this.qrCodeContent == null || (this.qrCodeContent != null && this.qrCodeContent.trim().length <= 0));
       default:
         return false;
     }

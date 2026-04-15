@@ -5,6 +5,7 @@ import { AlertController, LoadingController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from 'src/app/services/env.service';
 import { SplashScreen } from '@capacitor/splash-screen';
+import { App } from '@capacitor/app';
 
 @Component({
     selector: 'app-setting',
@@ -141,7 +142,7 @@ export class SettingPage {
   }
 
   exitApp() {
-    navigator['app'].exitApp();
+    App.exitApp();
   }
 
   openGooglePlay(): void {

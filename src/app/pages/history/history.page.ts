@@ -1,6 +1,13 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, IonItemSliding, LoadingController, ModalController, PopoverController, ToastController } from '@ionic/angular';
+import {
+  AlertController,
+  IonItemSliding,
+  LoadingController,
+  ModalController,
+  PopoverController,
+  ToastController,
+} from '@ionic/angular';
 import { EnvService } from 'src/app/services/env.service';
 import { format, Locale } from 'date-fns';
 import { de, enUS, fr, it, ptBR, ru, zhCN, zhHK } from 'date-fns/locale';
@@ -13,17 +20,16 @@ import { fastFadeIn, flyOut } from 'src/app/utils/animations';
 import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
-    selector: 'app-history',
-    templateUrl: './history.page.html',
-    styleUrls: ['./history.page.scss'],
-    animations: [fastFadeIn, flyOut],
-    standalone: false
+  selector: 'app-history',
+  templateUrl: './history.page.html',
+  styleUrls: ['./history.page.scss'],
+  animations: [fastFadeIn, flyOut],
+  standalone: false,
 })
 export class HistoryPage {
+  segmentModel: 'history' | 'bookmarks' = 'history';
 
-  segmentModel: 'history' | 'bookmarks' = "history";
-
-  deleteToast: HTMLIonToastElement;
+  deleteToast?: HTMLIonToastElement;
 
   dummyArr = Array.from(Array(10).keys());
 
@@ -39,9 +45,9 @@ export class HistoryPage {
     public modalController: ModalController,
     public popoverController: PopoverController,
     private route: ActivatedRoute,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
   ) {
-    this.route.params.subscribe(val => {
+    this.route.params.subscribe((val) => {
       setTimeout(() => this.firstLoadItems(), 200);
     });
   }
@@ -50,7 +56,10 @@ export class HistoryPage {
     this.isLoading = true;
     if (this.env.recordsLimit != -1) {
       if (this.env.scanRecords.length > this.env.recordsLimit) {
-        this.env.scanRecords = this.env.scanRecords.slice(0, this.env.recordsLimit);
+        this.env.scanRecords = this.env.scanRecords.slice(
+          0,
+          this.env.recordsLimit,
+        );
       }
     }
     this.env.viewingScanRecords = [];
@@ -63,13 +72,23 @@ export class HistoryPage {
   }
 
   loadMoreScanRecords() {
-    const scanRecords = [...this.env.scanRecords]
-    this.env.viewingScanRecords.push(...scanRecords.slice(this.env.viewingScanRecords.length, this.env.viewingScanRecords.length + 15));
+    const scanRecords = [...this.env.scanRecords];
+    this.env.viewingScanRecords.push(
+      ...scanRecords.slice(
+        this.env.viewingScanRecords.length,
+        this.env.viewingScanRecords.length + 15,
+      ),
+    );
   }
 
   loadMoreBookmarks() {
-    const bookmarks = [...this.env.bookmarks]
-    this.env.viewingBookmarks.push(...bookmarks.slice(this.env.viewingBookmarks.length, this.env.viewingBookmarks.length + 15));
+    const bookmarks = [...this.env.bookmarks];
+    this.env.viewingBookmarks.push(
+      ...bookmarks.slice(
+        this.env.viewingBookmarks.length,
+        this.env.viewingBookmarks.length + 15,
+      ),
+    );
   }
 
   onLoadScanRecords(ev: any) {
@@ -97,7 +116,7 @@ export class HistoryPage {
   }
 
   async ionViewDidEnter() {
-    await SplashScreen.hide()
+    await SplashScreen.hide();
     this.segmentModel = this.env.historyPageStartSegment;
   }
 
@@ -121,34 +140,37 @@ export class HistoryPage {
     return bookmark.id;
   }
 
-  maskDatetimeAndSource(date: Date, source: 'create' | 'view' | 'scan' | 'external-share' | undefined): string {
+  maskDatetimeAndSource(
+    date: Date,
+    source: 'create' | 'view' | 'scan' | 'external-share' | undefined,
+  ): string {
     if (!date) {
-      return "-";
+      return '-';
     }
     let locale: Locale;
     switch (this.env.language) {
-      case "de":
+      case 'de':
         locale = de;
         break;
-      case "en":
+      case 'en':
         locale = enUS;
         break;
-      case "fr":
+      case 'fr':
         locale = fr;
         break;
-      case "it":
+      case 'it':
         locale = it;
         break;
-      case "pt-BR":
+      case 'pt-BR':
         locale = ptBR;
         break;
-      case "ru":
+      case 'ru':
         locale = ru;
         break;
-      case "zh-CN":
+      case 'zh-CN':
         locale = zhCN;
         break;
-      case "zh-HK":
+      case 'zh-HK':
         locale = zhHK;
         break;
       default:
@@ -156,62 +178,68 @@ export class HistoryPage {
     }
     switch (source) {
       case 'create':
-        return `${this.translate.instant("CREATED")} ${this.translate.instant("AT")} ${format(date, "PP pp", { locale: locale })}`;
+        return `${this.translate.instant('CREATED')} ${this.translate.instant('AT')} ${format(date, 'PP pp', { locale: locale })}`;
       case 'view':
-        return `${this.translate.instant("VIEWED")} ${this.translate.instant("AT")} ${format(date, "PP pp", { locale: locale })}`;
+        return `${this.translate.instant('VIEWED')} ${this.translate.instant('AT')} ${format(date, 'PP pp', { locale: locale })}`;
       case 'scan':
-        return `${this.translate.instant("SCANNED")} ${this.translate.instant("AT")} ${format(date, "PP pp", { locale: locale })}`;
+        return `${this.translate.instant('SCANNED')} ${this.translate.instant('AT')} ${format(date, 'PP pp', { locale: locale })}`;
       case 'external-share':
-        return `${this.translate.instant("EXTERNALLY_SHARED")} ${this.translate.instant("AT")} ${format(date, "PP pp", { locale: locale })}`;
+        return `${this.translate.instant('EXTERNALLY_SHARED')} ${this.translate.instant('AT')} ${format(date, 'PP pp', { locale: locale })}`;
+      default:
+        return `${this.translate.instant('UNKNOWN')} ${this.translate.instant('AT')} ${format(date, 'PP pp', { locale: locale })}`;
     }
   }
 
   getBarcodeFormat(barcodeType: string): string {
     switch (barcodeType) {
-      case "UPC_A":
-        return this.translate.instant("BARCODE_TYPE.UPC").trim() + ` (UPC-A)`;
-      case "UPC_E":
-        return this.translate.instant("BARCODE_TYPE.UPC").trim() + ` (UPC-E)`;
-      case "UPC_EAN_EXTENSION":
-        return this.translate.instant("BARCODE_TYPE.UPC").trim() + ` (UPC/EAN Ext.)`;
-      case "EAN_8":
-        return this.translate.instant("BARCODE_TYPE.EAN").trim() + ` (EAN-8)`;
-      case "EAN_13":
-        return this.translate.instant("BARCODE_TYPE.EAN").trim() + ` (EAN-13)`;
-      case "CODE_39":
-        return this.translate.instant("BARCODE_TYPE.1D").trim() + ` (Code 39)`;
-      case "CODE_39_MOD_43":
-        return this.translate.instant("BARCODE_TYPE.1D").trim() + ` (Code 39 mod 43)`;
-      case "CODE_93":
-        return this.translate.instant("BARCODE_TYPE.1D").trim() + ` (Code 93)`;
-      case "CODE_128":
-        return this.translate.instant("BARCODE_TYPE.1D").trim() + ` (Code 128)`;
-      case "CODABAR":
-        return this.translate.instant("BARCODE_TYPE.1D").trim() + ` (Codabar)`;
-      case "ITF":
-        return this.translate.instant("BARCODE_TYPE.1D").trim() + ` (ITF)`;
-      case "ITF_14":
-        return this.translate.instant("BARCODE_TYPE.1D").trim() + ` (ITF-14)`;
-      case "AZTEC":
-        return this.translate.instant("BARCODE_TYPE.AZTEC").trim();
-      case "DATA_MATRIX":
-        return this.translate.instant("BARCODE_TYPE.DATA_MATRIX").trim();
-      case "MAXICODE":
-        return this.translate.instant("BARCODE_TYPE.MAXICODE").trim();
-      case "PDF_417":
-        return this.translate.instant("BARCODE_TYPE.PDF_417").trim();
-      case "QR_CODE":
-        return this.translate.instant("BARCODE_TYPE.QR_CODE").trim();
-      case "RSS_14":
-        return this.translate.instant("BARCODE_TYPE.RSS").trim();
-      case "RSS_EXPANDED":
-        return this.translate.instant("BARCODE_TYPE.RSS").trim();
+      case 'UPC_A':
+        return this.translate.instant('BARCODE_TYPE.UPC').trim() + ` (UPC-A)`;
+      case 'UPC_E':
+        return this.translate.instant('BARCODE_TYPE.UPC').trim() + ` (UPC-E)`;
+      case 'UPC_EAN_EXTENSION':
+        return (
+          this.translate.instant('BARCODE_TYPE.UPC').trim() + ` (UPC/EAN Ext.)`
+        );
+      case 'EAN_8':
+        return this.translate.instant('BARCODE_TYPE.EAN').trim() + ` (EAN-8)`;
+      case 'EAN_13':
+        return this.translate.instant('BARCODE_TYPE.EAN').trim() + ` (EAN-13)`;
+      case 'CODE_39':
+        return this.translate.instant('BARCODE_TYPE.1D').trim() + ` (Code 39)`;
+      case 'CODE_39_MOD_43':
+        return (
+          this.translate.instant('BARCODE_TYPE.1D').trim() + ` (Code 39 mod 43)`
+        );
+      case 'CODE_93':
+        return this.translate.instant('BARCODE_TYPE.1D').trim() + ` (Code 93)`;
+      case 'CODE_128':
+        return this.translate.instant('BARCODE_TYPE.1D').trim() + ` (Code 128)`;
+      case 'CODABAR':
+        return this.translate.instant('BARCODE_TYPE.1D').trim() + ` (Codabar)`;
+      case 'ITF':
+        return this.translate.instant('BARCODE_TYPE.1D').trim() + ` (ITF)`;
+      case 'ITF_14':
+        return this.translate.instant('BARCODE_TYPE.1D').trim() + ` (ITF-14)`;
+      case 'AZTEC':
+        return this.translate.instant('BARCODE_TYPE.AZTEC').trim();
+      case 'DATA_MATRIX':
+        return this.translate.instant('BARCODE_TYPE.DATA_MATRIX').trim();
+      case 'MAXICODE':
+        return this.translate.instant('BARCODE_TYPE.MAXICODE').trim();
+      case 'PDF_417':
+        return this.translate.instant('BARCODE_TYPE.PDF_417').trim();
+      case 'QR_CODE':
+        return this.translate.instant('BARCODE_TYPE.QR_CODE').trim();
+      case 'RSS_14':
+        return this.translate.instant('BARCODE_TYPE.RSS').trim();
+      case 'RSS_EXPANDED':
+        return this.translate.instant('BARCODE_TYPE.RSS').trim();
       default:
         return this.env.resultContentFormat;
     }
   }
 
-  viewRecord(data: string, source: "view-log" | "view-bookmark") {
+  viewRecord(data: string, source: 'view-log' | 'view-bookmark') {
     this.isLoading = true;
     this.changeDetectorRef.detach();
     this.env.viewingScanRecords = [];
@@ -219,10 +247,10 @@ export class HistoryPage {
     this.changeDetectorRef.detectChanges();
     this.changeDetectorRef.reattach();
     this.env.resultContent = data;
-    this.env.resultContentFormat = "";
-    this.env.recordSource = "view";
+    this.env.resultContentFormat = '';
+    this.env.recordSource = 'view';
     this.env.detailedRecordSource = source;
-    this.env.viewResultFrom = "/tabs/history";
+    this.env.viewResultFrom = '/tabs/history';
     this.router.navigate(['tabs/result']);
   }
 
@@ -232,53 +260,67 @@ export class HistoryPage {
 
   async addBookmark(record: ScanRecord, slidingItem: IonItemSliding) {
     await slidingItem.close();
-    if (this.env.bookmarks.find(x => x.text === record.text)) {
-      await this.presentToast(this.translate.instant("MSG.ALREADY_BOOKMARKED"), "short", "bottom");
+    if (this.env.bookmarks.find((x) => x.text === record.text)) {
+      await this.presentToast(
+        this.translate.instant('MSG.ALREADY_BOOKMARKED'),
+        'short',
+        'bottom',
+      );
       return;
     }
     await this.showBookmarkAlert(record);
   }
 
   async showBookmarkAlert(record: ScanRecord) {
-    const alert = await this.alertController.create(
-      {
-        header: this.translate.instant('BOOKMARK'),
-        message: this.translate.instant('MSG.INPUT_TAG'),
-        cssClass: ['alert-bg'],
-        inputs: [
-          {
-            name: 'tag',
-            id: 'tag',
-            type: 'text',
-            label: `${this.translate.instant("MSG.TAG_MAX_LENGTH")}`,
-            placeholder: `${this.translate.instant("MSG.TAG_MAX_LENGTH")}`,
-            max: 30
-          }
-        ],
-        buttons: [
-          {
-            text: this.translate.instant('CREATE'),
-            handler: async data => {
-              alert.dismiss();
-              if (data.tag != null && data.tag.trim().length > 30) {
-                this.presentToast(this.translate.instant("MSG.TAG_MAX_LENGTH_EXPLAIN"), "short", "bottom");
-                return true;
-              }
-              const bookmark = await this.env.saveBookmark(record.text, data.tag);
-              this.env.viewingBookmarks.unshift(bookmark);
-              this.env.viewingBookmarks.sort((a, b) => {
-                return ('' + a.tag).localeCompare(b.tag ?? '');
-              });
-              if (bookmark != null) {
-                await this.presentToast(this.translate.instant("MSG.BOOKMARKED"), "short", "bottom");
-              } else {
-                await this.presentToast(this.translate.instant("MSG.ALREADY_BOOKMARKED"), "short", "bottom");
-              }
+    const alert = await this.alertController.create({
+      header: this.translate.instant('BOOKMARK'),
+      message: this.translate.instant('MSG.INPUT_TAG'),
+      cssClass: ['alert-bg'],
+      inputs: [
+        {
+          name: 'tag',
+          id: 'tag',
+          type: 'text',
+          label: `${this.translate.instant('MSG.TAG_MAX_LENGTH')}`,
+          placeholder: `${this.translate.instant('MSG.TAG_MAX_LENGTH')}`,
+          max: 30,
+        },
+      ],
+      buttons: [
+        {
+          text: this.translate.instant('CREATE'),
+          handler: async (data) => {
+            alert.dismiss();
+            if (data.tag != null && data.tag.trim().length > 30) {
+              this.presentToast(
+                this.translate.instant('MSG.TAG_MAX_LENGTH_EXPLAIN'),
+                'short',
+                'bottom',
+              );
+              return true;
             }
-          }
-        ]
-      }
-    )
+            const bookmark = await this.env.saveBookmark(record.text, data.tag);
+            if (!bookmark) {
+              await this.presentToast(
+                this.translate.instant('MSG.ALREADY_BOOKMARKED'),
+                'short',
+                'bottom',
+              );
+              return;
+            }
+            this.env.viewingBookmarks.unshift(bookmark);
+            this.env.viewingBookmarks.sort((a, b) => {
+              return ('' + a.tag).localeCompare(b.tag ?? '');
+            });
+            await this.presentToast(
+              this.translate.instant('MSG.BOOKMARKED'),
+              'short',
+              'bottom',
+            );
+          },
+        },
+      ],
+    });
     await alert.present();
   }
 
@@ -286,22 +328,32 @@ export class HistoryPage {
     slidingItem.disabled = true;
     if (this.deleteToast) {
       await this.deleteToast.dismiss();
-      this.deleteToast = null;
+      delete this.deleteToast;
+    }
+    if (!bookmark.text) {
+      return;
     }
     await this.env.deleteBookmark(bookmark.text);
-    const index = this.env.viewingBookmarks.findIndex(x => x.text == bookmark.text);
+    const index = this.env.viewingBookmarks.findIndex(
+      (x) => x.text == bookmark.text,
+    );
     if (index != -1) {
       this.env.viewingBookmarks.splice(index, 1);
       if (this.env.bookmarks?.length > this.env.viewingBookmarks.length) {
-        const bookmarks = [...this.env.bookmarks]
-        this.env.viewingBookmarks.push(...bookmarks.slice(this.env.viewingBookmarks.length, this.env.viewingBookmarks.length + 1));
+        const bookmarks = [...this.env.bookmarks];
+        this.env.viewingBookmarks.push(
+          ...bookmarks.slice(
+            this.env.viewingBookmarks.length,
+            this.env.viewingBookmarks.length + 1,
+          ),
+        );
       }
     }
     this.deleteToast = await this.toastController.create({
       message: this.translate.instant('MSG.UNDO_DELETE'),
       duration: 2000,
-      color: "light",
-      position: "top",
+      color: 'light',
+      position: 'top',
       buttons: [
         {
           text: this.translate.instant('UNDO'),
@@ -309,10 +361,10 @@ export class HistoryPage {
           handler: async () => {
             await this.env.undoBookmarkDeletion(bookmark);
             this.env.viewingBookmarks.splice(index, 0, bookmark);
-            this.deleteToast.dismiss();
-          }
-        }
-      ]
+            this.deleteToast?.dismiss();
+          },
+        },
+      ],
     });
     await this.deleteToast.present();
   }
@@ -323,48 +375,57 @@ export class HistoryPage {
   }
 
   async showEditBookmarkAlert(bookmark: Bookmark) {
-    const alert = await this.alertController.create(
-      {
-        header: this.translate.instant('BOOKMARK'),
-        message: this.translate.instant('MSG.INPUT_TAG'),
-        cssClass: ['alert-bg'],
-        inputs: [
-          {
-            name: 'tag',
-            id: 'tag',
-            type: 'text',
-            label: `${this.translate.instant("MSG.TAG_MAX_LENGTH")}`,
-            placeholder: `${this.translate.instant("MSG.TAG_MAX_LENGTH")}`,
-            value: bookmark.tag ?? '',
-            max: 30
-          }
-        ],
-        buttons: [
-          {
-            text: this.translate.instant('EDIT'),
-            handler: async data => {
-              alert.dismiss();
-              if (data.tag != null && data.tag.trim().length > 30) {
-                this.presentToast(this.translate.instant("MSG.TAG_MAX_LENGTH_EXPLAIN"), "short", "bottom");
-                return true;
-              }
-              this.isLoading = true;
-              await this.env.deleteBookmark(bookmark.text);
-              const index = this.env.viewingBookmarks.findIndex(x => x.text === bookmark.text);
-              if (index != -1) {
-                this.env.viewingBookmarks.splice(index, 1);
-              }
-              const newBookmark = await this.env.saveBookmark(bookmark.text, data.tag);
-              this.env.viewingBookmarks.unshift(newBookmark);
-              this.env.viewingBookmarks.sort((a, b) => {
-                return ('' + a.tag).localeCompare(b.tag ?? '');
-              });
-              this.isLoading = false;
+    const alert = await this.alertController.create({
+      header: this.translate.instant('BOOKMARK'),
+      message: this.translate.instant('MSG.INPUT_TAG'),
+      cssClass: ['alert-bg'],
+      inputs: [
+        {
+          name: 'tag',
+          id: 'tag',
+          type: 'text',
+          label: `${this.translate.instant('MSG.TAG_MAX_LENGTH')}`,
+          placeholder: `${this.translate.instant('MSG.TAG_MAX_LENGTH')}`,
+          value: bookmark.tag ?? '',
+          max: 30,
+        },
+      ],
+      buttons: [
+        {
+          text: this.translate.instant('EDIT'),
+          handler: async (data) => {
+            alert.dismiss();
+            if (data.tag != null && data.tag.trim().length > 30) {
+              this.presentToast(
+                this.translate.instant('MSG.TAG_MAX_LENGTH_EXPLAIN'),
+                'short',
+                'bottom',
+              );
+              return true;
             }
-          }
-        ]
-      }
-    )
+            this.isLoading = true;
+            await this.env.deleteBookmark(bookmark.text);
+            const index = this.env.viewingBookmarks.findIndex(
+              (x) => x.text === bookmark.text,
+            );
+            if (index != -1) {
+              this.env.viewingBookmarks.splice(index, 1);
+            }
+            const newBookmark = await this.env.saveBookmark(
+              bookmark.text,
+              data.tag,
+            );
+            if (newBookmark) {
+              this.env.viewingBookmarks.unshift(newBookmark);
+            }
+            this.env.viewingBookmarks.sort((a, b) => {
+              return ('' + a.tag).localeCompare(b.tag ?? '');
+            });
+            this.isLoading = false;
+          },
+        },
+      ],
+    });
     await alert.present();
   }
 
@@ -372,22 +433,29 @@ export class HistoryPage {
     slidingItem.disabled = true;
     if (this.deleteToast) {
       await this.deleteToast.dismiss();
-      this.deleteToast = null;
+      delete this.deleteToast;
     }
     await this.env.deleteScanRecord(record.id);
-    const index = this.env.viewingScanRecords.findIndex(x => x.id == record.id);
+    const index = this.env.viewingScanRecords.findIndex(
+      (x) => x.id == record.id,
+    );
     if (index != -1) {
       this.env.viewingScanRecords.splice(index, 1);
       if (this.env.scanRecords?.length > this.env.viewingScanRecords.length) {
-        const scanRecords = [...this.env.scanRecords]
-        this.env.viewingScanRecords.push(...scanRecords.slice(this.env.viewingScanRecords.length, this.env.viewingScanRecords.length + 1));
+        const scanRecords = [...this.env.scanRecords];
+        this.env.viewingScanRecords.push(
+          ...scanRecords.slice(
+            this.env.viewingScanRecords.length,
+            this.env.viewingScanRecords.length + 1,
+          ),
+        );
       }
     }
     this.deleteToast = await this.toastController.create({
       message: this.translate.instant('MSG.UNDO_DELETE'),
       duration: 2000,
-      color: "light",
-      position: "top",
+      color: 'light',
+      position: 'top',
       buttons: [
         {
           text: this.translate.instant('UNDO'),
@@ -395,13 +463,12 @@ export class HistoryPage {
           handler: async () => {
             await this.env.undoScanRecordDeletion(record);
             this.env.viewingScanRecords.splice(index, 0, record);
-            this.deleteToast.dismiss();
-          }
-        }
-      ]
+            this.deleteToast?.dismiss();
+          },
+        },
+      ],
     });
     await this.deleteToast.present();
-
   }
 
   async removeAll() {
@@ -418,13 +485,13 @@ export class HistoryPage {
               this.isLoading = true;
               this.env.viewingScanRecords = [];
               this.isLoading = false;
-            }
+            },
           },
           {
             text: this.translate.instant('NO'),
-            role: 'cancel'
+            role: 'cancel',
           },
-        ]
+        ],
       });
       alert.present();
     } else if (this.segmentModel === 'bookmarks') {
@@ -440,13 +507,13 @@ export class HistoryPage {
               this.isLoading = true;
               this.env.viewingBookmarks = [];
               this.isLoading = false;
-            }
+            },
           },
           {
             text: this.translate.instant('NO'),
-            role: 'cancel'
+            role: 'cancel',
           },
-        ]
+        ],
       });
       alert.present();
     }
@@ -466,14 +533,19 @@ export class HistoryPage {
     return this.env.recordsLimit;
   }
 
-  async presentAlert(msg: string, head: string, buttonText: string, buttonless: boolean = false): Promise<HTMLIonAlertElement> {
+  async presentAlert(
+    msg: string,
+    head: string,
+    buttonText: string,
+    buttonless: boolean = false,
+  ): Promise<HTMLIonAlertElement> {
     let alert: any;
     if (!buttonless) {
       alert = await this.alertController.create({
         header: head,
         message: msg,
         cssClass: ['alert-bg'],
-        buttons: [buttonText]
+        buttons: [buttonText],
       });
     } else {
       alert = await this.alertController.create({
@@ -481,7 +553,7 @@ export class HistoryPage {
         message: msg,
         buttons: [],
         cssClass: ['alert-bg'],
-        backdropDismiss: false
+        backdropDismiss: false,
       });
     }
     await alert.present();
@@ -490,28 +562,35 @@ export class HistoryPage {
 
   async presentLoading(msg: string): Promise<HTMLIonLoadingElement> {
     const loading = await this.loadingController.create({
-      message: msg
+      message: msg,
     });
     await loading.present();
     return loading;
   }
 
-  async presentToast(msg: string, duration: "short" | "long", pos: "top" | "center" | "bottom") {
+  async presentToast(
+    msg: string,
+    duration: 'short' | 'long',
+    pos: 'top' | 'center' | 'bottom',
+  ) {
     await Toast.show({
       text: msg,
       duration: duration,
-      position: pos
+      position: pos,
     });
   }
 
   async tapHaptic() {
     if (this.env.vibration === 'on' || this.env.vibration === 'on-haptic') {
-      await Haptics.impact({ style: ImpactStyle.Light })
-        .catch(async err => {
-          if (this.env.debugMode === 'on') {
-            await Toast.show({ text: 'Err when Haptics.impact: ' + JSON.stringify(err), position: "top", duration: "long" })
-          }
-        })
+      await Haptics.impact({ style: ImpactStyle.Light }).catch(async (err) => {
+        if (this.env.debugMode === 'on') {
+          await Toast.show({
+            text: 'Err when Haptics.impact: ' + JSON.stringify(err),
+            position: 'top',
+            duration: 'long',
+          });
+        }
+      });
     }
   }
 }
