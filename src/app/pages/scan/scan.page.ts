@@ -25,7 +25,7 @@ import {
   ImageOptions,
   Photo,
 } from '@capacitor/camera';
-import jsQR from 'jsqr';
+import { ImageService } from 'src/app/services/image.service';
 import { Capacitor } from '@capacitor/core';
 import { SystemBars, SystemBarsStyle, SystemBarType } from '@capacitor/core';
 import { StatusBar } from '@capacitor/status-bar';
@@ -62,6 +62,7 @@ export class ScanPage {
     public translate: TranslateService,
     private readonly ngZone: NgZone,
     private platform: Platform,
+    private imageService: ImageService,
   ) {}
 
   ionViewWillEnter() {
@@ -436,26 +437,10 @@ export class ScanPage {
         const decodingLoading = await this.presentLoading(
           this.translate.instant('DECODING'),
         );
-        await this.convertDataUrlToImageData(photo?.dataUrl ?? '').then(
-          async (imageData) => {
-            await this.getJsQr(
-              imageData.imageData.data,
-              imageData.width,
-              imageData.height,
-            ).then(
-              async (qrValue) => {
-                decodingLoading.dismiss();
-                this.processQrCode(qrValue, 'QR_CODE');
-              },
-              async (_) => {
-                decodingLoading.dismiss();
-                await this.presentToast(
-                  this.translate.instant('MSG.NO_QR_CODE'),
-                  'short',
-                  'center',
-                );
-              },
-            );
+        await this.imageService.scanQrFromDataUrl(photo?.dataUrl ?? '').then(
+          async ({ data }) => {
+            decodingLoading.dismiss();
+            this.processQrCode(data, 'QR_CODE');
           },
           async (_) => {
             decodingLoading.dismiss();
@@ -478,73 +463,6 @@ export class ScanPage {
         }
       },
     );
-  }
-
-  private async convertDataUrlToImageData(
-    uri: string,
-  ): Promise<{ imageData: ImageData; width: number; height: number }> {
-    return await new Promise((resolve, reject) => {
-      if (uri == null) return reject();
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
-      const image = new Image();
-      image.addEventListener(
-        'load',
-        function () {
-          canvas.width = image.width;
-          canvas.height = image.height;
-          if (!context) {
-            return reject();
-          }
-          context.fillStyle = 'white';
-          context.fillRect(0, 0, canvas.width, canvas.height);
-          context.drawImage(image, 0, 0, canvas.width, canvas.height);
-          const imageData = context.getImageData(
-            0,
-            0,
-            canvas.width,
-            canvas.height,
-          );
-          const data = imageData.data;
-          for (let i = 0; i < data.length; i += 4) {
-            const avg =
-              (imageData.data[i] +
-                imageData.data[i + 1] +
-                imageData.data[i + 2]) /
-              3;
-            imageData.data[i] = avg;
-            imageData.data[i + 1] = avg;
-            imageData.data[i + 2] = avg;
-          }
-          const width = image.width;
-          const height = image.height;
-          resolve({ imageData: imageData, width: width, height: height });
-        },
-        false,
-      );
-      if (uri.startsWith('data')) {
-        image.src = uri;
-      } else {
-        image.src = 'data:image/png;base64,' + uri;
-      }
-    });
-  }
-
-  private async getJsQr(
-    imageData: Uint8ClampedArray,
-    width: number,
-    height: number,
-  ): Promise<string> {
-    return await new Promise((resolve, reject) => {
-      const qrcode = jsQR(imageData, width, height, {
-        inversionAttempts: 'attemptBoth',
-      });
-      if (qrcode) {
-        return resolve(qrcode.data);
-      } else {
-        return reject();
-      }
-    });
   }
 
   processQrCode(scannedData: string, format: string) {

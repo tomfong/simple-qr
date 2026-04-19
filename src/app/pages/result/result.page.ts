@@ -82,6 +82,8 @@ export class ResultPage {
 
   resultSaved: boolean = false;
 
+  qrCodeModal: HTMLIonModalElement | undefined;
+
   @ViewChildren(MatFormField) formFields!: QueryList<MatFormField>;
 
   constructor(
@@ -158,7 +160,9 @@ export class ResultPage {
     } else if (this.showQrFirst) {
       this.showQrFirst = false;
       if (this.qrCodeContent && this.qrCodeContent.trim().length > 0) {
-        await this.enlarge();
+        setTimeout(async () => {
+          await this.showQrCodeModal();
+        }, 100);
       }
     }
     if (
@@ -173,8 +177,13 @@ export class ResultPage {
     }
   }
 
-  ionViewDidLeave() {
+  ionViewWillLeave() {
     this.reset();
+    this.qrCodeModal?.dismiss();
+  }
+
+  ionViewDidLeave() {
+    
   }
 
   async saveRecord() {
@@ -601,15 +610,16 @@ export class ResultPage {
     }
   }
 
-  async enlarge(): Promise<void> {
-    const modal = await this.modalController.create({
+  async showQrCodeModal(): Promise<void> {
+    this.qrCodeModal?.dismiss();
+    this.qrCodeModal = await this.modalController.create({
       component: QrCodePage,
       breakpoints: [0, 0.5, 1],
       initialBreakpoint: 0.5,
       cssClass: 'fullscreen-modal',
       componentProps: { qrCodeContent: this.qrCodeContent },
     });
-    await modal.present();
+    await this.qrCodeModal.present();
   }
 
   async webSearch(): Promise<void> {

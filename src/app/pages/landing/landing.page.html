@@ -1,6 +1,6 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>{{ 'SIMPLE_QR' | translate}}</ion-title>
+  <ion-toolbar [color]="env.colorTheme === 'black'? 'black' : 'dark'">
+    <ion-title>{{ 'LOADING_DATA' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 

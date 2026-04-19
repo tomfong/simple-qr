@@ -2,10 +2,13 @@ import { Component, NgZone } from '@angular/core';
 import { App } from '@capacitor/app';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { Toast } from '@capacitor/toast';
-import { Platform } from '@ionic/angular';
+import { LoadingController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { EnvService } from './services/env.service';
+import { ImageService } from './services/image.service';
 import { Router } from '@angular/router';
+import { de } from 'date-fns/locale';
+import { set } from 'date-fns';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +25,8 @@ export class AppComponent {
     private platform: Platform,
     private router: Router,
     private ngZone: NgZone,
+    private imageService: ImageService,
+    private loadingController: LoadingController,
   ) {
     this.translate.addLangs(this.env.languages);
     this.translate.setDefaultLang('en');
@@ -103,9 +108,80 @@ export class AppComponent {
         sharedText = decodeURIComponent(textMatch[1]);
       }
     }
+    // Handle image share from external apps: simpleqr://scan-image?path=<encoded_path>
+    else if (url.startsWith('simpleqr://scan-image?')) {
+      this.handleSharedImage(url);
+      return;
+    }
 
     if (sharedText) {
       this.handleSharedText(sharedText);
+    }
+  }
+
+  private async handleSharedImage(url: string): Promise<void> {
+    try {
+      const params = new URL(url).searchParams;
+      const isIos = this.platform.is('ios');
+      let filePath: string;
+
+      if (isIos) {
+        // iOS: image saved to App Groups shared container by Share Extension
+        // URL format: simpleqr://scan-image?id=<filename>
+        const filename = params.get('id');
+        if (!filename) return;
+        // App Groups container path on iOS
+        filePath = `file:///var/mobile/Containers/Shared/AppGroup/group.com.tomfong.simpleqr/SharedImages/${filename}`;
+      } else {
+        // Android: image copied to app cache, path passed directly
+        // URL format: simpleqr://scan-image?path=<encoded-cache-path>
+        const encodedPath = params.get('path');
+        if (!encodedPath) return;
+        filePath = decodeURIComponent(encodedPath);
+      }
+
+      const decodingLoading = await this.presentLoading(
+        this.translate.instant('DECODING'),
+      );
+
+      const { data } = await this.imageService
+        .scanQrFromFilePath(filePath)
+        .finally(() => {
+          decodingLoading.dismiss();
+        });
+
+      this.env.resultContent = data;
+      this.env.isSharedContent = true;
+      this.env.pendingShareNavigation = true;
+
+      this.router.navigate(['tabs/landing']).then(() => {
+        setTimeout(() => {
+          this.env.resultContentFormat = 'QR_CODE';
+          this.env.recordSource = 'external-share';
+          this.env.detailedRecordSource = 'external-share';
+          this.env.viewResultFrom = '/tabs/history';
+          this.router
+            .navigate(['tabs/result'], {
+              replaceUrl: true,
+              queryParams: { refresh: new Date().getTime() },
+            })
+            .finally(() => {
+              // Allow normal startup navigation again once result page routing is triggered
+              setTimeout(() => {
+                this.env.pendingShareNavigation = false;
+              }, 300);
+            });
+        }, 200);
+      });
+    } catch (_) {
+      setTimeout(() => {
+        this.presentToast(
+          this.translate.instant('MSG.NO_QR_CODE'),
+          'short',
+          'center',
+        );
+        this.router.navigate(['tabs/history'], { replaceUrl: true });
+      }, 200);
     }
   }
 
@@ -116,21 +192,25 @@ export class AppComponent {
       this.env.resultContent = sanitized;
       this.env.isSharedContent = true; // Mark as shared to force freeText type
       this.env.pendingShareNavigation = true;
-      this.env.recordSource = 'external-share';
-      this.env.detailedRecordSource = 'external-share';
-      this.env.viewResultFrom = '/tabs/history';
 
-      // Navigate to result page - use setTimeout to ensure it happens after initial routing
-      setTimeout(() => {
-        this.router
-          .navigateByUrl('/tabs/result', { replaceUrl: true })
-          .finally(() => {
-            // Allow normal startup navigation again once result page routing is triggered
-            setTimeout(() => {
-              this.env.pendingShareNavigation = false;
-            }, 300);
-          });
-      }, 100);
+      this.router.navigate(['tabs/landing']).then(() => {
+        setTimeout(() => {
+          this.env.recordSource = 'external-share';
+          this.env.detailedRecordSource = 'external-share';
+          this.env.viewResultFrom = '/tabs/history';
+          this.router
+            .navigate(['tabs/result'], {
+              replaceUrl: true,
+              queryParams: { refresh: new Date().getTime() },
+            })
+            .finally(() => {
+              // Allow normal startup navigation again once result page routing is triggered
+              setTimeout(() => {
+                this.env.pendingShareNavigation = false;
+              }, 300);
+            });
+        }, 200);
+      });
     }
   }
 
@@ -162,6 +242,14 @@ export class AppComponent {
       'bottom',
     );
     return truncated;
+  }
+
+  async presentLoading(msg: string): Promise<HTMLIonLoadingElement> {
+    const loading = await this.loadingController.create({
+      message: msg,
+    });
+    await loading.present();
+    return loading;
   }
 
   async presentToast(

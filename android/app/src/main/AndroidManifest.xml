@@ -48,11 +48,18 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
 
-      <!-- Share to app intent filter -->
+      <!-- Share to app intent filter for text -->
       <intent-filter>
         <action android:name="android.intent.action.SEND" />
         <category android:name="android.intent.category.DEFAULT" />
         <data android:mimeType="text/plain" />
+      </intent-filter>
+
+      <!-- Share to app intent filter for images -->
+      <intent-filter>
+        <action android:name="android.intent.action.SEND" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <data android:mimeType="image/*" />
       </intent-filter>
 
       <!-- Custom URL scheme for share -->
@@ -64,15 +71,15 @@
       </intent-filter>
     </activity>
 
-<!--    <provider-->
-<!--      android:name="androidx.core.content.FileProvider"-->
-<!--      android:authorities="${applicationId}.fileprovider"-->
-<!--      android:exported="false"-->
-<!--      android:grantUriPermissions="true">-->
-<!--      <meta-data-->
-<!--        android:name="android.support.FILE_PROVIDER_PATHS"-->
-<!--        android:resource="@xml/file_paths" />-->
-<!--    </provider>-->
+    <provider
+      android:name="androidx.core.content.FileProvider"
+      android:authorities="${applicationId}.fileprovider"
+      android:exported="false"
+      android:grantUriPermissions="true">
+      <meta-data
+        android:name="android.support.FILE_PROVIDER_PATHS"
+        android:resource="@xml/file_paths" />
+    </provider>
 
     <service
       android:name=".MyQSTileService"
